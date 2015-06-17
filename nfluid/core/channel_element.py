@@ -59,7 +59,7 @@ class ChannelElement(object):
 #--------------------------------------------------------------------
   def print_info(self):
     self.for_each_gate(fcn_print_info_xxx)
-#    print_info "ChannelElement"
+#    print "ChannelElement"
 
 #--------------------------------------------------------------------  
   def print_info_channel(self):
@@ -76,7 +76,7 @@ class ChannelElement(object):
 #--------------------------------------------------------------------
     ret = ""
     res = self.resolve_geometry_base()
-    print_info "Tail gate res = ", res
+    print "Tail gate res = ", res
     if res == "":
       pass
     elif res == "ok":
@@ -85,7 +85,7 @@ class ChannelElement(object):
       return res
 
     res = self.resolve_geometry_child()
-    print_info "Tail gate res = ", res
+    print "Tail gate res = ", res
     if res == "":
       pass
     elif res == "ok":
@@ -108,7 +108,7 @@ class ChannelElement(object):
     ret = ""
     for gate in self.heads:
       res = gate.resolve_geometry()
-      print_info "Head gate res = ", res
+      print "Head gate res = ", res
       if res == "":
         pass
       elif res == "ok":
@@ -118,7 +118,7 @@ class ChannelElement(object):
 
     for gate in self.tails:
       res = gate.resolve_geometry()
-      print_info "Tail gate res = ", res
+      print "Tail gate res = ", res
       if res == "":
         pass
       elif res == "ok":
