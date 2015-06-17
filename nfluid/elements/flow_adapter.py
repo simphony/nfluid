@@ -1,17 +1,17 @@
-from NF_ChannelElement2G import *
-from NF_Gates import *
+from ChannelElement2G import *
+from Gates import *
 #====================================================================
-# Class of Cone
-class NF_Cone(NF_ChannelElement2G):
+# Class of FlowAdapter
+class FlowAdapter(ChannelElement2G):
 #--------------------------------------------------------------------
   def __init__(self, \
     RH = None, RT = None, L = None, \
     PosH = None, PosT = None,    \
     Normal = None):
 
-    NF_ChannelElement2G.__init__(self)
-    self.heads.append(NF_GateCircle(self))
-    self.tails.append(NF_GateCircle(self))
+    ChannelElement2G.__init__(self)
+    self.heads.append(GateCircle(self))
+    self.tails.append(GateCircle(self))
 
     self.length = L
     self.setNormalDef(Normal)
@@ -22,12 +22,12 @@ class NF_Cone(NF_ChannelElement2G):
 
 #--------------------------------------------------------------------
   def getName(self):
-    return "Cone"
+    return "FlowAdapter"
 
 #--------------------------------------------------------------------
   def Print(self):
-    NF_ChannelElement2G.Print(self)
-    print "NF_Cone RHdef =", self.getHeadGate().getRdef(), \
+    ChannelElement2G.Print(self)
+    print "FlowAdapter RHdef =", self.getHeadGate().getRdef(), \
       "radiusTail RTdef=", self.getTailGate().getRdef(), "length =", self.length, \
       "RH =", self.getGateSizeH(), "RT =", self.getGateSizeT() 
                                                         

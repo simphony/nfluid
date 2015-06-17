@@ -1,16 +1,16 @@
-from NF_ChannelElement import *
-from NF_Gates import *
+from ChannelElement import *
+from Gates import *
 #====================================================================
-class NF_BifurcationCircle(NF_ChannelElement):
+class BifurcationCircle(ChannelElement):
 #--------------------------------------------------------------------
   def __init__(self, R = None):
-    NF_ChannelElement.__init__(self)
+    ChannelElement.__init__(self)
     
     self.length = R
 
-    self.heads.append(NF_GateCircle(self))
-    self.tails.append(NF_GateCircle(self))
-    self.tails.append(NF_GateCircle(self))
+    self.heads.append(GateCircle(self))
+    self.tails.append(GateCircle(self))
+    self.tails.append(GateCircle(self))
 
     self.getHeadGate().setSizeDef(R)
     self.getTailGate(0).setSizeDef(R)
@@ -46,7 +46,7 @@ class NF_BifurcationCircle(NF_ChannelElement):
   def resolveGeometryBase(self):
 #--------------------------------------------------------------------
     ret = ""
-    res = NF_ChannelElement.resolveGeometryBase(self)
+    res = ChannelElement.resolveGeometryBase(self)
     if res == "":
       pass
     elif res == "ok":
@@ -55,7 +55,7 @@ class NF_BifurcationCircle(NF_ChannelElement):
       return res
 
 #STUB!!!
-    res = self.getHeadGate(0).setNormal(NF_Vector(0, 0, 1))
+    res = self.getHeadGate(0).setNormal(Vector(0, 0, 1))
     if res == "":
       pass
     elif res == "ok":
@@ -63,7 +63,7 @@ class NF_BifurcationCircle(NF_ChannelElement):
     else: 
       return res
 
-    res = self.getTailGate(0).setNormal(NF_Vector(-1, 0, 0))
+    res = self.getTailGate(0).setNormal(Vector(-1, 0, 0))
     if res == "":
       pass
     elif res == "ok":
@@ -71,7 +71,7 @@ class NF_BifurcationCircle(NF_ChannelElement):
     else: 
       return res
 
-    res = self.getTailGate(1).setNormal(NF_Vector(1, 0, 0))
+    res = self.getTailGate(1).setNormal(Vector(1, 0, 0))
     if res == "":
       pass
     elif res == "ok":
@@ -100,7 +100,7 @@ class NF_BifurcationCircle(NF_ChannelElement):
     """
 
     PosT0 = copy.copy(self.getHeadGate().Pos)
-    res = PosT0.add(NF_Vector(-self.length, 0, -self.length))
+    res = PosT0.add(Vector(-self.length, 0, -self.length))
     if res == "ok":
       res = self.getTailGate(0).setPos(PosT0)
       if res == "":
@@ -112,7 +112,7 @@ class NF_BifurcationCircle(NF_ChannelElement):
     
     
     PosT1 = copy.copy(self.getHeadGate().Pos)
-    res = PosT1.add(NF_Vector(self.length, 0, -self.length))
+    res = PosT1.add(Vector(self.length, 0, -self.length))
     if res == "ok":
       res = self.getTailGate(1).setPos(PosT1)
       if res == "":
@@ -173,7 +173,7 @@ class NF_BifurcationCircle(NF_ChannelElement):
     print "getGatesDiff Len", Len, "self.length", self.length
     if Len is None or  Len == 0:
       print "getGatesDiff bad"
-      return NF_Vector()
+      return Vector()
     else:
       if self.length is None:
         x = None
@@ -185,13 +185,13 @@ class NF_BifurcationCircle(NF_ChannelElement):
         z = None
         if IsEqualEps(Normal.z, 0):
           z = 0
-        return NF_Vector(x, y, z)
+        return Vector(x, y, z)
       else:
         Normal.scale(self.length / Len)
         print "getGatesDiff Normal Scaled"
         Normal.Print()
         return Normal
-#    return NF_Vector(10, 20, self.length)
+#    return Vector(10, 20, self.length)
 
 #--------------------------------------------------------------------
   def setEqualGateSize(self):
@@ -241,7 +241,7 @@ class NF_BifurcationCircle(NF_ChannelElement):
 
 #--------------------------------------------------------------------
   def Print(self):
-    NF_ChannelElement.Print(self)
+    ChannelElement.Print(self)
     print "Len = ", self.getLen()
 """
 

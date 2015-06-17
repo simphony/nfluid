@@ -1,16 +1,16 @@
-from NF_ChannelElement2G import *
-from NF_Gates import *
+from ChannelElement2G import *
+from Gates import *
 #====================================================================
-# Class of Bar
-class NF_Bar(NF_ChannelElement2G):
+# Class of CouplingSquare
+class CouplingSquare(ChannelElement2G):
 #--------------------------------------------------------------------
   def __init__(self, A = None, B = None, L = None, \
       PosH = None, PosT = None,    \
       Normal = None):
-    NF_ChannelElement2G.__init__(self)
+    ChannelElement2G.__init__(self)
     self.length = L
-    self.heads.append(NF_GateRect(self))
-    self.tails.append(NF_GateRect(self))
+    self.heads.append(GateRect(self))
+    self.tails.append(GateRect(self))
 
     self.setNormalDef(Normal)
     self.getHeadGate().setPosDef(PosH)
@@ -20,7 +20,7 @@ class NF_Bar(NF_ChannelElement2G):
 
 #--------------------------------------------------------------------
   def getName(self):
-    return "Bar"
+    return "CouplingSquare"
 
 #--------------------------------------------------------------------
   def resolveGeometryChild(self):
@@ -28,8 +28,8 @@ class NF_Bar(NF_ChannelElement2G):
 
 #--------------------------------------------------------------------
   def Print(self):
-    NF_ChannelElement2G.Print(self)
-    print "NF_Bar AHdef =", self.getHeadGate().getAdef(), \
+    ChannelElement2G.Print(self)
+    print "CouplingSquare AHdef =", self.getHeadGate().getAdef(), \
       " BHdef =", self.getHeadGate().getBdef(),           \
       "length =", self.length, \
       " AH =", self.getGateSizeH(), "AT =", self.getGateSizeT() 
