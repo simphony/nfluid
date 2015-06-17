@@ -7,30 +7,30 @@ class ChannelElement(object):
   assembly = None;
 
   def __init__(self):
-    ChannelElement.assembly.addElement(self)
+    ChannelElement.assembly.add_element(self)
     self.heads = []
     self.tails = []
     self.changed = True
 
 #--------------------------------------------------------------------
-  def getName(self):
+  def get_name(self):
     return "ChannelElement"
 
 #--------------------------------------------------------------------
-  def getHeadGate(self, n = 0):
+  def get_head_gate(self, n = 0):
     return self.heads[n]
 
 #--------------------------------------------------------------------
-  def getTailGate(self, n = 0):
+  def get_tail_gate(self, n = 0):
     return self.tails[n]
 
 #--------------------------------------------------------------------
-  def getTailGateBif(self, n = 0):
+  def get_tail_gate_bif(self, n = 0):
     return self.tailsBif[n]
 
 #--------------------------------------------------------------------
-  def getNextElement(self, n = 0):
-    gt = self.getTailGate(n)
+  def get_next_element(self, n = 0):
+    gt = self.get_tail_gate(n)
     if gt is None:
       return None
     gtb = gt.buddy
@@ -39,8 +39,8 @@ class ChannelElement(object):
     return gtb.element
 
 #--------------------------------------------------------------------
-  def getPrevElement(self, n = 0):
-    gh = self.getHeadGate(n)
+  def get_prev_element(self, n = 0):
+    gh = self.get_head_gate(n)
     if gh is None:
       return None
     ghb = gh.buddy
@@ -50,33 +50,33 @@ class ChannelElement(object):
 
 #--------------------------------------------------------------------
   def link(self, next, gateTail = 0, gateHead = 0):
-    gt1 = self.getTailGate(gateTail)
-    gh2 = next.getHeadGate(gateHead)
+    gt1 = self.get_tail_gate(gateTail)
+    gh2 = next.get_head_gate(gateHead)
     gt1.buddy = gh2
     gh2.buddy = gt1
     return next
 
 #--------------------------------------------------------------------
-  def Print(self):
-    self.forEachGate(fcnPrintXXX)
-#    print "ChannelElement"
+  def print_info(self):
+    self.for_each_gate(fcn_print_info_xxx)
+#    print_info "ChannelElement"
 
 #--------------------------------------------------------------------  
-  def PrintChannel(self):
-    self.Print()
-    next = self.getNextElement()
+  def print_info_channel(self):
+    self.print_info()
+    next = self.get_next_element()
     if next is not None:
-      next.PrintChannel()
+      next.print_info_channel()
 
 #--------------------------------------------------------------------
 # "" nothing changed
 # "ok" something changed
 # "other text" - fatal error
-  def resolveGeometry(self):
+  def resolve_geometry(self):
 #--------------------------------------------------------------------
     ret = ""
-    res = self.resolveGeometryBase()
-    print "Tail gate res = ", res
+    res = self.resolve_geometry_base()
+    print_info "Tail gate res = ", res
     if res == "":
       pass
     elif res == "ok":
@@ -84,8 +84,8 @@ class ChannelElement(object):
     else:
       return res
 
-    res = self.resolveGeometryChild()
-    print "Tail gate res = ", res
+    res = self.resolve_geometry_child()
+    print_info "Tail gate res = ", res
     if res == "":
       pass
     elif res == "ok":
@@ -96,19 +96,19 @@ class ChannelElement(object):
     return ret
 
 #--------------------------------------------------------------------
-  def resolveGeometryChild(self):
+  def resolve_geometry_child(self):
     return ""
 
 #--------------------------------------------------------------------
 # "" nothing changed
 # "ok" something changed
 # "other text" - fatal error
-  def resolveGeometryBase(self):
+  def resolve_geometry_base(self):
 #--------------------------------------------------------------------
     ret = ""
     for gate in self.heads:
-      res = gate.resolveGeometry()
-      print "Head gate res = ", res
+      res = gate.resolve_geometry()
+      print_info "Head gate res = ", res
       if res == "":
         pass
       elif res == "ok":
@@ -117,8 +117,8 @@ class ChannelElement(object):
         return res 
 
     for gate in self.tails:
-      res = gate.resolveGeometry()
-      print "Tail gate res = ", res
+      res = gate.resolve_geometry()
+      print_info "Tail gate res = ", res
       if res == "":
         pass
       elif res == "ok":
@@ -129,40 +129,40 @@ class ChannelElement(object):
       return ret
 
 #--------------------------------------------------------------------
-  def isResolvedGeometry(self):
+  def is_resolved_geometry(self):
     msg = "xxx"
     for gate in self.heads:
-      res = gate.isResolvedGeometry()
+      res = gate.is_resolved_geometry()
       if res != "":
         return msg + res
     for gate in self.tails:
-      res = gate.isResolvedGeometry()
+      res = gate.is_resolved_geometry()
       if res != "":
         return msg + res
     return ""
 
 #--------------------------------------------------------------------
 #  @staticmethod
-  def fcnClearGeometry(gate):
-    gate.clearGeometry()
+  def fcn_clear_geometry(gate):
+    gate.clear_geometry()
 
 #--------------------------------------------------------------------
-  def clearGeometry(self):
-    self.forEachGate(fcnClearGeometryXXX)
-#    self.forEachGate(ChannelElement.fcnClearGeometry)
+  def clear_geometry(self):
+    self.for_each_gate(fcn_clear_geometry_xxx)
+#    self.for_each_gate(ChannelElement.fcn_clear_geometry)
 
 #--------------------------------------------------------------------
-  def forEachGate(self, fcn):
+  def for_each_gate(self, fcn):
     for gate in self.heads:
       fcn(gate)
     for gate in self.tails:
       fcn(gate)
 
 #--------------------------------------------------------------------
-def fcnClearGeometryXXX(gate):
-    gate.clearGeometry()
+def fcn_clear_geometry_xxx(gate):
+    gate.clear_geometry()
 
 #--------------------------------------------------------------------
-def fcnPrintXXX(gate):
-    gate.Print()
+def fcn_print_info_xxx(gate):
+    gate.print_info()
 

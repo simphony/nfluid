@@ -12,26 +12,26 @@ class CouplingSquare(ChannelElement2G):
     self.heads.append(GateRect(self))
     self.tails.append(GateRect(self))
 
-    self.setNormalDef(Normal)
-    self.getHeadGate().setPosDef(PosH)
-    self.getTailGate().setPosDef(PosT)
-    self.getHeadGate().setSizeDef(A, B)
-    self.getTailGate().setSizeDef(A, B)
+    self.set_normal_def(Normal)
+    self.get_head_gate().set_pos_def(PosH)
+    self.get_tail_gate().set_pos_def(PosT)
+    self.get_head_gate().set_size_def(A, B)
+    self.get_tail_gate().set_size_def(A, B)
 
 #--------------------------------------------------------------------
-  def getName(self):
+  def get_name(self):
     return "CouplingSquare"
 
 #--------------------------------------------------------------------
-  def resolveGeometryChild(self):
-    return self.setEqualGateSize()
+  def resolve_geometry_child(self):
+    return self.set_equal_gate_size()
 
 #--------------------------------------------------------------------
-  def Print(self):
-    ChannelElement2G.Print(self)
-    print "CouplingSquare AHdef =", self.getHeadGate().getAdef(), \
-      " BHdef =", self.getHeadGate().getBdef(),           \
+  def print_info(self):
+    ChannelElement2G.print_info(self)
+    print "CouplingSquare AHdef =", self.get_head_gate().get_a_def(), \
+      " BHdef =", self.get_head_gate().get_b_def(),           \
       "length =", self.length, \
-      " AH =", self.getGateSizeH(), "AT =", self.getGateSizeT() 
+      " AH =", self.get_gate_size_h(), "AT =", self.get_gate_size_t() 
 
 

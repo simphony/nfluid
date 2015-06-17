@@ -13,36 +13,36 @@ class Elbow(ChannelElement2G):
     self.heads.append(GateCircle(self))
     self.tails.append(GateCircle(self))
 
-    self.setNormalDef(Normal)
-    self.getHeadGate().setPosDef(PosH)
-    self.getTailGate().setPosDef(PosT)
-    self.getHeadGate().setSizeDef(R)
-    self.getTailGate().setSizeDef(R)
+    self.set_normal_def(Normal)
+    self.get_head_gate().set_pos_def(PosH)
+    self.get_tail_gate().set_pos_def(PosT)
+    self.get_head_gate().set_size_def(R)
+    self.get_tail_gate().set_size_def(R)
 
 #--------------------------------------------------------------------
-  def getName(self):
+  def get_name(self):
     return "Elbow"
 
 #--------------------------------------------------------------------
-  def resolveGeometryChild(self):
-    return self.setEqualGateSize()
+  def resolve_geometry_child(self):
+    return self.set_equal_gate_size()
 
 #--------------------------------------------------------------------
-  def getGatesDiff(self):
+  def get_gates_diff(self):
     return Vector(0, 3000, 4000)
 
 #--------------------------------------------------------------------
-  def getNormalTailFromHead(self, NormalH):
+  def get_normal_tail_from_head(self, NormalH):
     return Vector(1, 0, 0)
 
 #--------------------------------------------------------------------
-  def getNormalHeadFromTail(self, NormalT):
+  def get_normal_head_from_tail(self, NormalT):
     return Vector(0, 0, 1)
 
 #--------------------------------------------------------------------
-  def Print(self):
-    ChannelElement2G.Print(self)
-    print "Cylinder radius Rdef =", self.getHeadGate().getRdef(), "length =", self.length, \
-      "RH =", self.getGateSizeH(), "RT =", self.getGateSizeT() 
+  def print_info(self):
+    ChannelElement2G.print_info(self)
+    print "Coupling radius Rdef =", self.get_head_gate().get_r_def(), "length =", self.length, \
+      "RH =", self.get_gate_size_h(), "RT =", self.get_gate_size_t() 
 
 
