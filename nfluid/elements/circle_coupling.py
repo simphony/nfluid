@@ -1,36 +1,36 @@
-from NF_ChannelElement2G import *
-from NF_Gates import *
+from ChannelElement2G import *
+from Gates import *
 
 #====================================================================
-# Class of Cylinder
-class NF_Cylinder(NF_ChannelElement2G):
+# Class of Coupling
+class Coupling(ChannelElement2G):
 #--------------------------------------------------------------------
   def __init__(self, R = None, L = None, \
       PosH = None, PosT = None,    \
       Normal = None):
-    NF_ChannelElement2G.__init__(self)
+    ChannelElement2G.__init__(self)
     self.length = L
-    self.heads.append(NF_GateCircle(self))
-    self.tails.append(NF_GateCircle(self))
+    self.heads.append(GateCircle(self))
+    self.tails.append(GateCircle(self))
 
-    self.setNormalDef(Normal)
-    self.getHeadGate().setPosDef(PosH)
-    self.getTailGate().setPosDef(PosT)
-    self.getHeadGate().setSizeDef(R)
-    self.getTailGate().setSizeDef(R)
-
-#--------------------------------------------------------------------
-  def getName(self):
-    return "Cylinder"
+    self.set_normal_def(Normal)
+    self.get_head_gate().set_pos_def(PosH)
+    self.get_tail_gate().set_pos_def(PosT)
+    self.get_head_gate().set_size_def(R)
+    self.get_tail_gate().set_size_def(R)
 
 #--------------------------------------------------------------------
-  def resolveGeometryChild(self):
-    return self.setEqualGateSize()
+  def get_name(self):
+    return "Coupling"
 
 #--------------------------------------------------------------------
-  def Print(self):
-    NF_ChannelElement2G.Print(self)
-    print "NF_Cylinder radius Rdef =", self.getHeadGate().getRdef(), "length =", self.length, \
-      "RH =", self.getGateSizeH(), "RT =", self.getGateSizeT()
+  def resolve_geometry_child(self):
+    return self.set_equal_gate_size()
+
+#--------------------------------------------------------------------
+  def print_info(self):
+    ChannelElement2G.print_info(self)
+    print "Coupling radius Rdef =", self.get_head_gate().get_r_def(), "length =", self.length, \
+      "RH =", self.get_gate_size_h(), "RT =", self.get_gate_size_t()
 
 

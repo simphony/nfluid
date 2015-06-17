@@ -1,14 +1,14 @@
-from NF_ChannelAssembly import *
+from ChannelAssembly import *
 import os
 
 def MakeTest1(assembly):
 
-  print "resolveGeometry ----------------------------------"
-  res = assembly.resolveGeometry()
-  print "resolveGeometry res = ", "|", res, "|"
+  print "resolve_geometry ----------------------------------"
+  res = assembly.resolve_geometry()
+  print "resolve_geometry res = ", "|", res, "|"
 
   print "Test Geometry ------------------------------------"
-  res = assembly.isResolvedGeometry()
+  res = assembly.is_resolved_geometry()
   if res == "":
     print "Geometry resolved"
   else:
@@ -16,6 +16,6 @@ def MakeTest1(assembly):
     print "Geometry error res = ", res
     print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
 
-  print "\n\nPrint Assembly ---------------------------------"
-  assembly.Print()
+  print "\n\nprint_info Assembly ---------------------------------"
+  assembly.print_info()
 

@@ -1,37 +1,37 @@
-from NF_ChannelElement2G import *
-from NF_Gates import *
+from ChannelElement2G import *
+from Gates import *
 #====================================================================
-# Class of Bar
-class NF_Bar(NF_ChannelElement2G):
+# Class of CouplingSquare
+class CouplingSquare(ChannelElement2G):
 #--------------------------------------------------------------------
   def __init__(self, A = None, B = None, L = None, \
       PosH = None, PosT = None,    \
       Normal = None):
-    NF_ChannelElement2G.__init__(self)
+    ChannelElement2G.__init__(self)
     self.length = L
-    self.heads.append(NF_GateRect(self))
-    self.tails.append(NF_GateRect(self))
+    self.heads.append(GateRect(self))
+    self.tails.append(GateRect(self))
 
-    self.setNormalDef(Normal)
-    self.getHeadGate().setPosDef(PosH)
-    self.getTailGate().setPosDef(PosT)
-    self.getHeadGate().setSizeDef(A, B)
-    self.getTailGate().setSizeDef(A, B)
-
-#--------------------------------------------------------------------
-  def getName(self):
-    return "Bar"
+    self.set_normal_def(Normal)
+    self.get_head_gate().set_pos_def(PosH)
+    self.get_tail_gate().set_pos_def(PosT)
+    self.get_head_gate().set_size_def(A, B)
+    self.get_tail_gate().set_size_def(A, B)
 
 #--------------------------------------------------------------------
-  def resolveGeometryChild(self):
-    return self.setEqualGateSize()
+  def get_name(self):
+    return "CouplingSquare"
 
 #--------------------------------------------------------------------
-  def Print(self):
-    NF_ChannelElement2G.Print(self)
-    print "NF_Bar AHdef =", self.getHeadGate().getAdef(), \
-      " BHdef =", self.getHeadGate().getBdef(),           \
+  def resolve_geometry_child(self):
+    return self.set_equal_gate_size()
+
+#--------------------------------------------------------------------
+  def print_info(self):
+    ChannelElement2G.print_info(self)
+    print "CouplingSquare AHdef =", self.get_head_gate().get_a_def(), \
+      " BHdef =", self.get_head_gate().get_b_def(),           \
       "length =", self.length, \
-      " AH =", self.getGateSizeH(), "AT =", self.getGateSizeT() 
+      " AH =", self.get_gate_size_h(), "AT =", self.get_gate_size_t() 
 
 

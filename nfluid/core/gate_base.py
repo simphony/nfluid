@@ -1,7 +1,7 @@
-from NF_Vector import *
+from Vector import *
 
 #====================================================================
-class NF_Gate(object):
+class Gate(object):
 #--------------------------------------------------------------------
   def __init__(self, element):
     self.buddy = None
@@ -12,18 +12,18 @@ class NF_Gate(object):
     self.SizeDef = []
     self.Size = []
     self.PosDef = None
-    self.Pos = NF_Vector()
+    self.Pos = Vector()
     self.NormalDef = None
-    self.Normal = NF_Vector()
+    self.Normal = Vector()
 
 #--------------------------------------------------------------------
 # Position -------------------
-  def setPosDef(self, PosDef):
-#    print "Gate setPosDef"
+  def set_pos_def(self, PosDef):
+#    print "Gate set_pos_def"
     self.PosDef = PosDef
 
 #--------------------------------------------------------------------
-  def setSizeDef(self, s0, s1 = None, s2 = None, s3 = None):
+  def set_size_def(self, s0, s1 = None, s2 = None, s3 = None):
     SizeLen = len(self.SizeDef)
     if SizeLen > 0:
       self.SizeDef[0] = s0
@@ -35,7 +35,7 @@ class NF_Gate(object):
       self.SizeDef[3] = s3
 
 #--------------------------------------------------------------------
-  def setSizeArg(self, s0, s1 = None, s2 = None, s3 = None):
+  def set_size_arg(self, s0, s1 = None, s2 = None, s3 = None):
     SizeLen = len(self.Size)
     Size = []
     if SizeLen > 0:
@@ -47,13 +47,13 @@ class NF_Gate(object):
     if SizeLen > 3:
       Size.append(s3)
 
-    return self.setSize(Size)
+    return self.set_size(Size)
 
 #--------------------------------------------------------------------
 #No effect - return ""
 #Done - return "ok"
 #Error - other text
-  def setSize(self, Size):
+  def set_size(self, Size):
 #--------------------------------------------------------------------
     if len(self.Size) != len(Size):
       return "Incompatible size array length"
@@ -63,7 +63,7 @@ class NF_Gate(object):
       if self.Size[i] is not None:
         if Size[i] is not None:
           if (self.Size[i] != Size[i]):
-            return "NF_Gate setSize incompatible sizes i = ", i, \
+            return "Gate set_size incompatible sizes i = ", i, \
               " self.Size[i] = ", self.Size[i], "  Size[i] = ", Size[i]
       else:
         self.Size[i] = Size[i]
@@ -71,7 +71,7 @@ class NF_Gate(object):
 
     if ret == "ok":
       if self.buddy is not None:
-        res = self.buddy.setSizeExt(self.Size)
+        res = self.buddy.set_size_ext(self.Size)
         if res != "":
           return res
 
@@ -80,7 +80,7 @@ class NF_Gate(object):
 #--------------------------------------------------------------------
 #Ok - return ""
 #Error - not empty
-  def setSizeExt(self, Size):
+  def set_size_ext(self, Size):
 #--------------------------------------------------------------------
     if len(self.Size) != len(Size):
       return "Incompatible size array length"
@@ -89,7 +89,7 @@ class NF_Gate(object):
     for i in range(0, len(Size)):
       if self.Size[i] is not None:
         if (self.Size[i] != Size[i]):
-          return "NF_Circle setSize incompatible sizes i = ", i, \
+          return "Circle set_size incompatible sizes i = ", i, \
             " self.Size[i] = ", self.Size[i], "  Size[i] = ", Size[i]
       else:
         self.Size[i] = Size[i]
@@ -105,17 +105,17 @@ class NF_Gate(object):
 # "" - nothing changed
 # "ok" - changed
 # other - error
-  def setPos(self, Pos):
+  def set_pos(self, Pos):
 #--------------------------------------------------------------------
-    print "Gate setPos"
-    res = self.Pos.setv(Pos)
+    print "Gate set_pos"
+    res = self.Pos.set_v(Pos)
 # nothing changed
     if res == "":
       return ""
 # changed
     elif res == "ok":
       if self.buddy is not None:
-        res = self.buddy.setPosExt(self.Pos)
+        res = self.buddy.set_pos_ext(self.Pos)
         if res != "":
           return res
       return "ok"
@@ -127,10 +127,10 @@ class NF_Gate(object):
 # from buddy
 # "" - no errors
 # other - error
-  def setPosExt(self, Pos):
+  def set_pos_ext(self, Pos):
 #--------------------------------------------------------------------
-    print "Gate setPosExt"
-    res = self.Pos.setv(Pos)
+    print "Gate set_pos_ext"
+    res = self.Pos.set_v(Pos)
 # nothing changed
     if res == "":
       return ""
@@ -144,8 +144,8 @@ class NF_Gate(object):
 
 #--------------------------------------------------------------------
 # Orientation ----------------------
-  def setNormalDef(self, NormalDef):
-#    print "Gate setNormalDef"
+  def set_normal_def(self, NormalDef):
+#    print "Gate set_normal_def"
     self.NormalDef = NormalDef
 
 #--------------------------------------------------------------------
@@ -153,17 +153,17 @@ class NF_Gate(object):
 # "" - nothing changed
 # "ok" - changed
 # other - error
-  def setNormal(self, Normal):
+  def set_normal(self, Normal):
 #--------------------------------------------------------------------
-    print "Gate setNormal"
-    res = self.Normal.setv(Normal)
+    print "Gate set_normal"
+    res = self.Normal.set_v(Normal)
 # nothing changed
     if res == "":
       return ""
 # changed
     elif res == "ok":
       if self.buddy is not None:
-        res = self.buddy.setNormalExt(self.Normal)
+        res = self.buddy.set_normal_ext(self.Normal)
         if res != "":
           return res
       return "ok"
@@ -175,10 +175,10 @@ class NF_Gate(object):
 #from buddy
 # "" - no errors
 # other - error
-  def setNormalExt(self, Normal):
+  def set_normal_ext(self, Normal):
 #--------------------------------------------------------------------
-    print "Gate setNormalExt"
-    res = self.Normal.setv(Normal)
+    print "Gate set_normal_ext"
+    res = self.Normal.set_v(Normal)
 # nothing changed
     if res == "":
       return ""
@@ -191,23 +191,23 @@ class NF_Gate(object):
       return res
 
 #--------------------------------------------------------------------
-  def clearGeometry(self):
+  def clear_geometry(self):
     for size in self.Size:
       size = None
-    self.Pos.clearGeometry()
-    self.Normal.clearGeometry()
-    print "NF_Gate clearGeometry"
+    self.Pos.clear_geometry()
+    self.Normal.clear_geometry()
+    print "Gate clear_geometry"
 
 #--------------------------------------------------------------------
-  def isResolvedGeometry(self):
+  def is_resolved_geometry(self):
     for size in self.Size:
       if size is None:
         return "Gate size is none"
 
-    res = self.Pos.isResolvedGeometry()
+    res = self.Pos.is_resolved_geometry()
     if res != "":
       return res
-    res = self.Normal.isResolvedGeometry()
+    res = self.Normal.is_resolved_geometry()
     if res != "":
       return res
     return ""
@@ -216,15 +216,15 @@ class NF_Gate(object):
 # "" nothing changed
 # "ok" something changed
 # "other text" - fatal error
-  def resolveGeometry(self):
+  def resolve_geometry(self):
 #--------------------------------------------------------------------
-    print "Gate resolveGeometry"
-    self.Print()
+    print "Gate resolve_geometry"
+    self.print_info()
     ret = ""
 
     
 #    if self.Rdef is not None:
-    res = self.setSize(self.SizeDef)
+    res = self.set_size(self.SizeDef)
     if res == "":
       pass
     elif res == "ok":
@@ -234,7 +234,7 @@ class NF_Gate(object):
     
 
     if self.PosDef is not None:
-      res =  self.setPos(self.PosDef)
+      res =  self.set_pos(self.PosDef)
       if res == "":
         pass
       elif res == "ok":
@@ -243,7 +243,7 @@ class NF_Gate(object):
         return res 
 
     if self.NormalDef is not None:
-      res =  self.setNormal(self.NormalDef)
+      res =  self.set_normal(self.NormalDef)
       if res == "":
         pass
       elif res == "ok":
@@ -254,18 +254,18 @@ class NF_Gate(object):
     return ret
 
 #--------------------------------------------------------------------
-  def Print(self):
+  def print_info(self):
     if self.PosDef is not None:
-      self.PosDef.Print()
+      self.PosDef.print_info()
     else:
       print "Pos def is None"
 
-    self.Pos.Print()
+    self.Pos.print_info()
 
     if self.NormalDef is not None:
-      self.NormalDef.Print()
+      self.NormalDef.print_info()
     else:
       print "Normal def is None"
 
-    self.Normal.Print()
+    self.Normal.print_info()
 

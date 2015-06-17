@@ -1,64 +1,64 @@
-from NF_ChannelElement import *
+from ChannelElement import *
 #====================================================================
-class NF_ChannelAssembly(object):
+class ChannelAssembly(object):
 #--------------------------------------------------------------------
   def __init__(self):
     self.elements = []
-    NF_ChannelElement.assembly = self
+    ChannelElement.assembly = self
 
 #--------------------------------------------------------------------
-  def addElement(self, element):
+  def add_element(self, element):
     self.elements.append(element)
 
 #--------------------------------------------------------------------
-  def forEachElement(self, fcn):
+  def for_each_element(self, fcn):
     for element in self.elements:
       fcn(element)
 
 #--------------------------------------------------------------------
-  def resolveGeometry(self):
+  def resolve_geometry(self):
 #--------------------------------------------------------------------
     while True:
-      print "resolveGeometry loop ---------------------------"
+      print "resolve_geometry loop ---------------------------"
       Changed = False;
       for element in self.elements:
         if element.changed:
-          print "resolveGeometry before --------"
-          element.Print()
-          res = element.resolveGeometry()
+          print "resolve_geometry before --------"
+          element.print_info()
+          res = element.resolve_geometry()
           if res != "":
             if res == "ok":
               Changed = True
             else:
               return res
-          print "resolveGeometry after --------"
-          element.Print()
+          print "resolve_geometry after --------"
+          element.print_info()
           element.changed = False
       print "Changed", Changed
       if not Changed:
         break
-    return self.isResolvedGeometry()
+    return self.is_resolved_geometry()
 
 #--------------------------------------------------------------------        
-  def isResolvedGeometry(self):
+  def is_resolved_geometry(self):
     for element in self.elements:
-      res = element.isResolvedGeometry()
+      res = element.is_resolved_geometry()
       if res != "":
         return res
     return ""
 
 #--------------------------------------------------------------------
-  def clearGeometry(self):
+  def clear_geometry(self):
     for element in self.elements:
-      element.clearGeometry()
-      print "clearGeometry Assembly loop ---------------------------"        
+      element.clear_geometry()
+      print "clear_geometry Assembly loop ---------------------------"        
 
 #--------------------------------------------------------------------
-  def Print(self):
+  def print_info(self):
     for element in self.elements:
-      print "New Assembly Element --------------------------- " + element.getName()
-      element.Print()
+      print "New Assembly Element --------------------------- " + element.get_name()
+      element.print_info()
 
 
-def CreateChannel(elt):
+def create_channel(elt):
   return elt

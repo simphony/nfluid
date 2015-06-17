@@ -1,24 +1,24 @@
-from NF_ChannelAssembly import *
-from NF_Cone import *
-from NF_Cylinder import *
-from NF_CylinderCurve import *
+from ChannelAssembly import *
+from FlowAdapter import *
+from Coupling import *
+from Elbow import *
 from TestBase import *
-from NF_Bar import *
+from CouplingSquare import *
 import os
 
 print os.path.basename(__file__), "------------------------\n"
 
-assembly = NF_ChannelAssembly()
+assembly = ChannelAssembly()
 
 
-CreateChannel( 
-    NF_Bar(111, 27, 78, 
-    PosH = NF_Vector(11, 22, 33), 
-    Normal = NF_Vector(0, 0, 1) 
+create_channel( 
+    CouplingSquare(111, 27, 78, 
+    PosH = Vector(11, 22, 33), 
+    Normal = Vector(0, 0, 1) 
     ) 
   ). \
-  link(NF_Bar(L = 20)). \
-  link(NF_Bar(L = 125))
+  link(CouplingSquare(L = 20)). \
+  link(CouplingSquare(L = 125))
 
 MakeTest1(assembly)
 
