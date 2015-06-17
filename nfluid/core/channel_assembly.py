@@ -1,10 +1,10 @@
-from NF_ChannelElement import *
+from ChannelElement import *
 #====================================================================
-class NF_ChannelAssembly(object):
+class ChannelAssembly(object):
 #--------------------------------------------------------------------
   def __init__(self):
     self.elements = []
-    NF_ChannelElement.assembly = self
+    ChannelElement.assembly = self
 
 #--------------------------------------------------------------------
   def addElement(self, element):

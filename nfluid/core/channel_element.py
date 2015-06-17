@@ -1,20 +1,20 @@
-from NF_Gate import * 
+from Gate import * 
 
 #==============================================================================
 #Base class of Channel Elements
-class NF_ChannelElement(object):
+class ChannelElement(object):
 #--------------------------------------------------------------------
   assembly = None;
 
   def __init__(self):
-    NF_ChannelElement.assembly.addElement(self)
+    ChannelElement.assembly.addElement(self)
     self.heads = []
     self.tails = []
     self.changed = True
 
 #--------------------------------------------------------------------
   def getName(self):
-    return "NF_ChannelElement"
+    return "ChannelElement"
 
 #--------------------------------------------------------------------
   def getHeadGate(self, n = 0):
@@ -59,7 +59,7 @@ class NF_ChannelElement(object):
 #--------------------------------------------------------------------
   def Print(self):
     self.forEachGate(fcnPrintXXX)
-#    print "NF_ChannelElement"
+#    print "ChannelElement"
 
 #--------------------------------------------------------------------  
   def PrintChannel(self):
@@ -149,7 +149,7 @@ class NF_ChannelElement(object):
 #--------------------------------------------------------------------
   def clearGeometry(self):
     self.forEachGate(fcnClearGeometryXXX)
-#    self.forEachGate(NF_ChannelElement.fcnClearGeometry)
+#    self.forEachGate(ChannelElement.fcnClearGeometry)
 
 #--------------------------------------------------------------------
   def forEachGate(self, fcn):

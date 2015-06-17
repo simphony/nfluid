@@ -1,10 +1,10 @@
-from NF_Gate import *
+from Gate import *
 
 #====================================================================
-class NF_GateCircle(NF_Gate):
+class GateCircle(Gate):
 #--------------------------------------------------------------------
   def __init__(self, aelement):
-    NF_Gate.__init__(self, aelement)
+    Gate.__init__(self, aelement)
     self.SizeDef = [None]
     self.Size = [None]
 
@@ -21,15 +21,15 @@ class NF_GateCircle(NF_Gate):
 
 #--------------------------------------------------------------------
   def Print(self):
-    NF_Gate.Print(self)
-    print "NF_GateCircle", "radius =", self.getR()
+    Gate.Print(self)
+    print "GateCircle", "radius =", self.getR()
 
 
 #====================================================================
-class NF_GateRect(NF_Gate):
+class GateRect(Gate):
 #--------------------------------------------------------------------
   def __init__(self, aelement):
-    NF_Gate.__init__(self, aelement)
+    Gate.__init__(self, aelement)
     self.SizeDef = [None, None]
     self.Size = [None, None]
 
@@ -51,8 +51,8 @@ class NF_GateRect(NF_Gate):
 
 #--------------------------------------------------------------------
   def Print(self):
-    NF_Gate.Print(self)
-    print "NF_GateRect", "A = ", self.getA(), "B = ", self.getB()
+    Gate.Print(self)
+    print "GateRect", "A = ", self.getA(), "B = ", self.getB()
 
 
 

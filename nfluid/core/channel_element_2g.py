@@ -1,10 +1,10 @@
-from NF_ChannelElement import *
+from ChannelElement import *
 
 #====================================================================
-class NF_ChannelElement2G(NF_ChannelElement):
+class ChannelElement2G(ChannelElement):
 #--------------------------------------------------------------------
   def __init__(self):
-    NF_ChannelElement.__init__(self)
+    ChannelElement.__init__(self)
     self.length = None
 
   def getGateSizeH(self, n = 0):
@@ -23,7 +23,7 @@ class NF_ChannelElement2G(NF_ChannelElement):
   def resolveGeometryBase(self):
 #--------------------------------------------------------------------
     ret = ""
-    res = NF_ChannelElement.resolveGeometryBase(self)
+    res = ChannelElement.resolveGeometryBase(self)
     if res == "":
       pass
     elif res == "ok":
@@ -97,7 +97,7 @@ class NF_ChannelElement2G(NF_ChannelElement):
     print "getGatesDiff Len", Len, "self.length", self.length
     if Len is None or  Len == 0:
       print "getGatesDiff bad"
-      return NF_Vector()
+      return Vector()
     else:
       if self.length is None:
         x = None
@@ -109,13 +109,13 @@ class NF_ChannelElement2G(NF_ChannelElement):
         z = None
         if IsEqualEps(Normal.z, 0):
           z = 0
-        return NF_Vector(x, y, z)
+        return Vector(x, y, z)
       else:
         Normal.scale(self.length / Len)
         print "getGatesDiff Normal Scaled"
         Normal.Print()
         return Normal
-#    return NF_Vector(10, 20, self.length)
+#    return Vector(10, 20, self.length)
 
 #--------------------------------------------------------------------
   def setEqualGateSize(self):
@@ -165,7 +165,7 @@ class NF_ChannelElement2G(NF_ChannelElement):
 
 #--------------------------------------------------------------------
   def Print(self):
-    NF_ChannelElement.Print(self)
+    ChannelElement.Print(self)
     print "Len = ", self.getLen()
 
 

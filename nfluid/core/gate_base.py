@@ -1,7 +1,7 @@
-from NF_Vector import *
+from Vector import *
 
 #====================================================================
-class NF_Gate(object):
+class Gate(object):
 #--------------------------------------------------------------------
   def __init__(self, element):
     self.buddy = None
@@ -12,9 +12,9 @@ class NF_Gate(object):
     self.SizeDef = []
     self.Size = []
     self.PosDef = None
-    self.Pos = NF_Vector()
+    self.Pos = Vector()
     self.NormalDef = None
-    self.Normal = NF_Vector()
+    self.Normal = Vector()
 
 #--------------------------------------------------------------------
 # Position -------------------
@@ -63,7 +63,7 @@ class NF_Gate(object):
       if self.Size[i] is not None:
         if Size[i] is not None:
           if (self.Size[i] != Size[i]):
-            return "NF_Gate setSize incompatible sizes i = ", i, \
+            return "Gate setSize incompatible sizes i = ", i, \
               " self.Size[i] = ", self.Size[i], "  Size[i] = ", Size[i]
       else:
         self.Size[i] = Size[i]
@@ -89,7 +89,7 @@ class NF_Gate(object):
     for i in range(0, len(Size)):
       if self.Size[i] is not None:
         if (self.Size[i] != Size[i]):
-          return "NF_Circle setSize incompatible sizes i = ", i, \
+          return "Circle setSize incompatible sizes i = ", i, \
             " self.Size[i] = ", self.Size[i], "  Size[i] = ", Size[i]
       else:
         self.Size[i] = Size[i]
@@ -196,7 +196,7 @@ class NF_Gate(object):
       size = None
     self.Pos.clearGeometry()
     self.Normal.clearGeometry()
-    print "NF_Gate clearGeometry"
+    print "Gate clearGeometry"
 
 #--------------------------------------------------------------------
   def isResolvedGeometry(self):
