@@ -1,5 +1,5 @@
-from channel_element import *
-from gates import *
+from nfluid.core.channel_element import *
+from nfluid.core.gates import *
 #====================================================================
 class BifurcationCircle(ChannelElement):
 #--------------------------------------------------------------------

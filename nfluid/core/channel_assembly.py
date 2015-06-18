@@ -1,10 +1,11 @@
-from channel_element import *
+from nfluid.core.channel_element import *
 #====================================================================
 class ChannelAssembly(object):
 #--------------------------------------------------------------------
   def __init__(self):
     self.elements = []
     ChannelElement.assembly = self
+    print "-------------------test_---"
 
 #--------------------------------------------------------------------
   def add_element(self, element):

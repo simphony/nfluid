@@ -1,5 +1,5 @@
-from channel_element_2g import *
-from gates import *
+from nfluid.core.channel_element_2g import *
+from nfluid.core.gates import *
 
 #====================================================================
 # Class of Coupling

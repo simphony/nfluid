@@ -1,8 +1,8 @@
-from channel_assembly import *
-from flow_adapter import *
-from circle_coupling import *
-from elbow import *
-from TestBase import *
+from nfluid.core.channel_assembly import *
+from nfluid.elements.flow_adapter import *
+from nfluid.elements.circle_coupling import *
+from nfluid.elements.elbow import *
+from nfluid.tests.TestBase import *
 import os
 
 print os.path.basename(__file__), "------------------------\n"

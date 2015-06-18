@@ -1,4 +1,4 @@
-from vector import *
+from nfluid.util.vector import *
 
 #====================================================================
 class Gate(object):

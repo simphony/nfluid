@@ -1,4 +1,4 @@
-from channel_element import *
+from nfluid.core.channel_element import *
 
 #====================================================================
 class ChannelElement2G(ChannelElement):
