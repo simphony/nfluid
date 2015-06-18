@@ -1,7 +1,7 @@
-from ChannelAssembly import *
-from FlowAdapter import *
-from Coupling import *
-from BifurcationCircle import *
+from circle_bifurcation import *
+from channel_assembly import *
+from flow_adapter import *
+from circle_coupling import *
 from TestBase import *
 
 import os

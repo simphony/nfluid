@@ -1,9 +1,9 @@
-from ChannelAssembly import *
-from FlowAdapter import *
-from Coupling import *
-from Elbow import *
+from channel_assembly import *
+from flow_adapter import *
+from circle_coupling import *
+from elbow import *
 from TestBase import *
-from CouplingSquare import *
+from square_coupling import *
 import os
 
 print os.path.basename(__file__), "------------------------\n"

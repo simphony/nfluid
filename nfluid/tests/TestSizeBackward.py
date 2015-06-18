@@ -1,7 +1,8 @@
-from ChannelAssembly import *
-from FlowAdapter import *
-from Coupling import *
-from Elbow import *
+
+from channel_assembly import *
+from flow_adapter import *
+from circle_coupling import *
+from elbow import *
 from TestBase import *
 import os
 

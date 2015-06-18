@@ -1,4 +1,4 @@
-from Gate import *
+from gate_base import *
 
 #====================================================================
 class GateCircle(Gate):

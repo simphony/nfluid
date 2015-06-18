@@ -1,5 +1,5 @@
-from ChannelElement2G import *
-from Gates import *
+from channel_element_2g import *
+from gates import *
 
 #====================================================================
 # Class of Elbow

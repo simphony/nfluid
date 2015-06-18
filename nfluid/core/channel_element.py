@@ -1,4 +1,4 @@
-from Gate import * 
+from gate_base import * 
 
 #==============================================================================
 #Base class of Channel Elements

@@ -1,4 +1,4 @@
-from Vector import *
+from vector import *
 
 #====================================================================
 class Gate(object):

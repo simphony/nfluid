@@ -1,4 +1,4 @@
-from ChannelElement import *
+from channel_element import *
 #====================================================================
 class ChannelAssembly(object):
 #--------------------------------------------------------------------

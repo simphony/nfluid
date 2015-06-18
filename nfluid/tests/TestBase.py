@@ -1,4 +1,4 @@
-from ChannelAssembly import *
+from channel_assembly import *
 import os
 
 def MakeTest1(assembly):

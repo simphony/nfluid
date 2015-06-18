@@ -1,5 +1,5 @@
-from ChannelElement import *
-from Gates import *
+from channel_element import *
+from gates import *
 #====================================================================
 class BifurcationCircle(ChannelElement):
 #--------------------------------------------------------------------
@@ -161,88 +161,5 @@ class BifurcationCircle(ChannelElement):
     """
     
     return ret
-
-"""
-#--------------------------------------------------------------------
-  def get_gates_diff(self):
-#--------------------------------------------------------------------
-    Normal = copy.copy(self.get_head_gate().Normal)
-    print "get_gates_diff Normal"
-    Normal.print_info()
-    Len = Normal.get_len()
-    print "get_gates_diff Len", Len, "self.length", self.length
-    if Len is None or  Len == 0:
-      print "get_gates_diff bad"
-      return Vector()
-    else:
-      if self.length is None:
-        x = None
-        if is_equal_eps(Normal.x, 0):
-          x = 0
-        y = None
-        if is_equal_eps(Normal.y, 0):
-          y = 0
-        z = None
-        if is_equal_eps(Normal.z, 0):
-          z = 0
-        return Vector(x, y, z)
-      else:
-        Normal.scale(self.length / Len)
-        print "get_gates_diff Normal Scaled"
-        Normal.print_info()
-        return Normal
-#    return Vector(10, 20, self.length)
-
-#--------------------------------------------------------------------
-  def set_equal_gate_size(self):
-#--------------------------------------------------------------------
-    ret = ""
-    SizeH = self.get_head_gate().Size
-    res = self.get_tail_gate().set_size(SizeH)
-    if res == "":
-      pass
-    elif res == "ok":
-      ret = "ok"
-    else:
-      return res
-
-    SizeT = self.get_tail_gate().Size
-    res = self.get_head_gate().set_size(SizeT)
-    if res == "":
-      pass
-    elif res == "ok":
-      ret = "ok"
-    else:
-      return res
-
-    return ret
-
-#--------------------------------------------------------------------
-  def set_normal_def(self, NormalDef):
-    self.get_head_gate().set_normal_def(NormalDef)
-    self.get_tail_gate().set_normal_def(NormalDef)
-
-#--------------------------------------------------------------------
-  def get_normal_tail_from_head(self, NormalH):
-    return NormalH
-
-#--------------------------------------------------------------------
-  def get_normal_head_from_tail(self, NormalT):
-    return NormalT
-
-#--------------------------------------------------------------------
-  def get_len(self):
-    if self.length is not None:
-      return self.length
-    else:
-      DifPos = copy.copy(self.get_head_gate().Pos)
-      DifPos.sub(self.get_tail_gate().Pos)
-      return DifPos.get_len()
-
-#--------------------------------------------------------------------
-  def print_info(self):
-    ChannelElement.print_info(self)
-    print "Len = ", self.get_len()
-"""
 
 
