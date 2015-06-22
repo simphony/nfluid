@@ -21,8 +21,5 @@ create_channel(
   link(FlowAdapter(RT =123, L = 20)). \
   link(Coupling(L = 200))
 
-#  link(FlowAdapter(RT =123, L = 30)). \
-#  link(Coupling(L = 20)). \
-
 MakeTest1(assembly)
 

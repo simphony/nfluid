@@ -1,5 +1,17 @@
 from nfluid.core.gate_base import * 
 
+
+class ShapeSTL(object):
+  def __init__(self):
+    print "ShapeSTL.__init__"
+
+  def export(self, file):
+    print "ShapeSTL.export"
+
+  def show(self):
+    print "ShapeSTL.show"
+
+
 #==============================================================================
 #Base class of Channel Elements
 class ChannelElement(object):
@@ -11,6 +23,7 @@ class ChannelElement(object):
     self.heads = []
     self.tails = []
     self.changed = True
+    self.shape = None
 
 #--------------------------------------------------------------------
   def get_name(self):
@@ -157,6 +170,28 @@ class ChannelElement(object):
       fcn(gate)
     for gate in self.tails:
       fcn(gate)
+
+#--------------------------------------------------------------------
+  def create_shape(self):
+    self.shape = ShapeSTL() #Real shapes in derived classes
+#    print "create_shape"
+    return ""
+
+#--------------------------------------------------------------------
+  def release_shape(self):
+    print "release_shape"
+    self.shape = None
+
+#--------------------------------------------------------------------
+  def export(self, file):
+#    print "export"
+    self.shape.export(file) 
+
+#--------------------------------------------------------------------
+  def show_shape(self):
+#    print "show_shape"
+    self.shape.show()
+
 
 #--------------------------------------------------------------------
 def fcn_clear_geometry_xxx(gate):

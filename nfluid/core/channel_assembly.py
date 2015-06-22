@@ -60,6 +60,35 @@ class ChannelAssembly(object):
       print "New Assembly Element --------------------------- " + element.get_name()
       element.print_info()
 
+#--------------------------------------------------------------------
+  def create_shapes(self):
+    for element in self.elements:
+      res = element.create_shape()
+      if res != "":
+        return res
+    return ""
 
+#--------------------------------------------------------------------    
+  def release_shapes(self):
+    for element in self.elements:
+      element.release_shape()
+
+#--------------------------------------------------------------------
+  def export(self, file_name):
+  # open file
+    file = None
+    for element in self.elements:
+      element.export(file)
+  # close file
+    return ""
+
+#--------------------------------------------------------------------    
+  def show_shapes(self):
+    for element in self.elements:
+      element.show_shape()
+
+#--------------------------------------------------------------------      
 def create_channel(elt):
   return elt
+  
+  

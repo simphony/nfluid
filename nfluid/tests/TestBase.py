@@ -7,6 +7,9 @@ def MakeTest1(assembly):
   res = assembly.resolve_geometry()
   print "resolve_geometry res = ", "|", res, "|"
 
+  print "\n\nprint_info Assembly ---------------------------------"
+  assembly.print_info()
+
   print "Test Geometry ------------------------------------"
   res = assembly.is_resolved_geometry()
   if res == "":
@@ -15,7 +18,25 @@ def MakeTest1(assembly):
     print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
     print "Geometry error res = ", res
     print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
+    exit()
 
-  print "\n\nprint_info Assembly ---------------------------------"
-  assembly.print_info()
+  res = assembly.create_shapes()
+  if res == "":
+    print "Shapes created"
+  else:
+    print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
+    print "Shapes creation error res = ", res
+    print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
+
+  res = assembly.export("Test1.stl")
+  if res == "":
+    print "Shapes exported"
+  else:
+    print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
+    print "Shapes export error res = ", res
+    print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
+
+  assembly.show_shapes()
+
+  assembly.release_shapes()
 
