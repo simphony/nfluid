@@ -1,0 +1,402 @@
+TestSizeForward.py ------------------------
+
+-------------------test_---
+resolve_geometry ----------------------------------
+resolve_geometry loop ---------------------------
+resolve_geometry before --------
+Vector x= 11  y = 22  z = 33
+Vector x= None  y = None  z = None
+Vector x= 0  y = 0  z = 1
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Pos def is None
+Vector x= None  y = None  z = None
+Vector x= 0  y = 0  z = 1
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Len =  78
+Coupling radius Rdef = 111 length = 78 RH = None RT = None
+Gate resolve_geometry
+Vector x= 11  y = 22  z = 33
+Vector x= None  y = None  z = None
+Vector x= 0  y = 0  z = 1
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Gate set_pos
+Gate set_normal
+Head gate res =  ok
+Gate resolve_geometry
+Pos def is None
+Vector x= None  y = None  z = None
+Vector x= 0  y = 0  z = 1
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Gate set_normal
+Gate set_normal_ext
+Tail gate res =  ok
+Gate set_normal
+Gate set_normal
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 78
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 78.0
+Gate set_pos
+Gate set_pos_ext
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 78
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 78.0
+Gate set_pos
+Vector x= 11  y = 22  z = 33
+Tail gate res =  ok
+Tail gate res =  
+resolve_geometry after --------
+Vector x= 11  y = 22  z = 33
+Vector x= 11  y = 22  z = 33
+Vector x= 0  y = 0  z = 1
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 111
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 111.0
+Vector x= 0  y = 0  z = 1
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 111
+Len =  78
+Coupling radius Rdef = 111 length = 78 RH = 111 RT = 111
+resolve_geometry before --------
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 111.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 111
+Pos def is None
+Vector x= None  y = None  z = None
+Normal def is None
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Len =  15
+FlowAdapter RHdef = None radiusTail RTdef= 222 length = 15 RH = 111 RT = None
+Gate resolve_geometry
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 111.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 111
+Head gate res =  
+Gate resolve_geometry
+Pos def is None
+Vector x= None  y = None  z = None
+Normal def is None
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Tail gate res =  
+Gate set_normal
+Gate set_normal_ext
+Gate set_normal
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 15
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 15.0
+Gate set_pos
+Gate set_pos_ext
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 15
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 15.0
+Gate set_pos
+Vector x= 11.0  y = 22.0  z = 111.0
+Tail gate res =  ok
+Tail gate res =  
+resolve_geometry after --------
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 111.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 111
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 126.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Len =  15
+FlowAdapter RHdef = None radiusTail RTdef= 222 length = 15 RH = 111 RT = 222
+resolve_geometry before --------
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 126.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Pos def is None
+Vector x= None  y = None  z = None
+Normal def is None
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Len =  125
+Coupling radius Rdef = None length = 125 RH = 222 RT = None
+Gate resolve_geometry
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 126.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Head gate res =  
+Gate resolve_geometry
+Pos def is None
+Vector x= None  y = None  z = None
+Normal def is None
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Tail gate res =  
+Gate set_normal
+Gate set_normal_ext
+Gate set_normal
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 125
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 125.0
+Gate set_pos
+Gate set_pos_ext
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 125
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 125.0
+Gate set_pos
+Vector x= 11.0  y = 22.0  z = 126.0
+Tail gate res =  ok
+Tail gate res =  
+resolve_geometry after --------
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 126.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 251.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Len =  125
+Coupling radius Rdef = None length = 125 RH = 222 RT = 222
+resolve_geometry before --------
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 251.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Pos def is None
+Vector x= None  y = None  z = None
+Normal def is None
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Len =  20
+FlowAdapter RHdef = None radiusTail RTdef= 123 length = 20 RH = 222 RT = None
+Gate resolve_geometry
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 251.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Head gate res =  
+Gate resolve_geometry
+Pos def is None
+Vector x= None  y = None  z = None
+Normal def is None
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Tail gate res =  
+Gate set_normal
+Gate set_normal_ext
+Gate set_normal
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 20
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 20.0
+Gate set_pos
+Gate set_pos_ext
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 20
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 20.0
+Gate set_pos
+Vector x= 11.0  y = 22.0  z = 251.0
+Tail gate res =  ok
+Tail gate res =  
+resolve_geometry after --------
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 251.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 271.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 123
+Len =  20
+FlowAdapter RHdef = None radiusTail RTdef= 123 length = 20 RH = 222 RT = 123
+resolve_geometry before --------
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 271.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 123
+Pos def is None
+Vector x= None  y = None  z = None
+Normal def is None
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Len =  200
+Coupling radius Rdef = None length = 200 RH = 123 RT = None
+Gate resolve_geometry
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 271.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 123
+Head gate res =  
+Gate resolve_geometry
+Pos def is None
+Vector x= None  y = None  z = None
+Normal def is None
+Vector x= None  y = None  z = None
+GateCircle radius = None
+Tail gate res =  
+Gate set_normal
+Gate set_normal
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 200
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 200.0
+Gate set_pos
+get_gates_diff Normal
+Vector x= 0  y = 0  z = 1
+get_gates_diff Len 1.0 self.length 200
+get_gates_diff Normal Scaled
+Vector x= 0.0  y = 0.0  z = 200.0
+Gate set_pos
+Vector x= 11.0  y = 22.0  z = 271.0
+Tail gate res =  ok
+Tail gate res =  
+resolve_geometry after --------
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 271.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 123
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 471.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 123
+Len =  200
+Coupling radius Rdef = None length = 200 RH = 123 RT = 123
+Changed True
+resolve_geometry loop ---------------------------
+Changed False
+resolve_geometry res =  |  |
+
+
+print_info Assembly ---------------------------------
+New Assembly Element --------------------------- Coupling
+Vector x= 11  y = 22  z = 33
+Vector x= 11  y = 22  z = 33
+Vector x= 0  y = 0  z = 1
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 111
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 111.0
+Vector x= 0  y = 0  z = 1
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 111
+Len =  78
+Coupling radius Rdef = 111 length = 78 RH = 111 RT = 111
+New Assembly Element --------------------------- FlowAdapter
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 111.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 111
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 126.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Len =  15
+FlowAdapter RHdef = None radiusTail RTdef= 222 length = 15 RH = 111 RT = 222
+New Assembly Element --------------------------- Coupling
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 126.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 251.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Len =  125
+Coupling radius Rdef = None length = 125 RH = 222 RT = 222
+New Assembly Element --------------------------- FlowAdapter
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 251.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 222
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 271.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 123
+Len =  20
+FlowAdapter RHdef = None radiusTail RTdef= 123 length = 20 RH = 222 RT = 123
+New Assembly Element --------------------------- Coupling
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 271.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 123
+Pos def is None
+Vector x= 11.0  y = 22.0  z = 471.0
+Normal def is None
+Vector x= 0  y = 0  z = 1
+GateCircle radius = 123
+Len =  200
+Coupling radius Rdef = None length = 200 RH = 123 RT = 123
+Test Geometry ------------------------------------
+Geometry resolved
+STLCircleCoupling.__init__
+create_shape Coupling
+STLFlowAdapter.__init__
+create_shape FlowAdapter
+STLCircleCoupling.__init__
+create_shape Coupling
+STLFlowAdapter.__init__
+create_shape FlowAdapter
+STLCircleCoupling.__init__
+create_shape Coupling
+Shapes created
+ShapeSTL.export
+ShapeSTL.export
+ShapeSTL.export
+ShapeSTL.export
+ShapeSTL.export
+Shapes exported
+ShapeSTL.show
+ShapeSTL.show
+ShapeSTL.show
+ShapeSTL.show
+ShapeSTL.show
+release_shape
+release_shape
+release_shape
+release_shape
+release_shape
