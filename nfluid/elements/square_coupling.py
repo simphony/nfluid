@@ -23,6 +23,14 @@ class CouplingSquare(ChannelElement2G):
     return "CouplingSquare"
 
 #--------------------------------------------------------------------
+  def get_a(self):
+    return self.get_head_gate().get_a()
+
+#--------------------------------------------------------------------
+  def get_b(self):
+    return self.get_head_gate().get_b()
+
+#--------------------------------------------------------------------
   def resolve_geometry_child(self):
     return self.set_equal_gate_size()
 
@@ -34,4 +42,13 @@ class CouplingSquare(ChannelElement2G):
       "length =", self.length, \
       " AH =", self.get_gate_size_h(), "AT =", self.get_gate_size_t() 
 
+#--------------------------------------------------------------------
+"""
+  def create_shape(self):
+    # check geometry data
+    self.shape = STLSquare(self.get_a(), self.get_b(), self.get_len(), self.get_pos_head(), self.get_pos_tail()) 
+    print "create_shape CouplingSquare"
+    return ""
+
+"""
 

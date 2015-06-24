@@ -2,7 +2,7 @@ from nfluid.core.channel_element_2g import *
 from nfluid.core.gates import *
 
 #====================================================================
-# Class of Coupling
+# Class of Coupling                                        PosH, PosT
 class Coupling(ChannelElement2G):
 #--------------------------------------------------------------------
   def __init__(self, R = None, L = None, \
@@ -24,6 +24,10 @@ class Coupling(ChannelElement2G):
     return "Coupling"
 
 #--------------------------------------------------------------------
+  def get_r(self):
+    return self.get_head_gate().get_r()
+
+#--------------------------------------------------------------------
   def resolve_geometry_child(self):
     return self.set_equal_gate_size()
 
@@ -33,4 +37,10 @@ class Coupling(ChannelElement2G):
     print "Coupling radius Rdef =", self.get_head_gate().get_r_def(), "length =", self.length, \
       "RH =", self.get_gate_size_h(), "RT =", self.get_gate_size_t()
 
+#--------------------------------------------------------------------
+  def create_shape(self):
+    # check geometry data
+    self.shape = STLCircleCoupling(self.get_r(), self.get_len(), self.get_pos_head(), self.get_pos_tail()) 
+    print "create_shape Coupling"
+    return ""
 

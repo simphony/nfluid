@@ -164,6 +164,14 @@ class ChannelElement2G(ChannelElement):
       return DifPos.get_len()
 
 #--------------------------------------------------------------------
+  def get_pos_head(self):
+    return self.get_head_gate().Pos
+
+#--------------------------------------------------------------------
+  def get_pos_tail(self):
+    return self.get_tail_gate().Pos
+
+#--------------------------------------------------------------------
   def print_info(self): # replace with __str__ ?
     ChannelElement.print_info(self)
     print "Len = ", self.get_len()

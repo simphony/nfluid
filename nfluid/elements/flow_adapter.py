@@ -25,9 +25,27 @@ class FlowAdapter(ChannelElement2G):
     return "FlowAdapter"
 
 #--------------------------------------------------------------------
+  def get_r(self):
+    return self.get_head_gate().get_r()
+
+#--------------------------------------------------------------------
+  def get_rh(self):
+    return self.get_head_gate().get_r()
+
+#--------------------------------------------------------------------
+  def get_rt(self):
+    return self.get_tail_gate().get_r()
+
+#--------------------------------------------------------------------
   def print_info(self):
     ChannelElement2G.print_info(self)
     print "FlowAdapter RHdef =", self.get_head_gate().get_r_def(), \
       "radiusTail RTdef=", self.get_tail_gate().get_r_def(), "length =", self.length, \
       "RH =", self.get_gate_size_h(), "RT =", self.get_gate_size_t() 
                                                         
+#--------------------------------------------------------------------
+  def create_shape(self):
+    # check geometry data
+    self.shape = STLFlowAdapter(self.get_rh(), self.get_rt(), self.get_len(), self.get_pos_head(), self.get_pos_tail()) 
+    print "create_shape FlowAdapter"
+    return ""

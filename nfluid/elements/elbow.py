@@ -24,6 +24,10 @@ class Elbow(ChannelElement2G):
     return "Elbow"
 
 #--------------------------------------------------------------------
+  def get_r(self):
+    return self.get_head_gate().get_r()
+
+#--------------------------------------------------------------------
   def resolve_geometry_child(self):
     return self.set_equal_gate_size()
 
@@ -45,4 +49,12 @@ class Elbow(ChannelElement2G):
     print "Coupling radius Rdef =", self.get_head_gate().get_r_def(), "length =", self.length, \
       "RH =", self.get_gate_size_h(), "RT =", self.get_gate_size_t() 
 
-
+#--------------------------------------------------------------------
+  """
+  def create_shape(self):
+    # check geometry data
+    self.shape = STLCircleCoupling(self.get_rh(), self.get_len()) 
+    print "create_shape FlowAdapter"
+    return ""
+  """
+ 

@@ -1,15 +1,5 @@
 from nfluid.core.gate_base import * 
-
-
-class ShapeSTL(object):
-  def __init__(self):
-    print "ShapeSTL.__init__"
-
-  def export(self, file):
-    print "ShapeSTL.export"
-
-  def show(self):
-    print "ShapeSTL.show"
+from nfluid.shapes.shapes import * 
 
 
 #==============================================================================
@@ -36,10 +26,6 @@ class ChannelElement(object):
 #--------------------------------------------------------------------
   def get_tail_gate(self, n = 0):
     return self.tails[n]
-
-#--------------------------------------------------------------------
-  def get_tail_gate_bif(self, n = 0):
-    return self.tailsBif[n]
 
 #--------------------------------------------------------------------
   def get_next_element(self, n = 0):
@@ -173,7 +159,7 @@ class ChannelElement(object):
 
 #--------------------------------------------------------------------
   def create_shape(self):
-    self.shape = ShapeSTL() #Real shapes in derived classes
+#    self.shape = ShapeSTL() #Real shapes in derived classes
 #    print "create_shape"
     return ""
 
@@ -185,12 +171,14 @@ class ChannelElement(object):
 #--------------------------------------------------------------------
   def export(self, file):
 #    print "export"
-    self.shape.export(file) 
+    if self.shape is not None:
+      self.shape.export(file) 
 
 #--------------------------------------------------------------------
   def show_shape(self):
 #    print "show_shape"
-    self.shape.show()
+    if self.shape is not None:
+      self.shape.show()
 
 
 #--------------------------------------------------------------------
