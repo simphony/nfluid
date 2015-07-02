@@ -1,9 +1,8 @@
-from circle_bifurcation import *
-from channel_assembly import *
-from flow_adapter import *
-from circle_coupling import *
-from TestBase import *
-
+from nfluid.core.channel_assembly import *
+from nfluid.elements.flow_adapter import *
+from nfluid.elements.circle_coupling import *
+from nfluid.elements.circle_tee import *
+from nfluid.tests.TestBase import *
 import os
 
 print os.path.basename(__file__), "------------------------\n"
@@ -11,7 +10,7 @@ print os.path.basename(__file__), "------------------------\n"
 assembly = ChannelAssembly()
 
 
-bif = create_channel( 
+tee = create_channel( 
     Coupling(111, 78, 
     PosH = Vector(11, 22, 33), 
     Normal = Vector(0, 0, 1) 
@@ -19,17 +18,18 @@ bif = create_channel(
   ). \
   link(FlowAdapter(RT = 220, L = 15)). \
   link(Coupling(L = 125)).  \
-  link(BifurcationCircle(220)) 
+  link(TeeCircle(220)) 
 
 #
-bif. \
+tee. \
   link(FlowAdapter(RT =123, L = 20)). \
   link(Coupling(L = 200))
 
 
-bif. \
+tee. \
   link(FlowAdapter(RT =150, L = 20), 1). \
   link(Coupling(L = 200))
 
-MakeTest1(assembly)
 
+
+MakeTest1(assembly)

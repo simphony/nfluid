@@ -1,8 +1,6 @@
 from nfluid.core.channel_assembly import *
-from nfluid.elements.flow_adapter import *
 from nfluid.elements.circle_coupling import *
-from nfluid.elements.elbow import *
-from nfluid.elements.square_coupling import *
+from nfluid.elements.cap import *
 from nfluid.tests.TestBase import *
 import os
 
@@ -12,13 +10,12 @@ assembly = ChannelAssembly()
 
 
 create_channel( 
-    CouplingSquare(111, 27, 78, 
-    PosH = Vector(11, 22, 33), 
+    Coupling(10, 20, 
+    PosH = Vector(0, 20, 30), 
     Normal = Vector(0, 0, 1) 
     ) 
   ). \
-  link(CouplingSquare(L = 20)). \
-  link(CouplingSquare(L = 125))
+  link(Cap(L = 5, R = 25))
+
 
 MakeTest1(assembly)
-

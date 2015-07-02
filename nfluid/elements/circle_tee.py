@@ -1,9 +1,15 @@
-from channel_element import *
-from gates import *
+from nfluid.core.channel_element import *
+from nfluid.core.gates import *
 #====================================================================
-class BifurcationCircle(ChannelElement):
+class TeeCircle(ChannelElement):
 #--------------------------------------------------------------------
-  def __init__(self, R = None):
+  def __init__(self, R = None,     \
+      PosH = None, PosT0 = None, PosT1 = None,    \
+      NormalH = None, NormalT0 = None):
+
+# NormalH, NormalT0 must be orthogonal
+# NormalT should be corrected to respect that
+
     ChannelElement.__init__(self)
     
     self.length = R
@@ -15,31 +21,38 @@ class BifurcationCircle(ChannelElement):
     self.get_head_gate().set_size_def(R)
     self.get_tail_gate(0).set_size_def(R)
     self.get_tail_gate(1).set_size_def(R)
+
+    self.get_head_gate().set_pos_def(PosH)
+    self.get_tail_gate().set_pos_def(PosT0)
+    self.get_tail_gate(1).set_pos_def(PosT1)
     
     """
     self.set_normal_def(Normal)
-    self.get_head_gate().set_pos_def(PosH)
-    self.get_tail_gate().set_pos_def(PosT)
     """
     
+#--------------------------------------------------------------------
+  def get_name(self):
+    return "TeeCircle"
+
   def get_gate_size_h(self, n = 0):
     return self.get_head_gate().Size[n]
 
   def set_gate_size_h(self, s0, s1 = None, s2 = None, s3 = None):
     return self.get_head_gate().set_size_arg(s0, s1, s2, s3)
 
+
   """
   def get_gate_size_t(self, n = 0):
     return self.get_tail_gate().Size[n]
 
-  def get_gate_size_tBif(self, n = 0):
-    return self.get_tail_gate_bif().Size[n]
+  def get_gate_size_tTee(self, n = 0):
+    return self.get_tail_gate_tee().Size[n]
 
   def set_gate_size_t(self, s0, s1 = None, s2 = None, s3 = None):
     return self.get_tail_gate().set_size_arg(s0, s1, s2, s3)
 
-  def set_gate_size_tBif(self, s0, s1 = None, s2 = None, s3 = None):
-    return self.get_tail_gate_bif().set_size_argBif(s0, s1, s2, s3)
+  def set_gate_size_tTee(self, s0, s1 = None, s2 = None, s3 = None):
+    return self.get_tail_gate_tee().set_size_argTee(s0, s1, s2, s3)
   """
 
 #--------------------------------------------------------------------
@@ -47,6 +60,14 @@ class BifurcationCircle(ChannelElement):
 #--------------------------------------------------------------------
     ret = ""
     res = ChannelElement.resolve_geometry_base(self)
+    if res == "":
+      pass
+    elif res == "ok":
+      ret = "ok"
+    else: 
+      return res
+
+    res = self.set_equal_gate_size()
     if res == "":
       pass
     elif res == "ok":

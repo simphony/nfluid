@@ -1,5 +1,5 @@
-from channel_element_2g import *
-from gates import *
+from nfluid.core.channel_element_2g import *
+from nfluid.core.gates import *
 #====================================================================
 # Class of CouplingSquare
 class CouplingSquare(ChannelElement2G):
@@ -21,6 +21,14 @@ class CouplingSquare(ChannelElement2G):
 #--------------------------------------------------------------------
   def get_name(self):
     return "CouplingSquare"
+
+#--------------------------------------------------------------------
+  def get_a(self):
+    return self.get_head_gate().get_a()
+
+#--------------------------------------------------------------------
+  def get_b(self):
+    return self.get_head_gate().get_b()
 
 #--------------------------------------------------------------------
   def resolve_geometry_child(self):

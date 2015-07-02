@@ -1,4 +1,4 @@
-from gate_base import *
+from nfluid.core.gate_base import *
 
 #====================================================================
 class GateCircle(Gate):

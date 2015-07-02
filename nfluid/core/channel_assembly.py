@@ -1,10 +1,11 @@
-from channel_element import *
+from nfluid.core.channel_element import *
 #====================================================================
 class ChannelAssembly(object):
 #--------------------------------------------------------------------
   def __init__(self):
     self.elements = []
     ChannelElement.assembly = self
+    print "-------------------test_---"
 
 #--------------------------------------------------------------------
   def add_element(self, element):
@@ -54,11 +55,52 @@ class ChannelAssembly(object):
       print "clear_geometry Assembly loop ---------------------------"        
 
 #--------------------------------------------------------------------
+  """
+  def __str__(self):
+    self.print_info()
+  """
+#--------------------------------------------------------------------
   def print_info(self):
+#--------------------------------------------------------------------
     for element in self.elements:
       print "New Assembly Element --------------------------- " + element.get_name()
       element.print_info()
+      res = element.is_resolved_geometry()
+      if res != "":
+        print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
+        print "GEOMETRY NOT RESOLVED: ", res 
+        print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
 
+#--------------------------------------------------------------------
+  def create_shapes(self):
+    for element in self.elements:
+      res = element.create_shape()
+      if res != "":
+        return res
+    return ""
 
+#--------------------------------------------------------------------    
+  def release_shapes(self):
+    for element in self.elements:
+      element.release_shape()
+
+#--------------------------------------------------------------------
+  def export(self, file_name):
+  # open file
+    file = open(file_name, "w")
+    for element in self.elements:
+      element.export(file)
+  # close file
+    file.close()
+    return ""
+
+#--------------------------------------------------------------------    
+  def show_shapes(self):
+    for element in self.elements:
+      element.show_shape()
+
+#--------------------------------------------------------------------      
 def create_channel(elt):
   return elt
+  
+  
