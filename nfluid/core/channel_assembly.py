@@ -55,10 +55,21 @@ class ChannelAssembly(object):
       print "clear_geometry Assembly loop ---------------------------"        
 
 #--------------------------------------------------------------------
+  """
+  def __str__(self):
+    self.print_info()
+  """
+#--------------------------------------------------------------------
   def print_info(self):
+#--------------------------------------------------------------------
     for element in self.elements:
       print "New Assembly Element --------------------------- " + element.get_name()
       element.print_info()
+      res = element.is_resolved_geometry()
+      if res != "":
+        print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
+        print "GEOMETRY NOT RESOLVED: ", res 
+        print "-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-"
 
 #--------------------------------------------------------------------
   def create_shapes(self):
@@ -76,10 +87,11 @@ class ChannelAssembly(object):
 #--------------------------------------------------------------------
   def export(self, file_name):
   # open file
-    file = None
+    file = open(file_name, "w")
     for element in self.elements:
       element.export(file)
   # close file
+    file.close()
     return ""
 
 #--------------------------------------------------------------------    

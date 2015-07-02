@@ -28,7 +28,12 @@ class ChannelElement(object):
     return self.tails[n]
 
 #--------------------------------------------------------------------
+  def get_pos_head(self):
+    return self.get_head_gate().Pos
+
+#--------------------------------------------------------------------
   def get_next_element(self, n = 0):
+#--------------------------------------------------------------------
     gt = self.get_tail_gate(n)
     if gt is None:
       return None
@@ -39,6 +44,7 @@ class ChannelElement(object):
 
 #--------------------------------------------------------------------
   def get_prev_element(self, n = 0):
+#--------------------------------------------------------------------
     gh = self.get_head_gate(n)
     if gh is None:
       return None
@@ -58,6 +64,7 @@ class ChannelElement(object):
 #--------------------------------------------------------------------
   def print_info(self):
     self.for_each_gate(fcn_print_info_xxx)
+
 #    print "ChannelElement"
 
 #--------------------------------------------------------------------  
@@ -71,11 +78,13 @@ class ChannelElement(object):
 # "" nothing changed
 # "ok" something changed
 # "other text" - fatal error
+
   def resolve_geometry(self):
 #--------------------------------------------------------------------
+    print "+++++++++++++++ resolve_geometry beg", self.get_name(), "+++++++++++++"
     ret = ""
     res = self.resolve_geometry_base()
-    print "Tail gate res = ", res
+    print "resolve_geometry_base = ", res
     if res == "":
       pass
     elif res == "ok":
@@ -84,7 +93,7 @@ class ChannelElement(object):
       return res
 
     res = self.resolve_geometry_child()
-    print "Tail gate res = ", res
+    print "resolve_geometry_child res = ", res
     if res == "":
       pass
     elif res == "ok":
@@ -92,6 +101,7 @@ class ChannelElement(object):
     else:
       return res
 
+    print "resolve_geometry ret = ", ret
     return ret
 
 #--------------------------------------------------------------------
@@ -102,6 +112,7 @@ class ChannelElement(object):
 # "" nothing changed
 # "ok" something changed
 # "other text" - fatal error
+
   def resolve_geometry_base(self):
 #--------------------------------------------------------------------
     ret = ""
@@ -129,6 +140,7 @@ class ChannelElement(object):
 
 #--------------------------------------------------------------------
   def is_resolved_geometry(self):
+#--------------------------------------------------------------------
     msg = "xxx"
     for gate in self.heads:
       res = gate.is_resolved_geometry()
@@ -139,6 +151,56 @@ class ChannelElement(object):
       if res != "":
         return msg + res
     return ""
+
+#--------------------------------------------------------------------
+  def set_equal_gate_size(self):
+#--------------------------------------------------------------------
+    ret = ""
+
+    for gate in self.heads:
+      res = self.set_gate_size_all(gate.Size) 
+      if res == "":
+        pass
+      elif res == "ok":
+        ret = "ok"
+      else:
+        return res
+
+    for gate in self.tails:
+      res = self.set_gate_size_all(gate.Size)
+      if res == "":
+        pass
+      elif res == "ok":
+        ret = "ok"
+      else:
+        return res
+
+    return ret
+
+#--------------------------------------------------------------------
+  def set_gate_size_all(self, Size):
+#--------------------------------------------------------------------
+    ret = ""
+
+    for gate in self.heads:
+      res = gate.set_size(Size)
+      if res == "":
+        pass
+      elif res == "ok":
+        ret = "ok"
+      else:
+        return res
+
+    for gate in self.tails:
+      res = gate.set_size(Size)
+      if res == "":
+        pass
+      elif res == "ok":
+        ret = "ok"
+      else:
+        return res
+
+    return ret
 
 #--------------------------------------------------------------------
 #  @staticmethod
@@ -159,7 +221,7 @@ class ChannelElement(object):
 
 #--------------------------------------------------------------------
   def create_shape(self):
-#    self.shape = ShapeSTL() #Real shapes in derived classes
+#    self.shape = Shape() #Real shapes in derived classes
 #    print "create_shape"
     return ""
 
@@ -180,12 +242,11 @@ class ChannelElement(object):
     if self.shape is not None:
       self.shape.show()
 
-
 #--------------------------------------------------------------------
 def fcn_clear_geometry_xxx(gate):
     gate.clear_geometry()
 
 #--------------------------------------------------------------------
 def fcn_print_info_xxx(gate):
+    print "Gate --------------------"
     gate.print_info()
-

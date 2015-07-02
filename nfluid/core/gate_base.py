@@ -24,6 +24,7 @@ class Gate(object):
 
 #--------------------------------------------------------------------
   def set_size_def(self, s0, s1 = None, s2 = None, s3 = None):
+#--------------------------------------------------------------------
     SizeLen = len(self.SizeDef)
     if SizeLen > 0:
       self.SizeDef[0] = s0
@@ -36,6 +37,7 @@ class Gate(object):
 
 #--------------------------------------------------------------------
   def set_size_arg(self, s0, s1 = None, s2 = None, s3 = None):
+#--------------------------------------------------------------------
     SizeLen = len(self.Size)
     Size = []
     if SizeLen > 0:
@@ -146,6 +148,8 @@ class Gate(object):
 # Orientation ----------------------
   def set_normal_def(self, NormalDef):
 #    print "Gate set_normal_def"
+    if NormalDef is not None:
+      NormalDef.normalize()
     self.NormalDef = NormalDef
 
 #--------------------------------------------------------------------
@@ -192,6 +196,7 @@ class Gate(object):
 
 #--------------------------------------------------------------------
   def clear_geometry(self):
+#--------------------------------------------------------------------
     for size in self.Size:
       size = None
     self.Pos.clear_geometry()
@@ -200,6 +205,7 @@ class Gate(object):
 
 #--------------------------------------------------------------------
   def is_resolved_geometry(self):
+#--------------------------------------------------------------------
     for size in self.Size:
       if size is None:
         return "Gate size is none"
@@ -255,17 +261,18 @@ class Gate(object):
 
 #--------------------------------------------------------------------
   def print_info(self):
+#--------------------------------------------------------------------
     if self.PosDef is not None:
-      self.PosDef.print_info()
+      print "PosDef:", self.PosDef
     else:
       print "Pos def is None"
 
-    self.Pos.print_info()
+    print "Pos:", self.Pos
 
     if self.NormalDef is not None:
-      self.NormalDef.print_info()
+      print "NormalDef:", self.NormalDef
     else:
       print "Normal def is None"
 
-    self.Normal.print_info()
+    print "Normal:", self.Normal
 

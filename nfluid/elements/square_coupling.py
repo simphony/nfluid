@@ -42,13 +42,4 @@ class CouplingSquare(ChannelElement2G):
       "length =", self.length, \
       " AH =", self.get_gate_size_h(), "AT =", self.get_gate_size_t() 
 
-#--------------------------------------------------------------------
-"""
-  def create_shape(self):
-    # check geometry data
-    self.shape = STLSquare(self.get_a(), self.get_b(), self.get_len(), self.get_pos_head(), self.get_pos_tail()) 
-    print "create_shape CouplingSquare"
-    return ""
-
-"""
 

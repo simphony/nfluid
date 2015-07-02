@@ -2,26 +2,31 @@ from nfluid.core.channel_element_2g import *
 from nfluid.core.gates import *
 
 #====================================================================
-# Class of Elbow
-class Elbow(ChannelElement2G):
+# Class of SphericCoupling
+class SphericCoupling(ChannelElement2G):
 #--------------------------------------------------------------------
-  def __init__(self, R = None, L = None, \
-      PosH = None, PosT = None,    \
-      Normal = None):
+  def __init__(self, RS, R = None,  \
+      PosH = None, PosT = None, \
+      NormalH = None, NormalT = None):
     ChannelElement2G.__init__(self)
-    self.length = L
+
     self.heads.append(GateCircle(self))
     self.tails.append(GateCircle(self))
 
-    self.set_normal_def(Normal)
+    self.RadiusSphere = RS
+
+    self.get_head_gate().set_normal_def(NormalH) 
+    self.get_tail_gate().set_normal_def(NormalT)
+
     self.get_head_gate().set_pos_def(PosH)
     self.get_tail_gate().set_pos_def(PosT)
+
     self.get_head_gate().set_size_def(R)
     self.get_tail_gate().set_size_def(R)
 
 #--------------------------------------------------------------------
   def get_name(self):
-    return "Elbow"
+    return "SphericCoupling"
 
 #--------------------------------------------------------------------
   def get_r(self):
@@ -32,29 +37,19 @@ class Elbow(ChannelElement2G):
     return self.set_equal_gate_size()
 
 #--------------------------------------------------------------------
-  def get_gates_diff(self):
-    return Vector(0, 3000, 4000)
-
-#--------------------------------------------------------------------
-  def get_normal_tail_from_head(self, NormalH):
-    return Vector(1, 0, 0)
-
-#--------------------------------------------------------------------
-  def get_normal_head_from_tail(self, NormalT):
-    return Vector(0, 0, 1)
-
-#--------------------------------------------------------------------
   def print_info(self):
     ChannelElement2G.print_info(self)
-    print "Coupling radius Rdef =", self.get_head_gate().get_r_def(), "length =", self.length, \
-      "RH =", self.get_gate_size_h(), "RT =", self.get_gate_size_t() 
+    print "SphericCoupling radius Rdef =", self.get_head_gate().get_r_def(), \
+      "RH =", self.get_gate_size_h(), "RT =", self.get_gate_size_t(), \
+      "RadiusSphere =", self.RadiusSphere, \
+      "PosH = ", self.get_pos_head(), "PosT =", self.get_pos_tail()  
 
 #--------------------------------------------------------------------
-  """
   def create_shape(self):
     # check geometry data
-    self.shape = STLCircleCoupling(self.get_rh(), self.get_len()) 
-    print "create_shape FlowAdapter"
+    self.shape = ShapeSphericCoupling(self.RadiusSphere, self.get_r(),  \
+    self.get_pos_head(), self.get_pos_tail()) 
+    print "create_shape SphericCoupling"
     return ""
-  """
+
  

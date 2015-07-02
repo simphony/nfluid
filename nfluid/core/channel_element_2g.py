@@ -20,6 +20,22 @@ class ChannelElement2G(ChannelElement):
     return self.get_tail_gate().set_size_arg(s0, s1, s2, s3)
 
 #--------------------------------------------------------------------
+#  def get_pos_head(self):
+#    return self.get_head_gate().Pos
+
+#--------------------------------------------------------------------
+  def get_pos_tail(self):
+    return self.get_tail_gate().Pos
+
+#--------------------------------------------------------------------
+  def get_normal_head(self):
+    return self.get_head_gate().Normal
+
+#--------------------------------------------------------------------
+  def get_normal_tail(self):
+    return self.get_tail_gate().Normal
+
+#--------------------------------------------------------------------
   def resolve_geometry_base(self):
 #--------------------------------------------------------------------
     ret = ""
@@ -32,58 +48,63 @@ class ChannelElement2G(ChannelElement):
       return res
 
     NormalH = copy.copy(self.get_head_gate().Normal)
-    res = self.get_tail_gate().set_normal(self.get_normal_tail_from_head(NormalH))
-    if res == "":
-      pass
-    elif res == "ok":
-      ret = "ok"
-    else: 
-      return res
+    NormalTNew = self.get_normal_tail_from_head(NormalH)
+    if NormalTNew is not None:
+      res = self.get_tail_gate().set_normal(NormalTNew)
+      if res == "":
+        pass
+      elif res == "ok":
+        ret = "ok"
+      else: 
+        return res
 
     NormalT = copy.copy(self.get_tail_gate().Normal)
-    res = self.get_head_gate().set_normal(self.get_normal_head_from_tail(NormalT))
-    if res == "":
-      pass
-    elif res == "ok":
-      ret = "ok"
-    else:
-      return res
-
-    PosH = copy.copy(self.get_head_gate().Pos)
-#    print "XXX---------------"
-#    PosH.print_info()
-#    print "111---------------"
-#    self.get_gates_diff().print_info()
-#    print "222---------------"
-    res = PosH.add(self.get_gates_diff())
-#    PosH.print_info()
-#    print "333--------------- res = ", res
-    if res == "ok":
-      res = self.get_tail_gate().set_pos(PosH)
+    NormalHNew = self.get_normal_head_from_tail(NormalT)
+    if NormalHNew is not None:
+      res = self.get_head_gate().set_normal(NormalHNew)
       if res == "":
         pass
       elif res == "ok":
         ret = "ok"
-      else: 
+      else:
         return res
 
-    PosT = copy.copy(self.get_tail_gate().Pos)
-#    print "XXX---------------"
-#    PosT.print_info()
-#    self.get_gates_diff().print_info()
-    res = PosT.sub(self.get_gates_diff())
-#    PosT.print_info()
-#    print "--------------- res = ", res
-    if res == "ok":
-      res = self.get_head_gate().set_pos(PosT)
-      if res == "":
-        pass
-      elif res == "ok":
-        ret = "ok"
-      else: 
-        return res
-#    print "AAA---------------"
-    self.get_head_gate().Pos.print_info()
+    diff = self.get_gates_diff()
+    if diff is not None:
+      PosH = copy.copy(self.get_head_gate().Pos)
+#      print "XXX---------------", PosH
+#      print "111---------------"
+#      print self.get_gates_diff()
+#      print "222---------------"
+      res = PosH.add(diff)
+#      PosH.print_info()
+#      print "333--------------- res = ", res
+      if res == "ok":
+        res = self.get_tail_gate().set_pos(PosH)
+        if res == "":
+          pass
+        elif res == "ok":
+          ret = "ok"
+        else: 
+          return res
+    
+      PosT = copy.copy(self.get_tail_gate().Pos)
+#      print "XXX---------------"
+#      PosT.print_info()
+#      self.get_gates_diff().print_info()
+      res = PosT.sub(diff)
+#      PosT.print_info()
+#      print "--------------- res = ", res
+      if res == "ok":
+        res = self.get_head_gate().set_pos(PosT)
+        if res == "":
+          pass
+        elif res == "ok":
+          ret = "ok"
+        else: 
+          return res
+#      print "AAA---------------"
+      print self.get_head_gate().Pos
 
     return ret
 
@@ -92,7 +113,7 @@ class ChannelElement2G(ChannelElement):
 #--------------------------------------------------------------------
     Normal = copy.copy(self.get_head_gate().Normal)
     print "get_gates_diff Normal"
-    Normal.print_info()
+    print Normal
     Len = Normal.get_len()
     print "get_gates_diff Len", Len, "self.length", self.length
     if Len is None or  Len == 0:
@@ -113,10 +134,18 @@ class ChannelElement2G(ChannelElement):
       else:
         Normal.scale(self.length / Len)
         print "get_gates_diff Normal Scaled"
-        Normal.print_info()
+        print Normal
         return Normal
-#    return Vector(10, 20, self.length)
 
+#--------------------------------------------------------------------
+  def get_gates_diff_real(self):
+#--------------------------------------------------------------------
+    diff = copy.copy(self.get_pos_tail())
+    diff.sub(self.get_pos_head())
+    return diff
+
+#    return Vector(10, 20, self.length)
+  """
 #--------------------------------------------------------------------
   def set_equal_gate_size(self):
 #--------------------------------------------------------------------
@@ -140,7 +169,7 @@ class ChannelElement2G(ChannelElement):
       return res
 
     return ret
-
+  """
 #--------------------------------------------------------------------
   def set_normal_def(self, NormalDef):
     self.get_head_gate().set_normal_def(NormalDef)
@@ -156,6 +185,7 @@ class ChannelElement2G(ChannelElement):
 
 #--------------------------------------------------------------------
   def get_len(self):
+#--------------------------------------------------------------------
     if self.length is not None:
       return self.length
     else:
@@ -164,17 +194,6 @@ class ChannelElement2G(ChannelElement):
       return DifPos.get_len()
 
 #--------------------------------------------------------------------
-  def get_pos_head(self):
-    return self.get_head_gate().Pos
-
-#--------------------------------------------------------------------
-  def get_pos_tail(self):
-    return self.get_tail_gate().Pos
-
-#--------------------------------------------------------------------
-  def print_info(self): # replace with __str__ ?
+  def print_info(self): #  replace with __str__ ?
     ChannelElement.print_info(self)
     print "Len = ", self.get_len()
-
-
-
