@@ -18,7 +18,7 @@ tee = create_channel(
   ). \
   link(FlowAdapter(RT = 220, L = 15)). \
   link(Coupling(L = 125)).  \
-  link(TeeCircle(220)) 
+  link(TeeCircle(220, NormalT0 = Vector(1, 0, 0))) 
 
 #
 tee. \
@@ -27,9 +27,8 @@ tee. \
 
 
 tee. \
-  link(FlowAdapter(RT =150, L = 20), 1). \
-  link(Coupling(L = 200))
-
+  link(FlowAdapter(RT =155, L = 27), 1). \
+  link(Coupling(L = 120))
 
 
 MakeTest1(assembly)

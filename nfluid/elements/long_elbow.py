@@ -10,6 +10,9 @@ class LongElbow(ChannelElement2G):
       PosH = None, PosT = None, \
       NormalH = None, NormalT = None):
     ChannelElement2G.__init__(self)
+
+    self.IsEqualGateSize = True
+
     self.heads.append(GateCircle(self))
     self.tails.append(GateCircle(self))
 
@@ -27,6 +30,12 @@ class LongElbow(ChannelElement2G):
     self.get_head_gate().set_size_def(R)
     self.get_tail_gate().set_size_def(R)
 
+# Initial position along Z and X
+    self.get_head_gate().NormalElement = Vector(0, 0, 1)
+    self.get_tail_gate().NormalElement = Vector(1, 0, 0)
+# Move to resolve own
+    self.get_head_gate().PosElement = Vector(0, 0, - RC)
+    self.get_tail_gate().PosElement = Vector(RC, 0, 0)
 #--------------------------------------------------------------------
   def get_name(self):
     return "LongElbow"
@@ -40,69 +49,8 @@ class LongElbow(ChannelElement2G):
     return self.RadiusCurvature
 #--------------------------------------------------------------------
   def resolve_geometry_child(self):
-#--------------------------------------------------------------------
-    print "zzzzzzzzzzzzzzzzzz++++++++ 1"
-    if self.get_normal_head().is_not_none() and self.get_normal_tail().is_not_none():
-      angle = get_vector_angle(self.get_normal_head(), self.get_normal_tail())
-      print "resolve_geometry_child angle = ", angle
-      if not is_equal_eps(angle, self.angle):
-        print "Incorrect angle = "
-        return "Incorrect angle in LongElbow"
 
-
-    return self.set_equal_gate_size()
-
-#--------------------------------------------------------------------
-  def get_gates_diff(self):
-#--------------------------------------------------------------------
-    if self.get_normal_head() is not None and self.get_normal_tail() is not None:
-#    NormalH = copy.copy(self.get_head_gate().Normal)
-      # Only for 90 degree
-      print "======= get_gates_diff A", self.get_r_curv(), self.get_normal_head(), self.get_normal_tail()
-      DiffH = self.get_normal_head() * self.get_r_curv()
-      DiffT = self.get_normal_tail() * self.get_r_curv()
-      print "======= get_gates_diff B", DiffH, DiffT, DiffH + DiffT
-      return DiffH + DiffT
-    else:
-      print "======= get_gates_diff None"
-      return None  
-
-#--------------------------------------------------------------------
-  def get_normal_tail_from_head(self, NormalH):
-#--------------------------------------------------------------------
-    # Head Normal and tail pos
-    print "++++++++ 1", NormalH, self.get_normal_tail()
-    if self.get_normal_tail().is_none():
-      print "++++++++ 2"
-      if NormalH.is_not_none():
-        print "++++++++ 3"
-        diff = self.get_gates_diff_real()
-        if diff.is_not_none():
-          print "++++++++ 4 diff = ", diff
-          Normal = diff - self.get_normal_head() * self.get_r_curv()
-          Normal.normalize()
-          print "+++++++++++++++ Normal", Normal
-          return Normal
-    return None
-
-#--------------------------------------------------------------------
-  def get_normal_head_from_tail(self, NormalT):
-#--------------------------------------------------------------------
-    # Tail Normal and head pos
-    print "-------- 1", NormalT, self.get_normal_head()
-    if self.get_normal_head().is_none():
-      print "-------- 2"
-      if NormalT.is_not_none:
-        diff = self.get_gates_diff_real()
-        print "-------- diff = ", diff
-        if diff.is_not_none():
-          print "-------- 4"
-          Normal = diff - self.get_normal_tail() * self.get_r_curv()
-          Normal.normalize()
-          print "--------------- Normal", Normal
-          return Normal
-
-    return None
+    return ""
 
 #--------------------------------------------------------------------
   def print_info(self):

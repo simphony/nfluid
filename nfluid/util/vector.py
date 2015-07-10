@@ -1,13 +1,13 @@
 import copy
 import math
 
-
 #====================================================================
 def is_equal_eps(v1, v2, eps = 1e-8):
 #--------------------------------------------------------------------
   if v1 is None or v2 is None:
     return False
   return math.fabs(v1 - v2) <= eps 
+
 #====================================================================
 class Vector(object):
 #--------------------------------------------------------------------
@@ -15,6 +15,22 @@ class Vector(object):
     self.x = x
     self.y = y
     self.z = z
+
+  def X(self, i):
+    if i == 0:
+      return self.x
+    elif i == 1:
+      return self.y
+    elif i == 2:
+      return self.z
+
+  def setX(self, i, val):
+    if i == 0:
+      self.x = val
+    elif i == 1:
+      self.y = val
+    elif i == 2:
+      self.z = val
 
 #--------------------------------------------------------------------
   def __add__(self, right):
@@ -182,7 +198,6 @@ class Vector(object):
         self.z += v.z
       ret = "ok"
 
-#    print "Vector add ", ret
     return ret
 
 #--------------------------------------------------------------------
@@ -210,7 +225,6 @@ class Vector(object):
         self.z -= v.z
       ret = "ok"
 
-#    print "Vector add ", ret
     return ret
 
 #--------------------------------------------------------------------
@@ -219,6 +233,7 @@ class Vector(object):
     if len is not None:
       if len != 0:
         self.scale(1 / len)
+    return self
         
 #--------------------------------------------------------------------
   def scale(self, s):
@@ -228,6 +243,7 @@ class Vector(object):
       self.y *= s
     if self.z is not None:
       self.z *= s
+    return self
 
 #--------------------------------------------------------------------
   def get_len(self):
@@ -256,7 +272,22 @@ class Vector(object):
   def __str__(self):
     return "Vector x = {0} y = {1} z = {2}".format(self.x, self.y, self.z)
 
+#--------------------------------------------------------------------
+  def round(self):
+#--------------------------------------------------------------------
+    if self.x is not None:
+      if is_equal_eps(self.x, 0):
+        self.x = 0
+    if self.y is not None: 
+      if is_equal_eps(self.y, 0):
+        self.y = 0
+    if self.z is not None: 
+      if is_equal_eps(self.z, 0):
+        self.z = 0
+
 #======================================================================
+
+#--------------------------------------------------------------------
 def scalar_product(v1, v2):
 #--------------------------------------------------------------------
   if type(v1) is not Vector or type(v2) is not Vector :
@@ -268,7 +299,25 @@ def scalar_product(v1, v2):
   return None
 
 #--------------------------------------------------------------------
-def get_vector_angle(v1, v2):
+def vector_product(v1, v2):
+#--------------------------------------------------------------------
+  if type(v1) is not Vector or type(v2) is not Vector :
+    raise TypeError('unsupported operand type(s)')
+
+  print "vector_product v1, v2", v1, v2
+  if v1.is_not_none() and v2.is_not_none():
+    print "vector_product notNone"
+    Res = Vector();
+    Res.x = v1.y * v2.z - v1.z * v2.y;
+    Res.y = v1.z * v2.x - v1.x * v2.z;
+    Res.z = v1.x * v2.y - v1.y * v2.x;
+
+    return Res
+
+  return None
+
+#--------------------------------------------------------------------
+def get_vector_angle_rad(v1, v2):
 #--------------------------------------------------------------------
   if type(v1) is not Vector or type(v2) is not Vector :
     raise TypeError('unsupported operand type(s)')
@@ -280,11 +329,20 @@ def get_vector_angle(v1, v2):
 
     cos_angle = scalar_product(v1, v2)/L2
     print "cos_angle = ", cos_angle
-    angle = math.degrees(math.acos(cos_angle))
+    angle = math.acos(cos_angle)
     print "angle = ", angle
     return angle
 
   return None
+
+#--------------------------------------------------------------------
+def get_vector_angle_grad(v1, v2):
+#--------------------------------------------------------------------
+  angle = get_vector_angle_rad(v1, v2)
+  if angle is None:
+    return None
+
+  return math.degrees(angle)
 
 #--------------------------------------------------------------------
 def get_projection(v, axis):
@@ -292,7 +350,7 @@ def get_projection(v, axis):
   if type(v) is not Vector or type(axis) is not Vector :
     raise TypeError('unsupported operand type(s)')
 
-  if v.is_not_none() or axis.is_not_none():
+  if v.is_none() or axis.is_none():
     return None #TODO or None Vector
   AxisNorm = Vector(axis.x, axis.y, axis.z)
   AxisNorm.normalize()
@@ -300,3 +358,18 @@ def get_projection(v, axis):
 
   return AxisNorm
 
+#--------------------------------------------------------------------
+def get_orthogonal(v, axis):
+#--------------------------------------------------------------------
+  print "get_orthogonal", v, axis
+  proj = get_projection(v, axis)
+  if proj is None:
+    print "get_orthogonal is None"
+    return None 
+  return v - proj
+
+#--------------------------------------------------------------------
+def is_colinear(v1, v2):
+#--------------------------------------------------------------------
+
+  return is_equal_eps(vector_product(v1, v2).get_len(), 0)

@@ -16,6 +16,9 @@ class Gate(object):
     self.NormalDef = None
     self.Normal = Vector()
 
+    self.PosElement = None
+    self.NormalElement = None
+
 #--------------------------------------------------------------------
 # Position -------------------
   def set_pos_def(self, PosDef):
@@ -147,6 +150,7 @@ class Gate(object):
 #--------------------------------------------------------------------
 # Orientation ----------------------
   def set_normal_def(self, NormalDef):
+#--------------------------------------------------------------------
 #    print "Gate set_normal_def"
     if NormalDef is not None:
       NormalDef.normalize()

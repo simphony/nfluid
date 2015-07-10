@@ -27,6 +27,7 @@ class ChannelAssembly(object):
           print "resolve_geometry before --------"
           element.print_info()
           res = element.resolve_geometry()
+          print "assembly.resolve_geometry res = ", res
           if res != "":
             if res == "ok":
               Changed = True
@@ -54,11 +55,6 @@ class ChannelAssembly(object):
       element.clear_geometry()
       print "clear_geometry Assembly loop ---------------------------"        
 
-#--------------------------------------------------------------------
-  """
-  def __str__(self):
-    self.print_info()
-  """
 #--------------------------------------------------------------------
   def print_info(self):
 #--------------------------------------------------------------------

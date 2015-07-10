@@ -14,14 +14,18 @@ NormalH0 = Vector(0, 0, 100)
 print "%%%%%%%%%%%%%%", NormalH0 
 
 create_channel( 
-    Coupling(10, 20, 
-    PosH = Vector(0, 20, 30), 
+    Coupling(10, 15, 
+    PosH = Vector(0, 77, 130), 
     Normal = Vector(0, 0, 1) 
     ) 
 #  ) 
   ). \
-  link(LongElbow(RC = 50, PosT = Vector(50, 20, 100))).  \
+  link(LongElbow(RC = 50, NormalH = Vector(0, 0, 1), NormalT = Vector(0, 1, 0))).  \
   link (Coupling(L = 125))
+#  link(LongElbow(RC = 50, NormalT = Vector(0, 0, 1))).  \
+#  link (Coupling(L = 122))
+
+#  link(LongElbow(RC = 50, PosT = Vector(50, 20, 100))).  \
 
 print "%%%%%%%%%%%%%%", NormalH0 
 """
@@ -53,5 +57,5 @@ MakeTest1(assembly)
 
 PosH = Vector(1, 0, 0) 
 Normal = Vector(5, 5, 0) 
-angle = get_vector_angle(PosH, Normal)
+angle = get_vector_angle_grad(PosH, Normal)
 print "angle = ", angle
