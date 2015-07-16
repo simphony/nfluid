@@ -5,7 +5,7 @@ class TeeCircle4(ChannelElement):
 #--------------------------------------------------------------------
   def __init__(self, R = None,     \
       PosH = None, PosT0 = None, PosT1 = None, PosT2 = None, PosT3 = None, \
-      NormalH = None, NormalT0 = None):
+      NormalH = None, NormalT0 = None, NormalT1 = None, NormalT2 = None, NormalT3 = None):
 
 # NormalH, NormalT0 must be orthogonal
 # NormalT should be corrected to respect that
@@ -34,6 +34,11 @@ class TeeCircle4(ChannelElement):
     self.get_tail_gate(2).set_pos_def(PosT2)
     self.get_tail_gate(3).set_pos_def(PosT3)
     
+    self.get_head_gate().set_normal_def(NormalH)
+    self.get_tail_gate(0).set_normal_def(NormalT0)
+    self.get_tail_gate(1).set_normal_def(NormalT1)
+    self.get_tail_gate(2).set_normal_def(NormalT2)
+    self.get_tail_gate(3).set_normal_def(NormalT3)
 
 # Initial position along Z and X
     self.get_head_gate().NormalElement = Vector(0, 0, 1)

@@ -5,7 +5,7 @@ class TeeCircle3(ChannelElement):
 #--------------------------------------------------------------------
   def __init__(self, R = None,     \
       PosH = None, PosT0 = None, PosT1 = None, PosT2 = None,    \
-      NormalH = None, NormalT0 = None):
+      NormalH = None, NormalT0 = None, NormalT1 = None, NormalT2 = None):
 
 # NormalH, NormalT0 must be orthogonal
 # NormalT should be corrected to respect that
@@ -29,8 +29,12 @@ class TeeCircle3(ChannelElement):
     self.get_head_gate().set_pos_def(PosH)
     self.get_tail_gate(0).set_pos_def(PosT0)
     self.get_tail_gate(1).set_pos_def(PosT1)
-    self.get_tail_gate(2).set_pos_def(PosT2)
-    
+    self.get_tail_gate(2).set_pos_def(PosT2)    
+
+    self.get_head_gate().set_normal_def(NormalH)
+    self.get_tail_gate(0).set_normal_def(NormalT0)
+    self.get_tail_gate(1).set_normal_def(NormalT1)
+    self.get_tail_gate(2).set_normal_def(NormalT2)
 
 # Initial position along Z and X
     self.dx = math.cos(math.radians(120)) 
@@ -61,6 +65,7 @@ class TeeCircle3(ChannelElement):
   def resolve_geometry_child(self):
 #--------------------------------------------------------------------
     R = self.get_r()
+    print "resolve_geometry_child R = ", R
     if R is not None:
       self.get_head_gate().PosElement = Vector(0, 0, - R)
       self.get_tail_gate(0).PosElement = Vector(R, 0, 0)

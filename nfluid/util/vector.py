@@ -131,21 +131,21 @@ class Vector(object):
 
     if x is not None:
       if self.x is not None:
-        if not is_equal_eps(self.x, x): return "x is not equal to already defined value self.x", self.x, "x", x
+        if not is_equal_eps(self.x, x): return "x is not equal to already defined value self.x = " + str(self.x) + " x = " + str(x)
       else:
         self.x = x
         changed = True
 
     if y is not None:
       if self.y is not None:
-        if not is_equal_eps(self.y, y): return "y is not equal to already defined value self.y", self.y, "y", y
+        if not is_equal_eps(self.y, y): return "y is not equal to already defined value self.y = " + str(self.y) + " y = " + str(y)
       else:
         self.y = y
         changed = True
 
     if z is not None:
       if self.z is not None:
-        if not is_equal_eps(self.z, z): return "z is not equal to already defined value self.z", self.z, "z", z
+        if not is_equal_eps(self.z, z): return "z is not equal to already defined value self.z = " + str(self.z) + " z = " + str(z)
       else:
         self.z = z
         changed = True
@@ -229,6 +229,7 @@ class Vector(object):
 
 #--------------------------------------------------------------------
   def normalize(self):
+#--------------------------------------------------------------------
     len = self.get_len()
     if len is not None:
       if len != 0:
@@ -237,6 +238,7 @@ class Vector(object):
         
 #--------------------------------------------------------------------
   def scale(self, s):
+#--------------------------------------------------------------------
     if self.x is not None:
       self.x *= s
     if self.y is not None:
@@ -247,6 +249,7 @@ class Vector(object):
 
 #--------------------------------------------------------------------
   def get_len(self):
+#--------------------------------------------------------------------
     if self.is_none():
       return None
     else:
@@ -254,6 +257,7 @@ class Vector(object):
 
 #--------------------------------------------------------------------
   def is_resolved_geometry(self):
+#--------------------------------------------------------------------
     if self.x is None:
       return "x is None" 
     if self.y is None: 

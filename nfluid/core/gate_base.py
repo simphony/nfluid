@@ -19,6 +19,23 @@ class Gate(object):
     self.PosElement = None
     self.NormalElement = None
 
+
+#--------------------------------------------------------------------
+  def link(self, gate):
+    self.buddy = gate
+    gate.buddy = self
+
+#--------------------------------------------------------------------
+  def detach(self):
+#--------------------------------------------------------------------
+    if self.buddy is None:
+      return None
+    else:
+      self.buddy.buddy = None
+      old_buddy = self.buddy
+      self.buddy = None
+      return old_buddy
+
 #--------------------------------------------------------------------
 # Position -------------------
   def set_pos_def(self, PosDef):
@@ -68,8 +85,8 @@ class Gate(object):
       if self.Size[i] is not None:
         if Size[i] is not None:
           if (self.Size[i] != Size[i]):
-            return "Gate set_size incompatible sizes i = ", i, \
-              " self.Size[i] = ", self.Size[i], "  Size[i] = ", Size[i]
+            return "Gate set_size incompatible sizes i = " + str(i) + \
+              " self.Size[i] = " +  str(self.Size[i]) + "  Size[i] = " + str(Size[i])
       else:
         self.Size[i] = Size[i]
         ret = "ok"
@@ -94,8 +111,8 @@ class Gate(object):
     for i in range(0, len(Size)):
       if self.Size[i] is not None:
         if (self.Size[i] != Size[i]):
-          return "Circle set_size incompatible sizes i = ", i, \
-            " self.Size[i] = ", self.Size[i], "  Size[i] = ", Size[i]
+          return "Circle set_size incompatible sizes i = " + i + \
+            " self.Size[i] = " + self.Size[i] + "  Size[i] = " + Size[i]
       else:
         self.Size[i] = Size[i]
         ret = "ok"
@@ -232,7 +249,6 @@ class Gate(object):
     self.print_info()
     ret = ""
 
-    
 #    if self.Rdef is not None:
     res = self.set_size(self.SizeDef)
     if res == "":
@@ -242,7 +258,6 @@ class Gate(object):
     else:
       return res
     
-
     if self.PosDef is not None:
       res =  self.set_pos(self.PosDef)
       if res == "":

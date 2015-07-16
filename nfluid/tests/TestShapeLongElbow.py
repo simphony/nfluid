@@ -20,14 +20,17 @@ create_channel(
     ) 
 #  ) 
   ). \
-  link(LongElbow(RC = 50, NormalH = Vector(0, 0, 1), NormalT = Vector(0, 1, 0))).  \
-  link (Coupling(L = 125))
-#  link(LongElbow(RC = 50, NormalT = Vector(0, 0, 1))).  \
-#  link (Coupling(L = 122))
+  link(LongElbow(RC = 50, PosT = Vector(0, 127.0, 195.0))).  \
+  link (Coupling(L = 125)). \
+  link(LongElbow(RC = 50, NormalT = Vector(1, 0, 0))).  \
+  link (Coupling(L = 122))
 
+#  link(LongElbow(RC = 50, NormalH = Vector(0, 0, 1), NormalT = Vector(0, 1, 0))).  \
+#  link(LongElbow(RC = 50, NormalT = Vector(1, 0, 0))).  \
 #  link(LongElbow(RC = 50, PosT = Vector(50, 20, 100))).  \
 
-print "%%%%%%%%%%%%%%", NormalH0 
+print "%%%%%%%%%%%%%%", NormalH0
+ 
 """
 create_channel( 
     Coupling(10, 20, 

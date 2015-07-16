@@ -8,7 +8,8 @@ from nfluid.util.rotations import *
 #Base class of Channel Elements
 class ChannelElement(object):
 #--------------------------------------------------------------------
-  assembly = None;
+  assembly = None
+  __id_cnt = 0
 
   def __init__(self):
     ChannelElement.assembly.add_element(self)
@@ -16,7 +17,8 @@ class ChannelElement(object):
     self.tails = []
     self.changed = True
     self.shape = None
-
+    self.__id = ChannelElement.__id_cnt
+    ChannelElement.__id_cnt += 1
     self.IsAxialSym = False
     self.IsEqualGateSize = False
 
@@ -26,6 +28,19 @@ class ChannelElement(object):
 #--------------------------------------------------------------------
   def get_name(self):
     return "ChannelElement"
+
+#--------------------------------------------------------------------
+  def get_chain_str(self):
+#--------------------------------------------------------------------
+    prev = self.get_prev_element()
+    if prev is not None:
+      return prev.get_chain_str() + "|" + self.get_name()
+    else:
+      return self.get_name()
+
+#--------------------------------------------------------------------
+  def get_id(self):
+    return self.__id
 
 #--------------------------------------------------------------------
   def get_head_gate(self, n = 0):
@@ -63,14 +78,12 @@ class ChannelElement(object):
 
 #--------------------------------------------------------------------
   def link(self, next, gateTail = 0, gateHead = 0):
-    gt1 = self.get_tail_gate(gateTail)
-    gh2 = next.get_head_gate(gateHead)
-    gt1.buddy = gh2
-    gh2.buddy = gt1
+    self.get_tail_gate(gateTail).link(next.get_head_gate(gateHead))
     return next
 
 #--------------------------------------------------------------------
   def print_info(self):
+    print "id = ", self.__id
     self.for_each_gate(fcn_print_info_xxx)
 
 #    print "ChannelElement"
@@ -222,6 +235,7 @@ class ChannelElement(object):
         axis = pairs_normal_nc[0][1]
         rot1 = GetRotationMatrixVectorToVector(
           pairs_normal_nc[0][0], axis)
+        print "Rot1"
         rot1.trace()
 
         rot2, res2 = GetRotationMatrixVectorFaceToVector(
@@ -229,8 +243,11 @@ class ChannelElement(object):
         if res2 != "":
           return res2
         rot2.trace()
+        print "Rot2"
+        rot2.trace()
 
-        self.RotationOperator = rot1 * rot2
+        self.RotationOperator = rot2 * rot1
+#        self.RotationOperator = rot1 * rot2
 
       elif len(pairs_pos) >= 3:
         print "3  positions"
@@ -241,23 +258,27 @@ class ChannelElement(object):
 
         rot1 = GetRotationMatrixVectorToVector(
           DiffElement1, RealElement1)
+        print "Rot1"
         rot1.trace()
 
         rot2, res2 = GetRotationMatrixVectorFaceToVector(
           rot1 * DiffElement2, RealElement2, RealElement1)
         if res2 != "":
           return res2
+        print "Rot2"
         rot2.trace()
 
-        self.RotationOperator = rot1 * rot2
+        self.RotationOperator = rot2 * rot1
+#        self.RotationOperator = rot1 * rot2
 
       elif len(pairs_normal_nc) == 1 and len(pairs_pos) >= 2:
         print "Normal and pos"
 
         pos_nc = None
-        for i in range[0, len(pairs_pos) - 1]: # -2?
+        for i in range(0, len(pairs_pos) - 1): # -2?
           DiffElement0 = pairs_pos[i + 1][0] - pairs_pos[i][0]
-          if not is_colinear(DiffElement0, pairs_normal_nc[0]):
+          print "DiffElement0 ", DiffElement0
+          if not is_colinear(DiffElement0, pairs_normal_nc[0][0]):
             pos_nc = i
             break
 
@@ -276,12 +297,14 @@ class ChannelElement(object):
             return res2
           rot2.trace()
       
-          self.RotationOperator = rot1 * rot2
+          self.RotationOperator = rot2 * rot1
+#          self.RotationOperator = rot1 * rot2
 
 
     if self.RotationOperator is not None:
       print "Orientation Resolved"
       self.RotationOperator.trace()
+
     else:
       print "Orientation not Resolved"
 
@@ -305,6 +328,7 @@ class ChannelElement(object):
 
     return ""
 
+
 #--------------------------------------------------------------------
   def resolve_geometry_set_gates_norm_pos(self):
 #--------------------------------------------------------------------
@@ -313,59 +337,24 @@ class ChannelElement(object):
 
     ret = ""
 
-    for gate in self.heads:
-      if gate.NormalElement is not None:
-        RealNormal = self.RotationOperator * gate.NormalElement
-        RealNormal.round()
-        res = gate.set_normal(RealNormal)
-        print "set_gates_norm_pos 1 res = ", res
-        if res == "":
-          pass
-        elif res == "ok":
-          ret = "ok"
-        else:
-          return res 
-
-      if self.CenterPos is not None and gate.PosElement is not None:
-        RealShift = self.RotationOperator * gate.PosElement
-        RealShift.round()
-        res = gate.set_pos(self.CenterPos + RealShift)
-        print "set_gates_norm_pos 2 res = ", res
-        if res == "":
-          pass
-        elif res == "ok":
-          ret = "ok"
-        else:
-          return res
-
-    for gate in self.tails:
-      if gate.NormalElement is not None:
-        RealNormal = self.RotationOperator * gate.NormalElement
-        RealNormal.round()
-        res = gate.set_normal(RealNormal)
-        print "set_gates_norm_pos 1 res = ", res
-        if res == "":
-          pass
-        elif res == "ok":
-          ret = "ok"
-        else:
-          return res 
-
-      if self.CenterPos is not None and gate.PosElement is not None:
-        RealShift = self.RotationOperator * gate.PosElement
-        RealShift.round()
-        res = gate.set_pos(self.CenterPos + RealShift)
-        print "set_gates_norm_pos 2 res = ", res
-        if res == "":
-          pass
-        elif res == "ok":
-          ret = "ok"
-        else:
-          return res
-
-
+    res = self.for_each_gate_err_ok(resolve_geometry_set_gates_norm_fcn, self)
+    if res == "":
+      pass
+    elif res == "ok":
+      ret = "ok"
+    else:
+      return res
+    
+    res = self.for_each_gate_err_ok(resolve_geometry_set_gates_pos_fcn, self)
+    if res == "":
+      pass
+    elif res == "ok":
+      ret = "ok"
+    else:
+      return res
+    
+    print "resolve_geometry_set_gates_norm_pos ret = ", ret
     return ret
-
 
 #--------------------------------------------------------------------
 # "" nothing changed
@@ -373,95 +362,21 @@ class ChannelElement(object):
 # "other text" - fatal error
 
   def resolve_geometry_base(self):
-#--------------------------------------------------------------------
-    ret = ""
-    for gate in self.heads:
-      res = gate.resolve_geometry()
-      print "Head gate res = ", res
-      if res == "":
-        pass
-      elif res == "ok":
-        ret = "ok"
-      else:
-        return res 
-
-    for gate in self.tails:
-      res = gate.resolve_geometry()
-      print "Tail gate res = ", res
-      if res == "":
-        pass
-      elif res == "ok":
-        ret = "ok"
-      else:
-        return res
-
-    return ret
+    return self.for_each_gate_err_ok(resolve_geometry_base_fcn)
 
 #--------------------------------------------------------------------
   def is_resolved_geometry(self):
-#--------------------------------------------------------------------
-    msg = "xxx"
-    for gate in self.heads:
-      res = gate.is_resolved_geometry()
-      if res != "":
-        return msg + res
-    for gate in self.tails:
-      res = gate.is_resolved_geometry()
-      if res != "":
-        return msg + res
-    return ""
+    return self.for_each_gate_err(is_resolved_geometry_fcn)
 
 #--------------------------------------------------------------------
   def set_equal_gate_size(self):
-#--------------------------------------------------------------------
-    ret = ""
-
-    for gate in self.heads:
-      res = self.set_gate_size_all(gate.Size) 
-      if res == "":
-        pass
-      elif res == "ok":
-        ret = "ok"
-      else:
-        return res
-
-    for gate in self.tails:
-      res = self.set_gate_size_all(gate.Size)
-      if res == "":
-        pass
-      elif res == "ok":
-        ret = "ok"
-      else:
-        return res
-
-    return ret
+    return self.for_each_gate_err_ok(set_equal_gate_size_fcn)
 
 #--------------------------------------------------------------------
   def set_gate_size_all(self, Size):
+    return self.for_each_gate_err_ok(set_gate_size_fcn, Size)
 #--------------------------------------------------------------------
-    ret = ""
 
-    for gate in self.heads:
-      res = gate.set_size(Size)
-      if res == "":
-        pass
-      elif res == "ok":
-        ret = "ok"
-      else:
-        return res
-
-    for gate in self.tails:
-      res = gate.set_size(Size)
-      if res == "":
-        pass
-      elif res == "ok":
-        ret = "ok"
-      else:
-        return res
-
-    return ret
-
-#--------------------------------------------------------------------
 #  @staticmethod
   def fcn_clear_geometry(gate):
     gate.clear_geometry()
@@ -473,10 +388,54 @@ class ChannelElement(object):
 
 #--------------------------------------------------------------------
   def for_each_gate(self, fcn):
+#--------------------------------------------------------------------
     for gate in self.heads:
       fcn(gate)
     for gate in self.tails:
       fcn(gate)
+
+#--------------------------------------------------------------------
+  def for_each_gate_err(self, fcn, arg = None):
+#--------------------------------------------------------------------
+#    for i, gate in enumerate(self.heads):
+
+    for i in xrange(0, len(self.heads)):
+      res = fcn(self.heads[i], self, arg)
+      if res != "":
+        return "Head gate #" + str(i) + ": " + str(res)
+
+    for i in xrange(0, len(self.tails)):
+      res = fcn(self.tails[i], self, arg)
+      if res != "":
+        return "Tail gate #" + str(i) + ": " + str(res)
+
+    return ""
+
+#--------------------------------------------------------------------
+  def for_each_gate_err_ok(self, fcn, arg = None):
+#--------------------------------------------------------------------
+    ret = ""
+
+    for i in xrange(0, len(self.heads)):
+      res = fcn(self.heads[i], self, arg)
+      if res == "":
+        pass
+      elif res == "ok":
+        ret = "ok"
+      else:
+        print "zzzzzzzzzzzzzzzzzz", res
+        return "Head gate #" + str(i) + ": " + str(res)
+
+    for i in xrange(0, len(self.tails)):
+      res = fcn(self.tails[i], self, arg)
+      if res == "":
+        pass
+      elif res == "ok":
+        ret = "ok"
+      else:
+        return "Tail gate #" + str(i) + ": " + str(res)
+
+    return ret
 
 #--------------------------------------------------------------------
   def collect_gate_pairs_normal(self):
@@ -503,6 +462,19 @@ class ChannelElement(object):
     return pairs
 
 #--------------------------------------------------------------------
+  def detach(self):
+#--------------------------------------------------------------------
+    gates_tails = []
+    for gate in self.tails:
+      gates_tails.append(gate.detach())
+
+    gates_heads = []
+    for gate in self.heads:
+      gates_heads.append(gate.detach())
+
+    return gates_tails, gates_heads
+
+#--------------------------------------------------------------------
   def create_shape(self):
     return ""
 
@@ -522,6 +494,36 @@ class ChannelElement(object):
 #    print "show_shape"
     if self.shape is not None:
       self.shape.show()
+
+
+#====================================================================
+#--------------------------------------------------------------------
+def resolve_geometry_base_fcn(gate, elem, arg):
+  return gate.resolve_geometry()
+
+#--------------------------------------------------------------------
+def is_resolved_geometry_fcn(gate, elem = None, arg = None):
+  return gate.is_resolved_geometry()
+
+#--------------------------------------------------------------------
+def set_equal_gate_size_fcn(gate, elem, arg):
+  return elem.set_gate_size_all(gate.Size)
+
+#--------------------------------------------------------------------
+def set_gate_size_fcn(gate, elem, arg):
+  return gate.set_size(arg)
+
+#--------------------------------------------------------------------
+def resolve_geometry_set_gates_norm_fcn(gate, elem, arg = None):
+  if gate.NormalElement is not None:
+    RealNormal = elem.RotationOperator * gate.NormalElement
+    return gate.set_normal(RealNormal)
+
+#--------------------------------------------------------------------
+def resolve_geometry_set_gates_pos_fcn(gate, elem, arg = None):
+  if elem.CenterPos is not None and gate.PosElement is not None:
+    RealShift = elem.RotationOperator * gate.PosElement
+    return gate.set_pos(elem.CenterPos + RealShift)
 
 #--------------------------------------------------------------------
 def fcn_clear_geometry_xxx(gate):

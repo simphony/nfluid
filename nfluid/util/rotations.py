@@ -23,6 +23,8 @@ def GetRotationMatrixAxisAngleRad(aaxis, angle):
   Res.setA(2,1, axis.z * axis.y * (1 - CosA) + axis.x * SinA)
   Res.setA(2,2, CosA + axis.z * axis.z * (1 - CosA))
 
+  Res.round()
+
   return Res
 
 #--------------------------------------------------------------------

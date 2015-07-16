@@ -61,6 +61,34 @@ class ChannelElement2G(ChannelElement):
       return DifPos.get_len()
 
 #--------------------------------------------------------------------
+  def delete(self):
+#--------------------------------------------------------------------
+    gates_tails, gates_heads = self.detach()
+
+    if gates_tails[0] is not None and gates_heads[0] is not None:
+      gates_tails[0].link(gates_heads[0])
+
+# TODO if None
+
+#--------------------------------------------------------------------
+  def insert_before(self, element):
+#--------------------------------------------------------------------
+    prev = self.get_prev_element()
+    if prev is not None:
+      prev.get_tail_gate().link(element.get_head_gate())
+            
+    element.get_tail_gate().link(self.get_head_gate())
+
+#--------------------------------------------------------------------
+  def insert_after(self, element):
+#--------------------------------------------------------------------
+    next = self.get_next_element()
+    if next is not None:
+      next.get_head_gate().link(element.get_tail_gate())
+
+    element.get_head_gate().link(self.get_tail_gate())
+     
+#--------------------------------------------------------------------
   def print_info(self): #  replace with __str__ ?
     ChannelElement.print_info(self)
     print "Len = ", self.get_len()

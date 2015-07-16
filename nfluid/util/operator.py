@@ -35,6 +35,7 @@ class Operator(object):
 
 #--------------------------------------------------------------------
   def get_invert(self): 
+#--------------------------------------------------------------------
     Res = Operator()
   
     if self.is_empty():
@@ -58,6 +59,7 @@ class Operator(object):
 
 #--------------------------------------------------------------------
   def get_deterninant(self): 
+#--------------------------------------------------------------------
     return \
         self.A(0,0)*(self.A(1,1)*self.A(2,2)-self.A(1,2)*self.A(2,1)) \
       - self.A(0,1)*(self.A(2,2)*self.A(1,0)-self.A(1,2)*self.A(2,0)) \
@@ -65,10 +67,18 @@ class Operator(object):
 
 #--------------------------------------------------------------------
   def trace(self): 
+#--------------------------------------------------------------------
     for i in xrange(0, 3):
       print self.A(i,0), self.A(i,1), self.A(i,2)
 
-#==============================================================================
+    new_x = self * Vector(1, 0, 0)
+    print "X axis will be ", new_x
+    new_y = self * Vector(0, 1, 0)
+    print "Y axis will be ", new_y
+    new_z = self * Vector(0, 0, 1)
+    print "Z axis will be ", new_z
+
+#=======================================================================
 #--------------------------------------------------------------------
   def __mul__(self, right):
 #--------------------------------------------------------------------
@@ -80,7 +90,7 @@ class Operator(object):
               sum += self.A(i,j) * right.X(j)
         Res.setX(i, sum)
 
-#      Res.TryRound()
+      Res.round()
       return Res
 
     elif isinstance(right, Operator):
@@ -93,7 +103,7 @@ class Operator(object):
      
           Res.setA(i, j, sum)
      
-#      Res.TryRound()
+      Res.round()
       return Res
 
     elif isinstance(right, (int, long, float)):
@@ -116,3 +126,12 @@ class Operator(object):
 
     else:
       raise TypeError('unsupported operand type(s)')
+
+#--------------------------------------------------------------------
+  def round(self):
+#--------------------------------------------------------------------
+    for i in xrange(0, 9):
+      if is_equal_eps(self.VA[i], 0):
+        self.VA[i] = 0.0
+
+ 
