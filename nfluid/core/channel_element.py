@@ -423,7 +423,7 @@ class ChannelElement(object):
       elif res == "ok":
         ret = "ok"
       else:
-        print "zzzzzzzzzzzzzzzzzz", res
+        print "for_each_gate_err_ok  !!!"
         return "Head gate #" + str(i) + ": " + str(res)
 
     for i in xrange(0, len(self.tails)):

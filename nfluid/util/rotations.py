@@ -1,6 +1,5 @@
 from nfluid.util.operator import *
 
-
 #--------------------------------------------------------------------
 def GetRotationMatrixAxisAngleRad(aaxis, angle):
 #--------------------------------------------------------------------
@@ -32,15 +31,23 @@ def GetRotationMatrixAxisAngleGrad(axis, angle):
   return GetRotationMatrixAxisAngleRad(axis, math.radians(angle))
 
 #--------------------------------------------------------------------
-def GetRotationMatrixVectorToVector(From, To):
+def GetRotationMatrixVectorToVector(From, To, AxisExt = None):
 #--------------------------------------------------------------------
 #STUB!!! What to do if Len == 0
   print "GetRotationMatrixVectorToVector From ", From
   print "GetRotationMatrixVectorToVector To", To
   axis = vector_product(From, To).normalize()
+  if is_equal_eps(axis.get_len(), 0):
+    if scalar_product(From, To) > 0:
+      return Operator()
+
+    if AxisExt is not None:
+      axis = AxisExt
+    else:
+      print "GetRotationMatrixVectorToVector !!!! Axix not defined"
   angle = get_vector_angle_rad(From, To)
   print "GetRotationMatrixVectorToVector axis ", axis
-  print "GetRotationMatrixVectorToVector angle", angle
+  print "GetRotationMatrixVectorToVector angle", math.degrees(angle)
   return GetRotationMatrixAxisAngleRad(axis, angle)
 
 #--------------------------------------------------------------------
@@ -48,13 +55,20 @@ def GetRotationMatrixVectorFaceToVector(From, To, Axis):
 #--------------------------------------------------------------------
   Res = Operator()
 
+  print "GetRotationMatrixVectorFaceToVector From ", From
+  print "GetRotationMatrixVectorFaceToVector To", To
+  print "GetRotationMatrixVectorFaceToVector Axis", Axis
+
   FromOrt = get_orthogonal(From, Axis)
   ToOrt = get_orthogonal(To, Axis)
+
+  print "GetRotationMatrixVectorFaceToVector FromOrt", FromOrt
+  print "GetRotationMatrixVectorFaceToVector ToOrt", ToOrt
 
   if is_equal_eps(FromOrt.get_len(), 0):
     return None, "Vector 'From' is colinear to the rotation axis"
   if is_equal_eps(ToOrt.get_len(), 0):
     return None, "Vector 'To' is colinear to the rotation axis"
 
-  return GetRotationMatrixVectorToVector(FromOrt, ToOrt), "" 
+  return GetRotationMatrixVectorToVector(FromOrt, ToOrt, Axis), "" 
 

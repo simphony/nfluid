@@ -1,8 +1,9 @@
 from nfluid.core.channel_assembly import *
 import os
 
+#--------------------------------------------------------------------
 def MakeTest1(assembly):
-
+#--------------------------------------------------------------------
   print "resolve_geometry ----------------------------------"
   res = assembly.resolve_geometry()
   if res != "":

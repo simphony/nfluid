@@ -7,15 +7,19 @@ class ChannelElement2G(ChannelElement):
     ChannelElement.__init__(self)
     self.length = None
 
+#--------------------------------------------------------------------
   def get_gate_size_h(self, n = 0):
     return self.get_head_gate().Size[n]
 
+#--------------------------------------------------------------------
   def set_gate_size_h(self, s0, s1 = None, s2 = None, s3 = None):
     return self.get_head_gate().set_size_arg(s0, s1, s2, s3)
 
+#--------------------------------------------------------------------
   def get_gate_size_t(self, n = 0):
     return self.get_tail_gate().Size[n]
 
+#--------------------------------------------------------------------
   def set_gate_size_t(self, s0, s1 = None, s2 = None, s3 = None):
     return self.get_tail_gate().set_size_arg(s0, s1, s2, s3)
 
