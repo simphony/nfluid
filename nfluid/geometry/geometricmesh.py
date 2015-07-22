@@ -138,7 +138,10 @@ class GeometricMesh(object):
         
     def n_triangles(self):
         return len(self.triangles)
-        
+
+    def move(self, point, direction):
+        pass
+
     def attach(self, figure):
         pass
         
@@ -425,75 +428,163 @@ class CylindricalPart(GeometricMesh):
         n = normal_of(v0, v1, v2)
         c = center_of(vert_coords)
         return (c, n)
-        
+
+    def move(self, point, direction, center=False):
+        """center == True means that we do the movement in reference
+        to the center of the mesh
+        center == False means that we do the movement in reference to the
+        center of the head circle.
+        This method implies a traslation and a rotation.
+        """
+        if center:
+            raise NotImplementedError()
+        else:
+            p, n = self.get_face_info(0)
+            angle = angle_between_vectors(direction, n)
+            vect = unit_vector(vector_product(direction, n))
+            rot_m = rotation_matrix(angle, vect)
+            d = (point[0]-p[0],point[1]-p[1],point[2]-p[2])
+            t = (-p[0],-p[1],-p[2])
+            for k,v in self.vertices.iteritems():
+                n_v = (v[0]+t[0],v[1]+t[1],v[2]+t[2])
+                if angle != 0.0 and math.isnan(angle) is False:
+                    n_v = np.dot(n_v+(1,), rot_m)
+                n_v = (n_v[0]+d[0]-t[0],n_v[1]+d[1]-t[1],n_v[2]+d[2]-t[2])
+                self.update_vertex(k, n_v)
+                # print n_v
+
     def link(self, figure):
-        return self.attach(figure)
-        
+        print '# '*30, 'BEG'
+        res = self.attach(figure)
+        res = self.adapt(res)
+        res = self.connect(res)
+        print '# '*30, 'END'
+        return res
+        # return self.connect(res)
+
     def attach(self, figure):
-        # Calculate translation
-        # Calculate rotation
-        # Rotate, then translate
-        
-        # ORG WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        print '================'*5
         # Last face (considered tail ftm)
         center1, normal1 = self.get_face_info(self.n_faces()-1)
-        # First face (considered head ftm)
+        # center1, normal1 = self.get_face_info(0)
+        print "nfaces center1, normal1"
+        print self.n_faces(), center1, normal1
         center2, normal2 = figure.get_face_info(0)
-        vect = [center1[0]-center2[0], center1[1]-center2[1], center1[2]-center2[2]]
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        # # TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        # face1 = self.connection_face(self.n_faces()-1)
-        # face0 = figure.connection_face(0)
-        # p1 = self.vertex(face1[0])
-        # p2 = figure.vertex(face0[0])
-        # vect = [p1[0]-p2[0], p1[1]-p2[1], p1[2]-p2[2]]
-        # # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        
-        # circles_file.write('circle1 c: {0}; n: {1} --- '.format(center1, normal1))
-        # circles_file.write('circle2 c: {0}; n: {1}\n'.format(center2, normal2))
-        
-        # vect = unit_vector(vect)
-        t_matrix = translation_matrix(vect)
-        n = vector_product(normal1, normal2)
-        angle = angle_between_vectors(normal1, normal2)
-        # angle = 3*angle_between_vectors(normal2, normal1)
-        # print "center1, normal1", center1, normal1
-        # print "center2, normal2", center2, normal2
-        # print "vect", vect
-        # print "n", n
-        # print "angle", angle
-        if equal_vertices(n, (0,0,0)):
-            n = (1,0,0)
-        if angle != 0:
-            rot_matrix = rotation_matrix(-angle, n)
-            for i, v in figure.vertices.iteritems():
-                # Note: rotation matrix around a certain point does not work,
-                # so we use this ftm
-                new_v = v + (1,)
-                new_v = (new_v[0]-center2[0],
-                         new_v[1]-center2[1],
-                         new_v[2]-center2[2], 1)
-                new_v = np.dot(new_v, rot_matrix)
-                # new_n = unit_vector(new_v[:-1])
-                new_v[0] += vect[0] + center2[0]
-                new_v[1] += vect[1] + center2[1]
-                new_v[2] += vect[2] + center2[2]
-                figure.update_vertex(i, new_v[:-1])
-                # figure.update_normal(i, new_n)
-        else:
-            for i, v in figure.vertices.iteritems():
-                new_v = v + (1,)
-                new_v = np.dot(t_matrix, new_v)
-                # new_v[0] += vect[0]
-                # new_v[1] += vect[1]
-                # new_v[2] += vect[2]
-                # print "t new_v", i, v, new_v
-                figure.update_vertex(i, new_v[:-1])
+        print "center2, normal2 before"
+        print center2, normal2
+        figure.move(center1, normal1)
+        center2, normal2 = figure.get_face_info(0)
+        print "center2, normal2 after"
+        print center2, normal2
+        print
+        print '-'*40
+        print 
+        print '================'*5
+        print
         return figure
+
+    # def attach(self, figure):
+        # # Calculate translation
+        # # Calculate rotation
+        # # Rotate, then translate
         
-    def adapt():
-        pass
-            
+        # # ORG WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        # # Last face (considered tail ftm)
+        # center1, normal1 = self.get_face_info(self.n_faces()-1)
+        # # First face (considered head ftm)
+        # center2, normal2 = figure.get_face_info(0)
+        # vect = [center1[0]-center2[0], center1[1]-center2[1], center1[2]-center2[2]]
+        # # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        # # # TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        # # face1 = self.connection_face(self.n_faces()-1)
+        # # face0 = figure.connection_face(0)
+        # # p1 = self.vertex(face1[0])
+        # # p2 = figure.vertex(face0[0])
+        # # vect = [p1[0]-p2[0], p1[1]-p2[1], p1[2]-p2[2]]
+        # # # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
+        # # circles_file.write('circle1 c: {0}; n: {1} --- '.format(center1, normal1))
+        # # circles_file.write('circle2 c: {0}; n: {1}\n'.format(center2, normal2))
+        
+        # # vect = unit_vector(vect)
+        # t_matrix = translation_matrix(vect)
+        # n = unit_vector(vector_product(normal1, normal2))
+        # angle = angle_between_vectors(normal1, normal2)
+        # # angle = 3*angle_between_vectors(normal2, normal1)
+        # # print "center1, normal1", center1, normal1
+        # # print "center2, normal2", center2, normal2
+        # # print "vect", vect
+        # # print "n", n
+        # # print "angle", angle
+        # if equal_vertices(n, (0,0,0)):
+            # n = (1,0,0)
+        # if angle != 0:
+            # rot_matrix = rotation_matrix(-angle, n)
+            # for i, v in figure.vertices.iteritems():
+                # # Note: rotation matrix around a certain point does not work,
+                # # so we use this ftm
+                # new_v = v + (1,)
+                # new_v = (new_v[0]-center2[0],
+                         # new_v[1]-center2[1],
+                         # new_v[2]-center2[2], 1)
+                # new_v = np.dot(new_v, rot_matrix)
+                # # new_n = unit_vector(new_v[:-1])
+                # new_v[0] += vect[0] + center2[0]
+                # new_v[1] += vect[1] + center2[1]
+                # new_v[2] += vect[2] + center2[2]
+                # figure.update_vertex(i, new_v[:-1])
+                # # figure.update_normal(i, new_n)
+        # else:
+            # for i, v in figure.vertices.iteritems():
+                # new_v = v + (1,)
+                # new_v = np.dot(t_matrix, new_v)
+                # # new_v[0] += vect[0]
+                # # new_v[1] += vect[1]
+                # # new_v[2] += vect[2]
+                # # print "t new_v", i, v, new_v
+                # figure.update_vertex(i, new_v[:-1])
+        # return figure
+        
+    def adapt(self, figure):
+        print '%%%%%%%%%%%%%'*5
+        center1, normal1 = self.get_face_info(self.n_faces()-1)
+        center2, normal2 = figure.get_face_info(0)
+        print 'center1, normal1'
+        print center1, normal1
+        print 'center2, normal2'
+        print center2, normal2
+        face1 = self.connection_face(self.n_faces()-1)
+        face2 = figure.connection_face(0)
+        n_vertices1 = self.n_vertices()
+        n_vertices2 = figure.n_vertices()
+        v0 = self.vertex(face1[0])
+        v1 = figure.vertex(face2[0])
+        print 'v0, v1'
+        print v0, v1
+        v0c = unit_vector((-center1[0]+v0[0],-center1[1]+v0[1],-center1[2]+v0[2]))
+        print 'a'
+        v1c = unit_vector((-center2[0]+v1[0],-center2[1]+v1[1],-center2[2]+v1[2]))
+        print 'b'
+        angle = angle_between_vectors(v0c,v1c)
+        print 'c'
+        v_rot = unit_vector(vector_product(v0c,v1c))
+        print 'd'
+        # v_rot = normal2
+        print '0_'*20
+        print angle
+        print v_rot
+        print '_0'*20
+        t = (-center2[0],-center2[1],-center2[2])
+        if angle != 0.0 and math.isnan(angle) is False:
+            rot_m = rotation_matrix(angle, v_rot)
+            for k,v in figure.vertices.iteritems():
+                n_v = (v[0]+t[0],v[1]+t[1],v[2]+t[2])
+                n_v = np.dot(n_v+(1,), rot_m)
+                n_v = (n_v[0]-t[0],n_v[1]-t[1],n_v[2]-t[2])
+                figure.update_vertex(k,n_v)
+        print '%%%%%%%%%%%%%'*5
+        return figure
+
     def connect(self, figure):
         if isinstance(figure, Circle3D):
             return self._connect_to_circle3d(figure,1)  # the 1 means it will connect the tail
@@ -602,6 +693,11 @@ class CylindricalPart(GeometricMesh):
         face1 = None
         face2 = None
         # print '-'*30
+        # Calculate eps
+        # f = self.connection_face(0)
+        # v0 = self.vertex(f[0])
+        # v1 = self.vertex(f[1])
+        # eps = abs(vector_norm((v1[0]-v0[0],v1[1]-v0[1],v1[2]-v0[2])))
         for i in xrange(self.n_faces()):
             cur_face1 = self.connection_face(i)
             # print i, "cur_face1", cur_face1
@@ -614,6 +710,7 @@ class CylindricalPart(GeometricMesh):
                 for v_index in cur_face2:
                     vertex = part.vertex(v_index)
                     # print v_index, vertex
+                    # if equal_vertices(v,vertex,eps):
                     if equal_vertices(v,vertex):
                     # if np.array_equal(v,vertex):
                     # if v == vertex:
