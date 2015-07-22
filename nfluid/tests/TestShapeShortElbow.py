@@ -12,16 +12,19 @@ assembly = ChannelAssembly()
 
 create_channel( 
     Coupling(10, 20, 
-    PosH = Vector(0, 20, 30), 
+    PosH = Vector(0, 27, 30), 
     Normal = Vector(0, 0, 1) 
     ) 
 #  ) 
   ). \
   link(ShortElbow(NormalT = Vector(1, 0, 0))). \
+  link (Coupling(L = 125))
+
+"""
   link (Coupling(L = 125)). \
   link(ShortElbow(NormalT = Vector(0, 1, 0))). \
   link (Coupling(L = 140))
-
+"""
 
 #  link(ShortElbow(NormalH = Vector(0, 0, 1), PosT = Vector(0, 70, 100))). \
 #  link(ShortElbow(NormalT = Vector(0, 1, 0))). \

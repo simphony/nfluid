@@ -8,6 +8,9 @@ class CouplingSquare(ChannelElement2G):
       PosH = None, PosT = None,    \
       Normal = None):
     ChannelElement2G.__init__(self)
+
+    self.IsEqualGateSize = True
+
     self.length = L
     self.heads.append(GateRect(self))
     self.tails.append(GateRect(self))
@@ -29,6 +32,14 @@ class CouplingSquare(ChannelElement2G):
 #--------------------------------------------------------------------
   def get_b(self):
     return self.get_head_gate().get_b()
+
+#--------------------------------------------------------------------
+  def resolve_geometry_child(self):
+    if self.get_len() is not None: 
+      self.get_head_gate().PosElement = Vector(0, 0, - self.get_len() / 2.0)
+      self.get_tail_gate().PosElement = Vector(0, 0, self.get_len() / 2.0)
+
+    return ""
 
 #--------------------------------------------------------------------
   def resolve_geometry_child(self):

@@ -9,18 +9,20 @@ class Cap(ChannelElement):
       PosH = None, NormalH = None):
     ChannelElement.__init__(self)
 
+    self.IsAxialSym = True
+
     self.length = L 
 
     self.heads.append(GateCircle(self))
-
-    self.alpha = 90 # Could vary in future
-
 
     self.get_head_gate().set_normal_def(NormalH) 
 
     self.get_head_gate().set_pos_def(PosH)
 
     self.get_head_gate().set_size_def(R)
+
+    self.get_head_gate().NormalElement = Vector(0, 0, 1)
+    self.get_head_gate().PosElement = Vector(0, 0, 0)
 
 #--------------------------------------------------------------------
   def get_name(self):
@@ -53,4 +55,3 @@ class Cap(ChannelElement):
     print "create_shape Cap"
     return ""
 
- 

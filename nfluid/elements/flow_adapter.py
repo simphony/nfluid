@@ -10,6 +10,9 @@ class FlowAdapter(ChannelElement2G):
     Normal = None):
 
     ChannelElement2G.__init__(self)
+
+    self.IsAxialSym = True
+
     self.heads.append(GateCircle(self))
     self.tails.append(GateCircle(self))
 
@@ -19,6 +22,10 @@ class FlowAdapter(ChannelElement2G):
     self.get_tail_gate().set_pos_def(PosT)
     self.get_head_gate().set_size_def(RH)
     self.get_tail_gate().set_size_def(RT)
+
+# Initial position along Z
+    self.get_head_gate().NormalElement = Vector(0, 0, 1)
+    self.get_tail_gate().NormalElement = Vector(0, 0, 1)
 
 #--------------------------------------------------------------------
   def get_name(self):
@@ -35,6 +42,14 @@ class FlowAdapter(ChannelElement2G):
 #--------------------------------------------------------------------
   def get_rt(self):
     return self.get_tail_gate().get_r()
+
+#--------------------------------------------------------------------
+  def resolve_geometry_child(self):
+    if self.get_len() is not None: 
+      self.get_head_gate().PosElement = Vector(0, 0, - self.get_len() / 2.0)
+      self.get_tail_gate().PosElement = Vector(0, 0, self.get_len() / 2.0)
+
+    return ""
 
 #--------------------------------------------------------------------
   def print_info(self):

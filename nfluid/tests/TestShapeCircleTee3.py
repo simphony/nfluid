@@ -1,7 +1,7 @@
 from nfluid.core.channel_assembly import *
 from nfluid.elements.flow_adapter import *
 from nfluid.elements.circle_coupling import *
-from nfluid.elements.circle_tee import *
+from nfluid.elements.circle_tee3 import *
 from nfluid.tests.TestBase import *
 import os
 
@@ -18,7 +18,7 @@ tee = create_channel(
   ). \
   link(FlowAdapter(RT = 220, L = 15)). \
   link(Coupling(L = 125)).  \
-  link(TeeCircle(220, NormalT0 = Vector(1, 0, 0))) 
+  link(TeeCircle3(220,NormalH = Vector(0, 0, 1), NormalT0 = Vector(1, 0, 0))) 
 
 #
 tee. \
@@ -29,6 +29,10 @@ tee. \
 tee. \
   link(FlowAdapter(RT =155, L = 27), 1). \
   link(Coupling(L = 120))
-
+"""
+tee. \
+  link(FlowAdapter(RT =15, L = 7), 2). \
+  link(Coupling(L = 20))
+"""
 
 MakeTest1(assembly)

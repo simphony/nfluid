@@ -1,5 +1,6 @@
 from nfluid.core.channel_element_2g import *
 from nfluid.core.gates import *
+import math
 
 #====================================================================
 # Class of SphericCoupling
@@ -10,10 +11,13 @@ class SphericCoupling(ChannelElement2G):
       NormalH = None, NormalT = None):
     ChannelElement2G.__init__(self)
 
+    self.IsEqualGateSize = True
+
     self.heads.append(GateCircle(self))
     self.tails.append(GateCircle(self))
 
     self.RadiusSphere = RS
+    self.IsAxialSym = True
 
     self.get_head_gate().set_normal_def(NormalH) 
     self.get_tail_gate().set_normal_def(NormalT)
@@ -23,6 +27,10 @@ class SphericCoupling(ChannelElement2G):
 
     self.get_head_gate().set_size_def(R)
     self.get_tail_gate().set_size_def(R)
+
+# Initial position along Z
+    self.get_head_gate().NormalElement = Vector(0, 0, 1)
+    self.get_tail_gate().NormalElement = Vector(0, 0, 1)
 
 #--------------------------------------------------------------------
   def get_name(self):
@@ -34,7 +42,20 @@ class SphericCoupling(ChannelElement2G):
 
 #--------------------------------------------------------------------
   def resolve_geometry_child(self):
-    return self.set_equal_gate_size()
+    print "&&&&&&&& SphericCoupling 1"
+
+    if self.get_r() is not None:
+      if self.get_r() > self.RadiusSphere:
+        return "Incorrect Sphere radius"
+
+      length = math.sqrt(self.RadiusSphere ** 2 -  self.get_r() ** 2)
+
+      self.get_head_gate().PosElement = Vector(0, 0, - length)
+      self.get_tail_gate().PosElement = Vector(length, 0, 0)
+
+      self.length = length * 2
+
+    return ""
 
 #--------------------------------------------------------------------
   def print_info(self):
