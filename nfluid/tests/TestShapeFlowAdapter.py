@@ -1,50 +1,52 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+import os
+import sys
+
 from nfluid.core.channel_assembly import *
 from nfluid.elements.circle_coupling import *
 from nfluid.elements.flow_adapter import *
 from nfluid.tests.TestBase import *
-import os
 
-print os.path.basename(__file__), "------------------------\n"
+print os.path.basename(__file__), '------------------------\n'
+
+if len(sys.argv) == 1:
+    print '0: '
+    print '1: '
+    print '2: '
+
+    exit(0)
+
+n_tests = 3
 
 assembly = ChannelAssembly()
 
+if sys.argv[1] == '0':
+    print 'Test_0'
 
-last = create_channel( 
-    Coupling(10, 20, 
-    PosH = Vector(0, 20, 30), 
-    Normal = Vector(0, 0, 1) 
-    ) 
-#  ) 
-  ). \
-  link(FlowAdapter(L = 15)). \
-  link (Coupling(45, L = 125))
+    create_channel(Coupling(R=10, L=20, PosH=Vector(0, 20, 30),
+                            Normal=Vector(0, 0, 1))). \
+        link(FlowAdapter(L=15)). \
+        link(Coupling(R=45, L=125))
+elif sys.argv[1] == '1':
 
-#  link(FlowAdapter(L = 50, PosT = Vector(0, 70, 100))). \
+    print 'Test_1'
 
+    create_channel(Coupling(R=10, L=20, PosH=Vector(0, 20, 30),
+                            Normal=Vector(1, 0, 0))). \
+        link(FlowAdapter(L=15)). \
+        link(Coupling(R=45, L=125))
+elif sys.argv[1] == '2':
 
-#MakeTest1(assembly)
+    print 'Test_2'
+elif sys.argv[1] == '*':
 
-print "-----------------------------"
-el1 = assembly.get_element_by_id(1)
-"""
-if el1 is not None:
-  print "get_element_by_id ", el1.print_info()
+    for i in range(0, n_tests):
+        os.system('TestShapeFlowAdapter.py ' + str(i))
+    exit(0)
+else:
 
-gates_t, gates_h = el1.detach()
-if el1 is not None:
-  print "gates_t, gates_h ", gates_t, gates_h
-"""
-
-#if el1 is not None:
-#  assembly.delete_element(el1)
-
-new_elt = Coupling(L = 125)
-#el1.insert_before(new_elt)
-
-assembly.insert_element_before(new_elt, el1)
+    print 'Incorrect argument value'
+    exit(0)
 
 MakeTest1(assembly)
-
-print last.get_chain_str()
-print el1.get_chain_str()
- 
