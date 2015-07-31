@@ -28,25 +28,25 @@ if sys.argv[1] == '0':
     print 'Test_0'
     print 'Test Normal - forward, Pos - backward'
 
-    create_channel(Coupling(R=10, L=45, PosH=Vector(0, 20, 30),
+    create_channel(CircleCoupling(R=10, L=45, PosH=Vector(0, 20, 30),
                             Normal=Vector(0, 0, 1))). \
-        link(Coupling(PosT=Vector(400, 20, 0)))
+        link(CircleCoupling(PosT=Vector(400, 20, 0)))
 elif sys.argv[1] == '1':
 
     print 'Test_1'
     print 'Test Two positions, Pos - backward'
 
-    create_channel(Coupling(R=10, PosH=Vector(0, 20, 30),
+    create_channel(CircleCoupling(R=10, PosH=Vector(0, 20, 30),
                             PosT=Vector(0, 20, 150))). \
-        link(Coupling(PosT=Vector(0, 20, 400)))
+        link(CircleCoupling(PosT=Vector(0, 20, 400)))
 elif sys.argv[1] == '2':
 
     print 'Test_2'
     print 'Test negative Normal'
 
-    create_channel(Coupling(R=10, L=45, PosH=Vector(0, 20, 30),
+    create_channel(CircleCoupling(R=10, L=45, PosH=Vector(0, 20, 30),
                             Normal=Vector(0, 0, -1))). \
-        link(Coupling(PosT=Vector(400, 20, 0)))
+        link(CircleCoupling(PosT=Vector(400, 20, 0)))
 elif sys.argv[1] == '*':
 
     for i in range(0, n_tests):
@@ -57,6 +57,6 @@ else:
     print 'Incorrect argument value'
     exit(0)
 
-#  link (Coupling(PosH = Vector(0, 20, 50), PosT = Vector(0, 20, 400)) )
+#  link (CircleCoupling(PosH = Vector(0, 20, 50), PosT = Vector(0, 20, 400)) )
 
 MakeTest1(assembly)

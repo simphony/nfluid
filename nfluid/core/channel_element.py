@@ -94,7 +94,7 @@ class ChannelElement(object):
 #  "other text" - fatal error
 
     def resolve_geometry(self):
-        print '+++++++++++++++ resolve_geometry beg', self.get_name(), \
+        print '+++++++++++++ resolve_geometry beg', self.get_name(), \
             '+++++++++++++'
         ret = ''
         res = self.resolve_geometry_base()

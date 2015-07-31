@@ -23,40 +23,40 @@ assembly = ChannelAssembly()
 
 if sys.argv[1] == '0':
     print 'Test All 0'
-    tee = create_channel(Coupling(R=10, L=45, PosH=Vector(20, 0, 30),
+    tee = create_channel(CircleCoupling(R=10, L=45, PosH=Vector(20, 0, 30),
                                   Normal=Vector(0, 0, 1))). \
         link(SphericCoupling(RS=50)). \
-        link(Coupling(L=30)). \
-        link(TeeCircle(NormalT0=Vector(1, 0, 0)))
+        link(CircleCoupling(L=30)). \
+        link(CircleTee(NormalT0=Vector(1, 0, 0)))
 
     tee.link(FlowAdapter(RT=23, L=20)). \
         link(ShortElbow(NormalT=Vector(0, 0, 1))). \
-        link(Coupling(L=42)). \
+        link(CircleCoupling(L=42)). \
         link(Cap(L=10))
 
     tee.link(FlowAdapter(RT=15, L=27), 1). \
         link(LongElbow(RC=50, NormalT=Vector(0, 0, 1))). \
-        link(Coupling(L=20)). \
+        link(CircleCoupling(L=20)). \
         link(Cap(L=5))
 
 if sys.argv[1] == '1':
     print 'Test All 1'
 
-    tee = create_channel(Coupling(R=10, L=45, PosH=Vector(20, 0, 30),
+    tee = create_channel(CircleCoupling(R=10, L=45, PosH=Vector(20, 0, 30),
                                   Normal=Vector(0, 0, 1))). \
         link(SphericCoupling(RS=50)). \
         link(FlowAdapter(RT=30, L=20)). \
-        link(Coupling(L=30)). \
-        link(TeeCircle(NormalT0=Vector(1, 0, 0)))
+        link(CircleCoupling(L=30)). \
+        link(CircleTee(NormalT0=Vector(1, 0, 0)))
 
     tee.link(FlowAdapter(RT=23, L=20)). \
         link(ShortElbow(NormalT=Vector(0, 0, 1))). \
-        link(Coupling(L=42)). \
+        link(CircleCoupling(L=42)). \
         link(Cap(L=10))
 
     tee.link(FlowAdapter(RT=15, L=27), 1). \
         link(LongElbow(RC=50, NormalT=Vector(0, 0, 1))). \
-        link(Coupling(L=20)). \
+        link(CircleCoupling(L=20)). \
         link(Cap(L=5))
 
     print '-----------------------------'
@@ -79,7 +79,7 @@ if sys.argv[1] == '1':
     if el1 is not None:
         assembly.delete_element(el1)
 
-    new_elt = Coupling(L=125)
+    new_elt = CircleCoupling(L=125)
     el3.insert_before(new_elt)
 
     assembly.insert_element_before(new_elt, el3)

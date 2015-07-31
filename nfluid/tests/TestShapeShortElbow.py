@@ -26,18 +26,18 @@ assembly = ChannelAssembly()
 if sys.argv[1] == '0':
     print 'Test_0'
 
-    create_channel(Coupling(10, 20, PosH=Vector(0, 27, 30),
+    create_channel(CircleCoupling(10, 20, PosH=Vector(0, 27, 30),
                             Normal=Vector(0, 0, 1))). \
         link(ShortElbow(NormalT=Vector(1, 0, 0))). \
-        link(Coupling(L=125))
+        link(CircleCoupling(L=125))
 elif sys.argv[1] == '1':
 
     print 'Test_1'
 
-    create_channel(Coupling(10, 20, PosH=Vector(0, 27, 30),
+    create_channel(CircleCoupling(10, 20, PosH=Vector(0, 27, 30),
                             Normal=Vector(1, 0, 0))). \
         link(ShortElbow(NormalT=Vector(0, 1, 0))). \
-        link(Coupling(L=125))
+        link(CircleCoupling(L=125))
 
 elif sys.argv[1] == '2':
 

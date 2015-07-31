@@ -4,7 +4,7 @@ from nfluid.core.channel_element import *
 from nfluid.core.gates import *
 
 
-class TeeCircle3(ChannelElement):
+class CircleTee3(ChannelElement):
 
     def __init__(
         self,
@@ -48,7 +48,7 @@ class TeeCircle3(ChannelElement):
         self.get_tail_gate(1).set_normal_def(NormalT1)
         self.get_tail_gate(2).set_normal_def(NormalT2)
 
-# Initial position along Z and X
+        # Initial position along Z and X
 
         self.dx = math.cos(math.radians(120))
         self.dy = math.sin(math.radians(120))
@@ -59,7 +59,7 @@ class TeeCircle3(ChannelElement):
         self.get_tail_gate(2).NormalElement = Vector(-self.dx, -self.dy, 0)
 
     def get_name(self):
-        return 'TeeCircle3'
+        return 'CircleTee3'
 
     def get_gate_size_h(self, n=0):
         return self.get_head_gate().Size[n]

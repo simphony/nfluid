@@ -5,9 +5,9 @@ from nfluid.core.channel_element_2g import *
 from nfluid.core.gates import *
 
 
-# Class of Coupling
+# Class of CircleCoupling
 
-class Coupling(ChannelElement2G):
+class CircleCoupling(ChannelElement2G):
 
     def __init__(
         self,
@@ -38,7 +38,7 @@ class Coupling(ChannelElement2G):
         self.get_tail_gate().NormalElement = Vector(0, 0, 1)
 
     def get_name(self):
-        return 'Coupling'
+        return 'CircleCoupling'
 
     def get_r(self):
         return self.get_head_gate().get_r()
@@ -54,7 +54,7 @@ class Coupling(ChannelElement2G):
 
     def print_info(self):
         ChannelElement2G.print_info(self)
-        print 'Coupling radius Rdef =', \
+        print 'CircleCoupling radius Rdef =', \
             self.get_head_gate().get_r_def(), 'length =', self.length, \
             'RH =', self.get_gate_size_h(), 'RT =', \
             self.get_gate_size_t(), 'PosH =', self.get_head_gate().Pos, \
@@ -66,5 +66,5 @@ class Coupling(ChannelElement2G):
         self.shape = ShapeCircleCoupling(self.get_r(), self.get_len(),
                                          self.get_pos_head(),
                                          self.get_pos_tail())
-        print 'create_shape Coupling'
+        print 'create_shape CircleCoupling'
         return ''

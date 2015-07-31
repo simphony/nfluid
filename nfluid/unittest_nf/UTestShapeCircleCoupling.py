@@ -12,9 +12,9 @@ class NFT_CircleCoupling(NFT_UnittestBase):
         print 'Hello test_all_forward'
         print 'Test Normal - forward, Pos - backward'
 
-        create_channel(Coupling(R=10, L=45, PosH=Vector(0, 20, 30),
-                       Normal=Vector(1, 0,
-                       0))).link(Coupling(PosT=Vector(400, 20, 0)))
+        create_channel(CircleCoupling(R=10, L=45, PosH=Vector(0, 20, 30),
+                       Normal=Vector(1, 0, 0))). \
+            link(CircleCoupling(PosT=Vector(400, 20, 0)))
         self.process_chain()
 
     def test_bbb(self):

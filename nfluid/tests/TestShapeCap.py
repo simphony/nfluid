@@ -10,10 +10,10 @@ from nfluid.tests.TestBase import *
 print os.path.basename(__file__), "------------------------\n"
 
 if len(sys.argv) == 1:
-    print "0: Coupling, Normal z, Cap"
-    print "1: Coupling, Normal x, Cap"
-    print "2: Coupling, Cap"
-    print "3: Coupling, Cap"
+    print "0: CircleCoupling, Normal z, Cap"
+    print "1: CircleCoupling, Normal x, Cap"
+    print "2: CircleCoupling, Cap"
+    print "3: CircleCoupling, Cap"
     exit(0)
 
 n_tests = 4
@@ -23,7 +23,7 @@ assembly = ChannelAssembly()
 if sys.argv[1] == "0":
     print "Test Cap 0"
 
-    last = create_channel(Coupling(R=10, L=20, PosH=Vector(0, 27, 35),
+    last = create_channel(CircleCoupling(R=10, L=20, PosH=Vector(0, 27, 35),
                           Normal=Vector(0, 0, 1))
     ). \
         link(Cap(L=5))
@@ -31,7 +31,7 @@ if sys.argv[1] == "0":
 elif sys.argv[1] == "1":
     print "Test Cap 1"
 
-    last = create_channel(Coupling(R=10, L=20, PosH=Vector(0, 27, 35),
+    last = create_channel(CircleCoupling(R=10, L=20, PosH=Vector(0, 27, 35),
                           Normal=Vector(1, 0, 0))
     ). \
         link(Cap(L=5))
@@ -42,13 +42,13 @@ elif sys.argv[1] == "2":
 elif sys.argv[1] == "3":
     print "Test Cap 3"
 
-else:
-    print "Incorrect argument value"
-    exit(0)
-
 elif sys.argv[1] == "*":
     for i in range(0, n_tests):
         os.system("TestShapeCap.py " + str(i))
+    exit(0)
+
+else:
+    print "Incorrect argument value"
     exit(0)
 
 MakeTest1(assembly)
@@ -69,7 +69,7 @@ if el1 is not None:
 #if el1 is not None:
 #  assembly.delete_element(el1)
 
-new_elt = Coupling(L = 125)
+new_elt = CircleCoupling(L = 125)
 #el1.insert_before(new_elt)
 
 assembly.insert_element_before(new_elt, el1)

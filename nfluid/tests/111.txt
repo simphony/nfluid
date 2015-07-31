@@ -1,0 +1,1072 @@
+TestPositionBackward.py ------------------------
+
+resolve_geometry ----------------------------------
+resolve_geometry loop ---------------------------
+resolve_geometry before --------
+id= 0
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  78
+CircleCoupling radius Rdef = None length = 78 RH = None RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
++++++++++++++ resolve_geometry beg CircleCoupling +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+resolve_geometry_base= 
+self.IsEqualGateSize True
+set_equal_gate_size res= 
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Check positions
+Orientation not Resolved
+Resolving of positions
+CenterPos not Resolved
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+resolve_geometry_set_gates_norm_pos res= 
+resolve_geometry ret= 
+assembly.resolve_geometry res =  
+resolve_geometry after --------
+id= 0
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  78
+CircleCoupling radius Rdef = None length = 78 RH = None RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
+resolve_geometry before --------
+id= 1
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  15
+FlowAdapter RHdef = 22 radiusTail RTdef= None length = 15 RH = None RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
++++++++++++++ resolve_geometry beg FlowAdapter +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+resolve_geometry_base= 
+self.IsEqualGateSize False
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Check positions
+Orientation not Resolved
+Resolving of positions
+CenterPos not Resolved
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+resolve_geometry_set_gates_norm_pos res= 
+resolve_geometry ret= 
+assembly.resolve_geometry res =  
+resolve_geometry after --------
+id= 1
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  15
+FlowAdapter RHdef = 22 radiusTail RTdef= None length = 15 RH = 22 RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
+resolve_geometry before --------
+id= 2
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  125
+CircleCoupling radius Rdef = None length = 125 RH = None RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
++++++++++++++ resolve_geometry beg CircleCoupling +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+resolve_geometry_base= 
+self.IsEqualGateSize True
+set_equal_gate_size res= 
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Check positions
+Orientation not Resolved
+Resolving of positions
+CenterPos not Resolved
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+resolve_geometry_set_gates_norm_pos res= 
+resolve_geometry ret= 
+assembly.resolve_geometry res =  
+resolve_geometry after --------
+id= 2
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  125
+CircleCoupling radius Rdef = None length = 125 RH = None RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
+resolve_geometry before --------
+id= 3
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  20
+FlowAdapter RHdef = 12 radiusTail RTdef= None length = 20 RH = None RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
++++++++++++++ resolve_geometry beg FlowAdapter +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+resolve_geometry_base= 
+self.IsEqualGateSize False
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Check positions
+Orientation not Resolved
+Resolving of positions
+CenterPos not Resolved
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+resolve_geometry_set_gates_norm_pos res= 
+resolve_geometry ret= 
+assembly.resolve_geometry res =  
+resolve_geometry after --------
+id= 3
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  20
+FlowAdapter RHdef = 12 radiusTail RTdef= None length = 20 RH = 12 RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
+resolve_geometry before --------
+id= 4
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+NormalDef: Vector x = 0.0 y = 0.0 z = 1.0
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate --------------------
+PosDef: Vector x = 11 y = 22 z = 800
+Pos: Vector x = None y = None z = None
+NormalDef: Vector x = 0.0 y = 0.0 z = 1.0
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  20
+CircleCoupling radius Rdef = 88 length = 20 RH = None RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
++++++++++++++ resolve_geometry beg CircleCoupling +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+NormalDef: Vector x = 0.0 y = 0.0 z = 1.0
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate set_normal
+Gate set_normal_ext
+Gate resolve_geometry
+PosDef: Vector x = 11 y = 22 z = 800
+Pos: Vector x = None y = None z = None
+NormalDef: Vector x = 0.0 y = 0.0 z = 1.0
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate set_pos
+Gate set_normal
+resolve_geometry_base= ok
+self.IsEqualGateSize True
+set_equal_gate_size res= 
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+Vector x = 0 y = 0 z = 1 Vector x = 0.0 y = 0.0 z = 1.0
+Vector x = 0 y = 0 z = 1 Vector x = 0.0 y = 0.0 z = 1.0
+vector_product v1, v2 Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1
+vector_product notNone
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+Vector x = 0 y = 0 z = 1 Vector x = 0.0 y = 0.0 z = 1.0
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Vector x = 0 y = 0 z = 10.0 Vector x = 11 y = 22 z = 800
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Normal exists
+GetRotationMatrixVectorToVector From  Vector x = 0 y = 0 z = 1
+GetRotationMatrixVectorToVector To Vector x = 0.0 y = 0.0 z = 1.0
+vector_product v1, v2 Vector x = 0 y = 0 z = 1 Vector x = 0.0 y = 0.0 z = 1.0
+vector_product notNone
+Orientation Resolved
+1.0 0.0 0.0
+0.0 1.0 0.0
+0.0 0.0 1.0
+X axis will be  Vector x = 1.0 y = 0 z = 0
+Y axis will be  Vector x = 0 y = 1.0 z = 0
+Z axis will be  Vector x = 0 y = 0 z = 1.0
+Resolving of positions
+pairs_pos > 0
+RotationOperator is not None
+RealShift, pairs_pos[0][1] Vector x = 0 y = 0 z = 10.0 Vector x = 11 y = 22 z = 800
+CenterPos Resolved CenterPos Vector x = 11 y = 22 z = 790.0
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+Gate set_normal
+Gate set_normal
+Gate set_pos
+Gate set_pos_ext
+Gate set_pos
+resolve_geometry_set_gates_norm_pos ret= ok
+resolve_geometry_set_gates_norm_pos res= ok
+resolve_geometry ret= ok
+assembly.resolve_geometry res =  ok
+resolve_geometry after --------
+id= 4
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 780.0
+NormalDef: Vector x = 0.0 y = 0.0 z = 1.0
+Normal: Vector x = 0.0 y = 0.0 z = 1.0
+GateCircle radius = 88
+Gate --------------------
+PosDef: Vector x = 11 y = 22 z = 800
+Pos: Vector x = 11 y = 22 z = 800
+NormalDef: Vector x = 0.0 y = 0.0 z = 1.0
+Normal: Vector x = 0.0 y = 0.0 z = 1.0
+GateCircle radius = 88
+Len =  20
+CircleCoupling radius Rdef = 88 length = 20 RH = 88 RT = 88 PosH = Vector x = 11 y = 22 z = 780.0 PosT = Vector x = 11 y = 22 z = 800
+Changed True
+resolve_geometry loop ---------------------------
+resolve_geometry before --------
+id= 0
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Len =  78
+CircleCoupling radius Rdef = None length = 78 RH = None RT = 22 PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
++++++++++++++ resolve_geometry beg CircleCoupling +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+resolve_geometry_base= 
+self.IsEqualGateSize True
+set_equal_gate_size res= 
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Check positions
+Orientation not Resolved
+Resolving of positions
+CenterPos not Resolved
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+resolve_geometry_set_gates_norm_pos res= 
+resolve_geometry ret= 
+assembly.resolve_geometry res =  
+resolve_geometry after --------
+id= 0
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Len =  78
+CircleCoupling radius Rdef = None length = 78 RH = 22 RT = 22 PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
+resolve_geometry before --------
+id= 1
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  15
+FlowAdapter RHdef = 22 radiusTail RTdef= None length = 15 RH = 22 RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
++++++++++++++ resolve_geometry beg FlowAdapter +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+resolve_geometry_base= 
+self.IsEqualGateSize False
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Check positions
+Orientation not Resolved
+Resolving of positions
+CenterPos not Resolved
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+resolve_geometry_set_gates_norm_pos res= 
+resolve_geometry ret= 
+assembly.resolve_geometry res =  
+resolve_geometry after --------
+id= 1
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Len =  15
+FlowAdapter RHdef = 22 radiusTail RTdef= None length = 15 RH = 22 RT = None PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
+resolve_geometry before --------
+id= 2
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Len =  125
+CircleCoupling radius Rdef = None length = 125 RH = None RT = 12 PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
++++++++++++++ resolve_geometry beg CircleCoupling +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = None
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+resolve_geometry_base= 
+self.IsEqualGateSize True
+set_equal_gate_size res= 
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Check positions
+Orientation not Resolved
+Resolving of positions
+CenterPos not Resolved
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+resolve_geometry_set_gates_norm_pos res= 
+resolve_geometry ret= 
+assembly.resolve_geometry res =  
+resolve_geometry after --------
+id= 2
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Len =  125
+CircleCoupling radius Rdef = None length = 125 RH = 12 RT = 12 PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
+resolve_geometry before --------
+id= 3
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 780.0
+Normal def is None
+Normal: Vector x = 0.0 y = 0.0 z = 1.0
+GateCircle radius = 88
+Len =  20
+FlowAdapter RHdef = 12 radiusTail RTdef= None length = 20 RH = 12 RT = 88 PosH = Vector x = None y = None z = None PosT = Vector x = 11 y = 22 z = 780.0
++++++++++++++ resolve_geometry beg FlowAdapter +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 780.0
+Normal def is None
+Normal: Vector x = 0.0 y = 0.0 z = 1.0
+GateCircle radius = 88
+resolve_geometry_base= 
+self.IsEqualGateSize False
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+Vector x = 0 y = 0 z = 1 Vector x = 0.0 y = 0.0 z = 1.0
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+Vector x = 0 y = 0 z = 1 Vector x = 0.0 y = 0.0 z = 1.0
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Vector x = 0 y = 0 z = 10.0 Vector x = 11 y = 22 z = 780.0
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Normal exists
+GetRotationMatrixVectorToVector From  Vector x = 0 y = 0 z = 1
+GetRotationMatrixVectorToVector To Vector x = 0.0 y = 0.0 z = 1.0
+vector_product v1, v2 Vector x = 0 y = 0 z = 1 Vector x = 0.0 y = 0.0 z = 1.0
+vector_product notNone
+Orientation Resolved
+1.0 0.0 0.0
+0.0 1.0 0.0
+0.0 0.0 1.0
+X axis will be  Vector x = 1.0 y = 0 z = 0
+Y axis will be  Vector x = 0 y = 1.0 z = 0
+Z axis will be  Vector x = 0 y = 0 z = 1.0
+Resolving of positions
+pairs_pos > 0
+RotationOperator is not None
+RealShift, pairs_pos[0][1] Vector x = 0 y = 0 z = 10.0 Vector x = 11 y = 22 z = 780.0
+CenterPos Resolved CenterPos Vector x = 11 y = 22 z = 770.0
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+Gate set_normal
+Gate set_normal_ext
+Gate set_normal
+Gate set_pos
+Gate set_pos_ext
+Gate set_pos
+resolve_geometry_set_gates_norm_pos ret= ok
+resolve_geometry_set_gates_norm_pos res= ok
+resolve_geometry ret= ok
+assembly.resolve_geometry res =  ok
+resolve_geometry after --------
+id= 3
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 760.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 780.0
+Normal def is None
+Normal: Vector x = 0.0 y = 0.0 z = 1.0
+GateCircle radius = 88
+Len =  20
+FlowAdapter RHdef = 12 radiusTail RTdef= None length = 20 RH = 12 RT = 88 PosH = Vector x = 11 y = 22 z = 760.0 PosT = Vector x = 11 y = 22 z = 780.0
+Changed True
+resolve_geometry loop ---------------------------
+resolve_geometry before --------
+id= 1
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Len =  15
+FlowAdapter RHdef = 22 radiusTail RTdef= None length = 15 RH = 22 RT = 12 PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
++++++++++++++ resolve_geometry beg FlowAdapter +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+resolve_geometry_base= 
+self.IsEqualGateSize False
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Check positions
+Orientation not Resolved
+Resolving of positions
+CenterPos not Resolved
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+resolve_geometry_set_gates_norm_pos res= 
+resolve_geometry ret= 
+assembly.resolve_geometry res =  
+resolve_geometry after --------
+id= 1
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Len =  15
+FlowAdapter RHdef = 22 radiusTail RTdef= None length = 15 RH = 22 RT = 12 PosH = Vector x = None y = None z = None PosT = Vector x = None y = None z = None
+resolve_geometry before --------
+id= 2
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 760.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Len =  125
+CircleCoupling radius Rdef = None length = 125 RH = 12 RT = 12 PosH = Vector x = None y = None z = None PosT = Vector x = 11 y = 22 z = 760.0
++++++++++++++ resolve_geometry beg CircleCoupling +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 12
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 760.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+resolve_geometry_base= 
+self.IsEqualGateSize True
+set_equal_gate_size res= 
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1.0
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1.0
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Vector x = 0 y = 0 z = 62.5 Vector x = 11 y = 22 z = 760.0
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Normal exists
+GetRotationMatrixVectorToVector From  Vector x = 0 y = 0 z = 1
+GetRotationMatrixVectorToVector To Vector x = 0 y = 0 z = 1.0
+vector_product v1, v2 Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1.0
+vector_product notNone
+Orientation Resolved
+1.0 0.0 0.0
+0.0 1.0 0.0
+0.0 0.0 1.0
+X axis will be  Vector x = 1.0 y = 0 z = 0
+Y axis will be  Vector x = 0 y = 1.0 z = 0
+Z axis will be  Vector x = 0 y = 0 z = 1.0
+Resolving of positions
+pairs_pos > 0
+RotationOperator is not None
+RealShift, pairs_pos[0][1] Vector x = 0 y = 0 z = 62.5 Vector x = 11 y = 22 z = 760.0
+CenterPos Resolved CenterPos Vector x = 11 y = 22 z = 697.5
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+Gate set_normal
+Gate set_normal_ext
+Gate set_normal
+Gate set_pos
+Gate set_pos_ext
+Gate set_pos
+resolve_geometry_set_gates_norm_pos ret= ok
+resolve_geometry_set_gates_norm_pos res= ok
+resolve_geometry ret= ok
+assembly.resolve_geometry res =  ok
+resolve_geometry after --------
+id= 2
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 635.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 760.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Len =  125
+CircleCoupling radius Rdef = None length = 125 RH = 12 RT = 12 PosH = Vector x = 11 y = 22 z = 635.0 PosT = Vector x = 11 y = 22 z = 760.0
+Changed True
+resolve_geometry loop ---------------------------
+resolve_geometry before --------
+id= 1
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 635.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Len =  15
+FlowAdapter RHdef = 22 radiusTail RTdef= None length = 15 RH = 22 RT = 12 PosH = Vector x = None y = None z = None PosT = Vector x = 11 y = 22 z = 635.0
++++++++++++++ resolve_geometry beg FlowAdapter +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 635.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+resolve_geometry_base= 
+self.IsEqualGateSize False
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1.0
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1.0
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Vector x = 0 y = 0 z = 7.5 Vector x = 11 y = 22 z = 635.0
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Normal exists
+GetRotationMatrixVectorToVector From  Vector x = 0 y = 0 z = 1
+GetRotationMatrixVectorToVector To Vector x = 0 y = 0 z = 1.0
+vector_product v1, v2 Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1.0
+vector_product notNone
+Orientation Resolved
+1.0 0.0 0.0
+0.0 1.0 0.0
+0.0 0.0 1.0
+X axis will be  Vector x = 1.0 y = 0 z = 0
+Y axis will be  Vector x = 0 y = 1.0 z = 0
+Z axis will be  Vector x = 0 y = 0 z = 1.0
+Resolving of positions
+pairs_pos > 0
+RotationOperator is not None
+RealShift, pairs_pos[0][1] Vector x = 0 y = 0 z = 7.5 Vector x = 11 y = 22 z = 635.0
+CenterPos Resolved CenterPos Vector x = 11 y = 22 z = 627.5
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+Gate set_normal
+Gate set_normal_ext
+Gate set_normal
+Gate set_pos
+Gate set_pos_ext
+Gate set_pos
+resolve_geometry_set_gates_norm_pos ret= ok
+resolve_geometry_set_gates_norm_pos res= ok
+resolve_geometry ret= ok
+assembly.resolve_geometry res =  ok
+resolve_geometry after --------
+id= 1
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 620.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 635.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Len =  15
+FlowAdapter RHdef = 22 radiusTail RTdef= None length = 15 RH = 22 RT = 12 PosH = Vector x = 11 y = 22 z = 620.0 PosT = Vector x = 11 y = 22 z = 635.0
+Changed True
+resolve_geometry loop ---------------------------
+resolve_geometry before --------
+id= 0
+Gate --------------------
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 620.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 22
+Len =  78
+CircleCoupling radius Rdef = None length = 78 RH = 22 RT = 22 PosH = Vector x = None y = None z = None PosT = Vector x = 11 y = 22 z = 620.0
++++++++++++++ resolve_geometry beg CircleCoupling +++++++++++++
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = None y = None z = None
+Normal def is None
+Normal: Vector x = None y = None z = None
+GateCircle radius = 22
+Gate resolve_geometry
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 620.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 22
+resolve_geometry_base= 
+self.IsEqualGateSize True
+set_equal_gate_size res= 
+resolve_geometry_child res= 
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal
+Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1.0
+$$$$$$$$$$$$$$$$$$$$$$ pairs_normal_nc
+Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1.0
+$$$$$$$$$$$$$$$$$$$$$$ pairs_pos
+Vector x = 0 y = 0 z = 39.0 Vector x = 11 y = 22 z = 620.0
+Resolving of orientation
+IsAxialSym= True
+IsAxialSym
+Normal exists
+GetRotationMatrixVectorToVector From  Vector x = 0 y = 0 z = 1
+GetRotationMatrixVectorToVector To Vector x = 0 y = 0 z = 1.0
+vector_product v1, v2 Vector x = 0 y = 0 z = 1 Vector x = 0 y = 0 z = 1.0
+vector_product notNone
+Orientation Resolved
+1.0 0.0 0.0
+0.0 1.0 0.0
+0.0 0.0 1.0
+X axis will be  Vector x = 1.0 y = 0 z = 0
+Y axis will be  Vector x = 0 y = 1.0 z = 0
+Z axis will be  Vector x = 0 y = 0 z = 1.0
+Resolving of positions
+pairs_pos > 0
+RotationOperator is not None
+RealShift, pairs_pos[0][1] Vector x = 0 y = 0 z = 39.0 Vector x = 11 y = 22 z = 620.0
+CenterPos Resolved CenterPos Vector x = 11 y = 22 z = 581.0
+resolve_geometry_pos_norm_generic res= 
+resolve_geometry_pos_norm res= 
+Gate set_normal
+Gate set_normal
+Gate set_pos
+Gate set_pos
+resolve_geometry_set_gates_norm_pos ret= ok
+resolve_geometry_set_gates_norm_pos res= ok
+resolve_geometry ret= ok
+assembly.resolve_geometry res =  ok
+resolve_geometry after --------
+id= 0
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 542.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 620.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 22
+Len =  78
+CircleCoupling radius Rdef = None length = 78 RH = 22 RT = 22 PosH = Vector x = 11 y = 22 z = 542.0 PosT = Vector x = 11 y = 22 z = 620.0
+Changed True
+resolve_geometry loop ---------------------------
+Changed False
+
+
+print_info Assembly ---------------------------
+New Assembly Element --------------------------- CircleCoupling
+id= 0
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 542.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 620.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 22
+Len =  78
+CircleCoupling radius Rdef = None length = 78 RH = 22 RT = 22 PosH = Vector x = 11 y = 22 z = 542.0 PosT = Vector x = 11 y = 22 z = 620.0
+New Assembly Element --------------------------- FlowAdapter
+id= 1
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 620.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 22
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 635.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Len =  15
+FlowAdapter RHdef = 22 radiusTail RTdef= None length = 15 RH = 22 RT = 12 PosH = Vector x = 11 y = 22 z = 620.0 PosT = Vector x = 11 y = 22 z = 635.0
+New Assembly Element --------------------------- CircleCoupling
+id= 2
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 635.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 760.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Len =  125
+CircleCoupling radius Rdef = None length = 125 RH = 12 RT = 12 PosH = Vector x = 11 y = 22 z = 635.0 PosT = Vector x = 11 y = 22 z = 760.0
+New Assembly Element --------------------------- FlowAdapter
+id= 3
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 760.0
+Normal def is None
+Normal: Vector x = 0 y = 0 z = 1.0
+GateCircle radius = 12
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 780.0
+Normal def is None
+Normal: Vector x = 0.0 y = 0.0 z = 1.0
+GateCircle radius = 88
+Len =  20
+FlowAdapter RHdef = 12 radiusTail RTdef= None length = 20 RH = 12 RT = 88 PosH = Vector x = 11 y = 22 z = 760.0 PosT = Vector x = 11 y = 22 z = 780.0
+New Assembly Element --------------------------- CircleCoupling
+id= 4
+Gate --------------------
+Pos def is None
+Pos: Vector x = 11 y = 22 z = 780.0
+NormalDef: Vector x = 0.0 y = 0.0 z = 1.0
+Normal: Vector x = 0.0 y = 0.0 z = 1.0
+GateCircle radius = 88
+Gate --------------------
+PosDef: Vector x = 11 y = 22 z = 800
+Pos: Vector x = 11 y = 22 z = 800
+NormalDef: Vector x = 0.0 y = 0.0 z = 1.0
+Normal: Vector x = 0.0 y = 0.0 z = 1.0
+GateCircle radius = 88
+Len =  20
+CircleCoupling radius Rdef = 88 length = 20 RH = 88 RT = 88 PosH = Vector x = 11 y = 22 z = 780.0 PosT = Vector x = 11 y = 22 z = 800
+Test Geometry -------------------------------------
+Geometry resolved
+ShapeCircleCoupling
+create_shape CircleCoupling
+ShapeFlowAdapter
+create_shape FlowAdapter
+ShapeCircleCoupling
+create_shape CircleCoupling
+ShapeFlowAdapter
+create_shape FlowAdapter
+ShapeCircleCoupling
+create_shape CircleCoupling
+Shapes created
+Shape.export
+Shape.export
+Shape.export
+Shape.export
+Shape.export
+Shapes exported
+Shape.show
+Shape.show
+Shape.show
+Shape.show
+Shape.show
+release_shape
+release_shape
+release_shape
+release_shape
+release_shape

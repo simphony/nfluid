@@ -28,21 +28,21 @@ if sys.argv[1] == '0':
 
     print '%%%%%%%%%%%%%%', NormalH0
 
-    create_channel(Coupling(10, 15, PosH=Vector(0, 77, 130),
+    create_channel(CircleCoupling(10, 15, PosH=Vector(0, 77, 130),
                    Normal=Vector(0, 0, 1))). \
         link(LongElbowAngle(RC=50, Angle=135, NormalT=Vector(1, 0, 1))). \
-        link(Coupling(L=122))
+        link(CircleCoupling(L=122))
 
     print '%%%%%%%%%%%%%%', NormalH0
 elif sys.argv[1] == '1':
 
     print 'Test_1'
 
-    create_channel(Coupling(10, 20, PosH=Vector(0, 20, 30),
+    create_channel(CircleCoupling(10, 20, PosH=Vector(0, 20, 30),
                    Normal=Vector(0, 0, 1))). \
         link(LongElbow(RC=50, NormalT=Vector(0, 1, 0))). \
         link(LongElbowAngle(RC=50, Angle=45, NormalT=Vector(1, 0, 0))). \
-        link(Coupling(L=100))
+        link(CircleCoupling(L=100))
 
     print '%%%%%%%%%%%%%%', NormalH0
 elif sys.argv[1] == '2':

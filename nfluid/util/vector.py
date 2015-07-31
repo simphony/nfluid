@@ -17,7 +17,7 @@ class Vector(object):
         self,
         x=None,
         y=None,
-        z=None,
+        z=None
     ):
         self.x = x
         self.y = y
@@ -131,7 +131,7 @@ class Vector(object):
         self,
         x,
         y,
-        z,
+        z
     ):
         changed = False
 

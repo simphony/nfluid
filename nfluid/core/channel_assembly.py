@@ -9,7 +9,6 @@ class ChannelAssembly(object):
     def __init__(self):
         self.elements = []
         ChannelElement.assembly = self
-        print '-------------------test_---'
 
     def add_element(self, element):
         self.elements.append(element)
