@@ -3,8 +3,7 @@
 import os
 import sys
 from nfluid.core.channel_assembly import *
-from nfluid.elements.circle_coupling import *
-from nfluid.elements.spheric_coupling import *
+from nfluid.elements.square_coupling import *
 from nfluid.tests.TestBase import *
 
 print os.path.basename(__file__), '------------------------\n'
@@ -23,25 +22,21 @@ assembly = ChannelAssembly()
 if sys.argv[1] == '0':
     print 'Test_0'
 
-    create_channel(CircleCoupling(10, 20, PosH=Vector(0, 20, 30),
-                            Normal=Vector(0, 0, 1))).link(SphericCoupling(R=10, RS=50)). \
-        link(CircleCoupling(L=125))
+    create_channel(SquareCoupling(111, 27, 78,
+                              PosH=Vector(11, 22, 33),
+                              Normal=Vector(0, 0, 1))). \
+        link(SquareCoupling(L=20)). \
+        link(SquareCoupling(L=100))
 elif sys.argv[1] == '1':
 
     print 'Test_1'
-
-    create_channel(CircleCoupling(10, 20, PosH=Vector(0, 20, 30),
-                            Normal=Vector(1, 0, 0))). \
-        link(SphericCoupling(R=10, RS=50)). \
-        link(CircleCoupling(L=125))
-
 elif sys.argv[1] == '2':
 
     print 'Test_2'
 elif sys.argv[1] == '*':
 
     for i in range(0, n_tests):
-        os.system('TestShapeSphericCoupling.py ' + str(i))
+        os.system('TestShapeSquareCoupling.py ' + str(i))
     exit(0)
 else:
 
