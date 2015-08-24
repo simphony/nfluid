@@ -1,10 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from nfluid.geometry.generator import GeometryGenerator
+_generator = GeometryGenerator()
 
 class Shape(object):
 
     def __init__(self):
+        # Geometric mesh
+        self.mesh = None
         print 'Shape.__init__'
 
     def export(self, file):
@@ -26,7 +30,7 @@ class ShapeCap(Shape):
         # Cap length
         self.Length = L
         self.PosH = PosH
-
+        self.mesh = _generator.create_cap(self.Radius, self.Length)
         print 'ShapeCap'
 
 
@@ -38,6 +42,7 @@ class ShapeCircleCoupling(Shape):
     ):
         self.Radius = R
         self.Length = L
+        self.mesh = _generator.create_coupling(self.Radius, self.Length)
         self.PosH = PosH
         self.PosT = PosT
         print 'ShapeCircleCoupling'
@@ -52,7 +57,6 @@ class ShapeTee(Shape):
         self.PosH = PosH
         self.PosT0 = PosT0
         self.PosT1 = PosT1
-
         print 'ShapeTee'
 
 class ShapeTee3(Shape):
@@ -66,7 +70,6 @@ class ShapeTee3(Shape):
         self.PosT0 = PosT0
         self.PosT1 = PosT1
         self.PosT2 = PosT2
-        
         print 'ShapeTee3'
         
 class ShapeTee4(Shape):
@@ -81,7 +84,6 @@ class ShapeTee4(Shape):
         self.PosT1 = PosT1
         self.PosT2 = PosT2
         self.PosT3 = PosT3
-
         print 'ShapeTee4'
 
 
@@ -96,7 +98,9 @@ class ShapeFlowAdapter(Shape):
         self.Length = L
         self.PosH = PosH
         self.PosT = PosT
-
+        self.mesh = _generator.create_flow_adapter(self.RadiusH,
+                                                   self.RadiusT,
+                                                   self.Length)
         print 'ShapeFlowAdapter'
 
 
@@ -114,7 +118,8 @@ class ShapeLongElbow(Shape):
         self.Radius = R
         self.PosH = PosH
         self.PosT = PosT
-
+        self.mesh = _generator.create_long_elbow(self.Radius,
+                                                 self.RadiusCurvature)
         print 'ShapeLongElbow'
 
 class ShapeLongElbowAngle(Shape):
@@ -130,7 +135,9 @@ class ShapeLongElbowAngle(Shape):
         self.Radius = R
         self.PosH = PosH
         self.PosT = PosT
-
+        self.mesh = _generator.create_long_elbow(self.Radius,
+                                                 self.RadiusCurvature,
+                                                 self.angle)
         print 'ShapeLongElbow'
 
 
@@ -143,8 +150,22 @@ class ShapeShortElbow(Shape):
         self.Radius = R
         self.PosH = PosH
         self.PosT = PosT
-
+        self.mesh = _generator.create_short_elbow(self.Radius)
         print 'ShapeShortElbow'
+
+class ShapeShortElbowAngle(Shape):
+
+    def __init__(
+        self, Angle, R,
+        PosH, PosT,
+    ):
+        self.Radius = R
+        self.angle = Angle
+        self.PosH = PosH
+        self.PosT = PosT
+        self.mesh = _generator.create_short_elbow(self.Radius, self.angle)
+        print 'ShapeShortElbow'
+
 
 
 class ShapeSphericCoupling(Shape):
@@ -159,7 +180,8 @@ class ShapeSphericCoupling(Shape):
         self.Radius = R
         self.PosH = PosH
         self.PosT = PosT
-
+        self.mesh = _generator.create_spheric_coupling(self.Radius,
+                                                       self.RadiusSphere)
         print 'ShapeSphericCoupling'
 
 
@@ -174,6 +196,6 @@ class ShapeSquareCoupling(Shape):
         self.length = L
         self.PosH = PosH
         self.PosT = PosT
-
+        self.mesh = None
         print 'ShapeSquareCoupling'
 

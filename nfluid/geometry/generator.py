@@ -374,7 +374,7 @@ class GeometryGenerator():
         else:
             mid_max = inter2
 
-        # this is the minimal distance point that assures a 90º elbow, so the
+        # this is the minimal distance point that assures a 90 elbow, so the
         angle = angle_between_vectors(v01,v12)
         angle = (math.pi-angle)
         print 'angle', angle
