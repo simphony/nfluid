@@ -74,15 +74,21 @@ class ChannelAssembly(object):
                 print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
     def create_shapes(self):
+        Shape.init()
+
         for element in self.elements:
             res = element.create_shape()
             if res != '':
                 return res
-        return ''
+            Shape.add_shape(element.shape)
+
+        return Shape.finalize()
 
     def release_shapes(self):
         for element in self.elements:
             element.release_shape()
+        Shape.release()
+
 
     def export_shapes(self, file_name):
         file = open(file_name, 'w')

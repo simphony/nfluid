@@ -52,12 +52,10 @@ class Cap(ChannelElement):
         print 'Cap radius Rdef =', self.get_head_gate().get_r_def(), \
               'R =', self.get_head_gate().get_r()
 
-    def create_shape(self):
+    def create_shape_child(self):
 
         # check geometry data
-
-        self.shape = ShapeCap(self.get_head_gate().get_r(),
-                              self.length, 0)
-
         print 'create_shape Cap'
-        return ''
+
+        return CreateShape('cap', self.CenterPos, self.RotationOperator,
+            self.get_head_gate().get_r(), self.length, 0)

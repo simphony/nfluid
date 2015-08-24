@@ -60,3 +60,12 @@ class SquareCoupling(ChannelElement2G):
             self.get_head_gate().get_b_def(), 'length =', self.length, \
             ' AH =', self.get_gate_size_h(), 'AT =', \
             self.get_gate_size_t()
+
+    def create_shape_child(self):
+        print 'create_shape SquareCoupling'
+        # check geometry data
+        return CreateShape('square_coupling', self.CenterPos, self.RotationOperator, 
+                                         self.get_a(), self.get_b(), self.get_len(),
+                                         self.get_pos_head(),
+                                         self.get_pos_tail())
+            
