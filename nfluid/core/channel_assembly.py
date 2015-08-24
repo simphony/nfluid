@@ -84,6 +84,13 @@ class ChannelAssembly(object):
         for element in self.elements:
             element.release_shape()
 
+    def export_shapes(self, file_name):
+        file = open(file_name, 'w')
+        for element in self.elements:
+            element.export(file)
+        file.close()
+        return ''
+
     def export(self, file_name):
         file = open(file_name, 'w')
         for element in self.elements:

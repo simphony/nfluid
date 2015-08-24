@@ -92,7 +92,7 @@ class GeometricMesh(object):
         return res
 
     def export(self, filename):
-        vv.meshWrite(filename, self.to_visvis_mesh(), bin=True)
+        vv.meshWrite(filename, self.to_visvis_mesh(), bin=False)
         
     def n_vertices(self):
         return len(self.vertices)
@@ -551,8 +551,8 @@ class CylindricalPart(GeometricMesh):
 
     def link(self, figure):
         res = self.attach(figure)
-        # res = self.adapt(res)
-        # res = self.connect(res)
+        res = self.adapt(res)
+        res = self.connect(res)
         return res
         # return self.connect(res)
 
