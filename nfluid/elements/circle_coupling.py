@@ -60,11 +60,10 @@ class CircleCoupling(ChannelElement2G):
             self.get_gate_size_t(), 'PosH =', self.get_head_gate().Pos, \
             'PosT =', self.get_pos_tail()
 
-    def create_shape(self):
-
+    def create_shape_child(self):
+        print 'create_shape CircleCoupling'
         # check geometry data
-        self.shape = ShapeCircleCoupling(self.get_r(), self.get_len(),
+        return CreateShape('circle_coupling', self.CenterPos, self.RotationOperator, 
+                                         self.get_r(), self.get_len(),
                                          self.get_pos_head(),
                                          self.get_pos_tail())
-        print 'create_shape CircleCoupling'
-        return ''

@@ -90,3 +90,13 @@ class CircleTee4(ChannelElement):
             self.get_tail_gate(3).PosElement = Vector(0, -R, 0)
 
         return ''
+
+    def create_shape_child(self):
+        # check geometry data
+        print 'create_shape CircleTee4'
+
+        return CreateShape('circle_tee4', self.CenterPos, self.RotationOperator,
+            self.get_head_gate().get_r(),
+            self.get_pos_head(), self.get_pos_tail(0), self.get_pos_tail(1), 
+            self.get_pos_tail(2), self.get_pos_tail(3))
+        

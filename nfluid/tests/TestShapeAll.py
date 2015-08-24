@@ -39,7 +39,7 @@ if sys.argv[1] == '0':
         link(CircleCoupling(L=20)). \
         link(Cap(L=5))
 
-if sys.argv[1] == '1':
+elif sys.argv[1] == '1':
     print 'Test All 1'
 
     tee = create_channel(CircleCoupling(R=10, L=45, PosH=Vector(20, 0, 30),
@@ -90,4 +90,3 @@ else:
 
 MakeTest1(assembly)
 
-print el2.get_chain_str()

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from nfluid.core.gate_base import *
-from nfluid.shapes.shapes import *
+from nfluid.shapes.shapes_base import *
 
 from nfluid.util.rotations import *
 
@@ -47,8 +47,17 @@ class ChannelElement(object):
     def get_tail_gate(self, n=0):
         return self.tails[n]
 
-    def get_pos_head(self):
-        return self.get_head_gate().Pos
+    def get_pos_head(self, n = 0):
+        return self.get_head_gate(n).Pos
+
+    def get_pos_tail(self, n = 0):
+        return self.get_tail_gate(n).Pos
+
+    def get_normal_head(self, n = 0):
+        return self.get_head_gate(n).Normal
+
+    def get_normal_tail(self, n = 0):
+        return self.get_tail_gate(n).Normal
 
     def get_next_element(self, n=0):
         gt = self.get_tail_gate(n)
@@ -446,7 +455,21 @@ class ChannelElement(object):
         return (gates_tails, gates_heads)
 
     def create_shape(self):
+        self.shape = self.create_shape_child()
+
+        for gate in self.heads:
+            if gate.buddy is not None:
+                element = gate.buddy.element
+                if self.shape is not None:
+                    self.shape.add_link_head(element.shape)
+                n = element.tails.index(gate.buddy)
+                if element.shape is not None:
+                    element.shape.set_link_tail(n, self.shape)
+
         return ''
+
+    def create_shape_child(self):
+        return None
 
     def release_shape(self):
         print 'release_shape'
@@ -467,7 +490,7 @@ def resolve_geometry_base_fcn(gate, elem, arg):
 
 def is_resolved_geometry_fcn(gate, elem=None, arg=None):
     return gate.is_resolved_geometry()
-
+    
 
 def set_equal_gate_size_fcn(gate, elem, arg):
     return elem.set_gate_size_all(gate.Size)

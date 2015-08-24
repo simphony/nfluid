@@ -89,3 +89,12 @@ class CircleTee3(ChannelElement):
                                                       -self.dy * R, 0)
 
         return ''
+
+    def create_shape_child(self):
+        # check geometry data
+        print 'create_shape CircleTee3'
+
+        return CreateShape('circle_tee3', self.CenterPos, self.RotationOperator,
+            self.get_head_gate().get_r(),
+            self.get_pos_head(), self.get_pos_tail(0), self.get_pos_tail(1), self.get_pos_tail(2))
+        

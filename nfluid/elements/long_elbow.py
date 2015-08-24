@@ -67,12 +67,12 @@ class LongElbow(ChannelElement2G):
             self.get_head_gate().get_r_def(), 'RH =', \
             self.get_gate_size_h(), 'RT =', self.get_gate_size_t()
 
-    def create_shape(self):
+    def create_shape_child(self):
+        print 'create_shape LongElbow'
 
         # check geometry data
 
-        self.shape = ShapeLongElbow(self.get_r_curv(), self.get_r(),
+        return CreateShape('long_elbow', self.CenterPos, self.RotationOperator,
+                                    self.get_r_curv(), self.get_r(),
                                     self.get_pos_head(),
                                     self.get_pos_tail())
-        print 'create_shape LongElbow'
-        return ''

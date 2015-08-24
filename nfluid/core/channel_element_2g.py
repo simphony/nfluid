@@ -33,15 +33,6 @@ class ChannelElement2G(ChannelElement):
     ):
         return self.get_tail_gate().set_size_arg(s0, s1, s2, s3)
 
-    def get_pos_tail(self):
-        return self.get_tail_gate().Pos
-
-    def get_normal_head(self):
-        return self.get_head_gate().Normal
-
-    def get_normal_tail(self):
-        return self.get_tail_gate().Normal
-
     def get_gates_diff_real(self):
 
         diff = copy.copy(self.get_pos_tail())

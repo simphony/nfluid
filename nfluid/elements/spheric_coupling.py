@@ -74,13 +74,13 @@ class SphericCoupling(ChannelElement2G):
             'RadiusSphere =', self.RadiusSphere, 'PosH = ', \
             self.get_pos_head(), 'PosT =', self.get_pos_tail()
 
-    def create_shape(self):
+    def create_shape_child(self):
+        print 'create_shape SphericCoupling'
 
         # check geometry data
 
-        self.shape = ShapeSphericCoupling(self.RadiusSphere,
+        return CreateShape('spheric_coupling', self.CenterPos, self.RotationOperator,
+                                          self.RadiusSphere,
                                           self.get_r(),
                                           self.get_pos_head(),
                                           self.get_pos_tail())
-        print 'create_shape SphericCoupling'
-        return ''
