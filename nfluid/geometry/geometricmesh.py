@@ -719,14 +719,26 @@ class CylindricalPart(GeometricMesh):
         for i in xrange(self.face_count):
             if i != face1:
                 cur_f = self.connection_face(i)
-                res.add_connection_face(cur_f)
+                res.add_connection_face(tuple(cur_f))
         # Add the other connection face of the part
         for i in xrange(part.face_count):
             if i != face2:
                 f = part.connection_face(i)
                 cur_f = [ id_check[vertex] for vertex in f ]
-                res.add_connection_face(cur_f)
+                res.add_connection_face(tuple(cur_f))
         return res
+
+    def close(self):
+        """This will close the mesh for the head and tail gates so we obtain a closed
+        STL surface.
+        NOTE: this will terminate the mesh, so there is no guarantee that the rest of
+        operation will work after closing the mesh."""
+        for i in xrange(self.n_faces()):
+            face = self.connection_face(i)
+            center, normal = self.get_face_info(i)
+            v_index = self.add_vertex(center)
+            for v1,v2 in zip(face, face[1:]+(face[0],)):
+                self.add_triangle((v1, v_index, v2))
 
     @property
     def resolution(self):
