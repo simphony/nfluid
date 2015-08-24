@@ -33,6 +33,14 @@ class Shape(object):
         if shape is not None:
             cls.shapes.append(shape)
 
+    @classmethod
+    def export(f)
+        pass
+
+    @classmethod
+    def show()
+        pass
+
     def __init__(self):
         # Geometric mesh
         self.mesh = None
