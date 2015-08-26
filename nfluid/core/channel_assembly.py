@@ -89,11 +89,10 @@ class ChannelAssembly(object):
             element.release_shape()
         Shape.release()
 
-
     def export_shapes(self, file_name):
-        file = open(file_name, 'w')
-        Shape.export(f)
-        file.close()
+        # file = open(file_name, 'w')
+        Shape.export(file_name)
+        # file.close()
         return ''
 
     def show_shapes(self):

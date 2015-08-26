@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from nfluid.shapes.shapes_base import *
+from nfluid.visualisation.show import show
 from nfluid.geometry.generator import GeometryGenerator
 _generator = GeometryGenerator()
 
@@ -12,21 +12,63 @@ def SetListElement(list, elt, n):
     list[n] = elt
 #    print 'SetListElement', list
 
+class ShapeContainer(list):
+    def get_head(self):
+        for e in self:
+            if len(e.links_head) == 0:
+                return e
+        return None
+
+    def get_tail(self):
+        tails = []
+        for e in self:
+            if len(e.links_tail) == 0:
+                tails.append(e)
+        return tails
+
 class Shape(object):
-    shapes = []
+    shapes = ShapeContainer()
+    total_mesh = None
 
 #WORKFLOW init, add_shape, add_shape ... , finalize,  ...use..., release
     @classmethod
     def init(cls):
-        cls.shapes = []
+        cls.shapes = ShapeContainer()
+        cls.total_mesh = None
 
     @classmethod
     def finalize(cls):
+        initial = cls.shapes.get_head()
+        final = cls.shapes.get_tail()
+        initial_mesh = initial.mesh
+        
+        cursor = initial
+        cls.total_mesh = initial_mesh
+        count = 0
+        print "SHAPES!!!!"
+        print cls.shapes
+        print "initial"
+        print initial
+        print "final"
+        print final
+        while len(cursor.links_tail) != 0:
+            # WE ASSUME FOR THE MOMENT THAT WE DONT HAVE TEE PIECES
+            print "THE MEEEEHHHH {}".format(count)
+            print "cursor"
+            print cursor
+            tail = cursor.links_tail[0]
+            print "tail"
+            print tail
+            # HERE WE SHOULD MAKE ALL THE OPERATIONS RELATED WITH ORIENTATION
+            cls.total_mesh = cls.total_mesh.link(tail.mesh)
+            count += 1
+            cursor = tail
         return ''
 
     @classmethod
     def release(cls):
-        cls.shapes = []
+        cls.shapes = ShapeContainer()
+        cls.total_mesh = None
 
     @classmethod
     def add_shape(cls, shape):
@@ -34,12 +76,16 @@ class Shape(object):
             cls.shapes.append(shape)
 
     @classmethod
-    def export(f)
-        pass
+    def export(cls, file_name):
+        if cls.total_mesh is None:
+            raise Exception('Total mesh not generated!')
+        cls.total_mesh.export(file_name)
 
     @classmethod
-    def show()
-        pass
+    def show(cls):
+        if cls.total_mesh is None:
+            raise Exception('Total mesh not generated!')
+        show([cls.total_mesh])
 
     def __init__(self):
         # Geometric mesh
@@ -60,12 +106,12 @@ class Shape(object):
     def set_link_tail(self, n, shape):
         SetListElement(self.links_tail, shape, n)
 
-    def export(self, file):
-        file.write('Shape export\n')
-        print 'Shape.export'
+    # def export(self, file):
+        # file.write('Shape export\n')
+        # print 'Shape.export'
 
-    def show(self):
-        print 'Shape.show'
+    # def show(self):
+        # print 'Shape.show'
 
 
 class ShapeCap(Shape):

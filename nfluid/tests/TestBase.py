@@ -35,7 +35,7 @@ print_info Assembly ---------------------------'''
         print 'Shapes creation error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    res = assembly.export('Test1.stl')
+    res = assembly.export_shapes('Test1.stl')
     if res == '':
         print 'Shapes exported'
     else:

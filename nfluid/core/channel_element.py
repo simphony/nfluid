@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from nfluid.core.gate_base import *
-from nfluid.shapes.shapes_base import *
+from nfluid.shapes.shapes import *
 
 from nfluid.util.rotations import *
 
