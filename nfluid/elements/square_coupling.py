@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.core.channel_element_2g import *
-from nfluid.core.gates import *
-
-
+from nfluid.shapes.shapes import CreateShape
+from nfluid.core.channel_element_2g import ChannelElement2G
+from nfluid.core.gates import GateRect
+from nfluid.util.vector import Vector
 # Class of SquareCoupling
+
 
 class SquareCoupling(ChannelElement2G):
 
@@ -47,9 +48,9 @@ class SquareCoupling(ChannelElement2G):
     def resolve_geometry_child(self):
         if self.get_len() is not None:
             self.get_head_gate().PosElement = \
-                                 Vector(0, 0, -self.get_len() / 2.0)
+                Vector(0, 0, -self.get_len() / 2.0)
             self.get_tail_gate().PosElement = \
-                                 Vector(0, 0, self.get_len() / 2.0)
+                Vector(0, 0, self.get_len() / 2.0)
 
         return ''
 
@@ -64,8 +65,8 @@ class SquareCoupling(ChannelElement2G):
     def create_shape_child(self):
         print 'create_shape SquareCoupling'
         # check geometry data
-        return CreateShape('square_coupling', self.CenterPos, self.RotationOperator, 
-                                         self.get_a(), self.get_b(), self.get_len(),
-                                         self.get_pos_head(),
-                                         self.get_pos_tail())
-            
+        return CreateShape('square_coupling', self.CenterPos,
+                           self.RotationOperator,
+                           self.get_a(), self.get_b(), self.get_len(),
+                           self.get_pos_head(),
+                           self.get_pos_tail())

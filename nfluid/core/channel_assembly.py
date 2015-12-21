@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.core.channel_element import *
-from nfluid.core.channel_element_2g import *
+from nfluid.core.channel_element import ChannelElement
+from nfluid.core.channel_element_2g import ChannelElement2G
+from nfluid.shapes.shapes import Shape
 
 
 class ChannelAssembly(object):

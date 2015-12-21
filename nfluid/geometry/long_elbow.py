@@ -8,16 +8,7 @@ from nfluid.external.transformations import vector_product
 class LongElbow(CylindricalPart):
     def __init__(self, r1, r2, slices, stacks, angle=90):
         super(LongElbow, self).__init__()
-        print "r1"
-        print r1
-        print "r2"
-        print r2
-        print "slices"
-        print slices
-        print "stacks"
-        print stacks
-        print "angle"
-        print angle
+        r1 = r1-r2
         self.r1 = r1
         self.r2 = r2
         self.angle = angle

@@ -35,8 +35,8 @@ def GetRotationMatrixVectorToVector(From, To, AxisExt=None):
 
     # STUB!!! What to do if Len == 0
 
-    print 'GetRotationMatrixVectorToVector From ', From
-    print 'GetRotationMatrixVectorToVector To', To
+    # print 'GetRotationMatrixVectorToVector From ', From
+    # print 'GetRotationMatrixVectorToVector To', To
     axis = vector_product(From, To).normalize()
     if is_equal_eps(axis.get_len(), 0):
         if scalar_product(From, To) > 0:
@@ -45,30 +45,30 @@ def GetRotationMatrixVectorToVector(From, To, AxisExt=None):
         if AxisExt is not None:
             axis = AxisExt
         else:
-            print 'GetRotationMatrixVectorToVector !!!! Axix not defined'
+            # print 'GetRotationMatrixVectorToVector !!!! Axix not defined'
             axis_face = Vector(1, 0, 0)
             if is_colinear(axis_face, To):
                 axis_face = Vector(0, 1, 0)
             axis = get_orthogonal(axis_face, To).normalize()
 
     angle = get_vector_angle_rad(From, To)
-    print 'GetRotationMatrixVectorToVector axis ', axis
-    print 'GetRotationMatrixVectorToVector angle', math.degrees(angle)
+    # print 'GetRotationMatrixVectorToVector axis ', axis
+    # print 'GetRotationMatrixVectorToVector angle', math.degrees(angle)
     return GetRotationMatrixAxisAngleRad(axis, angle)
 
 def GetRotationMatrixVectorFaceToVector(From, To, Axis):
 
     Res = Operator()
 
-    print 'GetRotationMatrixVectorFaceToVector From ', From
-    print 'GetRotationMatrixVectorFaceToVector To', To
-    print 'GetRotationMatrixVectorFaceToVector Axis', Axis
+    # print 'GetRotationMatrixVectorFaceToVector From ', From
+    # print 'GetRotationMatrixVectorFaceToVector To', To
+    # print 'GetRotationMatrixVectorFaceToVector Axis', Axis
 
     FromOrt = get_orthogonal(From, Axis)
     ToOrt = get_orthogonal(To, Axis)
 
-    print 'GetRotationMatrixVectorFaceToVector FromOrt', FromOrt
-    print 'GetRotationMatrixVectorFaceToVector ToOrt', ToOrt
+    # print 'GetRotationMatrixVectorFaceToVector FromOrt', FromOrt
+    # print 'GetRotationMatrixVectorFaceToVector ToOrt', ToOrt
 
     if is_equal_eps(FromOrt.get_len(), 0):
         return (None, "Vector 'From' is colinear to the rotation axis")

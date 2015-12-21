@@ -307,9 +307,9 @@ def vector_product(v1, v2):
     if type(v1) is not Vector or type(v2) is not Vector:
         raise TypeError('unsupported operand type(s)')
 
-    print 'vector_product v1, v2', v1, v2
+    # print 'vector_product v1, v2', v1, v2
     if v1.is_not_none() and v2.is_not_none():
-        print 'vector_product notNone'
+        # print 'vector_product notNone'
         Res = Vector()
         Res.x = v1.y * v2.z - v1.z * v2.y
         Res.y = v1.z * v2.x - v1.x * v2.z
@@ -331,9 +331,9 @@ def get_vector_angle_rad(v1, v2):
             raise TypeError('Zero vector length')
 
         cos_angle = scalar_product(v1, v2) / L2
-        print 'cos_angle = ', cos_angle
+        # print 'cos_angle = ', cos_angle
         angle = math.acos(cos_angle)
-        print 'angle = ', angle
+        # print 'angle = ', angle
         return angle
 
     return None
@@ -364,10 +364,10 @@ def get_projection(v, axis):
 
 def get_orthogonal(v, axis):
 
-    print 'get_orthogonal', v, axis
+    # print 'get_orthogonal', v, axis
     proj = get_projection(v, axis)
     if proj is None:
-        print 'get_orthogonal is None'
+        # print 'get_orthogonal is None'
         return None
     return v - proj
 

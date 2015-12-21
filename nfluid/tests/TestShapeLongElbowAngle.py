@@ -2,22 +2,23 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-from nfluid.core.channel_assembly import *
-from nfluid.elements.circle_coupling import *
-from nfluid.elements.long_elbow import *
-from nfluid.elements.long_elbow_angle import *
-from nfluid.tests.TestBase import *
+from nfluid.core.channel_assembly import ChannelAssembly, create_channel
+from nfluid.elements.circle_coupling import CircleCoupling
+from nfluid.elements.long_elbow import LongElbow
+from nfluid.elements.long_elbow_angle import LongElbowAngle
+from nfluid.tests.TestBase import MakeTest1
+from nfluid.util.vector import get_vector_angle_grad, Vector
 
 print os.path.basename(__file__), '------------------------\n'
 
 if len(sys.argv) == 1:
-    print '0: '
-    print '1: '
-    print '2: '
+    print '0: Test 0'
+    print '1: Test 1'
+    print '2: All'
 
     exit(0)
 
-n_tests = 3
+n_tests = 2
 
 NormalH0 = Vector(0, 0, 100)
 
@@ -28,17 +29,17 @@ if sys.argv[1] == '0':
 
     print '%%%%%%%%%%%%%%', NormalH0
 
-    create_channel(CircleCoupling(10, 15, PosH=Vector(0, 77, 130),
+    create_channel(CircleCoupling(10, 15, PosH=Vector(0, 0, 0),
                    Normal=Vector(0, 0, 1))). \
-        link(LongElbowAngle(RC=50, Angle=135, NormalT=Vector(1, 0, 1))). \
-        link(CircleCoupling(L=122))
+        link(LongElbowAngle(RC=50, Angle=135, NormalT=Vector(1, 0, 1)))#. \
+        # link(CircleCoupling(L=122))
 
     print '%%%%%%%%%%%%%%', NormalH0
 elif sys.argv[1] == '1':
 
     print 'Test_1'
 
-    create_channel(CircleCoupling(10, 20, PosH=Vector(0, 20, 30),
+    create_channel(CircleCoupling(10, 20, PosH=Vector(0, 0, 0),
                    Normal=Vector(0, 0, 1))). \
         link(LongElbow(RC=50, NormalT=Vector(0, 1, 0))). \
         link(LongElbowAngle(RC=50, Angle=45, NormalT=Vector(1, 0, 0))). \
@@ -46,9 +47,6 @@ elif sys.argv[1] == '1':
 
     print '%%%%%%%%%%%%%%', NormalH0
 elif sys.argv[1] == '2':
-
-    print 'Test_2'
-elif sys.argv[1] == '*':
 
     for i in range(0, n_tests):
         os.system('TestShapeLongElbowAngle.py ' + str(i))

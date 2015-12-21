@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.util.vector import *
+from nfluid.util.vector import Vector
 
 
 class Gate(object):
@@ -255,7 +255,8 @@ class Gate(object):
     def clear_geometry(self):
 
         for size in self.Size:
-            size = None
+            if size is not None:
+                size = None
         self.Pos.clear_geometry()
         self.Normal.clear_geometry()
         print 'Gate clear_geometry'

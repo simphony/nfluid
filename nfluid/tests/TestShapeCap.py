@@ -1,11 +1,10 @@
 import os
 import sys
-from nfluid.core.channel_assembly import *
-from nfluid.elements.circle_coupling import *
-from nfluid.elements.flow_adapter import *
-from nfluid.elements.short_elbow import *
-from nfluid.elements.cap import *
-from nfluid.tests.TestBase import *
+from nfluid.core.channel_assembly import ChannelAssembly, create_channel
+from nfluid.elements.circle_coupling import CircleCoupling
+from nfluid.elements.cap import Cap
+from nfluid.tests.TestBase import MakeTest1
+from nfluid.util.vector import Vector
 
 print os.path.basename(__file__), "------------------------\n"
 
@@ -25,7 +24,7 @@ if sys.argv[1] == "0":
 
     last = create_channel(CircleCoupling(R=10, L=20, PosH=Vector(0, 27, 35),
                           Normal=Vector(0, 0, 1))
-    ). \
+                          ). \
         link(Cap(L=5))
 
 elif sys.argv[1] == "1":
@@ -33,7 +32,7 @@ elif sys.argv[1] == "1":
 
     last = create_channel(CircleCoupling(R=10, L=20, PosH=Vector(0, 27, 35),
                           Normal=Vector(1, 0, 0))
-    ). \
+                          ). \
         link(Cap(L=5))
 
 elif sys.argv[1] == "2":

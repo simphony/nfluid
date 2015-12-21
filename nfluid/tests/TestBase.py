@@ -1,7 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.core.channel_assembly import *
-import os
 
 
 def MakeTest1(assembly):

@@ -7,5 +7,5 @@ class ShortElbow(CylindricalPart):
         super(ShortElbow, self).__init__()
         self.r = r
         self.angle = angle
-        part = LongElbow(0, r, slices, stacks, angle)
+        part = LongElbow(r, r, slices, stacks, angle)
         self.copy_from_cylindricalpart(part)
