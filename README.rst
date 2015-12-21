@@ -13,12 +13,13 @@ Nfluid is hosted on github https://github.com/simphony/nfluid
 
 Requirements
 ------------
-    - simphony-common
+    - simphony >= 0.2.0
     - numpy >= 1.4.1
 
 Optional requirements
 ---------------------
 For mesh integrated visualization it needs visvis visualization library https://pypi.python.org/pypi/visvis/1.8
+and PySide as the backend: https://pypi.python.org/pypi/PySide/1.2.4
 
 Installation
 ------------
