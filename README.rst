@@ -51,10 +51,7 @@ We also import the create_channel function since it will be the starting point f
 
 After creating this, all the channels and elements will be added automatically to the assembly object. We can start building pieces:
 
-    create_channel(CircleCoupling(R=10, L=20, PosH=Vector(0, 20, 30),
-                                  Normal=Vector(0, 0, 1))). \
-        link(FlowAdapter(L=15)). \
-        link(CircleCoupling(R=45, L=125))
+    create_channel(CircleCoupling(R=10, L=20, PosH=Vector(0, 20, 30), Normal=Vector(0, 0, 1))).link(FlowAdapter(L=15)).link(CircleCoupling(R=45, L=125))
 
 Using the link method of the elements we specify how the elements are connected. As we can see in the example above there is no
 need to specify every parameter of each element since there are some of them that are inherited depending of which channel are they in
