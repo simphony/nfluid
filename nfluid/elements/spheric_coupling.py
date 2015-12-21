@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-from nfluid.core.channel_element_2g import *
-from nfluid.core.gates import *
+from nfluid.shapes.shapes import CreateShape
+from nfluid.core.channel_element_2g import ChannelElement2G
+from nfluid.core.gates import GateCircle
+from nfluid.util.vector import Vector
 import math
-
-
 # Class of SphericCoupling
+
 
 class SphericCoupling(ChannelElement2G):
 
@@ -76,11 +76,12 @@ class SphericCoupling(ChannelElement2G):
 
     def create_shape_child(self):
         print 'create_shape SphericCoupling'
-
         # check geometry data
 
-        return CreateShape('spheric_coupling', self.CenterPos, self.RotationOperator,
-                                          self.RadiusSphere,
-                                          self.get_r(),
-                                          self.get_pos_head(),
-                                          self.get_pos_tail())
+        return CreateShape('spheric_coupling', self.CenterPos,
+                           self.RotationOperator,
+                           self.RadiusSphere,
+                           self.get_r(),
+                           self.get_pos_head(),
+                           self.get_pos_tail(),
+                           self.get_normal_head())

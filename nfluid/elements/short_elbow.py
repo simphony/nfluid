@@ -1,11 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-from nfluid.core.channel_element_2g import *
-from nfluid.core.gates import *
-
-
+from nfluid.shapes.shapes import CreateShape
+from nfluid.core.channel_element_2g import ChannelElement2G
+from nfluid.core.gates import GateCircle
+from nfluid.util.vector import Vector
 # Class of Elbow
+
 
 class ShortElbow(ChannelElement2G):
 
@@ -71,6 +71,8 @@ class ShortElbow(ChannelElement2G):
 
         # check geometry data
 
-        return CreateShape('short_elbow', self.CenterPos, self.RotationOperator,
-                                     self.get_r(), self.get_pos_head(),
-                                     self.get_pos_tail())
+        return CreateShape('short_elbow', self.CenterPos,
+                           self.RotationOperator,
+                           self.get_r(), self.get_pos_head(),
+                           self.get_pos_tail(),
+                           self.get_normal_tail())

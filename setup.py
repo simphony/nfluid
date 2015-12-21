@@ -3,11 +3,11 @@ import os
 from setuptools import setup, find_packages
 
 # Read description
-# with open('README.rst', 'r') as readme:
-    # README_TEXT = readme.read()
+with open('README.rst', 'r') as readme:
+    README_TEXT = readme.read()
 
 # Setup version
-VERSION = '0.0.0'
+VERSION = '0.0.1'
 
 
 def write_version_py(filename=None):
@@ -31,6 +31,8 @@ setup(
     author='SimPhoNy, EU FP7 Project (Nr. 604005) www.simphony-project.eu',
     description='The nFluid package to microchannels design',
     install_requires=[
-        "simphony"],
+        "simphony",
+        "visvis",
+        "numpy"],
     packages=find_packages()
     )

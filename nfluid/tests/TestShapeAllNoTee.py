@@ -2,15 +2,16 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-from nfluid.tests.TestBase import *
-from nfluid.core.channel_assembly import *
-from nfluid.elements.flow_adapter import *
-from nfluid.elements.circle_coupling import *
-from nfluid.elements.cap import *
-from nfluid.elements.circle_tee import *
-from nfluid.elements.long_elbow import *
-from nfluid.elements.short_elbow import *
-from nfluid.elements.spheric_coupling import *
+from nfluid.tests.TestBase import MakeTest1
+from nfluid.core.channel_assembly import ChannelAssembly, create_channel
+from nfluid.elements.flow_adapter import FlowAdapter
+from nfluid.elements.circle_coupling import CircleCoupling
+from nfluid.elements.cap import Cap
+from nfluid.elements.circle_tee import CircleTee
+from nfluid.elements.long_elbow import LongElbow
+from nfluid.elements.short_elbow import ShortElbow
+from nfluid.elements.spheric_coupling import SphericCoupling
+from nfluid.util.vector import Vector
 
 print os.path.basename(__file__), '------------------------\n'
 
@@ -27,19 +28,37 @@ if sys.argv[1] == '0':
                                   Normal=Vector(0, 0, 1))). \
         link(SphericCoupling(RS=50)). \
         link(CircleCoupling(L=30)). \
+        link(ShortElbow(NormalT=Vector(-0.45, 0.21, 0))). \
+        link(CircleCoupling(L=42)). \
+        link(LongElbow(RC=50, NormalT=Vector(0, 0, 1))). \
+        link(LongElbow(RC=50, NormalT=Vector(1, 1, 0))). \
+        link(LongElbow(RC=50, NormalT=Vector(0, 0, 1))). \
+        link(LongElbow(RC=50, NormalT=Vector(-0.25, 11, 0))). \
+        link(LongElbow(RC=50, NormalT=Vector(0, 0, -1))). \
+        link(CircleCoupling(L=20)). \
+        link(FlowAdapter(RT=30, L=20)). \
+        link(CircleCoupling(L=30))  # . \
+    # link(Cap(L=10))
+
+elif sys.argv[1] == '1':
+    create_channel(CircleCoupling(R=10, L=45, PosH=Vector(20, 0, 30),
+                                  Normal=Vector(0, 0, 1))). \
+        link(SphericCoupling(RS=50)). \
+        link(CircleCoupling(L=30)). \
         link(ShortElbow(NormalT=Vector(0, 1, 0))). \
         link(CircleCoupling(L=42)). \
+        link(FlowAdapter(RT=30, L=20)). \
         link(LongElbow(RC=50, NormalT=Vector(1, 0, 0))). \
         link(CircleCoupling(L=20)). \
         link(FlowAdapter(RT=30, L=20)). \
-        link(CircleCoupling(L=30)). \
-        link(Cap(L=10))
+        link(CircleCoupling(L=30))  # . \
+    # link(Cap(L=10))
 
-elif sys.argv[1] == '1':
-    print 'Test All 1'
+elif sys.argv[1] == '2':
+    print 'Test All 2'
 
     tee = create_channel(CircleCoupling(R=10, L=45, PosH=Vector(20, 0, 30),
-                                  Normal=Vector(0, 0, 1))). \
+                                        Normal=Vector(0, 0, 1))). \
         link(SphericCoupling(RS=50)). \
         link(FlowAdapter(RT=30, L=20)). \
         link(CircleCoupling(L=30)). \
@@ -85,4 +104,3 @@ else:
     exit(0)
 
 MakeTest1(assembly)
-

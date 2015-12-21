@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.core.channel_element import *
-from nfluid.core.gates import *
+from nfluid.shapes.shapes import CreateShape
+from nfluid.core.channel_element import ChannelElement
+from nfluid.core.gates import GateCircle
+from nfluid.util.vector import Vector
 
 
 class CircleTee(ChannelElement):
@@ -81,6 +83,6 @@ class CircleTee(ChannelElement):
         print 'create_shape CircleTee'
 
         return CreateShape('circle_tee', self.CenterPos, self.RotationOperator,
-            self.get_head_gate().get_r(),
-            self.get_pos_head(), self.get_pos_tail(0), self.get_pos_tail(1))
-        
+                           self.get_head_gate().get_r(),
+                           self.get_pos_head(), self.get_pos_tail(0),
+                           self.get_pos_tail(1), self.get_normal_head())

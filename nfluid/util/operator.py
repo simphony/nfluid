@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.util.vector import *
+from nfluid.util.vector import Vector, is_equal_eps
 
 
 class Operator(object):
@@ -27,7 +27,7 @@ class Operator(object):
 
     def set_empty(self):
         for i in xrange(0, 9):
-            Res.VA[i] = 0
+            self.VA[i] = 0
 
     def A(self, row, col):
         return self.VA[3 * row + col]

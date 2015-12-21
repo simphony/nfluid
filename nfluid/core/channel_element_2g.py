@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.core.channel_element import *
+from nfluid.core.channel_element import ChannelElement
+import copy
 
 
 class ChannelElement2G(ChannelElement):

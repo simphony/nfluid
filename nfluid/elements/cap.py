@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-from nfluid.core.channel_element_2g import *
-from nfluid.core.gates import *
+from nfluid.shapes.shapes import CreateShape
+from nfluid.util.vector import Vector
+from nfluid.core.channel_element import ChannelElement
+from nfluid.core.gates import GateCircle
 
 
 # Class of Cap
@@ -58,4 +59,4 @@ class Cap(ChannelElement):
         print 'create_shape Cap'
 
         return CreateShape('cap', self.CenterPos, self.RotationOperator,
-            self.get_head_gate().get_r(), self.length, 0)
+                           self.get_head_gate().get_r(), self.length, 0)

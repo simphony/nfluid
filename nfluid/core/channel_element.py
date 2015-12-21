@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from nfluid.core.gate_base import *
-from nfluid.shapes.shapes_base import *
-
-from nfluid.util.rotations import *
+# from nfluid.core.gate_base import Gate
+# from nfluid.shapes.shapes import Shape, CreateShape
+from nfluid.util.vector import is_colinear
+from nfluid.util.rotations import (
+    GetRotationMatrixVectorToVector, GetRotationMatrixVectorFaceToVector)
 
 
 # Base class of Channel Elements
@@ -47,16 +48,16 @@ class ChannelElement(object):
     def get_tail_gate(self, n=0):
         return self.tails[n]
 
-    def get_pos_head(self, n = 0):
+    def get_pos_head(self, n=0):
         return self.get_head_gate(n).Pos
 
-    def get_pos_tail(self, n = 0):
+    def get_pos_tail(self, n=0):
         return self.get_tail_gate(n).Pos
 
-    def get_normal_head(self, n = 0):
+    def get_normal_head(self, n=0):
         return self.get_head_gate(n).Normal
 
-    def get_normal_tail(self, n = 0):
+    def get_normal_tail(self, n=0):
         return self.get_tail_gate(n).Normal
 
     def get_next_element(self, n=0):
@@ -231,9 +232,9 @@ class ChannelElement(object):
                 print 'Rot1'
                 rot1.trace()
 
-                (rot2, res2) = GetRotationMatrixVectorFaceToVector(rot1
-                               * pairs_normal_nc[1][0], pairs_normal_nc[1][1],
-                               axis)
+                (rot2, res2) = GetRotationMatrixVectorFaceToVector(
+                    rot1 * pairs_normal_nc[1][0], pairs_normal_nc[1][1],
+                    axis)
                 if res2 != '':
                     return res2
                 rot2.trace()
@@ -253,8 +254,9 @@ class ChannelElement(object):
                 print 'Rot1'
                 rot1.trace()
 
-                (rot2, res2) = GetRotationMatrixVectorFaceToVector(rot1
-                               * DiffElement2, RealElement2, RealElement1)
+                (rot2, res2) = GetRotationMatrixVectorFaceToVector(
+                    rot1 * DiffElement2, RealElement2,
+                    RealElement1)
                 if res2 != '':
                     return res2
                 print 'Rot2'
@@ -285,8 +287,8 @@ class ChannelElement(object):
                     rot1.trace()
 
                     (rot2, res2) = \
-                        GetRotationMatrixVectorFaceToVector(rot1
-                                * DiffElement, RealElement, axis)
+                        GetRotationMatrixVectorFaceToVector(
+                            rot1 * DiffElement, RealElement, axis)
                     if res2 != '':
                         return res2
                     rot2.trace()
@@ -424,12 +426,12 @@ class ChannelElement(object):
     def collect_gate_pairs_normal(self):
         pairs = []
         for gate in self.heads:
-            if gate.NormalElement is not None \
-                and gate.Normal.is_not_none():
+            if (gate.NormalElement is not None
+               and gate.Normal.is_not_none()):
                 pairs.append((gate.NormalElement, gate.Normal))
         for gate in self.tails:
-            if gate.NormalElement is not None \
-                and gate.Normal.is_not_none():
+            if (gate.NormalElement is not None
+               and gate.Normal.is_not_none()):
                 pairs.append((gate.NormalElement, gate.Normal))
         return pairs
 
@@ -490,7 +492,7 @@ def resolve_geometry_base_fcn(gate, elem, arg):
 
 def is_resolved_geometry_fcn(gate, elem=None, arg=None):
     return gate.is_resolved_geometry()
-    
+
 
 def set_equal_gate_size_fcn(gate, elem, arg):
     return elem.set_gate_size_all(gate.Size)

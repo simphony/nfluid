@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.core.gate_base import *
+from nfluid.core.gate_base import Gate
 
 
 class GateCircle(Gate):

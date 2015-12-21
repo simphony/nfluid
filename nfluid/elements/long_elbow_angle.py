@@ -1,10 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.core.channel_element_2g import *
-from nfluid.core.gates import *
-
-
+from nfluid.shapes.shapes import CreateShape
+from nfluid.core.channel_element_2g import ChannelElement2G
+from nfluid.core.gates import GateCircle
+from nfluid.util.vector import Vector
+import math
+import copy
 # Class of Elbow
+
 
 class LongElbowAngle(ChannelElement2G):
 
@@ -74,10 +77,13 @@ class LongElbowAngle(ChannelElement2G):
 
     def create_shape_child(self):
         print 'create_shape LongElbow'
-
         # check geometry data
 
-        return CreateShape('long_elbow_angle', self.CenterPos, self.RotationOperator,
-                                    self.get_r_curv(), self.get_r(),
-                                    self.get_pos_head(),
-                                    self.get_pos_tail())
+        return CreateShape('long_elbow_angle', self.CenterPos,
+                           self.RotationOperator,
+                           self.get_r_curv(),
+                           self.angle,
+                           self.get_r(),
+                           self.get_pos_head(),
+                           self.get_pos_tail(),
+                           self.get_normal_head())

@@ -1,7 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.core.channel_assembly import *
-import os
 
 
 def MakeTest1(assembly):
@@ -35,7 +33,7 @@ print_info Assembly ---------------------------'''
         print 'Shapes creation error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    res = assembly.export('Test1.stl')
+    res = assembly.export_shapes('Test1.stl')
     if res == '':
         print 'Shapes exported'
     else:
