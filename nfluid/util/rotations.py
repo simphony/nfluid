@@ -1,7 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from nfluid.util.operator import *
+from nfluid.util.operator import Operator
+from nfluid.util.vector import (Vector, vector_product, is_equal_eps,
+                                scalar_product,
+                                get_orthogonal,
+                                get_vector_angle_rad,
+                                is_colinear)
+import copy
+import math
+
 
 def GetRotationMatrixAxisAngleRad(aaxis, angle):
 
@@ -28,8 +36,10 @@ def GetRotationMatrixAxisAngleRad(aaxis, angle):
 
     return Res
 
+
 def GetRotationMatrixAxisAngleGrad(axis, angle):
     return GetRotationMatrixAxisAngleRad(axis, math.radians(angle))
+
 
 def GetRotationMatrixVectorToVector(From, To, AxisExt=None):
 
@@ -56,9 +66,10 @@ def GetRotationMatrixVectorToVector(From, To, AxisExt=None):
     # print 'GetRotationMatrixVectorToVector angle', math.degrees(angle)
     return GetRotationMatrixAxisAngleRad(axis, angle)
 
+
 def GetRotationMatrixVectorFaceToVector(From, To, Axis):
 
-    Res = Operator()
+    # Res = Operator()
 
     # print 'GetRotationMatrixVectorFaceToVector From ', From
     # print 'GetRotationMatrixVectorFaceToVector To', To

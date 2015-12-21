@@ -1,5 +1,6 @@
 # STL utility functions
 
+
 class STL_Info():
     def __init__(self, file_name):
         self.file = open(file_name, "r")
@@ -15,12 +16,12 @@ class STL_Info():
         self.file.close()
         self.output.close()
 
-    def _coordinates_of_vertex(self,line):
+    def _coordinates_of_vertex(self, line):
         words = line.split(' ')
         x = words[1]
         y = words[2]
         z = words[3]
-        return (float(x),float(y),float(z))
+        return (float(x), float(y), float(z))
 
     def _check_limits(self, coordinates):
         if coordinates[0] < self.minx:
@@ -67,6 +68,3 @@ class STL_Info():
             v2 = self._coordinates_of_vertex(lines[i+2])
             self._check_limits(v2)
             i = i + 7
-
-        
-            

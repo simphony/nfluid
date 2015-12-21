@@ -31,15 +31,8 @@ if sys.argv[1] == '0':
 
     create_channel(CircleCoupling(10, 15, PosH=Vector(0, 77, 130),
                                   Normal=Vector(0, 0, 1))). \
-        link(LongElbow(RC=50, NormalT=Vector(1, -1, 0)))#. \
-        #link(CircleCoupling(L=122))
-
-#  link(LongElbow(RC = 50, PosT = Vector(0, 127.0, 195.0))).  \
-#  link (CircleCoupling(L = 125)). \
-#  link(LongElbow(RC = 50, NormalH = Vector(0, 0, 1), \
-#                 NormalT = Vector(0, 1, 0).normalize())).  \
-#  link(LongElbow(RC = 50, NormalT = Vector(1, 0, 0))).  \
-#  link(LongElbow(RC = 50, PosT = Vector(50, 20, 100))).  \
+        link(LongElbow(RC=50, NormalT=Vector(1, -1, 0))). \
+        link(CircleCoupling(L=122))
 
     print '%%%%%%%%%%%%%%', NormalH0
 elif sys.argv[1] == '1':
@@ -49,8 +42,8 @@ elif sys.argv[1] == '1':
     create_channel(CircleCoupling(10, 20, PosH=Vector(0, 0, 0),
                                   Normal=Vector(0, 0, 1))). \
         link(LongElbow(RC=50, NormalT=Vector(0, 1, 0))). \
-        link(LongElbow(RC=50, NormalT=Vector(-1, 0, 0)))#. \
-        #link(CircleCoupling(L=100))
+        link(LongElbow(RC=50, NormalT=Vector(-1, 0, 0))). \
+        link(CircleCoupling(L=100))
 
     print '%%%%%%%%%%%%%%', NormalH0
 elif sys.argv[1] == '2':

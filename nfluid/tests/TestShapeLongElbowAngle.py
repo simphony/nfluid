@@ -31,8 +31,8 @@ if sys.argv[1] == '0':
 
     create_channel(CircleCoupling(10, 15, PosH=Vector(0, 0, 0),
                    Normal=Vector(0, 0, 1))). \
-        link(LongElbowAngle(RC=50, Angle=135, NormalT=Vector(1, 0, 1)))#. \
-        # link(CircleCoupling(L=122))
+        link(LongElbowAngle(RC=50, Angle=135, NormalT=Vector(1, 0, 1))). \
+        link(CircleCoupling(L=122))
 
     print '%%%%%%%%%%%%%%', NormalH0
 elif sys.argv[1] == '1':

@@ -226,20 +226,20 @@ class GeometricMesh(object):
         # the normals of surrounding triangles
         for v_id, triangles in triangles_of.iteritems():
             vt_ids = [self.triangle(t_id) for t_id in triangles]
-            normals = [normal_of(self.vertex(t[0]),self.vertex(t[1]),self.vertex(t[2])) for t in vt_ids]
+            normals = [normal_of(self.vertex(t[0]),
+                       self.vertex(t[1]), self.vertex(t[2])) for t in vt_ids]
             new_normal = self._avg_normal(normals)
-            # self.update_normal(v_id, new_normal)
-            self.update_normal(v_id, (0,0,-1))
+            self.update_normal(v_id, new_normal)
 
     def _avg_normal(self, normals):
-        res = [0,0,0]
+        res = [0, 0, 0]
         for n in normals:
             res[0] += n[0]
             res[1] += n[1]
             res[2] += n[2]
         n_normals = len(normals)
-        return (res[0]/n_normals,res[1]/n_normals,res[2]/n_normals)
-            
+        return (res[0]/n_normals, res[1]/n_normals, res[2]/n_normals)
+
     @property
     def resolution(self):
         return self.vertex_count
