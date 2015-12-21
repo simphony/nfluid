@@ -155,6 +155,12 @@ class Shape(object):
         cls.total_mesh.export(file_name)
 
     @classmethod
+    def simphony_mesh(cls):
+        if cls.total_mesh is None:
+            raise Exception('Total mesh not generated!')
+        return cls.total_mesh.to_simphony_mesh()
+
+    @classmethod
     def show(cls):
         if cls.total_mesh is None:
             raise Exception('Total mesh not generated!')

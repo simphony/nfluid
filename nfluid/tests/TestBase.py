@@ -43,4 +43,7 @@ print_info Assembly ---------------------------'''
 
     assembly.show_shapes()
 
+    mesh = assembly.extract_simphony_mesh()
+    print mesh
+
     assembly.release_shapes()

@@ -96,6 +96,9 @@ class ChannelAssembly(object):
         # file.close()
         return ''
 
+    def extract_simphony_mesh(self):
+        return Shape.simphony_mesh()
+
     def show_shapes(self):
         Shape.show()
 
