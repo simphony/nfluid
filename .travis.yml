@@ -1,0 +1,18 @@
+language: python
+python:
+  - "2.7"
+virtualenv:
+  system_site_packages: false
+env:
+  - SIMPHONY_VERSION=0.2.0
+before_install:
+  - pip install numpy
+  - pip install visvis
+install:
+  - pip install git+https://github.com/simphony/simphony-common.git@${SIMPHONY_VERSION}#egg=simphony
+  - python setup.py develop
+script:
+  - flake8 .
+after_success:
+  - coveralls
+
