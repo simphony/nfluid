@@ -31,8 +31,9 @@ setup(
     author='SimPhoNy, EU FP7 Project (Nr. 604005) www.simphony-project.eu',
     description='The nFluid package to microchannels design',
     install_requires=[
-        "simphony",
+        "simphony >= 0.2.0",
         "visvis",
-        "numpy"],
+        "numpy >= 1.4.1",
+        "PySide"],
     packages=find_packages()
     )
