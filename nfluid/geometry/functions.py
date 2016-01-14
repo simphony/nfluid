@@ -50,7 +50,7 @@ def angle_between_vectors(v0, v1):
     v1_u = unit_vector(v1)
     angle = np.arccos(np.dot(v0_u, v1_u))
     if np.isnan(angle):
-        if (v0_u == v1_u).all():
+        if (equal_vertices(v0_u, v1_u)):
             return 0.0
         else:
             return np.pi

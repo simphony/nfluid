@@ -60,7 +60,7 @@ class SphericCoupling(ChannelElement2G):
                                self.get_r() ** 2)
 
             self.get_head_gate().PosElement = Vector(0, 0, -length)
-            self.get_tail_gate().PosElement = Vector(length, 0, 0)
+            self.get_tail_gate().PosElement = Vector(0, 0, length)
 
             self.length = length * 2
 

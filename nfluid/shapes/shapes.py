@@ -62,21 +62,27 @@ class Shape(object):
                     angle = angle_between_vectors(normal_tail,
                                                   normal_tail_current)
                     iter = 100
+                    print "angle beg"
+                    print angle
+                    print normal_tail_current
                     while angle > 0.001 and iter:
                         tail.mesh.set_orientation(math.degrees(angle))
                         c, normal_tail_current = tail.mesh.get_face_info(1)
                         angle = angle_between_vectors(normal_tail,
                                                       normal_tail_current)
                         iter -= 1
+                        print angle
+                        print normal_tail_current
+                    print "angle_end"
                     if iter == 0:
                         iter = 100
-                    while angle > 0.001 and iter:
-                        angle = math.pi - angle
-                        tail.mesh.set_orientation(math.degrees(angle))
-                        c, normal_tail_current = tail.mesh.get_face_info(1)
-                        angle = angle_between_vectors(normal_tail,
-                                                      normal_tail_current)
-                        iter -= 1
+                    # while angle > 0.001 and iter:
+                        # angle = math.pi - angle
+                        # tail.mesh.set_orientation(math.degrees(angle))
+                        # c, normal_tail_current = tail.mesh.get_face_info(1)
+                        # angle = angle_between_vectors(normal_tail,
+                                                      # normal_tail_current)
+                        # iter -= 1
                     tail.mesh = cls.total_mesh.adapt(tail.mesh, gate)
                     cls.total_mesh = cls.total_mesh.connect(tail.mesh, gate)
                 else:
