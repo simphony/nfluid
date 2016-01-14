@@ -81,7 +81,7 @@ class Shape(object):
                         # tail.mesh.set_orientation(math.degrees(angle))
                         # c, normal_tail_current = tail.mesh.get_face_info(1)
                         # angle = angle_between_vectors(normal_tail,
-                                                      # normal_tail_current)
+                        #                             normal_tail_current)
                         # iter -= 1
                     tail.mesh = cls.total_mesh.adapt(tail.mesh, gate)
                     cls.total_mesh = cls.total_mesh.connect(tail.mesh, gate)
