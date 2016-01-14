@@ -35,5 +35,6 @@ setup(
         "visvis",
         "numpy >= 1.4.1",
         "PySide"],
-    packages=find_packages()
+    packages=find_packages(),
+    package_data={'nfluid.util': ['snappy_templates/*.txt']}
     )

@@ -5,11 +5,12 @@ import bisect
 from visvis import OrientableMesh
 from simphony.cuds.mesh import Point, Face, Cell, Mesh
 from nfluid.external.transformations import rotation_matrix
-from nfluid.external.transformations import angle_between_vectors
+# from nfluid.external.transformations import angle_between_vectors
 from nfluid.external.transformations import vector_product
 from nfluid.external.transformations import unit_vector
 from nfluid.external.transformations import vector_norm
 from nfluid.geometry.functions import cos_table, sin_table
+from nfluid.geometry.functions import angle_between_vectors
 from nfluid.geometry.functions import normal_of, center_of, distance
 from nfluid.geometry.auxiliar_geometry import Plane, Line3D
 import visvis as vv
@@ -86,10 +87,11 @@ class GeometricMesh(object):
 
     def to_visvis_mesh(self):
         vertices = self.vertices.values()
-        if len(self.normals) is not 0:
-            normals = self.normals.values()
-        else:
-            normals = None
+        # if len(self.normals) is not 0:
+        #     normals = self.normals.values()
+        # else:
+        #     normals = None
+        normals = None
         if len(self.triangles) is not 0:
             faces = self.triangles.values()
         else:
@@ -137,14 +139,20 @@ class GeometricMesh(object):
         This method implies a traslation and a rotation.
         """
         angle = angle_between_vectors(direction, n)
-        if angle == math.pi:
+        if angle == math.pi or angle == 0:
             aux_plane = Plane(p, n)
             aux_point = aux_plane.get_point()
+            print("my_label_0")
             vect = unit_vector((aux_point[0]-p[0],
                                aux_point[1]-p[1],
                                aux_point[2]-p[2]))
         else:
+            print("my_label_3")
+            print(self)
+            print ("direction, n")
+            print (direction, n)
             vect = unit_vector(vector_product(direction, n))
+            print("my_label_3_end")
 
         rot_m = rotation_matrix(angle, vect)
         d = (point[0]-p[0], point[1]-p[1], point[2]-p[2])
@@ -307,6 +315,7 @@ class Circle3D(GeometricMesh):
         self.radius = radius
         self.slices = slices
         self.center = pos
+        print("my_label_4")
         self.normal_v = tuple(unit_vector(normal))
         # WE DONT SUPPORT IT WELL FTM
         self.filled = filled
@@ -315,7 +324,9 @@ class Circle3D(GeometricMesh):
         sin_t = sin_table(slices)
 
         # Vectors inside the circle, same orientation for all the points
+        print("my_label_5")
         v1 = unit_vector((1, 0, 0))
+        print("my_label_6")
         v2 = unit_vector((0, 1, 0))
         points = ()
         # Generate the points:
@@ -552,7 +563,8 @@ class CylindricalPart(GeometricMesh):
 
     def adapt(self, figure, conn_face=0):
         # We dont adapt tee! stub, maybe we should change this
-        if figure.n_faces() > 1:
+        print "--- adapt; figure, nfaces: ", figure, figure.n_faces()
+        if figure.n_faces() > 2:
             return figure
         # Calculate angle of twist
         center1, normal1 = self.get_face_info(1+conn_face)
@@ -575,8 +587,10 @@ class CylindricalPart(GeometricMesh):
             figure.twist(angle)
             v0 = self.vertex(face1[0])
             v1 = figure.vertex(face2[0])
+            print("my_label_2")
             v0c = unit_vector((-center1[0]+v0[0], -center1[1]+v0[1],
                               -center1[2]+v0[2]))
+            print("my_label_1")
             v1c = unit_vector((-center2[0]+v1[0], -center2[1]+v1[1],
                               -center2[2]+v1[2]))
             angle = angle_between_vectors(v1c, v0c)
@@ -714,7 +728,8 @@ class CylindricalPart(GeometricMesh):
             min_index = -1
             for vert in vertex_coordinates:
                 cur_distance = distance(vert[1], v_coords)
-                if cur_distance < min_distance:
+                if (cur_distance < min_distance
+                        and vert[0] not in new_vertices1):
                     min_distance = cur_distance
                     min_index = vert[0]
             new_vertices1.append(min_index)
