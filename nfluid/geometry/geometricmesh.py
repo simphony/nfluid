@@ -159,9 +159,9 @@ class GeometricMesh(object):
         t = (-p[0], -p[1], -p[2])
         for k, v in self.vertices.iteritems():
             n_v = (v[0]+t[0], v[1]+t[1], v[2]+t[2])
-            if (angle != 0.0 and angle != 2*math.pi
-               and math.isnan(angle) is False):
-                    n_v = np.dot(n_v+(1,), rot_m)
+            if (angle != 0.0 and angle != 2*math.pi and
+                    math.isnan(angle) is False):
+                n_v = np.dot(n_v+(1,), rot_m)
             n_v = (n_v[0]+d[0]-t[0], n_v[1]+d[1]-t[1], n_v[2]+d[2]-t[2])
             self.update_vertex(k, n_v)
 
@@ -728,8 +728,8 @@ class CylindricalPart(GeometricMesh):
             min_index = -1
             for vert in vertex_coordinates:
                 cur_distance = distance(vert[1], v_coords)
-                if (cur_distance < min_distance
-                        and vert[0] not in new_vertices1):
+                if (cur_distance < min_distance and
+                        vert[0] not in new_vertices1):
                     min_distance = cur_distance
                     min_index = vert[0]
             new_vertices1.append(min_index)

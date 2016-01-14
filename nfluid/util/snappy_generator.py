@@ -28,23 +28,23 @@ def CreateBlockMeshDict(f, minv, maxv, nx, ny, nz):
     f.write('  vertices\n')
     f.write('  (\n')
 
-    f.write("      (" + str(minv[0]) + ' '
-            + str(minv[1]) + ' ' + str(minv[2]) + ')\n')
-    f.write("      (" + str(maxv[0]) + ' '
-            + str(minv[1]) + ' ' + str(minv[2]) + ')\n')
-    f.write("      (" + str(maxv[0]) + ' '
-            + str(maxv[1]) + ' ' + str(minv[2]) + ')\n')
-    f.write("      (" + str(minv[0]) + ' '
-            + str(maxv[1]) + ' ' + str(minv[2]) + ')\n')
+    f.write("      (" + str(minv[0]) + ' ' +
+            str(minv[1]) + ' ' + str(minv[2]) + ')\n')
+    f.write("      (" + str(maxv[0]) + ' ' +
+            str(minv[1]) + ' ' + str(minv[2]) + ')\n')
+    f.write("      (" + str(maxv[0]) + ' ' +
+            str(maxv[1]) + ' ' + str(minv[2]) + ')\n')
+    f.write("      (" + str(minv[0]) + ' ' +
+            str(maxv[1]) + ' ' + str(minv[2]) + ')\n')
 
-    f.write("      (" + str(minv[0]) + ' '
-            + str(minv[1]) + ' ' + str(maxv[2]) + ')\n')
-    f.write("      (" + str(maxv[0]) + ' '
-            + str(minv[1]) + ' ' + str(maxv[2]) + ')\n')
-    f.write("      (" + str(maxv[0]) + ' '
-            + str(maxv[1]) + ' ' + str(maxv[2]) + ')\n')
-    f.write("      (" + str(minv[0]) + ' '
-            + str(maxv[1]) + ' ' + str(maxv[2]) + ')\n')
+    f.write("      (" + str(minv[0]) + ' ' +
+            str(minv[1]) + ' ' + str(maxv[2]) + ')\n')
+    f.write("      (" + str(maxv[0]) + ' ' +
+            str(minv[1]) + ' ' + str(maxv[2]) + ')\n')
+    f.write("      (" + str(maxv[0]) + ' ' +
+            str(maxv[1]) + ' ' + str(maxv[2]) + ')\n')
+    f.write("      (" + str(minv[0]) + ' ' +
+            str(maxv[1]) + ' ' + str(maxv[2]) + ')\n')
 
     f.write('  );\n')
 

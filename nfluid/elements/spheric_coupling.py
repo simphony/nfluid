@@ -56,8 +56,8 @@ class SphericCoupling(ChannelElement2G):
             if self.get_r() > self.RadiusSphere:
                 return 'Incorrect Sphere radius'
 
-            length = math.sqrt(self.RadiusSphere ** 2
-                               - self.get_r() ** 2)
+            length = math.sqrt(self.RadiusSphere ** 2 -
+                               self.get_r() ** 2)
 
             self.get_head_gate().PosElement = Vector(0, 0, -length)
             self.get_tail_gate().PosElement = Vector(length, 0, 0)

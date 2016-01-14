@@ -57,26 +57,26 @@ class Operator(object):
         if self.is_empty():
             Res.set_empty()
         else:
-            Res.setA(0, 0, self.A(1, 1) * self.A(2, 2) - self.A(1, 2)
-                     * self.A(2, 1))
-            Res.setA(0, 1, self.A(0, 2) * self.A(2, 1) - self.A(0, 1)
-                     * self.A(2, 2))
-            Res.setA(0, 2, self.A(0, 1) * self.A(1, 2) - self.A(0, 2)
-                     * self.A(1, 1))
+            Res.setA(0, 0, self.A(1, 1) * self.A(2, 2) - self.A(1, 2) *
+                     self.A(2, 1))
+            Res.setA(0, 1, self.A(0, 2) * self.A(2, 1) - self.A(0, 1) *
+                     self.A(2, 2))
+            Res.setA(0, 2, self.A(0, 1) * self.A(1, 2) - self.A(0, 2) *
+                     self.A(1, 1))
 
-            Res.setA(1, 0, self.A(1, 2) * self.A(2, 0) - self.A(1, 0)
-                     * self.A(2, 2))
-            Res.setA(1, 1, self.A(0, 0) * self.A(2, 2) - self.A(0, 2)
-                     * self.A(2, 0))
-            Res.setA(1, 2, self.A(0, 2) * self.A(1, 0) - self.A(0, 0)
-                     * self.A(1, 2))
+            Res.setA(1, 0, self.A(1, 2) * self.A(2, 0) - self.A(1, 0) *
+                     self.A(2, 2))
+            Res.setA(1, 1, self.A(0, 0) * self.A(2, 2) - self.A(0, 2) *
+                     self.A(2, 0))
+            Res.setA(1, 2, self.A(0, 2) * self.A(1, 0) - self.A(0, 0) *
+                     self.A(1, 2))
 
-            Res.setA(2, 0, self.A(1, 0) * self.A(2, 1) - self.A(1, 1)
-                     * self.A(2, 0))
-            Res.setA(2, 1, self.A(2, 0) * self.A(0, 1) - self.A(0, 0)
-                     * self.A(2, 1))
-            Res.setA(2, 2, self.A(0, 0) * self.A(1, 1) - self.A(0, 1)
-                     * self.A(1, 0))
+            Res.setA(2, 0, self.A(1, 0) * self.A(2, 1) - self.A(1, 1) *
+                     self.A(2, 0))
+            Res.setA(2, 1, self.A(2, 0) * self.A(0, 1) - self.A(0, 0) *
+                     self.A(2, 1))
+            Res.setA(2, 2, self.A(0, 0) * self.A(1, 1) - self.A(0, 1) *
+                     self.A(1, 0))
 
             Res.scale(1.0 / self.get_deterninant())
 
@@ -84,12 +84,12 @@ class Operator(object):
 
     def get_deterninant(self):
 
-        return self.A(0, 0) * (self.A(1, 1) * self.A(2, 2)
-                               - self.A(1, 2) * self.A(2, 1)) \
-            - self.A(0, 1) * (self.A(2, 2) * self.A(1, 0)
-                              - self.A(1, 2) * self.A(2, 0)) \
-            + self.A(0, 2) * (self.A(1, 0) * self.A(2, 1)
-                              - self.A(1, 1) * self.A(2, 0))
+        return self.A(0, 0) * (self.A(1, 1) * self.A(2, 2) -
+                               self.A(1, 2) * self.A(2, 1)) -\
+            self.A(0, 1) * (self.A(2, 2) * self.A(1, 0) -
+                            self.A(1, 2) * self.A(2, 0)) +\
+            self.A(0, 2) * (self.A(1, 0) * self.A(2, 1) -
+                            self.A(1, 1) * self.A(2, 0))
 
     def trace(self):
 
