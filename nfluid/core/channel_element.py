@@ -426,12 +426,12 @@ class ChannelElement(object):
     def collect_gate_pairs_normal(self):
         pairs = []
         for gate in self.heads:
-            if (gate.NormalElement is not None
-               and gate.Normal.is_not_none()):
+            if (gate.NormalElement is not None and
+                    gate.Normal.is_not_none()):
                 pairs.append((gate.NormalElement, gate.Normal))
         for gate in self.tails:
-            if (gate.NormalElement is not None
-               and gate.Normal.is_not_none()):
+            if (gate.NormalElement is not None and
+                    gate.Normal.is_not_none()):
                 pairs.append((gate.NormalElement, gate.Normal))
         return pairs
 

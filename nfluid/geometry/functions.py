@@ -1,7 +1,8 @@
-from math import cos, sin, pi, asin
+from math import cos, sin, pi
 from nfluid.external.transformations import vector_product
 from nfluid.external.transformations import unit_vector
 from nfluid.external.transformations import vector_norm
+import numpy as np
 
 global_eps = 0.0001
 
@@ -45,10 +46,15 @@ def center_of(points):
 
 
 def angle_between_vectors(v0, v1):
-    n_mod = vector_norm(vector_product(v0, v1))
-    v0_mod = vector_norm(v0)
-    v1_mod = vector_norm(v1)
-    return asin(n_mod/(v0_mod*v1_mod))
+    v0_u = unit_vector(v0)
+    v1_u = unit_vector(v1)
+    angle = np.arccos(np.dot(v0_u, v1_u))
+    if np.isnan(angle):
+        if (v0_u == v1_u).all():
+            return 0.0
+        else:
+            return np.pi
+    return angle
 
 
 def distance(p0, p1):

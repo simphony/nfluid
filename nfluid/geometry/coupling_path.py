@@ -1,6 +1,7 @@
 from nfluid.geometry.geometricmesh import Circle3D, CylindricalPart, Arc3D
 from nfluid.external.transformations import unit_vector
-from nfluid.external.transformations import angle_between_vectors
+# from nfluid.external.transformations import angle_between_vectors
+from nfluid.geometry.functions import angle_between_vectors
 from nfluid.geometry.auxiliar_geometry import Line3D, Plane
 from nfluid.external.transformations import vector_norm
 import math

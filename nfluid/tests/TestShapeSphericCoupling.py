@@ -25,7 +25,7 @@ if sys.argv[1] == '0':
     print 'Test_0'
 
     create_channel(CircleCoupling(1, 5, PosH=Vector(0, 20, 0),
-                                  Normal=Vector(0, 0, 1))).link(SphericCoupling(R=1, RS=5)). \
+                   Normal=Vector(0, 0, 1))).link(SphericCoupling(R=1, RS=5)). \
         link(CircleCoupling(L=10))
 elif sys.argv[1] == '1':
 

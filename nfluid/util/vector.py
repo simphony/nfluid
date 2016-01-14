@@ -137,8 +137,9 @@ class Vector(object):
         if x is not None:
             if self.x is not None:
                 if not is_equal_eps(self.x, x):
-                    return 'x is not equal to already defined value self.x = ' \
-                        + str(self.x) + ' x = ' + str(x)
+                    return 'x is not equal to already defined \
+                            value self.x = ' +\
+                            str(self.x) + ' x = ' + str(x)
             else:
                 self.x = x
                 changed = True
@@ -146,8 +147,9 @@ class Vector(object):
         if y is not None:
             if self.y is not None:
                 if not is_equal_eps(self.y, y):
-                    return 'y is not equal to already defined value self.y = ' \
-                        + str(self.y) + ' y = ' + str(y)
+                    return 'y is not equal to already defined \
+                            value self.y = ' +\
+                            str(self.y) + ' y = ' + str(y)
             else:
                 self.y = y
                 changed = True
@@ -155,8 +157,9 @@ class Vector(object):
         if z is not None:
             if self.z is not None:
                 if not is_equal_eps(self.z, z):
-                    return 'z is not equal to already defined value self.z = ' \
-                        + str(self.z) + ' z = ' + str(z)
+                    return 'z is not equal to already defined \
+                            value self.z = ' +\
+                            str(self.z) + ' z = ' + str(z)
             else:
                 self.z = z
                 changed = True

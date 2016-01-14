@@ -5,7 +5,8 @@ import math
 
 from nfluid.visualisation.show import show
 from nfluid.geometry.generator import GeometryGenerator
-from nfluid.external.transformations import angle_between_vectors
+# from nfluid.external.transformations import angle_between_vectors
+from nfluid.geometry.functions import angle_between_vectors
 from nfluid.geometry.auxiliar_geometry import Plane, Line3D
 from nfluid.external.transformations import unit_vector
 _generator = GeometryGenerator()
@@ -132,7 +133,9 @@ class Shape(object):
         pos = (initial.PosH.X(0), initial.PosH.X(1), initial.PosH.X(2))
         dir = (initial.NormalH.X(0), initial.NormalH.X(1),
                initial.NormalH.X(2))
+        print("the error beg")
         initial_mesh.move(point=pos, direction=dir)
+        print("the error end")
         cursor = initial
         cls.total_mesh = initial_mesh
         cls.connect_next_piece(cursor, 0)
