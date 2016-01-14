@@ -5,10 +5,7 @@ import math
 
 from nfluid.visualisation.show import show
 from nfluid.geometry.generator import GeometryGenerator
-# from nfluid.external.transformations import angle_between_vectors
 from nfluid.geometry.functions import angle_between_vectors
-from nfluid.geometry.auxiliar_geometry import Plane, Line3D
-from nfluid.external.transformations import unit_vector
 _generator = GeometryGenerator()
 
 
@@ -56,60 +53,29 @@ class Shape(object):
                         isinstance(tail, ShapeLongElbow) or
                         isinstance(tail, ShapeTee) or
                         isinstance(tail, ShapeShortElbow)):
-                    normal_head = (tail.NormalH.X(0), tail.NormalH.X(1),
+                    normal_tail = (tail.NormalH.X(0), tail.NormalH.X(1),
                                    tail.NormalH.X(2))
-                    try:
-                        pos_t = tail.PosT
-                    except:
-                        pos_t = tail.PosT0  # when we are processing a Tee
-                    center_target = (pos_t.X(0), pos_t.X(1),
-                                     pos_t.X(2))
                     tail.mesh = cls.total_mesh.attach(tail.mesh, gate)
-                    center_head, normal_head = tail.mesh.get_face_info(0)
-                    center_current, normal_tail = tail.mesh.get_face_info(1)
-                    head_plane = Plane(center_head, normal_head)
-                    center_target_p = head_plane.intersection(
-                        Line3D(center_target, normal_head))
-                    # center_current_proyection
-                    c_c_p = head_plane.intersection(
-                        Line3D(center_current, normal_head))
-                    vector_head_target = unit_vector(
-                        (center_target_p[0]-center_head[0],
-                         center_target_p[1]-center_head[1],
-                         center_target_p[2]-center_head[2]))
-                    vector_head_current = unit_vector(
-                        (c_c_p[0]-center_head[0],
-                         c_c_p[1]-center_head[1],
-                         c_c_p[2]-center_head[2]))
-                    angle = angle_between_vectors(vector_head_target,
-                                                  vector_head_current)
+                    c, normal_tail_current = tail.mesh.get_face_info(1)
+                    print "normal_tail", normal_tail
+                    print "normal_tail_current", normal_tail_current
+                    angle = angle_between_vectors(normal_tail,
+                                                  normal_tail_current)
                     iter = 100
                     while angle > 0.001 and iter:
                         tail.mesh.set_orientation(math.degrees(angle))
-                        center_current, n = tail.mesh.get_face_info(1)
-                        c_c_p = head_plane.intersection(
-                            Line3D(center_current, normal_head))
-                        vector_head_current = unit_vector(
-                            (c_c_p[0]-center_head[0],
-                             c_c_p[1]-center_head[1],
-                             c_c_p[2]-center_head[2]))
-                        angle = angle_between_vectors(vector_head_target,
-                                                      vector_head_current)
+                        c, normal_tail_current = tail.mesh.get_face_info(1)
+                        angle = angle_between_vectors(normal_tail,
+                                                      normal_tail_current)
                         iter -= 1
                     if iter == 0:
                         iter = 100
                     while angle > 0.001 and iter:
                         angle = math.pi - angle
                         tail.mesh.set_orientation(math.degrees(angle))
-                        center_current, n = tail.mesh.get_face_info(1)
-                        c_c_p = head_plane.intersection(
-                            Line3D(center_current, normal_head))
-                        vector_head_current = unit_vector(
-                            (c_c_p[0]-center_head[0],
-                             c_c_p[1]-center_head[1],
-                             c_c_p[2]-center_head[2]))
-                        angle = angle_between_vectors(vector_head_target,
-                                                      vector_head_current)
+                        c, normal_tail_current = tail.mesh.get_face_info(1)
+                        angle = angle_between_vectors(normal_tail,
+                                                      normal_tail_current)
                         iter -= 1
                     tail.mesh = cls.total_mesh.adapt(tail.mesh, gate)
                     cls.total_mesh = cls.total_mesh.connect(tail.mesh, gate)
@@ -133,9 +99,7 @@ class Shape(object):
         pos = (initial.PosH.X(0), initial.PosH.X(1), initial.PosH.X(2))
         dir = (initial.NormalH.X(0), initial.NormalH.X(1),
                initial.NormalH.X(2))
-        print("the error beg")
         initial_mesh.move(point=pos, direction=dir)
-        print("the error end")
         cursor = initial
         cls.total_mesh = initial_mesh
         cls.connect_next_piece(cursor, 0)

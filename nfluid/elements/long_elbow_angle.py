@@ -86,4 +86,4 @@ class LongElbowAngle(ChannelElement2G):
                            self.get_r(),
                            self.get_pos_head(),
                            self.get_pos_tail(),
-                           self.get_normal_head())
+                           self.get_normal_tail())
