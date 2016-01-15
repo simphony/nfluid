@@ -26,6 +26,7 @@ class CouplingPath(CylindricalPart):
             res = res.connect(new_circle)
         part = res
         self.copy_from_cylindricalpart(part)
+        self.compute_normals()
 
     def _calculate_points(self, r, points, stacks):
         """Calculates points and normals of the circles that will compound
