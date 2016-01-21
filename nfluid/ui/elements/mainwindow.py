@@ -1,13 +1,19 @@
 from PySide import QtCore, QtGui
+from nfluid.ui.elements.auxiliar import WidgetParameterNumber
+from nfluid.ui.elements.auxiliar import WidgetParameterVector
+from nfluid.ui.elements.auxiliar import WidgetNewPiece
 from nfluid.ui.elements.creationpieceswidget import CreationPiecesWidget
 from nfluid.ui.elements.listpieceswidget import ListPiecesWidget
 from nfluid.ui.elements.visualizer import VisVisWidget
+from nfluid.ui.manager import NfluidDataManager, Piece
+from nfluid.util.vector import Vector
 
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.create_gui()
+        self.refresh_all()
 
     def create_gui(self):
         self.dw_pieces_creation = QtGui.QDockWidget()
@@ -30,8 +36,61 @@ class MainWindow(QtGui.QMainWindow):
         self.menu_main = None
 
         self.status_bar = None
-
+        
+        self.min_h = 100
+        self.min_w = 100
+        self.max_h = 350
+        self.max_w = 500
+        
+        self.dw_pieces_creation.setMaximumWidth(self.max_w)
+        self.dw_pieces_creation.setMaximumHeight(self.max_h)
+        self.dw_pieces_creation.setMinimumWidth(self.min_w)
+        self.dw_pieces_creation.setMinimumHeight(self.min_h)
+        
+        self.dw_pieces_list.setMaximumWidth(self.max_w)
+        self.dw_pieces_list.setMaximumHeight(self.max_h)
+        self.dw_pieces_list.setMinimumWidth(self.min_w)
+        self.dw_pieces_list.setMinimumHeight(self.min_h)
+        
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_creation)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
-        self.setCentralWidget(self.cw_visualizer)
+        self.setCentralWidget(self.cw_visualizer.widget())
+        
+    def exit_handler(self):
+        self.cw_visualizer.exit_handler()
+        
+    def refresh_visualizer(self):
+        mesh = NfluidDataManager.get_total_mesh()
+        self.cw_visualizer.set_mesh(mesh)
+        
+    def refresh_list_pieces(self):
+        self.dw_pieces_list.widget().refresh_gui()
+        
+    def refresh_all(self):
+        self.refresh_visualizer()
+        self.refresh_list_pieces()
+        
+    def message(self, msg=''):
+        msgBox = QMessageBox()
+        msgBox.setText(msg)
+        msgBox.exec_()
+        
+    def ask_for(self, param_type, param_name, msg=''):
+        if param_type == Vector:
+            vec = QtGui.QInputDialog.getText(self, param_name, msg)
+            vec = vec[0].replace(' ', '')
+            vec = vec.replace('(', '')
+            vec = vec.replace(')', '')
+            vec_list = vec.split(',')
+            return Vector(float(vec_list[0]),float(vec_list[1]),float(vec_list[2]))
+        if param_type == int:
+            number = QtGui.QInputDialog.getInt(self, param_name, msg)
+            return int(number[0])
+        if param_type == float:
+            pass
+            
+            
+    
+    
+    
     

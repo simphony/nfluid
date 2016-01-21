@@ -5,40 +5,50 @@ from nfluid.ui.elements.auxiliar import WidgetParameterNumber
 from nfluid.ui.elements.auxiliar import WidgetParameterVector
 from nfluid.ui.elements.auxiliar import WidgetNewPiece
 from nfluid.ui.elements.auxiliar import strings
+from nfluid.ui.manager import NfluidDataManager, Piece
 
 
-_pieces = [('Coupling',
+_pieces = [(strings.coupling,
                 [(strings.head_radius, 0),
                  (strings.length, 0)
                 ]
             ),
-           ('Flow Adapter',
+           (strings.flow_adapter,
                 [(strings.head_radius, 0),
                  (strings.tail_radius, 0),
                  (strings.length, 0)
-                ])]
-            # ),
-           # ('Short Elbow',
-                # [
-                
-                # ]
-            # ),
-           # ('Long Elbow',
-                # [
-                
-                # ]
-            # ),
-           # ('Spheric Coupling',
-                # [
-                
-                # ]
-            # ),
-           # ('Tee',
-                # [
-                
-                # ]
-            # )
-           # ]
+                ]
+            ),
+           (strings.short_elbow,
+                [(strings.head_radius, 0),
+                 (strings.tail_normal, (0,0,0))
+                ]
+            ),
+           (strings.long_elbow,
+                [(strings.curvature_radius, 0),
+                 (strings.head_radius, 0),
+                 (strings.tail_normal, (0,0,0))
+                ]
+            ),
+           (strings.long_elbow_angle,
+                [(strings.curvature_radius, 0),
+                 (strings.head_radius, 0),
+                 (strings.tail_normal, (0,0,0)),
+                 (strings.angle, 0),
+                ]
+            ),
+           (strings.spheric_coupling,
+                [(strings.head_radius, 0),
+                 (strings.sphere_radius, 0),
+                 (strings.tail_normal, (0,0,0))
+                ]
+            ),
+           (strings.tee,
+                [(strings.head_radius, 0),
+                 (strings.tail_normal0, (0,0,0))
+                ]
+            )
+           ]
 
 class TabPiecesWidget(QtGui.QTabWidget):
     
@@ -58,23 +68,23 @@ class TabPiecesWidget(QtGui.QTabWidget):
     def get_piece(self):
         cur_page = self.currentWidget()
         name = cur_page.name()
-        params = {}
+        parameters = {}
 
-        params[strings.head_position] = cur_page.get_param(strings.head_position)
-        params[strings.tail_position] = cur_page.get_param(strings.tail_position)
-        params[strings.tail_position0] = cur_page.get_param(strings.tail_position0)
-        params[strings.tail_position1] = cur_page.get_param(strings.tail_position1)
-        params[strings.head_normal] = cur_page.get_param(strings.head_normal)
-        params[strings.tail_normal] = cur_page.get_param(strings.tail_normal)
-        params[strings.tail_normal0] = cur_page.get_param(strings.tail_normal0)
-        params[strings.tail_normal1] = cur_page.get_param(strings.tail_normal1)
-        params[strings.head_radius] = cur_page.get_param(strings.head_radius)
-        params[strings.tail_radius] = cur_page.get_param(strings.tail_radius)
-        params[strings.length] = cur_page.get_param(strings.length)
-        params[strings.curvature_radius] = cur_page.get_param(strings.curvature_radius)
-        params[strings.angle] = cur_page.get_param(strings.angle)
-        params[strings.sphere_radius] = cur_page.get_param(strings.sphere_radius)
-        params[strings.points_list] = cur_page.get_param(strings.points_list)
+        parameters[strings.head_position] = cur_page.get_param(strings.head_position)
+        parameters[strings.tail_position] = cur_page.get_param(strings.tail_position)
+        parameters[strings.tail_position0] = cur_page.get_param(strings.tail_position0)
+        parameters[strings.tail_position1] = cur_page.get_param(strings.tail_position1)
+        parameters[strings.head_normal] = cur_page.get_param(strings.head_normal)
+        parameters[strings.tail_normal] = cur_page.get_param(strings.tail_normal)
+        parameters[strings.tail_normal0] = cur_page.get_param(strings.tail_normal0)
+        parameters[strings.tail_normal1] = cur_page.get_param(strings.tail_normal1)
+        parameters[strings.head_radius] = cur_page.get_param(strings.head_radius)
+        parameters[strings.tail_radius] = cur_page.get_param(strings.tail_radius)
+        parameters[strings.length] = cur_page.get_param(strings.length)
+        parameters[strings.curvature_radius] = cur_page.get_param(strings.curvature_radius)
+        parameters[strings.angle] = cur_page.get_param(strings.angle)
+        parameters[strings.sphere_radius] = cur_page.get_param(strings.sphere_radius)
+        parameters[strings.points_list] = cur_page.get_param(strings.points_list)
         
-        return (name, params)
+        return Piece(type=name, params=parameters)
         

@@ -2,6 +2,7 @@ from PySide import QtCore, QtGui
 from nfluid.core.channel_assembly import ChannelAssembly
 from nfluid.core.channel_element import ChannelElement
 from nfluid.ui.elements.tabpieceswidget import TabPiecesWidget
+from nfluid.ui.manager import NfluidDataManager, Piece
 
 
 class CreationPiecesWidget(QtGui.QWidget):
@@ -25,6 +26,17 @@ class CreationPiecesWidget(QtGui.QWidget):
         self.layout.addWidget(self.pieces_widget)
         self.layout.addWidget(self.add_button)
         
+        self.min_h = 100
+        self.min_w = 100
+        self.max_h = 350
+        self.max_w = 500
+        
+        self.pieces_widget.setMaximumWidth(self.max_w)
+        self.pieces_widget.setMaximumHeight(self.max_h)
+        self.pieces_widget.setMinimumWidth(self.min_w)
+        self.pieces_widget.setMinimumHeight(self.min_h)
+        
+        # self.layout.SizeConstraint(QtGui.QLayout.SetMinAndMaxSize)
         self.setLayout(self.layout)
 
 
@@ -34,7 +46,9 @@ class CreationPiecesWidget(QtGui.QWidget):
 
     def add_current_piece(self):
         print "Adding new piece"
-        print self.pieces_widget.get_piece()
+        # print self.pieces_widget.get_piece()
+        piece = self.pieces_widget.get_piece()
+        NfluidDataManager.add_piece(piece)
 
 
         

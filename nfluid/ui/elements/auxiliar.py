@@ -1,6 +1,7 @@
 from PySide import QtCore, QtGui
 from nfluid.core.channel_assembly import ChannelAssembly
 from nfluid.core.channel_element import ChannelElement
+from nfluid.util.vector import Vector
 
 
 class ParametersString(object):
@@ -20,6 +21,14 @@ class ParametersString(object):
         self.angle = "Angle - elbow angle"
         self.sphere_radius = "RS - sphere radius"
         self.points_list = "P - list of points in path"
+        self.coupling = "coupling"
+        self.flow_adapter = "flow_adapter"
+        self.short_elbow = "short_elbow"
+        self.long_elbow = "long_elbow"
+        self.long_elbow_angle = "long_elbow_angle"
+        self.spheric_coupling = "spheric_coupling"
+        self.tee = "tee"
+        self.gate = "Gate"
 
 strings = ParametersString()
 
@@ -64,7 +73,7 @@ class WidgetParameterVector(QtGui.QWidget):
         x = self.x_widget.value()
         y = self.y_widget.value()
         z = self.z_widget.value()
-        self._value = (x, y, z)
+        self._value = Vector(x, y, z)
         return self._value
     
     def set_value(self, value):

@@ -53,8 +53,12 @@ class Shape(object):
                         isinstance(tail, ShapeLongElbow) or
                         isinstance(tail, ShapeTee) or
                         isinstance(tail, ShapeShortElbow)):
-                    normal_tail = (tail.NormalH.X(0), tail.NormalH.X(1),
-                                   tail.NormalH.X(2))
+                    if isinstance(tail, ShapeTee):
+                        normal_tail = (tail.NormalT0.X(0), tail.NormalT0.X(1),
+                                       tail.NormalT0.X(2))
+                    else:
+                        normal_tail = (tail.NormalH.X(0), tail.NormalH.X(1),
+                                       tail.NormalH.X(2))
                     tail.mesh = cls.total_mesh.attach(tail.mesh, gate)
                     c, normal_tail_current = tail.mesh.get_face_info(1)
                     print "normal_tail", normal_tail
@@ -100,15 +104,16 @@ class Shape(object):
 
     @classmethod
     def finalize(cls):
-        initial = cls.shapes.get_head()
-        initial_mesh = initial.mesh
-        pos = (initial.PosH.X(0), initial.PosH.X(1), initial.PosH.X(2))
-        dir = (initial.NormalH.X(0), initial.NormalH.X(1),
-               initial.NormalH.X(2))
-        initial_mesh.move(point=pos, direction=dir)
-        cursor = initial
-        cls.total_mesh = initial_mesh
-        cls.connect_next_piece(cursor, 0)
+        if len(cls.shapes) != 0:
+            initial = cls.shapes.get_head()
+            initial_mesh = initial.mesh
+            pos = (initial.PosH.X(0), initial.PosH.X(1), initial.PosH.X(2))
+            dir = (initial.NormalH.X(0), initial.NormalH.X(1),
+                   initial.NormalH.X(2))
+            initial_mesh.move(point=pos, direction=dir)
+            cursor = initial
+            cls.total_mesh = initial_mesh
+            cls.connect_next_piece(cursor, 0)
         return ''
 
     @classmethod
@@ -193,7 +198,8 @@ class ShapeTee(Shape):
 
     def __init__(
         self, R,
-        PosH, PosT0, PosT1, NormalH
+        PosH, PosT0, PosT1, NormalH,
+        NormalT0
     ):
         Shape.__init__(self)
         self.Radius = R
@@ -201,6 +207,7 @@ class ShapeTee(Shape):
         self.PosT0 = PosT0
         self.PosT1 = PosT1
         self.NormalH = NormalH
+        self.NormalT0 = NormalT0
         self.mesh = _generator.create_tee(self.Radius)
 
 
@@ -366,7 +373,7 @@ def CreateShape(type, center, rotation,
     elif type == 'circle_coupling':
         shape = ShapeCircleCoupling(par0, par1, par2, par3, par4)
     elif type == 'circle_tee':
-        shape = ShapeTee(par0, par1, par2, par3, par4)
+        shape = ShapeTee(par0, par1, par2, par3, par4, par5)
     elif type == 'circle_tee3':
         shape = ShapeTee3(par0, par1, par2, par3, par4)
     elif type == 'circle_tee4':
