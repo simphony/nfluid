@@ -4,11 +4,12 @@ from nfluid.ui.manager import NfluidDataManager, Piece
 
 class ListPiecesWidget(QtGui.QWidget):
     
-    def __init__(self):
+    def __init__(self, main_win):
         super(ListPiecesWidget, self).__init__()
         self.create_actions()
         self.create_gui()
         self._name = "  Current Pieces"
+        self.main_win = main_win
         self.refresh_gui()
 
     def name(self):
@@ -50,11 +51,15 @@ class ListPiecesWidget(QtGui.QWidget):
 
     def delete_current_piece(self):
         print "Deleting current piece"
-        print NfluidDataManager.model
+        current_piece = self.current_piece()
+        if current_piece.id != -1:
+            NfluidDataManager.remove_piece(current_piece)
+            self.main_win.refresh_all()
         
     def restart_pieces(self):
         print "Deleting all pieces"
         NfluidDataManager.remove_all()
+        self.main_win.refresh_all()
         # print self.current_piece().name()
         
     def refresh_gui(self):

@@ -7,11 +7,12 @@ from nfluid.ui.manager import NfluidDataManager, Piece
 
 class CreationPiecesWidget(QtGui.QWidget):
     
-    def __init__(self):
+    def __init__(self, main_win):
         super(CreationPiecesWidget, self).__init__()
         self.create_actions()
         self.create_gui()
         self._name = "  Pieces Creation"
+        self.main_win = main_win
 
     def name(self):
         return self._name
@@ -49,6 +50,7 @@ class CreationPiecesWidget(QtGui.QWidget):
         # print self.pieces_widget.get_piece()
         piece = self.pieces_widget.get_piece()
         NfluidDataManager.add_piece(piece)
+        self.main_win.refresh_all()
 
 
         

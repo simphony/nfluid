@@ -78,36 +78,51 @@ class NfluidDataManager(object):
                     # means that we have a symmetric element
                     piece.params[strings.tail_normal]=piece.params[strings.head_normal]
             new_piece = NfluidDataManager.create_piece(piece)
+            # NfluidDataManager.model.resolve_geometry()
         else:
             current_piece = NfluidDataManager.gui.\
                             dw_pieces_list.widget().\
                             current_piece()
-            if current_piece == None:
+            print "current_piece.."
+            print current_piece.type
+            print current_piece.id
+            if current_piece.id == -1:
                 msg = "No piece selected to link to!"
                 NfluidDataManager.gui.message(msg)
             else:
-                selected_piece = NfluidDataManager.model.get_element_by_id(
-                                    current_piece.id)
+                selected_piece = NfluidDataManager.get_piece(current_piece)
+                print "selected_piece..aaaaaaaaaaaaaaaaa"
+                print selected_piece
+                selected_piece.print_info()
+                print "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                 new_piece = NfluidDataManager.create_piece(piece)
-                gate = 0
                 if current_piece.type == strings.tee:
+                    gate = 0
                     msg = "As you are linking to a tee, you need to\
                            specify the gate (0 or 1)."
                     gate = NfluidDataManager.gui.ask_for(int,
                                                         strings.gate,
                                                         msg)
-                selected_piece.link(new_piece, gate)
-        NfluidDataManager.gui.refresh_all()
+                    selected_piece.link(new_piece, gate)
+                else:
+                    selected_piece.link(new_piece)
+            # NfluidDataManager.model.resolve_geometry()
     
     @classmethod
     def remove_piece(cls, piece):
-        pass
+        selected = NfluidDataManager.get_piece(piece)
+        NfluidDataManager.model.delete_element(selected)
     
     @classmethod
-    def remove_all(self):
-        for elem in NfluidDataManager.model.elements:
-            NfluidDataManager.model.delete_element(elem)
-        NfluidDataManager.gui.refresh_all()
+    def get_piece(cls, piece):
+        return NfluidDataManager.model.get_element_by_id(
+                                    piece.id)
+    
+    @classmethod
+    def remove_all(cls):
+        # for elem in NfluidDataManager.model.elements:
+            # NfluidDataManager.model.delete_element(elem)
+        NfluidDataManager.model.elements = []
 
     @classmethod
     def _get_string(self, element):
@@ -149,11 +164,26 @@ class NfluidDataManager(object):
     def get_total_mesh(self):
         if not NfluidDataManager.exists():
             return None
-        NfluidDataManager.model.release_shapes()
+        # if NfluidDataManager.number_of_pieces() >= 3:      # STUBBBBB!!!!!!!!!!!!!!!!!!!!!
         NfluidDataManager.model.resolve_geometry()
+        # if not NfluidDataManager.model.is_resolved_geometry() == '':
+            # return None
+        # NfluidDataManager.model.print_info()
         NfluidDataManager.model.create_shapes()
         return Shape.total_mesh
+        # else:
+            # return None
+    @classmethod
+    def export_mesh_stl(self):
+        file_name = NfluidDataManager.gui.get_path_save_file(ext='.stl')
+        NfluidDataManager.model.export_shapes(file_name[0])
     
+    @classmethod
+    def export_mesh_foam(self):
+        NfluidDataManager.model.create_openfoam_project()
+        msg = "Done."
+        NfluidDataManager.gui.message(msg)
+        
     @classmethod
     def number_of_pieces(self):
         return len(NfluidDataManager.model.elements)

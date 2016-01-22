@@ -12,20 +12,20 @@ from nfluid.util.vector import Vector
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.create_actions()
         self.create_gui()
         self.refresh_all()
 
     def create_gui(self):
         self.dw_pieces_creation = QtGui.QDockWidget()
-        cur_widget = CreationPiecesWidget()
-        print cur_widget
+        cur_widget = CreationPiecesWidget(self)
         self.dw_pieces_creation.setWidget(cur_widget)
         self.dw_pieces_creation.setFeatures(QtGui.QDockWidget.NoDockWidgetFeatures)
         title = QtGui.QLabel(cur_widget.name())
         self.dw_pieces_creation.setTitleBarWidget(title)
 
         self.dw_pieces_list = QtGui.QDockWidget()
-        cur_widget = ListPiecesWidget()
+        cur_widget = ListPiecesWidget(self)
         self.dw_pieces_list.setWidget(cur_widget)
         self.dw_pieces_list.setFeatures(QtGui.QDockWidget.NoDockWidgetFeatures)
         title = QtGui.QLabel(cur_widget.name())
@@ -33,7 +33,10 @@ class MainWindow(QtGui.QMainWindow):
         
         self.cw_visualizer = VisVisWidget()
 
-        self.menu_main = None
+        self.menu_main = self.menuBar()
+        file_menu = self.menu_main.addMenu('&File')
+        file_menu.addAction(self.stl_action)
+        file_menu.addAction(self.foam_action)
 
         self.status_bar = None
         
@@ -55,7 +58,22 @@ class MainWindow(QtGui.QMainWindow):
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_creation)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
         self.setCentralWidget(self.cw_visualizer.widget())
-        
+
+    def create_actions(self):
+        self.stl_action = QtGui.QAction(QtGui.QIcon(), "&Export mesh to STL",
+                self, statusTip="Exports the current mesh to STL format",
+                triggered=self.export_mesh_stl)
+
+        self.foam_action = QtGui.QAction(QtGui.QIcon(), "&Create OpenFoam project",
+                self, statusTip="Creates the OpenFoam Project with the default template",
+                triggered=self.export_mesh_foam)
+
+    def export_mesh_stl(self):
+        NfluidDataManager.export_mesh_stl()
+    
+    def export_mesh_foam(self):
+        NfluidDataManager.export_mesh_foam()
+                
     def exit_handler(self):
         self.cw_visualizer.exit_handler()
         
@@ -89,7 +107,9 @@ class MainWindow(QtGui.QMainWindow):
         if param_type == float:
             pass
             
-            
+    def get_path_save_file(self, ext):
+        res = QtGui.QFileDialog.getSaveFileName(filter=ext)
+        return res
     
     
     
