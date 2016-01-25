@@ -1,6 +1,5 @@
 from nfluid.core.channel_assembly import ChannelAssembly
 from nfluid.core.channel_element import ChannelElement
-from nfluid.elements.cap import Cap
 from nfluid.elements.circle_coupling import CircleCoupling
 from nfluid.elements.circle_tee import CircleTee
 from nfluid.elements.flow_adapter import FlowAdapter
@@ -13,38 +12,39 @@ from nfluid.ui.elements.auxiliar import strings
 from nfluid.util.vector import Vector
 import copy
 
+
 class Piece(object):
     sep = '-'
-    
+
     def __init__(self, type='', id=-1, params=None):
         self.type = type
         self.id = id
         self.params = copy.deepcopy(params)
-    
+
     def name(self):
         return self.type + Piece.sep + str(self.id)
-    
+
     def set_name(self, name):
         elems = name.split(Piece.sep)
         self.type = elems[0]
         self.id = int(elems[1])
 
+
 class NfluidDataManager(object):
-    
     model = None
     gui = None
-    
+
     def __init__(self, gui):
         if ChannelElement.assembly is None:
             NfluidDataManager.model = ChannelAssembly()
         else:
             NfluidDataManager.model = ChannelElement.assembly
         NfluidDataManager.gui = gui
-    
+
     @classmethod
     def exists(cls):
-        return (NfluidDataManager.model != None)
-        
+        return (NfluidDataManager.model is not None)
+
     @classmethod
     def add_piece(cls, piece):
         # print "piece..."
@@ -65,18 +65,15 @@ class NfluidDataManager(object):
             msg = "As is the first piece of the assembly, you must define\
                    its initial normal head."
             normal = NfluidDataManager.gui.ask_for(Vector,
-                                                strings.head_normal,
-                                                msg)
+                                                   strings.head_normal,
+                                                   msg)
             piece.params[strings.head_normal] = normal
             if piece.params[strings.tail_normal] is None:
                 if piece.params[strings.tail_normal0] is None:
-                    # tail_n = NfluidDataManager.gui.ask_for(Vector,
-                                                           # strings.tail_normal,
-                                                           # msg="")
-                    # piece.params[strings.tail_normal] = tail_n
                     # We copy the same normal, since if its not defined
                     # means that we have a symmetric element
-                    piece.params[strings.tail_normal]=piece.params[strings.head_normal]
+                    piece.params[strings.tail_normal] =\
+                                piece.params[strings.head_normal]
             new_piece = NfluidDataManager.create_piece(piece)
             NfluidDataManager.model.clear_geometry()
             NfluidDataManager.model.resolve_geometry()
@@ -102,24 +99,24 @@ class NfluidDataManager(object):
                     msg = "As you are linking to a tee, you need to\
                            specify the gate (0 or 1)."
                     gate = NfluidDataManager.gui.ask_for(int,
-                                                        strings.gate,
-                                                        msg)
+                                                         strings.gate,
+                                                         msg)
                     selected_piece.link(new_piece, gate)
                 else:
                     selected_piece.link(new_piece)
                 NfluidDataManager.model.clear_geometry()
                 NfluidDataManager.model.resolve_geometry()
-    
+
     @classmethod
     def remove_piece(cls, piece):
         selected = NfluidDataManager.get_piece(piece)
         NfluidDataManager.model.delete_element(selected)
-    
+
     @classmethod
     def get_piece(cls, piece):
         return NfluidDataManager.model.get_element_by_id(
                                     piece.id)
-    
+
     @classmethod
     def remove_all(cls):
         # for elem in NfluidDataManager.model.elements:
@@ -161,12 +158,13 @@ class NfluidDataManager(object):
         # res.append(Piece(strings.spheric_coupling, 5))
         # res.append(Piece(strings.tee, 6))
         return res
-        
+
     @classmethod
     def get_total_mesh(self):
         if not NfluidDataManager.exists():
             return None
-        # if NfluidDataManager.number_of_pieces() >= 3:      # STUBBBBB!!!!!!!!!!!!!!!!!!!!!
+        # STUB!
+        # if NfluidDataManager.number_of_pieces() >= 3:
         # NfluidDataManager.model.clear_geometry()
         # NfluidDataManager.model.resolve_geometry()
         # if not NfluidDataManager.model.is_resolved_geometry() == '':
@@ -175,18 +173,19 @@ class NfluidDataManager(object):
         NfluidDataManager.model.create_shapes()
         return Shape.total_mesh
         # else:
-            # return None
+        #    return None
+
     @classmethod
     def export_mesh_stl(self):
         file_name = NfluidDataManager.gui.get_path_save_file(ext='.stl')
         NfluidDataManager.model.export_shapes(file_name[0])
-    
+
     @classmethod
     def export_mesh_foam(self):
         NfluidDataManager.model.create_openfoam_project()
         msg = "Done."
         NfluidDataManager.gui.message(msg)
-        
+
     @classmethod
     def number_of_pieces(self):
         return len(NfluidDataManager.model.elements)
@@ -248,5 +247,3 @@ class NfluidDataManager(object):
                              NormalH=piece.params[strings.head_normal],
                              NormalT0=piece.params[strings.tail_normal0],
                              NormalT1=piece.params[strings.tail_normal1])
-    
-    

@@ -58,7 +58,7 @@ class Shape(object):
                                        tail.NormalT0.X(2))
                     else:
                         normal_tail = (tail.NormalH.X(0), tail.NormalH.X(1),
-                                           tail.NormalH.X(2))
+                                       tail.NormalH.X(2))
                     tail.mesh = cls.total_mesh.attach(tail.mesh, gate)
                     c, normal_tail_current = tail.mesh.get_face_info(1)
                     print "normal_tail", normal_tail

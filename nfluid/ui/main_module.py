@@ -1,9 +1,8 @@
 from nfluid.ui.elements.mainwindow import MainWindow
 from nfluid.ui.manager import NfluidDataManager
-from nfluid.core.channel_element import ChannelElement
-
-from PySide import QtCore, QtGui
+from PySide import QtGui
 import sys
+
 
 class NfluidGui(object):
     def __init__(self):
@@ -12,12 +11,12 @@ class NfluidGui(object):
         """
         self.manager = None
         self.main_window = None
-        
+
     def create_gui(self):
         self.main_window = MainWindow()
         self.manager = NfluidDataManager(self.main_window)
         # self.app.aboutToQuit.connect(self.exit_handler)
-        
+
     def exit_handler(self):
         self.main_window.exit_handler()
 
@@ -26,18 +25,16 @@ class NfluidGui(object):
         if app is None:
             app = QtGui.QApplication(sys.argv)
         app.aboutToQuit.connect(self.exit_handler)
-        
+
         if self.main_window is None:
             self.create_gui()
         self.main_window.show()
-        
-        
+
         app.exec_()
         QtGui.QApplication.instance()
-        
+
         self.main_window = None
 
-        
 
 def start_gui():
     gui = NfluidGui()
@@ -46,5 +43,3 @@ def start_gui():
 
 if __name__ == "__main__":
     start_gui()
-
-        

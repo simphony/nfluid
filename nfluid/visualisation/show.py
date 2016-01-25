@@ -5,10 +5,9 @@ backend = 'pyside'
 def show(items):
     """Function that shows a mesh object.
     """
-    # meshes = []
     for item in items:
+        vv.clf()
         # convert to visvis.Mesh class
-        # item.compute_normals()
         new_normals = []
         new_vertices = []
         for k, v in item.vertices.iteritems():
@@ -18,14 +17,9 @@ def show(items):
 
         mesh.SetVertices(new_vertices)
         mesh.SetNormals(new_normals)
-        # im = vv.imread("C:\Users\GregorioGarcia\Pictures\Icons\DeleteIcon.png")
-        # mesh.SetTexture(im)
         mesh.faceColor = 'y'
-        # mesh.faceShading = 'flat'
         mesh.edgeShading = 'plain'
-        mesh.edgeColor = (0,0,1)
-        # mesh.SetNormals(item.normals.values())
-        # meshes.append(mesh)
+        mesh.edgeColor = (0, 0, 1)
 
     axes = vv.gca()
     if axes.daspectAuto is None:

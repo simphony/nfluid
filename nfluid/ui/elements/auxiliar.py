@@ -1,6 +1,4 @@
-from PySide import QtCore, QtGui
-from nfluid.core.channel_assembly import ChannelAssembly
-from nfluid.core.channel_element import ChannelElement
+from PySide import QtGui
 from nfluid.util.vector import Vector
 
 
@@ -32,6 +30,7 @@ class ParametersString(object):
 
 strings = ParametersString()
 
+
 class WidgetParameterNumber(QtGui.QWidget):
     def __init__(self, name, value):
         super(WidgetParameterNumber, self).__init__()
@@ -45,7 +44,7 @@ class WidgetParameterNumber(QtGui.QWidget):
     def value(self):
         self._value = float(self.value_widget.text())
         return self._value
-    
+
     def setValue(self, value):
         self._value = value
         self.value_widget = str(value)
@@ -58,6 +57,7 @@ class WidgetParameterNumber(QtGui.QWidget):
         self.layout.addWidget(self.name_widget)
         self.layout.addWidget(self.value_widget)
         self.setLayout(self.layout)
+
 
 class WidgetParameterVector(QtGui.QWidget):
     def __init__(self, name, value):
@@ -75,7 +75,7 @@ class WidgetParameterVector(QtGui.QWidget):
         z = self.z_widget.value()
         self._value = Vector(x, y, z)
         return self._value
-    
+
     def set_value(self, value):
         self._value = value
         self.x_widget.set_value(value[0])
@@ -94,6 +94,7 @@ class WidgetParameterVector(QtGui.QWidget):
         self.layout.addWidget(self.z_widget)
         self.setLayout(self.layout)
 
+
 class WidgetNewPiece(QtGui.QWidget):
 
     def __init__(self, name, params):
@@ -107,7 +108,7 @@ class WidgetNewPiece(QtGui.QWidget):
             if elem[0] == name:
                 for index in xrange(self.layout.count()):
                     cur_widget = self.layout.itemAt(index).widget()
-                    if cur_widget.name() ==  name:
+                    if cur_widget.name() == name:
                         return cur_widget.value()
         return None
 
@@ -121,8 +122,7 @@ class WidgetNewPiece(QtGui.QWidget):
                 new_param = WidgetParameterVector(par[0], par[1])
             else:
                 new_param = WidgetParameterNumber(par[0], par[1])
-                
+
             self.layout.addWidget(new_param)
-        
+
         self.setLayout(self.layout)
-        
