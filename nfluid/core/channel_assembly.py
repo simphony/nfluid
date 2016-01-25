@@ -4,7 +4,6 @@ from nfluid.core.channel_element import ChannelElement
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.shapes.shapes import Shape
 from nfluid.util import snappy_generator
-import copy
 
 
 class ChannelAssembly(object):
@@ -27,6 +26,7 @@ class ChannelAssembly(object):
             fcn(element)
 
     def resolve_geometry(self):
+
         while True:
             print 'resolve_geometry loop ---------------------------'
             Changed = False

@@ -253,10 +253,9 @@ class Gate(object):
             return res
 
     def clear_geometry(self):
-
-        for size in self.Size:
-            if size is not None:
-                size = None
+        for i in xrange(0, len(self.Size)):
+            if self.Size[i] is not None:
+                self.Size[i] = None
         self.Pos.clear_geometry()
         self.Normal.clear_geometry()
         print 'Gate clear_geometry'

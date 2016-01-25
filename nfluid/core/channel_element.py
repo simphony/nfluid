@@ -376,6 +376,7 @@ class ChannelElement(object):
 
     def clear_geometry(self):
         self.for_each_gate(fcn_clear_geometry_xxx)
+        self.changed = True
 
         # self.for_each_gate(ChannelElement.fcn_clear_geometry)
 
@@ -495,7 +496,6 @@ def is_resolved_geometry_fcn(gate, elem=None, arg=None):
 
 
 def set_equal_gate_size_fcn(gate, elem, arg):
-    print "DELETE THIS gate.Size", gate.Size
     return elem.set_gate_size_all(gate.Size)
 
 

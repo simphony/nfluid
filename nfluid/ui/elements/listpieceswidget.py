@@ -70,8 +70,11 @@ class ListPiecesWidget(QtGui.QWidget):
             self.list_pieces.addItem(name)
 
     def current_piece(self):
-        piece = self.list_pieces.currentItem().text()
+        piece_item = self.list_pieces.currentItem()
         res = Piece()
+        if piece_item is None:
+            return res
+        piece = piece_item.text()
         res.set_name(piece)
         return res
         

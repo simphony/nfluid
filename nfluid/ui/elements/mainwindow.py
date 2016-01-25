@@ -89,7 +89,7 @@ class MainWindow(QtGui.QMainWindow):
         self.refresh_list_pieces()
         
     def message(self, msg=''):
-        msgBox = QMessageBox()
+        msgBox = QtGui.QMessageBox()
         msgBox.setText(msg)
         msgBox.exec_()
         

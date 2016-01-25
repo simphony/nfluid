@@ -78,7 +78,8 @@ class NfluidDataManager(object):
                     # means that we have a symmetric element
                     piece.params[strings.tail_normal]=piece.params[strings.head_normal]
             new_piece = NfluidDataManager.create_piece(piece)
-            # NfluidDataManager.model.resolve_geometry()
+            NfluidDataManager.model.clear_geometry()
+            NfluidDataManager.model.resolve_geometry()
         else:
             current_piece = NfluidDataManager.gui.\
                             dw_pieces_list.widget().\
@@ -106,7 +107,8 @@ class NfluidDataManager(object):
                     selected_piece.link(new_piece, gate)
                 else:
                     selected_piece.link(new_piece)
-            # NfluidDataManager.model.resolve_geometry()
+                NfluidDataManager.model.clear_geometry()
+                NfluidDataManager.model.resolve_geometry()
     
     @classmethod
     def remove_piece(cls, piece):
@@ -165,7 +167,8 @@ class NfluidDataManager(object):
         if not NfluidDataManager.exists():
             return None
         # if NfluidDataManager.number_of_pieces() >= 3:      # STUBBBBB!!!!!!!!!!!!!!!!!!!!!
-        NfluidDataManager.model.resolve_geometry()
+        # NfluidDataManager.model.clear_geometry()
+        # NfluidDataManager.model.resolve_geometry()
         # if not NfluidDataManager.model.is_resolved_geometry() == '':
             # return None
         # NfluidDataManager.model.print_info()
