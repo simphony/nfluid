@@ -16,8 +16,11 @@ Requirements
     - simphony >= 0.2.0
     - numpy >= 1.4.1
 
-Optional requirements
----------------------
+Visualization requirements
+--------------------------
+    - visvis
+    - PySide
+    
 For mesh integrated visualization it needs visvis visualization library https://pypi.python.org/pypi/visvis/1.8
 and PySide as the backend: https://pypi.python.org/pypi/PySide/1.2.4
 
@@ -26,6 +29,12 @@ Installation
 To install nfluid:
 
     python setup.py install
+    
+    or
+    
+    MakeWin nfluid
+    
+    (using the MakeWin .bat file in the Simphony framework package)
 
 Structure
 ---------
@@ -38,6 +47,7 @@ Structure
     - tests: subpackage containing some usage examples of nfluid using all the posible pieces
     - util: subpackage with auxiliar utilies, also containing the OpenFOAM project generator utility, called snappy_generator.py
     - visualisation: internal subpackage with the files containing the visualization utilities
+    - ui: GUI package with all the PySide infraestructure
 
 Building an assembly with nfluid
 --------------------------------
@@ -83,6 +93,14 @@ We we are done with the shapes, we can release them:
 We can also get the mesh in simphony format (as a Mesh object):
 
     mesh = my_assembly.extract_simphony_mesh()
+    
+Also we can modify the assembly creating new pieces and liking them, deleting existing pieces...
+After modifying the assembly, we just have to clear the geometry and resolve it again:
+
+    my_assembly.clear_geometry()
+    my_assembly.resolve_geometry()
+    
+And then we can use the create_shapes method and any other one.
 
 Notes
 -----
@@ -99,7 +117,7 @@ To be added very soon:
     
     - coupling_path: a piece that will be built joining user specified points
     - long_elbow_angle: a long elbow with a non 90 degrees angle
-    - long_short_angle: a short elbow with a non 90 degrees angle
+    - short_elbow_angle: a short elbow with a non 90 degrees angle
 
 OpenFOAM project generation
 ---------------------------
@@ -119,3 +137,11 @@ when:
 
 The snappy templates contain some keywords that, using information of the stl, will be replaced by the correct values. As a first approach,
 there are three different templates in the nfluid package, but the user can potentially use their own templates, using the keywords that are used by the snappy_generator.py script.
+
+Also, we can use the method in the ChannelAssembly class directly to do this:
+
+    my_asembly.create_openfoam_project()
+    
+to which we can indicate the stl to use (if not specified it will create a "foam.stl" for this task),
+the template to use (if not specified it will use the first template in the templates folder of the package),
+and also the cells in the three axis to generate the template (20, 20, 20 by default)
