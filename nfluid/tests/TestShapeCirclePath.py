@@ -26,17 +26,28 @@ assembly = ChannelAssembly()
 
 if sys.argv[1] == '0':
     print 'Test_0'
-    create_channel(CircleCoupling(R=5, L=40, PosH=Vector(0,0,0), Normal=Vector(0,0,1))
-             .link(CirclePath(Points=[Vector(0,0,0), Vector(0,0,50), Vector(50,0,50), Vector(50,0,100), Vector(100,0,100)], NormalT=Vector(1,0,0)))
-             .link(LongElbow(RC=50, NormalT=Vector(0,1,0))))
+    create_channel(
+             CircleCoupling(R=5, L=40, PosH=Vector(0, 0, 0),
+                            Normal=Vector(0, 0, 1))
+             .link(CirclePath(Points=[Vector(0, 0, 0), Vector(0, 0, 50),
+                                      Vector(50, 0, 50), Vector(50, 0, 100),
+                                      Vector(100, 0, 100)],
+                              NormalT=Vector(1, 0, 0)))
+             .link(LongElbow(RC=50, NormalT=Vector(0, 1, 0))))
 
 elif sys.argv[1] == '1':
     print 'Test_1'
-    create_channel(CircleCoupling(R=2, L=40, PosH=Vector(0,0,0), Normal=Vector(0,0,1))
-             .link(FlowAdapter(RT=5,L=5))
-             .link(CirclePath(Points=[Vector(0,0,0), Vector(0,0,50), Vector(50,0,25), Vector(25,25,75), Vector(50,0,100), Vector(50,50,100)], NormalT=Vector(-1,1,0)))
+    create_channel(
+             CircleCoupling(R=2, L=40, PosH=Vector(0, 0, 0),
+                            Normal=Vector(0, 0, 1))
+             .link(FlowAdapter(RT=5, L=5))
+             .link(CirclePath(Points=[Vector(0, 0, 0), Vector(0, 0, 50),
+                                      Vector(50, 0, 25), Vector(25, 25, 75),
+                                      Vector(50, 0, 100),
+                                      Vector(50, 50, 100)],
+                              NormalT=Vector(-1, 1, 0)))
              .link(SphericCoupling(RS=16))
-             .link(LongElbow(RC=50, NormalT=Vector(1,1,1))))
+             .link(LongElbow(RC=50, NormalT=Vector(1, 1, 1))))
 
 elif sys.argv[1] == '2':
     for i in range(0, n_tests):

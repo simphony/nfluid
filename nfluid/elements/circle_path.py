@@ -3,7 +3,6 @@
 from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
-from nfluid.util.vector import Vector
 import copy
 # Class of CirclePath
 
@@ -42,8 +41,10 @@ class CirclePath(ChannelElement2G):
         self.InputPoints = copy.copy(Points)
 
         # Initial Normals
-        self.get_head_gate().NormalElement = copy.copy((Points[1]-Points[0]).normalize())
-        self.get_tail_gate().NormalElement = copy.copy((Points[-1]-Points[-2]).normalize())
+        self.get_head_gate().NormalElement = copy.copy(
+            (Points[1]-Points[0]).normalize())
+        self.get_tail_gate().NormalElement = copy.copy(
+            (Points[-1]-Points[-2]).normalize())
 
         # Initial Positions
         self.get_head_gate().PosElement = copy.copy(Points[0])
@@ -52,14 +53,16 @@ class CirclePath(ChannelElement2G):
         # Try put center in the first point
         # centroid = Vector(0.0, 0.0, 0.0)
         # for Point in Points:
-            # centroid += Point
+        #    centroid += Point
         # centroid = centroid/len(Points)
         # print 'centroid = ',centroid
         # self.get_head_gate().PosElement = copy.copy(Points[0]-centroid)
         # self.get_tail_gate().PosElement = copy.copy(Points[-1]-centroid)
 
-        # print 'self.get_head_gate().PosElement = ',self.get_head_gate().PosElement
-        # print 'self.get_tail_gate().PosElement = ',self.get_tail_gate().PosElement
+        # print 'self.get_head_gate().PosElement = ',
+        # self.get_head_gate().PosElement
+        # print 'self.get_tail_gate().PosElement = ',
+        # self.get_tail_gate().PosElement
 
     def get_name(self):
         return 'CirclePath'
@@ -74,7 +77,8 @@ class CirclePath(ChannelElement2G):
         ChannelElement2G.print_info(self)
         print 'CirclePath radius Rdef =', self.get_head_gate().get_r_def(), \
             'RH =', self.get_gate_size_h(), 'RT =', self.get_gate_size_t(), \
-            'PosH =', self.get_head_gate().Pos, 'PosT =', self.get_tail_gate().Pos
+            'PosH =', self.get_head_gate().Pos, \
+            'PosT =', self.get_tail_gate().Pos
 
     def create_shape_child(self):
         print 'create_shape CirclePath'
@@ -89,8 +93,8 @@ class CirclePath(ChannelElement2G):
         # Check result
         # print 'OutputPoints = ',OutputPoints
 
-        return CreateShape('circle_path', self.CenterPos, self.RotationOperator,
+        return CreateShape('circle_path', self.CenterPos,
+                           self.RotationOperator,
                            self.get_r(), OutputPoints,
                            self.get_pos_head(), self.get_pos_tail(),
                            self.get_normal_head(), self.get_normal_tail())
-
