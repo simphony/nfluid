@@ -52,7 +52,8 @@ class Shape(object):
                         isinstance(tail, ShapeShortElbowAngle) or
                         isinstance(tail, ShapeLongElbow) or
                         isinstance(tail, ShapeTee) or
-                        isinstance(tail, ShapeShortElbow)):
+                        isinstance(tail, ShapeShortElbow) or
+                        isinstance(tail, ShapeCirclePath)):
                     if isinstance(tail, ShapeTee):
                         normal_tail = (tail.NormalT0.X(0), tail.NormalT0.X(1),
                                        tail.NormalT0.X(2))
@@ -347,6 +348,23 @@ class ShapeSphericCoupling(Shape):
                                                        self.RadiusSphere)
 
 
+class ShapeCirclePath(Shape):
+
+    def __init__(
+        self, R, P,
+        PosH, PosT,
+        NormalH, NormalT
+    ):
+        Shape.__init__(self)
+        self.Radius = R  # Gate radius equal for both gates
+        self.Points = P  # List of points in the path
+        self.PosH = PosH
+        self.PosT = PosT
+        self.NormalH = NormalH
+        self.NormalT = NormalT
+        self.mesh = _generator.create_coupling_path(self.Radius, self.Points)
+
+
 class ShapeSquareCoupling(Shape):
 
     def __init__(
@@ -388,6 +406,8 @@ def CreateShape(type, center, rotation,
         shape = ShapeShortElbow(par0, par1, par2, par3)
     elif type == 'spheric_coupling':
         shape = ShapeSphericCoupling(par0, par1, par2, par3, par4)
+    elif type == 'circle_path':
+        shape = ShapeCirclePath(par0, par1, par2, par3, par4, par5)
     elif type == 'square_coupling':
         shape = ShapeSquareCoupling(par0, par1, par2, par3, par4)
     else:
