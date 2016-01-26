@@ -20,7 +20,7 @@ if len(sys.argv) == 1:
 
     exit(0)
 
-n_tests = 2
+n_tests = 3
 
 assembly = ChannelAssembly()
 
@@ -50,6 +50,24 @@ elif sys.argv[1] == '1':
              .link(LongElbow(RC=50, NormalT=Vector(1, 1, 1))))
 
 elif sys.argv[1] == '2':
+    print 'Test_0'
+    points = [Vector(0, -2, 0), Vector(0, -1, 0), Vector(0, -1, 1),
+              Vector(0, -3, 3), Vector(0, -6, 6),
+              Vector(0, -9, 9), Vector(0, -9, 12), Vector(0, -6, 15),
+              Vector(0, -3, 15), Vector(0, -3, 12), Vector(0, 0, 9),
+              Vector(0, 3, 12), Vector(0, 3, 15), Vector(0, 6, 15),
+              Vector(0, 9, 12), Vector(0, 9, 9), Vector(0, 6, 6),
+              Vector(0, 3, 3), Vector(0, 1, 1), Vector(0, 1, 0)]
+    create_channel(
+             CircleCoupling(R=0.5, L=5, PosH=Vector(0, 0, 0),
+                            Normal=Vector(0, 1, 0))
+             .link(CirclePath(Points=points,
+                              NormalT=Vector(0, 0, -1)))
+             .link(LongElbow(RC=5, NormalT=Vector(0, 1, 0)))
+             .link(SphericCoupling(RS=2))
+             .link(CircleCoupling(L=4)))
+
+elif sys.argv[1] == '3':
     for i in range(0, n_tests):
         os.system('python ' + sys.argv[0] + ' ' + str(i))
     exit(0)
