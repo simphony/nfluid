@@ -376,6 +376,7 @@ class ChannelElement(object):
 
     def clear_geometry(self):
         self.for_each_gate(fcn_clear_geometry_xxx)
+        self.changed = True
 
         # self.for_each_gate(ChannelElement.fcn_clear_geometry)
 

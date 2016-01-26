@@ -142,17 +142,11 @@ class GeometricMesh(object):
         if angle == math.pi or angle == 0:
             aux_plane = Plane(p, n)
             aux_point = aux_plane.get_point()
-            print("my_label_0")
             vect = unit_vector((aux_point[0]-p[0],
                                aux_point[1]-p[1],
                                aux_point[2]-p[2]))
         else:
-            print("my_label_3")
-            print(self)
-            print ("direction, n")
-            print (direction, n)
             vect = unit_vector(vector_product(direction, n))
-            print("my_label_3_end")
 
         rot_m = rotation_matrix(angle, vect)
         d = (point[0]-p[0], point[1]-p[1], point[2]-p[2])
@@ -315,7 +309,6 @@ class Circle3D(GeometricMesh):
         self.radius = radius
         self.slices = slices
         self.center = pos
-        print("my_label_4")
         self.normal_v = tuple(unit_vector(normal))
         # WE DONT SUPPORT IT WELL FTM
         self.filled = filled
@@ -324,9 +317,7 @@ class Circle3D(GeometricMesh):
         sin_t = sin_table(slices)
 
         # Vectors inside the circle, same orientation for all the points
-        print("my_label_5")
         v1 = unit_vector((1, 0, 0))
-        print("my_label_6")
         v2 = unit_vector((0, 1, 0))
         points = ()
         # Generate the points:
@@ -587,10 +578,8 @@ class CylindricalPart(GeometricMesh):
             figure.twist(angle)
             v0 = self.vertex(face1[0])
             v1 = figure.vertex(face2[0])
-            print("my_label_2")
             v0c = unit_vector((-center1[0]+v0[0], -center1[1]+v0[1],
                               -center1[2]+v0[2]))
-            print("my_label_1")
             v1c = unit_vector((-center2[0]+v1[0], -center2[1]+v1[1],
                               -center2[2]+v1[2]))
             angle = angle_between_vectors(v1c, v0c)

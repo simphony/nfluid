@@ -1741,8 +1741,6 @@ def unit_vector(data, axis=None, out=None):
     [1.0]
 
     """
-    print ("unit_vector")
-    print(data)
     if out is None:
         data = numpy.array(data, dtype=numpy.float64, copy=True)
         if data.ndim == 1:
@@ -1821,10 +1819,6 @@ def angle_between_vectors(v0, v1, directed=True, axis=0):
     True
 
     """
-    print (v0)
-    print (v1)
-    print (directed)
-    print (axis)
     v0 = numpy.array(v0, dtype=numpy.float64, copy=False)
     v1 = numpy.array(v1, dtype=numpy.float64, copy=False)
     dot = numpy.sum(v0 * v1, axis=axis)

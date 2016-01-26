@@ -85,4 +85,5 @@ class CircleTee(ChannelElement):
         return CreateShape('circle_tee', self.CenterPos, self.RotationOperator,
                            self.get_head_gate().get_r(),
                            self.get_pos_head(), self.get_pos_tail(0),
-                           self.get_pos_tail(1), self.get_normal_head())
+                           self.get_pos_tail(1), self.get_head_gate(0).Normal,
+                           self.get_tail_gate(0).Normal)
