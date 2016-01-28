@@ -23,18 +23,29 @@ assembly = ChannelAssembly()
 
 if sys.argv[1] == '0':
     print 'Test_0'
-    create_channel(CircleCoupling(R=10, L=0, PosH=Vector(0, 0, 0), Normal=Vector(0, 0, 1))
-             .link(ShortElbowAngle(Angle=45, NormalT=Vector(1, 0, 1)))
-             .link(CircleCoupling(L=50))
-             .link(ShortElbowAngle(Angle=45, NormalT=Vector(0, 0, 1)))
-             .link(CircleCoupling(L=30)))
+    create_channel(
+        CircleCoupling(R=10, L=0, PosH=Vector(0, 0, 0), Normal=Vector(0, 0, 1))
+        .link(ShortElbowAngle(Angle=45, NormalT=Vector(1, 0, 1)))
+        .link(CircleCoupling(L=50))
+        .link(ShortElbowAngle(Angle=45, NormalT=Vector(0, 0, 1)))
+        .link(CircleCoupling(L=30))
+    )
 
 elif sys.argv[1] == '1':
     print 'Test_1'
-    create_channel(CircleCoupling(R=20, L=40, PosH=Vector(0, 0, 0), Normal=Vector(0, 0, 1))
-             # .link(ShortElbowAngle(Angle=135, NormalT=Vector(1, 0, -1)))
-             .link(ShortElbowAngle(Angle=135, NormalT=Vector(0.707107, 0.707107, -1)))
-             .link(CircleCoupling(L=80)))
+    create_channel(
+        CircleCoupling(
+            R=20,
+            L=40,
+            PosH=Vector(0, 0, 0),
+            Normal=Vector(0, 0, 1)
+        )
+        .link(ShortElbowAngle(
+            Angle=135,
+            NormalT=Vector(0.707107, 0.707107, -1)
+            ))
+        .link(CircleCoupling(L=80))
+    )
 
 elif sys.argv[1] == '2':
     for i in range(0, n_tests):

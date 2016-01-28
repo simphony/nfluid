@@ -63,7 +63,8 @@ class ShortElbowAngle(ChannelElement2G):
 
     def print_info(self):
         ChannelElement2G.print_info(self)
-        print 'ShortElbowAngle radius Rdef =', self.get_head_gate().get_r_def(), \
+        print 'ShortElbowAngle radius Rdef =', \
+            self.get_head_gate().get_r_def(), \
             'RH =', self.get_gate_size_h(), 'RT =', self.get_gate_size_t(), \
             'PosH =', self.get_head_gate().Pos, \
             'PosT =', self.get_tail_gate().Pos, \
