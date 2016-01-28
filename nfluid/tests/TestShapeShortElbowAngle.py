@@ -24,7 +24,8 @@ assembly = ChannelAssembly()
 if sys.argv[1] == '0':
     print 'Test_0'
     create_channel(
-        CircleCoupling(R=10, L=0, PosH=Vector(0, 0, 0), Normal=Vector(0, 0, 1))
+        CircleCoupling(R=10, L=20,
+                       PosH=Vector(0, 0, 0), Normal=Vector(0, 0, 1))
         .link(ShortElbowAngle(Angle=45, NormalT=Vector(1, 0, 1)))
         .link(CircleCoupling(L=50))
         .link(ShortElbowAngle(Angle=45, NormalT=Vector(0, 0, 1)))
