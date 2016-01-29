@@ -23,6 +23,7 @@ class ShortElbowAngle(ChannelElement2G):
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True
+        self.IsAxialSym = False
 
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))
@@ -38,14 +39,8 @@ class ShortElbowAngle(ChannelElement2G):
         self.get_tail_gate().set_size_def(R)
 
         self.angle = Angle
-
-        # Initial position along Z and X
-
-        self.cos = math.cos(math.radians(self.angle))
-        self.sin = math.sin(math.radians(self.angle))
-
-        self.get_head_gate().NormalElement = Vector(0, 0, 1)
-        self.get_tail_gate().NormalElement = Vector(-self.sin, 0, self.cos)
+        self.cos = math.cos(math.radians(Angle))
+        self.sin = math.sin(math.radians(Angle))
 
     def get_name(self):
         return 'ShortElbowAngle'
@@ -54,11 +49,15 @@ class ShortElbowAngle(ChannelElement2G):
         return self.get_head_gate().get_r()
 
     def resolve_geometry_child(self):
+        self.get_head_gate().NormalElement = Vector(0, 0, 1)
+        self.get_tail_gate().NormalElement = Vector(-self.sin, 0, self.cos)
+
         R = self.get_r()
         if R is not None:
             self.get_head_gate().PosElement = Vector(0, 0, 0)
             self.get_tail_gate().PosElement = Vector((self.cos - 1) * R,
                                                      0, self.sin * R)
+
         return ''
 
     def print_info(self):
@@ -73,6 +72,14 @@ class ShortElbowAngle(ChannelElement2G):
 
     def create_shape_child(self):
         print 'create_shape ShortElbowAngle'
+        print 'OPAZ - self.CenterPos:         ', self.CenterPos
+        print 'OPAZ - self.RotationOperator:  ', self.RotationOperator
+        print 'OPAZ - self.get_r():           ', self.get_r()
+        print 'OPAZ - self.angle:             ', self.angle
+        print 'OPAZ - self.get_pos_head():    ', self.get_pos_head()
+        print 'OPAZ - self.get_pos_tail():    ', self.get_pos_tail()
+        print 'OPAZ - self.get_normal_head(): ', self.get_normal_head()
+        print 'OPAZ - self.get_normal_tail(): ', self.get_normal_tail()
         return CreateShape('short_elbow_angle', self.CenterPos,
                            self.RotationOperator,
                            self.get_r(), self.angle,
