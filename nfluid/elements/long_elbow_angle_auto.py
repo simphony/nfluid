@@ -15,7 +15,6 @@ class LongElbowAngleAuto(ChannelElement2G):
     def __init__(
         self,
         RC,
-#        Angle=90,
         R=None,
         PosH=None,
         PosT=None,
@@ -51,7 +50,6 @@ class LongElbowAngleAuto(ChannelElement2G):
         # Move to resolve own
         self.get_head_gate().PosElement = Vector(0, 0, 0)
 
-
     def get_name(self):
         return 'LongElbowAngleAuto'
 
@@ -62,16 +60,20 @@ class LongElbowAngleAuto(ChannelElement2G):
         return self.RadiusCurvature
 
     def resolve_geometry_child(self):
-    	if self.get_normal_head() is not None and self.get_normal_tail() is not None:
-    		self.angle = 180 - get_vector_angle_grad(self.get_normal_head(), self.get_normal_tail())
-                print "resolve_geometry_child angle", self.angle, "radius", self.RadiusCurvature
-	        self.cos = math.cos(math.radians(self.angle))
-        	self.sin = math.sin(math.radians(self.angle))
-	        self.get_tail_gate().NormalElement = Vector(self.sin, 0,
-        	                                            -self.cos)
-	        self.get_tail_gate().PosElement = Vector((1 + self.cos) * self.RadiusCurvature,
-        	        	                                 0, self.sin * self.RadiusCurvature)
-        		
+        if self.get_normal_head() is not None and \
+           self.get_normal_tail() is not None:
+            self.angle = 180 - get_vector_angle_grad(self.get_normal_head(),
+                                                     self.get_normal_tail())
+            print "resolve_geometry_child angle", self.angle, \
+                  "radius", self.RadiusCurvature
+            self.cos = math.cos(math.radians(self.angle))
+            self.sin = math.sin(math.radians(self.angle))
+            self.get_tail_gate().NormalElement = Vector(self.sin, 0,
+                                                        -self.cos)
+            self.get_tail_gate().PosElement = \
+                Vector((1 + self.cos) * self.RadiusCurvature, 0,
+                       self.sin * self.RadiusCurvature)
+
         return ''
 
     def print_info(self):
