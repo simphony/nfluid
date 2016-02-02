@@ -3,6 +3,7 @@
 from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
+from nfluid.util.vector import is_colinear
 import copy
 # Class of CirclePath
 
@@ -22,6 +23,25 @@ class CirclePath(ChannelElement2G):
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True
+
+        # COLLINEAR CONDITION TO CHECK FOR AXIAL SYMMETRY
+        # SHOULD BE SOMETHING LIKE THIS:
+        # NormHeadFromPoints = (Points[1]-Points[0]).normalize()
+        # NormTailFromPoints = (Points[-1]-Points[-2]).normalize()
+        # NormHeadToTailFromPoints = (Points[-1]-Points[0]).normalize()
+        # if is_colinear(NormHeadFromPoints, NormTailFromPoints) and \
+        #    is_colinear(NormHeadFromPoints, NormHeadToTailFromPoints):
+        #     self.IsAxialSym = True
+        # else:
+        #     self.IsAxialSym = False
+
+        # BUT, WHAT ACTUALLY WORKS IS THIS:
+        NormHeadFromPoints = (Points[1]-Points[0]).normalize()
+        NormTailFromPoints = (Points[-1]-Points[-2]).normalize()
+        if is_colinear(NormHeadFromPoints, NormTailFromPoints):
+            self.IsAxialSym = True
+        else:
+            self.IsAxialSym = False
 
         # self.length = (Points[-1]-Points[0]).get_len()
 
@@ -49,6 +69,18 @@ class CirclePath(ChannelElement2G):
         # Initial Positions
         self.get_head_gate().PosElement = copy.copy(Points[0])
         self.get_tail_gate().PosElement = copy.copy(Points[-1])
+
+        PosH = self.get_pos_head()
+        PosT = self.get_pos_tail()
+        if PosH.is_not_none() and PosT.is_none():
+            VectorFromHeadToTail = (self.InputPoints[-1]-self.InputPoints[0])
+            print 'OPAZ - VectorFromHeadToTail:', VectorFromHeadToTail
+            self.get_tail_gate().Pos = PosH + VectorFromHeadToTail
+
+        print 'OPAZ - self.get_pos_head(): ', self.get_pos_head()
+        print 'OPAZ - self.get_pos_tail(): ', self.get_pos_tail()
+        print 'OPAZ - self.get_head_gate().Pos: ', self.get_head_gate().Pos
+        print 'OPAZ - self.get_tail_gate().Pos: ', self.get_tail_gate().Pos
 
         # Try put center in the first point
         # centroid = Vector(0.0, 0.0, 0.0)

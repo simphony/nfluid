@@ -16,11 +16,14 @@ print os.path.basename(__file__), '------------------------\n'
 if len(sys.argv) == 1:
     print '0: Test 0'
     print '1: Test 1'
-    print '2: All'
+    print '2: Test 2'
+    print '3: Test 3'
+    print '4: Test 4'
+    print '5: All'
 
     exit(0)
 
-n_tests = 3
+n_tests = 5
 
 assembly = ChannelAssembly()
 
@@ -50,7 +53,7 @@ elif sys.argv[1] == '1':
              .link(LongElbow(RC=50, NormalT=Vector(1, 1, 1))))
 
 elif sys.argv[1] == '2':
-    print 'Test_0'
+    print 'Test_2'
     points = [Vector(0, -2, 0), Vector(0, -1, 0), Vector(0, -1, 1),
               Vector(0, -3, 3), Vector(0, -6, 6),
               Vector(0, -9, 9), Vector(0, -9, 12), Vector(0, -6, 15),
@@ -68,6 +71,22 @@ elif sys.argv[1] == '2':
              .link(CircleCoupling(L=4)))
 
 elif sys.argv[1] == '3':
+    print 'Test_3'
+    points = [Vector(0, 0, 0), Vector(0, 0, 50), Vector(50, 0, 50),
+              Vector(50, 0, 100), Vector(0, 0, 100), Vector(0, 0, 150)]
+    create_channel(CirclePath(R=5, Points=points,
+                   PosH=Vector(0, 0, 0), NormalH=Vector(0, 0, 1),
+                   NormalT=Vector(0, 0, 1)))
+
+elif sys.argv[1] == '4':
+    print 'Test_4'
+    points = [Vector(0, 0, 0), Vector(0, 0, 50), Vector(50, 0, 50),
+              Vector(50, 0, 100), Vector(20, 0, 100), Vector(20, 0, 150)]
+    create_channel(CirclePath(R=5, Points=points,
+                   PosH=Vector(0, 0, 0), NormalH=Vector(0, 0, 1),
+                   NormalT=Vector(0, 0, 1)))
+
+elif sys.argv[1] == '5':
     for i in range(0, n_tests):
         os.system('python ' + sys.argv[0] + ' ' + str(i))
     exit(0)

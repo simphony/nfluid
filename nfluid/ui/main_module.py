@@ -30,7 +30,7 @@ class NfluidGui(object):
             self.create_gui()
         self.main_window.show()
         self.main_window.refresh_all()
-        
+
         app.exec_()
         QtGui.QApplication.instance()
 
