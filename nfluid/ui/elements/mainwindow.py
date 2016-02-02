@@ -90,8 +90,8 @@ class MainWindow(QtGui.QMainWindow):
         self.dw_pieces_list.widget().refresh_gui()
 
     def refresh_all(self):
-        self.refresh_visualizer()
         self.refresh_list_pieces()
+        self.refresh_visualizer()
 
     def message(self, msg=''):
         msgBox = QtGui.QMessageBox()

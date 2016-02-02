@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from nfluid.ui.main_module import start_gui
 
 
 def MakeTest1(assembly):
@@ -41,7 +42,8 @@ print_info Assembly ---------------------------'''
         print 'Shapes export error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    assembly.show_shapes()
+    # assembly.show_shapes()
+    start_gui()
 
     mesh = assembly.extract_simphony_mesh()
     print mesh
