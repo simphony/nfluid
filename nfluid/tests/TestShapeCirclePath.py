@@ -74,17 +74,26 @@ elif sys.argv[1] == '3':
     print 'Test_3'
     points = [Vector(0, 0, 0), Vector(0, 0, 50), Vector(50, 0, 50),
               Vector(50, 0, 100), Vector(0, 0, 100), Vector(0, 0, 150)]
-    create_channel(CirclePath(R=5, Points=points,
-                   PosH=Vector(0, 0, 0), NormalH=Vector(0, 0, 1),
-                   NormalT=Vector(0, 0, 1)))
+    create_channel(CircleCoupling(R=5, L=15, PosH=Vector(0, 0, 0),
+                                  Normal=Vector(0, 0, 1))
+                   .link(CirclePath(Points=points,
+                                    NormalT=Vector(0, 0, 1),
+                                    Twist=30))
+                   .link(LongElbow(RC=40,
+                                   NormalT=Vector(1, 2, 0))))
 
 elif sys.argv[1] == '4':
     print 'Test_4'
-    points = [Vector(0, 0, 0), Vector(0, 0, 50), Vector(50, 0, 50),
-              Vector(50, 0, 100), Vector(20, 0, 100), Vector(20, 0, 150)]
-    create_channel(CirclePath(R=5, Points=points,
-                   PosH=Vector(0, 0, 0), NormalH=Vector(0, 0, 1),
-                   NormalT=Vector(0, 0, 1)))
+    points = [Vector(0, 0, 0), Vector(0, 0, 50), Vector(0, 50, 50),
+              Vector(0, 50, 100), Vector(0, 20, 100), Vector(0, 20, 150)]
+    create_channel(CircleCoupling(R=5, L=35, PosH=Vector(0, 0, 0),
+                                  Normal=Vector(0, 0, 1))
+                   .link(LongElbow(RC=25,
+                                   NormalT=Vector(1, -1, 0)))
+                   .link(CirclePath(Points=points,
+                                    NormalT=Vector(1, -1, 0),
+                                    Twist=160))
+                   .link(CircleCoupling(L=40)))
 
 elif sys.argv[1] == '5':
     for i in range(0, n_tests):
