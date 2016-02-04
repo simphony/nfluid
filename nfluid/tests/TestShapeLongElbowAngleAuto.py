@@ -37,7 +37,7 @@ elif sys.argv[1] == '1':
         CircleCoupling(R=10, L=20,
                        PosH=Vector(0, 0, 0), Normal=Vector(0, 0, 1))
         .link(LongElbow(RC=50, NormalT=Vector(0, 1, 0)))
-        .link(LongElbowAngleAuto(RC=50, NormalT=Vector(0, 1, 1)))
+        .link(LongElbowAngleAuto(RC=50, NormalT=Vector(1, 1, -1)))
         .link(CircleCoupling(L=100))
     )
 

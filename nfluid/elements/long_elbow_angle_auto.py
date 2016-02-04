@@ -62,16 +62,16 @@ class LongElbowAngleAuto(ChannelElement2G):
     def resolve_geometry_child(self):
         if self.get_normal_head() is not None and \
            self.get_normal_tail() is not None:
-            self.angle = 180 - get_vector_angle_grad(self.get_normal_head(),
-                                                     self.get_normal_tail())
+            self.angle = get_vector_angle_grad(self.get_normal_head(),
+                                               self.get_normal_tail())
             print "resolve_geometry_child angle", self.angle, \
                   "radius", self.RadiusCurvature
             self.cos = math.cos(math.radians(self.angle))
             self.sin = math.sin(math.radians(self.angle))
-            self.get_tail_gate().NormalElement = Vector(self.sin, 0,
-                                                        -self.cos)
+            self.get_tail_gate().NormalElement = Vector(-self.sin, 0,
+                                                        self.cos)
             self.get_tail_gate().PosElement = \
-                Vector((1 + self.cos) * self.RadiusCurvature, 0,
+                Vector((self.cos - 1) * self.RadiusCurvature, 0,
                        self.sin * self.RadiusCurvature)
 
         return ''
