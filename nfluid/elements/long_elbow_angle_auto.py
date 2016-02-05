@@ -4,11 +4,13 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
+from nfluid.util.vector import get_vector_angle_grad
+import math
 import copy
 # Class of Elbow
 
 
-class LongElbow(ChannelElement2G):
+class LongElbowAngleAuto(ChannelElement2G):
 
     def __init__(
         self,
@@ -19,6 +21,7 @@ class LongElbow(ChannelElement2G):
         NormalH=None,
         NormalT=None,
     ):
+
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True
@@ -26,8 +29,7 @@ class LongElbow(ChannelElement2G):
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))
 
-        self.angle = 90
-
+        self.angle = None
         self.RadiusCurvature = RC
 
         # TODO Correct NormalT if both NormalH and NormalT are defined
@@ -44,15 +46,12 @@ class LongElbow(ChannelElement2G):
         # Initial position along Z and X
 
         self.get_head_gate().NormalElement = Vector(0, 0, 1)
-        self.get_tail_gate().NormalElement = Vector(1, 0, 0)
 
         # Move to resolve own
-
-        self.get_head_gate().PosElement = Vector(0, 0, -RC)
-        self.get_tail_gate().PosElement = Vector(RC, 0, 0)
+        self.get_head_gate().PosElement = Vector(0, 0, 0)
 
     def get_name(self):
-        return 'LongElbow'
+        return 'LongElbowAngleAuto'
 
     def get_r(self):
         return self.get_head_gate().get_r()
@@ -61,22 +60,37 @@ class LongElbow(ChannelElement2G):
         return self.RadiusCurvature
 
     def resolve_geometry_child(self):
+        if self.get_normal_head() is not None and \
+           self.get_normal_tail() is not None:
+            self.angle = get_vector_angle_grad(self.get_normal_head(),
+                                               self.get_normal_tail())
+            print "resolve_geometry_child angle", self.angle, \
+                  "radius", self.RadiusCurvature
+            self.cos = math.cos(math.radians(self.angle))
+            self.sin = math.sin(math.radians(self.angle))
+            self.get_tail_gate().NormalElement = Vector(-self.sin, 0,
+                                                        self.cos)
+            self.get_tail_gate().PosElement = \
+                Vector((self.cos - 1) * self.RadiusCurvature, 0,
+                       self.sin * self.RadiusCurvature)
 
         return ''
 
     def print_info(self):
         ChannelElement2G.print_info(self)
-        print 'LongElbow radius Rdef =', \
+        print 'LongElbowAngleAuto radius Rdef =', \
             self.get_head_gate().get_r_def(), 'RH =', \
             self.get_gate_size_h(), 'RT =', self.get_gate_size_t()
 
     def create_shape_child(self):
         print 'create_shape LongElbow'
-
         # check geometry data
 
-        return CreateShape('long_elbow', self.CenterPos, self.RotationOperator,
-                           self.get_r_curv(), self.get_r(),
+        return CreateShape('long_elbow_angle', self.CenterPos,
+                           self.RotationOperator,
+                           self.get_r_curv(),
+                           self.angle,
+                           self.get_r(),
                            self.get_pos_head(),
                            self.get_pos_tail(),
                            self.get_normal_head(),

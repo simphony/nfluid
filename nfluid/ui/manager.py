@@ -6,6 +6,7 @@ from nfluid.elements.flow_adapter import FlowAdapter
 from nfluid.elements.long_elbow import LongElbow
 from nfluid.elements.long_elbow_angle import LongElbowAngle
 from nfluid.elements.short_elbow import ShortElbow
+from nfluid.elements.short_elbow_angle import ShortElbowAngle
 from nfluid.elements.spheric_coupling import SphericCoupling
 from nfluid.shapes.shapes import Shape
 from nfluid.ui.elements.auxiliar import strings
@@ -22,6 +23,9 @@ class Piece(object):
         self.params = copy.deepcopy(params)
 
     def name(self):
+        print "    -------- B"
+        print self.type, Piece.sep, str(self.id)
+        print "    -------- E"
         return self.type + Piece.sep + str(self.id)
 
     def set_name(self, name):
@@ -131,6 +135,8 @@ class NfluidDataManager(object):
             return strings.flow_adapter
         if isinstance(element, ShortElbow):
             return strings.short_elbow
+        if isinstance(element, ShortElbowAngle):
+            return strings.short_elbow_angle
         if isinstance(element, LongElbow):
             return strings.long_elbow
         if isinstance(element, LongElbowAngle):

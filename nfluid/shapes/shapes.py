@@ -58,8 +58,8 @@ class Shape(object):
                         normal_tail = (tail.NormalT0.X(0), tail.NormalT0.X(1),
                                        tail.NormalT0.X(2))
                     else:
-                        normal_tail = (tail.NormalH.X(0), tail.NormalH.X(1),
-                                       tail.NormalH.X(2))
+                        normal_tail = (tail.NormalT.X(0), tail.NormalT.X(1),
+                                       tail.NormalT.X(2))
                     tail.mesh = cls.total_mesh.attach(tail.mesh, gate)
                     c, normal_tail_current = tail.mesh.get_face_info(1)
                     print "normal_tail", normal_tail
@@ -265,7 +265,7 @@ class ShapeLongElbow(Shape):
     def __init__(
         self, RC, R,
         PosH, PosT,
-        NormalH
+        NormalH, NormalT
     ):
         Shape.__init__(self)
         # Curvature radius
@@ -275,6 +275,7 @@ class ShapeLongElbow(Shape):
         self.PosH = PosH
         self.PosT = PosT
         self.NormalH = NormalH
+        self.NormalT = NormalT
         self.mesh = _generator.create_long_elbow(self.RadiusCurvature,
                                                  self.Radius
                                                  )
@@ -285,7 +286,7 @@ class ShapeLongElbowAngle(Shape):
     def __init__(
         self, RC, Angle, R,
         PosH, PosT,
-        NormalH
+        NormalH, NormalT
     ):
         Shape.__init__(self)
         # Curvature radius
@@ -296,6 +297,7 @@ class ShapeLongElbowAngle(Shape):
         self.PosH = PosH
         self.PosT = PosT
         self.NormalH = NormalH
+        self.NormalT = NormalT
         self.mesh = _generator.create_long_elbow(self.RadiusCurvature,
                                                  self.Radius,
                                                  self.angle)
@@ -306,26 +308,31 @@ class ShapeShortElbow(Shape):
     def __init__(
         self, R,
         PosH, PosT,
-        NormalH
+        NormalH, NormalT
     ):
         Shape.__init__(self)
         self.Radius = R
         self.PosH = PosH
         self.PosT = PosT
         self.NormalH = NormalH
+        self.NormalH = NormalT
         self.mesh = _generator.create_short_elbow(self.Radius)
 
 
 class ShapeShortElbowAngle(Shape):
 
     def __init__(
-        self, Angle, R,
+        self, R, Angle,
         PosH, PosT,
+        NormalH, NormalT
     ):
+        Shape.__init__(self)
         self.Radius = R
         self.angle = Angle
         self.PosH = PosH
         self.PosT = PosT
+        self.NormalH = NormalH
+        self.NormalT = NormalT
         self.mesh = _generator.create_short_elbow(self.Radius, self.angle)
 
 
@@ -382,7 +389,8 @@ class ShapeSquareCoupling(Shape):
 
 def CreateShape(type, center, rotation,
                 par0=None, par1=None, par2=None,
-                par3=None, par4=None, par5=None):
+                par3=None, par4=None, par5=None,
+                par6=None):
 
     shape = None
 
@@ -399,11 +407,13 @@ def CreateShape(type, center, rotation,
     elif type == 'flow_adapter':
         shape = ShapeFlowAdapter(par0, par1, par2, par3, par4, par5)
     elif type == 'long_elbow':
-        shape = ShapeLongElbow(par0, par1, par2, par3, par4)
+        shape = ShapeLongElbow(par0, par1, par2, par3, par4, par5)
     elif type == 'long_elbow_angle':
-        shape = ShapeLongElbowAngle(par0, par1, par2, par3, par4, par5)
+        shape = ShapeLongElbowAngle(par0, par1, par2, par3, par4, par5, par6)
     elif type == 'short_elbow':
         shape = ShapeShortElbow(par0, par1, par2, par3)
+    elif type == 'short_elbow_angle':
+        shape = ShapeShortElbowAngle(par0, par1, par2, par3, par4, par5)
     elif type == 'spheric_coupling':
         shape = ShapeSphericCoupling(par0, par1, par2, par3, par4)
     elif type == 'circle_path':

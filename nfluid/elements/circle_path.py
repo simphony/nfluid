@@ -3,6 +3,8 @@
 from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
+from nfluid.util.vector import is_colinear
+from nfluid.util.rotations import GetRotationMatrixAxisAngleGrad
 import copy
 # Class of CirclePath
 
@@ -17,11 +19,30 @@ class CirclePath(ChannelElement2G):
         PosT=None,     # Position of tail gate
         NormalH=None,  # Normal at head gate
         NormalT=None,  # Normal at tail gate
-        Angle=None,    # Extra angle (if Normals are collinear)
+        Twist=None,    # Extra parameter (if Normals are collinear)
     ):
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True
+
+        # COLLINEAR CONDITION TO CHECK FOR AXIAL SYMMETRY
+        # SHOULD BE SOMETHING LIKE THIS:
+        # NormHeadFromPoints = (Points[1]-Points[0]).normalize()
+        # NormTailFromPoints = (Points[-1]-Points[-2]).normalize()
+        # NormHeadToTailFromPoints = (Points[-1]-Points[0]).normalize()
+        # if is_colinear(NormHeadFromPoints, NormTailFromPoints) and \
+        #    is_colinear(NormHeadFromPoints, NormHeadToTailFromPoints):
+        #     self.IsAxialSym = True
+        # else:
+        #     self.IsAxialSym = False
+
+        # BUT, WHAT ACTUALLY WORKS IS THIS:
+        NormHeadFromPoints = (Points[1]-Points[0]).normalize()
+        NormTailFromPoints = (Points[-1]-Points[-2]).normalize()
+        if is_colinear(NormHeadFromPoints, NormTailFromPoints):
+            self.IsAxialSym = True
+        else:
+            self.IsAxialSym = False
 
         # self.length = (Points[-1]-Points[0]).get_len()
 
@@ -37,7 +58,7 @@ class CirclePath(ChannelElement2G):
         self.get_head_gate().set_size_def(R)
         self.get_tail_gate().set_size_def(R)
 
-        self.angle = Angle
+        self.angle = Twist
         self.InputPoints = copy.copy(Points)
 
         # Initial Normals
@@ -49,6 +70,18 @@ class CirclePath(ChannelElement2G):
         # Initial Positions
         self.get_head_gate().PosElement = copy.copy(Points[0])
         self.get_tail_gate().PosElement = copy.copy(Points[-1])
+
+        PosH = self.get_pos_head()
+        PosT = self.get_pos_tail()
+        if PosH.is_not_none() and PosT.is_none():
+            VectorFromHeadToTail = (self.InputPoints[-1]-self.InputPoints[0])
+            # print 'OPAZ - VectorFromHeadToTail:', VectorFromHeadToTail
+            self.get_tail_gate().Pos = PosH + VectorFromHeadToTail
+
+        # print 'OPAZ - self.get_pos_head(): ', self.get_pos_head()
+        # print 'OPAZ - self.get_pos_tail(): ', self.get_pos_tail()
+        # print 'OPAZ - self.get_head_gate().Pos: ', self.get_head_gate().Pos
+        # print 'OPAZ - self.get_tail_gate().Pos: ', self.get_tail_gate().Pos
 
         # Try put center in the first point
         # centroid = Vector(0.0, 0.0, 0.0)
@@ -84,13 +117,34 @@ class CirclePath(ChannelElement2G):
         print 'create_shape CirclePath'
 
         # Compute new Points: shift + rotation
-        OutputPoints = []
+        RPoints = []
         for Point in self.InputPoints:
             # print ' Point=',Point
             RPoint = self.CenterPos + self.RotationOperator * Point
             # print 'RPoint=',RPoint
-            OutputPoints.append((RPoint.x, RPoint.y, RPoint.z))
+            RPoints.append(RPoint)
         # Check result
+        # print 'RPoints = ',RPoints
+
+        # Add extra rotation if collinear case and Twist is provided
+        if self.IsAxialSym and self.angle is not None:
+            axis = (RPoints[1]-RPoints[0]).normalize()
+            # print 'axis=',axis
+            TwistRotation = GetRotationMatrixAxisAngleGrad(axis, self.angle)
+            origin = RPoints[0]
+            APoints = []
+            for Point in RPoints:
+                # print ' Point=',Point
+                APoint = origin + TwistRotation * (Point-origin)
+                # print 'APoint=',APoint
+                APoints.append(APoint)
+            RPoints = APoints
+            del APoints
+
+        # Convert from Vector type
+        OutputPoints = []
+        for Point in RPoints:
+            OutputPoints.append((Point.x, Point.y, Point.z))
         # print 'OutputPoints = ',OutputPoints
 
         return CreateShape('circle_path', self.CenterPos,

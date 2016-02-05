@@ -37,10 +37,10 @@ if sys.argv[1] == '0':
     tee2.link(CircleCoupling(L=42))
     tee2.link(ShortElbow(NormalT=Vector(1, 1, 0)), 1). \
         link(LongElbow(RC=15, NormalT=Vector(0, 0, 1))). \
-        link(FlowAdapter(RT=23, L=20))
+        link(FlowAdapter(RT=15, L=20))
     tee3.link(CircleCoupling(L=42)). \
         link(SphericCoupling(RS=20))
-    tee3.link(LongElbow(RC=50, NormalT=Vector(1, -1, 0)), 1)
+    tee3.link(LongElbow(RC=50, NormalT=Vector(-1, -1, 0)), 1)
 
 elif sys.argv[1] == '1':
     print 'Test All 1'
