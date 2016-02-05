@@ -14,7 +14,7 @@ from nfluid.geometry.functions import angle_between_vectors
 from nfluid.geometry.functions import normal_of, center_of, distance
 from nfluid.geometry.auxiliar_geometry import Plane, Line3D
 import visvis as vv
-
+import copy
 
 class GeometricMesh(object):
     """Simple class to specify a geometrical mesh:
@@ -801,6 +801,155 @@ class CylindricalPart(GeometricMesh):
                             inter_point = ((inter, key))
                             min_d = cur_d
         return inter_point
+        
+    def intersections_of_point(self, point, normal):
+        ray = Line3D(point, normal)
+        inter_points = []
+        inter_point = None
+        min_d = 9999
+        for key, triangle in self.triangles.iteritems():
+            v0 = self.vertex(triangle[0])
+            v1 = self.vertex(triangle[1])
+            v2 = self.vertex(triangle[2])
+            n = normal_of(v0, v1, v2)
+            plane = Plane(v0, n)
+            inter = plane.intersection(ray)
+            if inter is not None:
+                if (not math.isnan(inter[0]) and
+                        not math.isnan(inter[1]) and
+                        not math.isnan(inter[2])):
+                    # check if inside triangle
+                    a = np.array([[v0[0], v1[0], v2[0]],
+                                  [v0[1], v1[1], v2[1]],
+                                  [v0[2], v1[2], v2[2]]])
+                    b = np.array([inter[0], inter[1], inter[2]])
+                    try:
+                        s = np.linalg.solve(a, b)
+                    except np.linalg.linalg.LinAlgError:
+                        return None
+                    if (s[0] >= 0 and s[0] <= 1 and
+                            s[1] >= 0 and s[1] <= 1 and
+                            s[2] >= 0 and s[2] <= 1):
+                        inter_points.append((inter, key))
+        return inter_points
+
+    def is_inside(self, point, inter_points=None):
+        # copy_mesh = copy.deepcopy(self)
+        # copy_mesh.close()
+        # inter_points = copy_mesh.intersections_of_point(point, (0,1,0))
+        if inter_points is None:
+            inter_points = self.intersections_of_point(point, (0,1,0))
+        left = 0
+        right = 0
+        for coords, key in inter_points:
+            cur_n = (coords[0]-point[0], coords[1]-point[1], coords[2]-point[2])
+            if cur_n[1] < 0:
+                left += 1
+            else:
+                right += 1
+        # print "point"        
+        # print point        
+        # print "left - right"
+        # print left, right
+        if left % 2 != 0 and right % 2 != 0:
+            return True
+        return False
+
+    def fill_mesh(self, step, filename):
+        self.close()
+        limits = self.coord_limits()
+        # cube = mesh.generate_cubic_mesh(limits['x_min'],limits['x_max'],limits['y_min'],limits['y_max'],limits['z_min'],limits['z_max'], step)
+        
+        x_min = limits['x_min']
+        y_min = limits['y_min']
+        z_min = limits['z_min']
+        x_max = limits['x_max']
+        y_max = limits['y_max']
+        z_max = limits['z_max']
+        cur_x = x_min
+        cur_y = y_min
+        cur_z = z_min
+        inside = []
+        not_inside = []
+        while cur_x < x_max:
+            # print "X"
+            # print cur_x, cur_y, cur_z
+            while cur_z < z_max:
+                # print "Z"
+                # print cur_x, cur_y, cur_z
+                p = (cur_x, cur_y, cur_z)
+                inter_points = self.intersections_of_point(p, (0,1,0))
+                while cur_y < y_max:
+                    # print "Y"
+                    # print cur_x, cur_y, cur_z
+                    cur_p = (cur_x, cur_y, cur_z)
+                    if self.is_inside(cur_p, inter_points):
+                        inside.append(cur_p)
+                    else:
+                        not_inside.append(cur_p)
+                    cur_y += step
+                cur_y = y_min
+                cur_z += step
+            cur_z = z_min
+            cur_x += step
+        
+        file_out = open(filename, 'w')
+
+        total_v = len(inside)
+        file_out.write('{}\n'.format(total_v))
+        file_out.write('---------------\n')
+        spec = 'O'
+        for v in inside:
+            file_out.write('{0} {1} {2} {3}\n'.format(spec, v[0], v[1], v[2]))
+            
+        file_out.close()
+        
+        return not_inside
+
+    def coord_limits(self):
+        x_min = 9999
+        x_max = -9999
+        y_min = 9999
+        y_max = -9999
+        z_min = 9999
+        z_max = -9999
+        for v in self.vertices.itervalues():
+            if v[0] < x_min:
+                x_min = v[0]
+            if v[0] > x_max:
+                x_max = v[0]
+            if v[1] < y_min:
+                y_min = v[1]
+            if v[1] > y_max:
+                y_max = v[1]
+            if v[2] < z_min:
+                z_min = v[2]
+            if v[2] > z_max:
+                z_max = v[2]
+        return {'x_min':x_min, 'x_max':x_max, 
+                'y_min':y_min, 'y_max':y_max,
+                'z_min':z_min, 'z_max':z_max}
+        
+    # @classmethod
+    def generate_cubic_mesh(self, x_min, x_max, y_min, y_max, z_min, z_max, step=1):
+        res = GeometricMesh()
+        x_len = x_max - x_min
+        y_len = y_max - y_min
+        z_len = z_max - z_min
+        cur_x = x_min
+        cur_y = y_min
+        cur_z = z_min
+        while cur_x < x_max:
+            while cur_y < y_max:
+                while cur_z < z_max:
+                    res.add_vertex((cur_x, cur_y, cur_z))
+                    cur_z += step
+                cur_z = z_min
+                cur_y += step
+            cur_y = y_min
+            cur_x += step
+        return res
+        
 
     def intersection(self, figure):
         """This calculates an returns the intersection of the vertices of

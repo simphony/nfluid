@@ -45,7 +45,54 @@ print_info Assembly ---------------------------'''
     # assembly.show_shapes()
     start_gui()
 
-    mesh = assembly.extract_simphony_mesh()
-    print mesh
+    # mesh = assembly.extract_simphony_mesh()
+    # print mesh
+    
+    from nfluid.shapes.shapes import Shape
+
+    mesh = Shape.total_mesh
+    mesh.close()
+
+    p = (0,1,0)
+    print p
+    print mesh.is_inside(p)
+
+    p = (0,5,0)
+    print p
+    print mesh.is_inside(p)
+
+    p = (0,10,0)
+    print p
+    print mesh.is_inside(p)
+
+    p = (0,9,0)
+    print p
+    print mesh.is_inside(p)
+
+    print "mesh.coord_limits"
+    limits = mesh.coord_limits()
+    print limits
+
+    cube = mesh.generate_cubic_mesh(limits['x_min'],limits['x_max'],limits['y_min'],limits['y_max'],limits['z_min'],limits['z_max'], 0.5)
+
+    # print cube.vertices
+    inside = []
+    for v in cube.vertices.itervalues():
+        inside_r = mesh.is_inside(v)
+        # print inside_r
+        if inside_r is True:
+            inside.append(v)
+
+    filename = 'inside_shapeall.xyz'
+    file_out = open(filename, 'w')
+
+    total_v = len(inside)
+    file_out.write('{}\n'.format(total_v))
+    file_out.write('---------------\n')
+    spec = 'O'
+    for v in inside:
+        file_out.write('{0} {1} {2} {3}\n'.format(spec, v[0], v[1], v[2]))
+        
+    file_out.close()
 
     assembly.release_shapes()

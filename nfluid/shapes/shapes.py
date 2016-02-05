@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import math
+import copy
 
 from nfluid.visualisation.show import show
 from nfluid.geometry.generator import GeometryGenerator
@@ -112,6 +113,38 @@ class Shape(object):
             dir = (initial.NormalH.X(0), initial.NormalH.X(1),
                    initial.NormalH.X(2))
             initial_mesh.move(point=pos, direction=dir)
+            
+            if (isinstance(initial, ShapeLongElbowAngle) or
+                    isinstance(initial, ShapeShortElbowAngle) or
+                    isinstance(initial, ShapeLongElbow) or
+                    isinstance(initial, ShapeTee) or
+                    isinstance(initial, ShapeShortElbow) or
+                    isinstance(initial, ShapeCirclePath)):
+                if isinstance(initial, ShapeTee):
+                    normal_tail = (initial.NormalT0.X(0), initial.NormalT0.X(1),
+                                   initial.NormalT0.X(2))
+                else:
+                    normal_tail = (initial.NormalT.X(0), initial.NormalT.X(1),
+                                   initial.NormalT.X(2))
+                c, normal_tail_current = initial_mesh.get_face_info(1)
+                print "normal_tail", normal_tail
+                print "normal_tail_current", normal_tail_current
+                angle = angle_between_vectors(normal_tail,
+                                              normal_tail_current)
+                iter = 100
+                print "angle beg"
+                print angle
+                print normal_tail_current
+                while angle > 0.001 and iter:
+                    initial_mesh.set_orientation(math.degrees(angle))
+                    c, normal_tail_current = initial_mesh.get_face_info(1)
+                    angle = angle_between_vectors(normal_tail,
+                                                  normal_tail_current)
+                    iter -= 1
+                    print angle
+                    print normal_tail_current
+                print "angle_end"
+            
             cursor = initial
             cls.total_mesh = initial_mesh
             cls.connect_next_piece(cursor, 0)
@@ -131,7 +164,9 @@ class Shape(object):
     def export(cls, file_name):
         if cls.total_mesh is None:
             raise Exception('Total mesh not generated!')
-        cls.total_mesh.export(file_name)
+        res = copy.deepcopy(cls.total_mesh)
+        res.close()
+        res.export(file_name)
 
     @classmethod
     def simphony_mesh(cls):
@@ -315,7 +350,7 @@ class ShapeShortElbow(Shape):
         self.PosH = PosH
         self.PosT = PosT
         self.NormalH = NormalH
-        self.NormalH = NormalT
+        self.NormalT = NormalT
         self.mesh = _generator.create_short_elbow(self.Radius)
 
 
@@ -411,7 +446,7 @@ def CreateShape(type, center, rotation,
     elif type == 'long_elbow_angle':
         shape = ShapeLongElbowAngle(par0, par1, par2, par3, par4, par5, par6)
     elif type == 'short_elbow':
-        shape = ShapeShortElbow(par0, par1, par2, par3)
+        shape = ShapeShortElbow(par0, par1, par2, par3, par4)
     elif type == 'short_elbow_angle':
         shape = ShapeShortElbowAngle(par0, par1, par2, par3, par4, par5)
     elif type == 'spheric_coupling':
