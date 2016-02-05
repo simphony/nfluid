@@ -23,9 +23,9 @@ class Piece(object):
         self.params = copy.deepcopy(params)
 
     def name(self):
-        print "    ???????? B"
+        print "    -------- B"
         print self.type, Piece.sep, str(self.id)
-        print "    ???????? E"
+        print "    -------- E"
         return self.type + Piece.sep + str(self.id)
 
     def set_name(self, name):

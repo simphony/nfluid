@@ -7,33 +7,28 @@ from nfluid.util.vector import Vector
 from nfluid.util.vector import get_vector_angle_grad
 import math
 import copy
-# Class of Elbow
+# Class of ShortElbowAngleAuto
 
 
-class LongElbowAngleAuto(ChannelElement2G):
+class ShortElbowAngleAuto(ChannelElement2G):
 
     def __init__(
         self,
-        RC,
-        R=None,
-        PosH=None,
-        PosT=None,
-        NormalH=None,
-        NormalT=None,
+        R=None,        # Gate radius
+        PosH=None,     # Position of head gate
+        PosT=None,     # Position of tail gate
+        NormalH=None,  # Normal at head gate
+        NormalT=None,  # Normal at tail gate
     ):
-
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True
+        self.IsAxialSym = False
 
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))
 
-        self.angle = None
-        self.RadiusCurvature = RC
-
         # TODO Correct NormalT if both NormalH and NormalT are defined
-
         self.get_head_gate().set_normal_def(copy.copy(NormalH))
         self.get_tail_gate().set_normal_def(copy.copy(NormalT))
 
@@ -43,55 +38,47 @@ class LongElbowAngleAuto(ChannelElement2G):
         self.get_head_gate().set_size_def(R)
         self.get_tail_gate().set_size_def(R)
 
-        # Initial position along Z and X
+        self.angle = None
 
+        self.get_head_gate().PosElement = Vector(0, 0, 0)
         self.get_head_gate().NormalElement = Vector(0, 0, 1)
 
-        # Move to resolve own
-        self.get_head_gate().PosElement = Vector(0, 0, 0)
-
     def get_name(self):
-        return 'LongElbowAngleAuto'
+        return 'ShortElbowAngleAuto'
 
     def get_r(self):
         return self.get_head_gate().get_r()
 
-    def get_r_curv(self):
-        return self.RadiusCurvature
-
     def resolve_geometry_child(self):
+        R = self.get_r()
         if self.get_normal_head() is not None and \
-           self.get_normal_tail() is not None:
+           self.get_normal_tail() is not None and \
+           R is not None:
             self.angle = get_vector_angle_grad(self.get_normal_head(),
                                                self.get_normal_tail())
-            print "resolve_geometry_child angle", self.angle, \
-                  "radius", self.RadiusCurvature
+            print "resolve_geometry_child angle", self.angle
             self.cos = math.cos(math.radians(self.angle))
             self.sin = math.sin(math.radians(self.angle))
-            self.get_tail_gate().NormalElement = Vector(-self.sin, 0,
-                                                        self.cos)
-            self.get_tail_gate().PosElement = \
-                Vector((self.cos - 1) * self.RadiusCurvature, 0,
-                       self.sin * self.RadiusCurvature)
+            self.get_tail_gate().PosElement = Vector((self.cos - 1) * R,
+                                                     0, self.sin * R)
+            self.get_tail_gate().NormalElement = Vector(-self.sin, 0, self.cos)
 
         return ''
 
     def print_info(self):
         ChannelElement2G.print_info(self)
-        print 'LongElbowAngleAuto radius Rdef =', \
-            self.get_head_gate().get_r_def(), 'RH =', \
-            self.get_gate_size_h(), 'RT =', self.get_gate_size_t()
+        print 'ShortElbowAngleAuto radius Rdef =', \
+            self.get_head_gate().get_r_def(), \
+            'RH =', self.get_gate_size_h(), 'RT =', self.get_gate_size_t(), \
+            'PosH =', self.get_head_gate().Pos, \
+            'PosT =', self.get_tail_gate().Pos, \
+            'NormH =', self.get_head_gate().NormalElement, \
+            'NormT =', self.get_tail_gate().NormalElement
 
     def create_shape_child(self):
-        print 'create_shape LongElbow'
-        # check geometry data
-
-        return CreateShape('long_elbow_angle', self.CenterPos,
+        print 'create_shape ShortElbowAngleAuto'
+        return CreateShape('short_elbow_angle', self.CenterPos,
                            self.RotationOperator,
-                           self.get_r_curv(),
-                           self.angle,
-                           self.get_r(),
-                           self.get_pos_head(),
-                           self.get_pos_tail(),
-                           self.get_normal_head(),
-                           self.get_normal_tail())
+                           self.get_r(), self.angle,
+                           self.get_pos_head(), self.get_pos_tail(),
+                           self.get_normal_head(), self.get_normal_tail())

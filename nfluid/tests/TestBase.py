@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from nfluid.ui.main_module import start_gui
+# from nfluid.ui.main_module import start_gui
 
 
 def MakeTest1(assembly):
@@ -42,57 +42,43 @@ print_info Assembly ---------------------------'''
         print 'Shapes export error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    # assembly.show_shapes()
-    start_gui()
+    assembly.show_shapes()
+    # start_gui()
+
+    # Testing is_inside algorithm:
 
     # mesh = assembly.extract_simphony_mesh()
     # print mesh
-    
-    from nfluid.shapes.shapes import Shape
 
-    mesh = Shape.total_mesh
-    mesh.close()
+    # from nfluid.shapes.shapes import Shape
 
-    p = (0,1,0)
-    print p
-    print mesh.is_inside(p)
+    # mesh = Shape.total_mesh
+    # mesh.close()
 
-    p = (0,5,0)
-    print p
-    print mesh.is_inside(p)
+    # print "mesh.coord_limits"
+    # limits = mesh.coord_limits()
+    # print limits
 
-    p = (0,10,0)
-    print p
-    print mesh.is_inside(p)
+    # cube = mesh.generate_cubic_mesh(limits['x_min'],limits['x_max'],limits['y_min'],limits['y_max'],limits['z_min'],limits['z_max'], 0.5)
 
-    p = (0,9,0)
-    print p
-    print mesh.is_inside(p)
+    # # print cube.vertices
+    # inside = []
+    # for v in cube.vertices.itervalues():
+        # inside_r = mesh.is_inside(v)
+        # # print inside_r
+        # if inside_r is True:
+            # inside.append(v)
 
-    print "mesh.coord_limits"
-    limits = mesh.coord_limits()
-    print limits
+    # filename = 'inside_shapeall.xyz'
+    # file_out = open(filename, 'w')
 
-    cube = mesh.generate_cubic_mesh(limits['x_min'],limits['x_max'],limits['y_min'],limits['y_max'],limits['z_min'],limits['z_max'], 0.5)
-
-    # print cube.vertices
-    inside = []
-    for v in cube.vertices.itervalues():
-        inside_r = mesh.is_inside(v)
-        # print inside_r
-        if inside_r is True:
-            inside.append(v)
-
-    filename = 'inside_shapeall.xyz'
-    file_out = open(filename, 'w')
-
-    total_v = len(inside)
-    file_out.write('{}\n'.format(total_v))
-    file_out.write('---------------\n')
-    spec = 'O'
-    for v in inside:
-        file_out.write('{0} {1} {2} {3}\n'.format(spec, v[0], v[1], v[2]))
-        
-    file_out.close()
+    # total_v = len(inside)
+    # file_out.write('{}\n'.format(total_v))
+    # file_out.write('---------------\n')
+    # spec = 'O'
+    # for v in inside:
+        # file_out.write('{0} {1} {2} {3}\n'.format(spec, v[0], v[1], v[2]))
+ 
+    # file_out.close()
 
     assembly.release_shapes()
