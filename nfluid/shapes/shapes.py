@@ -315,7 +315,7 @@ class ShapeShortElbow(Shape):
         self.PosH = PosH
         self.PosT = PosT
         self.NormalH = NormalH
-        self.NormalH = NormalT
+        self.NormalT = NormalT
         self.mesh = _generator.create_short_elbow(self.Radius)
 
 
@@ -411,7 +411,7 @@ def CreateShape(type, center, rotation,
     elif type == 'long_elbow_angle':
         shape = ShapeLongElbowAngle(par0, par1, par2, par3, par4, par5, par6)
     elif type == 'short_elbow':
-        shape = ShapeShortElbow(par0, par1, par2, par3)
+        shape = ShapeShortElbow(par0, par1, par2, par3, par4)
     elif type == 'short_elbow_angle':
         shape = ShapeShortElbowAngle(par0, par1, par2, par3, par4, par5)
     elif type == 'spheric_coupling':
