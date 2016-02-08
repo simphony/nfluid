@@ -23,25 +23,23 @@ assembly = ChannelAssembly()
 
 if sys.argv[1] == '0':
     print 'Test_0'
-
     create_channel(CircleCoupling(1, 5, PosH=Vector(0, 20, 0),
                    Normal=Vector(0, 0, 1))).link(SphericCoupling(R=1, RS=5)). \
         link(CircleCoupling(L=10))
+
 elif sys.argv[1] == '1':
-
     print 'Test_1'
-
     create_channel(CircleCoupling(10, 20, PosH=Vector(0, 20, 30),
                                   Normal=Vector(1, 0, 0))). \
         link(SphericCoupling(R=10, RS=50)). \
         link(CircleCoupling(L=125))
+
 elif sys.argv[1] == '2':
-
     for i in range(0, n_tests):
-        os.system('TestShapeSphericCoupling.py ' + str(i))
+        os.system('python ' + sys.argv[0] + ' ' + str(i))
     exit(0)
-else:
 
+else:
     print 'Incorrect argument value'
     exit(0)
 
