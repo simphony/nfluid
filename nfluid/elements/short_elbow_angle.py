@@ -71,15 +71,6 @@ class ShortElbowAngle(ChannelElement2G):
             'NormT =', self.get_tail_gate().NormalElement
 
     def create_shape_child(self):
-        print 'create_shape ShortElbowAngle'
-        print 'OPAZ - self.CenterPos:         ', self.CenterPos
-        print 'OPAZ - self.RotationOperator:  ', self.RotationOperator
-        print 'OPAZ - self.get_r():           ', self.get_r()
-        print 'OPAZ - self.angle:             ', self.angle
-        print 'OPAZ - self.get_pos_head():    ', self.get_pos_head()
-        print 'OPAZ - self.get_pos_tail():    ', self.get_pos_tail()
-        print 'OPAZ - self.get_normal_head(): ', self.get_normal_head()
-        print 'OPAZ - self.get_normal_tail(): ', self.get_normal_tail()
         return CreateShape('short_elbow_angle', self.CenterPos,
                            self.RotationOperator,
                            self.get_r(), self.angle,

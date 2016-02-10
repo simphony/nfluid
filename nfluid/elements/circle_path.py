@@ -75,27 +75,15 @@ class CirclePath(ChannelElement2G):
         PosT = self.get_pos_tail()
         if PosH.is_not_none() and PosT.is_none():
             VectorFromHeadToTail = (self.InputPoints[-1]-self.InputPoints[0])
-            # print 'OPAZ - VectorFromHeadToTail:', VectorFromHeadToTail
             self.get_tail_gate().Pos = PosH + VectorFromHeadToTail
-
-        # print 'OPAZ - self.get_pos_head(): ', self.get_pos_head()
-        # print 'OPAZ - self.get_pos_tail(): ', self.get_pos_tail()
-        # print 'OPAZ - self.get_head_gate().Pos: ', self.get_head_gate().Pos
-        # print 'OPAZ - self.get_tail_gate().Pos: ', self.get_tail_gate().Pos
 
         # Try put center in the first point
         # centroid = Vector(0.0, 0.0, 0.0)
         # for Point in Points:
         #    centroid += Point
         # centroid = centroid/len(Points)
-        # print 'centroid = ',centroid
         # self.get_head_gate().PosElement = copy.copy(Points[0]-centroid)
         # self.get_tail_gate().PosElement = copy.copy(Points[-1]-centroid)
-
-        # print 'self.get_head_gate().PosElement = ',
-        # self.get_head_gate().PosElement
-        # print 'self.get_tail_gate().PosElement = ',
-        # self.get_tail_gate().PosElement
 
     def get_name(self):
         return 'CirclePath'
@@ -119,24 +107,17 @@ class CirclePath(ChannelElement2G):
         # Compute new Points: shift + rotation
         RPoints = []
         for Point in self.InputPoints:
-            # print ' Point=',Point
             RPoint = self.CenterPos + self.RotationOperator * Point
-            # print 'RPoint=',RPoint
             RPoints.append(RPoint)
-        # Check result
-        # print 'RPoints = ',RPoints
 
         # Add extra rotation if collinear case and Twist is provided
         if self.IsAxialSym and self.angle is not None:
             axis = (RPoints[1]-RPoints[0]).normalize()
-            # print 'axis=',axis
             TwistRotation = GetRotationMatrixAxisAngleGrad(axis, self.angle)
             origin = RPoints[0]
             APoints = []
             for Point in RPoints:
-                # print ' Point=',Point
                 APoint = origin + TwistRotation * (Point-origin)
-                # print 'APoint=',APoint
                 APoints.append(APoint)
             RPoints = APoints
             del APoints
@@ -145,7 +126,6 @@ class CirclePath(ChannelElement2G):
         OutputPoints = []
         for Point in RPoints:
             OutputPoints.append((Point.x, Point.y, Point.z))
-        # print 'OutputPoints = ',OutputPoints
 
         return CreateShape('circle_path', self.CenterPos,
                            self.RotationOperator,
