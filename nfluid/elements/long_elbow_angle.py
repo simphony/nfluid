@@ -49,12 +49,11 @@ class LongElbowAngle(ChannelElement2G):
         self.sin = math.sin(math.radians(self.angle))
 
         self.get_head_gate().NormalElement = Vector(0, 0, 1)
-        self.get_tail_gate().NormalElement = Vector(self.sin, 0,
-                                                    -self.cos)
+        self.get_tail_gate().NormalElement = Vector(-self.sin, 0, self.cos)
 
         # Move to resolve own
         self.get_head_gate().PosElement = Vector(0, 0, 0)
-        self.get_tail_gate().PosElement = Vector((1 + self.cos) * RC,
+        self.get_tail_gate().PosElement = Vector((self.cos - 1) * RC,
                                                  0, self.sin * RC)
 
     def get_name(self):
