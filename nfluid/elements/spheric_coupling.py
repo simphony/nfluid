@@ -48,7 +48,7 @@ class SphericCoupling(ChannelElement2G):
         return self.get_head_gate().get_r()
 
     def resolve_geometry_child(self):
-         if self.get_r() is not None:
+        if self.get_r() is not None:
             if self.get_r() > self.RadiusSphere:
                 return 'Incorrect Sphere radius'
 
