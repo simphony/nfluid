@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from nfluid.core.channel_info import ChannelInfoParser
+from nfluid.core.channel_info import ChannelInfo
 from nfluid.core.channel_element import ChannelElement
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.shapes.shapes import Shape
@@ -11,6 +13,7 @@ class ChannelAssembly(object):
     def __init__(self):
         self.elements = []
         ChannelElement.assembly = self
+        self.info_extractor = ChannelInfoParser(ChannelInfo(self))
 
     def add_element(self, element):
         self.elements.append(element)
@@ -142,6 +145,8 @@ class ChannelAssembly(object):
         except:
             print 'insert_element_before error'
 
+    def print_info_file(self, filename=None):
+        self.info_extractor.print_output(filename)
 
 def create_channel(elt):
     return elt

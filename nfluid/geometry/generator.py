@@ -17,8 +17,8 @@ class GeometryGenerator():
         # STUB!!!!
         self.slices = slices
         self.stacks = stacks
-        self.slices = 4
-        self.stacks = 1
+        # self.slices = 4
+        # self.stacks = 1
 
     def create_coupling(self, r, l):
         return Coupling(r, l, self.slices, self.stacks)

@@ -26,7 +26,7 @@ print_info Assembly ---------------------------'''
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
         exit()
 
-    res = assembly.create_shapes()
+    # res = assembly.create_shapes()
     if res == '':
         print 'Shapes created'
     else:
@@ -34,7 +34,7 @@ print_info Assembly ---------------------------'''
         print 'Shapes creation error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    res = assembly.export_shapes('Test1.stl')
+    # res = assembly.export_shapes('Test1.stl')
     if res == '':
         print 'Shapes exported'
     else:
@@ -42,7 +42,9 @@ print_info Assembly ---------------------------'''
         print 'Shapes export error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    assembly.show_shapes()
+    # assembly.show_shapes()
+
+
     # start_gui()
 
     # Testing is_inside algorithm:
@@ -81,4 +83,6 @@ print_info Assembly ---------------------------'''
  
     # file_out.close()
 
-    assembly.release_shapes()
+    assembly.print_info_file()
+
+    # assembly.release_shapes()

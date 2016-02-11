@@ -68,6 +68,9 @@ class CircleTee(ChannelElement):
     def get_r(self):
         return self.get_head_gate().get_r()
 
+    def get_len(self):
+        return self.length
+
     def resolve_geometry_child(self):
 
         R = self.get_r()
