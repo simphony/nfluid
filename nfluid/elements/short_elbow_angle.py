@@ -54,6 +54,7 @@ class ShortElbowAngle(ChannelElement2G):
 
         R = self.get_r()
         if R is not None:
+            self.length = 2*math.pi*R * self.angle/360.0
             self.get_head_gate().PosElement = Vector(0, 0, 0)
             self.get_tail_gate().PosElement = Vector((self.cos - 1) * R,
                                                      0, self.sin * R)
@@ -71,15 +72,6 @@ class ShortElbowAngle(ChannelElement2G):
             'NormT =', self.get_tail_gate().NormalElement
 
     def create_shape_child(self):
-        print 'create_shape ShortElbowAngle'
-        print 'OPAZ - self.CenterPos:         ', self.CenterPos
-        print 'OPAZ - self.RotationOperator:  ', self.RotationOperator
-        print 'OPAZ - self.get_r():           ', self.get_r()
-        print 'OPAZ - self.angle:             ', self.angle
-        print 'OPAZ - self.get_pos_head():    ', self.get_pos_head()
-        print 'OPAZ - self.get_pos_tail():    ', self.get_pos_tail()
-        print 'OPAZ - self.get_normal_head(): ', self.get_normal_head()
-        print 'OPAZ - self.get_normal_tail(): ', self.get_normal_tail()
         return CreateShape('short_elbow_angle', self.CenterPos,
                            self.RotationOperator,
                            self.get_r(), self.angle,

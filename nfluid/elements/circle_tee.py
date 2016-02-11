@@ -26,8 +26,6 @@ class CircleTee(ChannelElement):
 
         self.IsEqualGateSize = True
 
-        self.length = R
-
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))
         self.tails.append(GateCircle(self))
@@ -75,6 +73,8 @@ class CircleTee(ChannelElement):
 
         R = self.get_r()
         if R is not None:
+            self.length = 3.0 * R
+
             self.get_head_gate().PosElement = Vector(0, 0, -R)
             self.get_tail_gate(0).PosElement = Vector(R, 0, 0)
             self.get_tail_gate(1).PosElement = Vector(-R, 0, 0)

@@ -57,6 +57,8 @@ class ShortElbowAngleAuto(ChannelElement2G):
             self.angle = get_vector_angle_grad(self.get_normal_head(),
                                                self.get_normal_tail())
             print "resolve_geometry_child angle", self.angle
+            self.length = 2*math.pi*R * self.angle/360.0
+
             self.cos = math.cos(math.radians(self.angle))
             self.sin = math.sin(math.radians(self.angle))
             self.get_tail_gate().PosElement = Vector((self.cos - 1) * R,

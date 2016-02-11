@@ -4,6 +4,7 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
+import math
 # Class of Elbow
 
 
@@ -55,8 +56,10 @@ class ShortElbow(ChannelElement2G):
 
         R = self.get_r()
         if R is not None:
+            self.length = 2*math.pi*R * 0.25
             self.get_head_gate().PosElement = Vector(0, 0, -R)
             self.get_tail_gate().PosElement = Vector(R, 0, 0)
+
         return ''
 
     def print_info(self):
