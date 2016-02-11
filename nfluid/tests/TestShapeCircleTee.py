@@ -45,10 +45,10 @@ elif sys.argv[1] == '2':
     tee1 = tee0.link(FlowAdapter(RT=123, L=120), 0) \
                .link(CircleCoupling(L=200)) \
                .link(CircleTee(NormalT0=Vector(0, 1, 0)))
-    
+
     tee0.link(FlowAdapter(RT=155, L=127), 1) \
-        .link(CircleCoupling(L=120)) 
-               
+        .link(CircleCoupling(L=120))
+
     tee1.link(FlowAdapter(RT=220, L=115), 0) \
         .link(CircleCoupling(L=125))
 
