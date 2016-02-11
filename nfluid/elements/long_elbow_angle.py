@@ -32,6 +32,8 @@ class LongElbowAngle(ChannelElement2G):
         self.angle = Angle
         self.RadiusCurvature = RC
 
+        self.length = 2*math.pi*RC * Angle/360.0
+
         # TODO Correct NormalT if both NormalH and NormalT are defined
 
         self.get_head_gate().set_normal_def(copy.copy(NormalH))

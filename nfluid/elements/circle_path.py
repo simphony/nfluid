@@ -44,7 +44,10 @@ class CirclePath(ChannelElement2G):
         else:
             self.IsAxialSym = False
 
-        # self.length = (Points[-1]-Points[0]).get_len()
+        Length = 0.0
+        for Point in range(1, len(Points)):
+            Length += (Points[Point]-Points[Point-1]).get_len()
+        self.length = Length
 
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))

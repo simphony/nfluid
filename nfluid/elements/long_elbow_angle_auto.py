@@ -66,6 +66,8 @@ class LongElbowAngleAuto(ChannelElement2G):
                                                self.get_normal_tail())
             print "resolve_geometry_child angle", self.angle, \
                   "radius", self.RadiusCurvature
+            self.length = 2*math.pi*self.RadiusCurvature * self.angle/360.0
+
             self.cos = math.cos(math.radians(self.angle))
             self.sin = math.sin(math.radians(self.angle))
             self.get_tail_gate().NormalElement = Vector(-self.sin, 0,

@@ -4,6 +4,7 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
+import math
 import copy
 # Class of Elbow
 
@@ -29,6 +30,8 @@ class LongElbow(ChannelElement2G):
         self.angle = 90
 
         self.RadiusCurvature = RC
+
+        self.length = 2*math.pi*RC * 0.25
 
         # TODO Correct NormalT if both NormalH and NormalT are defined
 

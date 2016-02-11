@@ -54,6 +54,7 @@ class ShortElbowAngle(ChannelElement2G):
 
         R = self.get_r()
         if R is not None:
+            self.length = 2*math.pi*R * self.angle/360.0
             self.get_head_gate().PosElement = Vector(0, 0, 0)
             self.get_tail_gate().PosElement = Vector((self.cos - 1) * R,
                                                      0, self.sin * R)
