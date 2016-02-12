@@ -57,8 +57,7 @@ class Shape(object):
         new_paths = 0
         for tail in cursor.links_tail:
             if tail is not None:
-                if (isinstance(tail, ShapeLongElbowAngle) or
-                        isinstance(tail, ShapeShortElbowAngle) or
+                if (isinstance(tail, ShapeShortElbowAngle) or
                         isinstance(tail, ShapeLongElbow) or
                         isinstance(tail, ShapeTee) or
                         isinstance(tail, ShapeShortElbow) or
@@ -269,7 +268,7 @@ class ShapeFlowAdapter(Shape):
                                                    self.Length)
 
 
-class ShapeLongElbow(Shape):
+class ShapeLongElbow90(Shape):
 
     def __init__(
         self, RC, R,
@@ -290,7 +289,7 @@ class ShapeLongElbow(Shape):
                                                  )
 
 
-class ShapeLongElbowAngle(Shape):
+class ShapeLongElbow(Shape):
 
     def __init__(
         self, RC, Angle, R,
@@ -415,10 +414,10 @@ def CreateShape(type, center, rotation,
         shape = ShapeTee4(par0, par1, par2, par3, par4, par5)
     elif type == 'flow_adapter':
         shape = ShapeFlowAdapter(par0, par1, par2, par3, par4, par5)
+    elif type == 'long_elbow_90':
+        shape = ShapeLongElbow90(par0, par1, par2, par3, par4, par5)
     elif type == 'long_elbow':
-        shape = ShapeLongElbow(par0, par1, par2, par3, par4, par5)
-    elif type == 'long_elbow_angle':
-        shape = ShapeLongElbowAngle(par0, par1, par2, par3, par4, par5, par6)
+        shape = ShapeLongElbow(par0, par1, par2, par3, par4, par5, par6)
     elif type == 'short_elbow':
         shape = ShapeShortElbow(par0, par1, par2, par3, par4)
     elif type == 'short_elbow_angle':

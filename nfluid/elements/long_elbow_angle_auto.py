@@ -88,7 +88,7 @@ class LongElbowAngleAuto(ChannelElement2G):
         print 'create_shape LongElbow'
         # check geometry data
 
-        return CreateShape('long_elbow_angle', self.CenterPos,
+        return CreateShape('long_elbow', self.CenterPos,
                            self.RotationOperator,
                            self.get_r_curv(),
                            self.angle,

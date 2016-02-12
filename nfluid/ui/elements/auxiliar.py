@@ -24,7 +24,6 @@ class ParametersString(object):
         self.short_elbow = "short_elbow"
         self.short_elbow_angle = "short_elbow_angle"
         self.long_elbow = "long_elbow"
-        self.long_elbow_angle = "long_elbow_angle"
         self.spheric_coupling = "spheric_coupling"
         self.tee = "tee"
         self.gate = "Gate"

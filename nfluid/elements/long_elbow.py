@@ -14,12 +14,14 @@ class LongElbow(ChannelElement2G):
     def __init__(
         self,
         RC,
+        Angle=90,
         R=None,
         PosH=None,
         PosT=None,
         NormalH=None,
         NormalT=None,
     ):
+
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True
@@ -27,11 +29,10 @@ class LongElbow(ChannelElement2G):
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))
 
-        self.angle = 90
-
+        self.angle = Angle
         self.RadiusCurvature = RC
 
-        self.length = 2*math.pi*RC * 0.25
+        self.length = 2*math.pi*RC * Angle/360.0
 
         # TODO Correct NormalT if both NormalH and NormalT are defined
 
@@ -46,13 +47,16 @@ class LongElbow(ChannelElement2G):
 
         # Initial position along Z and X
 
+        self.cos = math.cos(math.radians(self.angle))
+        self.sin = math.sin(math.radians(self.angle))
+
         self.get_head_gate().NormalElement = Vector(0, 0, 1)
-        self.get_tail_gate().NormalElement = Vector(1, 0, 0)
+        self.get_tail_gate().NormalElement = Vector(-self.sin, 0, self.cos)
 
         # Move to resolve own
-
-        self.get_head_gate().PosElement = Vector(0, 0, -RC)
-        self.get_tail_gate().PosElement = Vector(RC, 0, 0)
+        self.get_head_gate().PosElement = Vector(0, 0, 0)
+        self.get_tail_gate().PosElement = Vector((self.cos - 1) * RC,
+                                                 0, self.sin * RC)
 
     def get_name(self):
         return 'LongElbow'
@@ -64,7 +68,6 @@ class LongElbow(ChannelElement2G):
         return self.RadiusCurvature
 
     def resolve_geometry_child(self):
-
         return ''
 
     def print_info(self):
@@ -75,11 +78,13 @@ class LongElbow(ChannelElement2G):
 
     def create_shape_child(self):
         print 'create_shape LongElbow'
-
         # check geometry data
 
-        return CreateShape('long_elbow', self.CenterPos, self.RotationOperator,
-                           self.get_r_curv(), self.get_r(),
+        return CreateShape('long_elbow', self.CenterPos,
+                           self.RotationOperator,
+                           self.get_r_curv(),
+                           self.angle,
+                           self.get_r(),
                            self.get_pos_head(),
                            self.get_pos_tail(),
                            self.get_normal_head(),

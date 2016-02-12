@@ -20,11 +20,6 @@ _pieces = [(strings.coupling,
            (strings.long_elbow,
             [(strings.curvature_radius, 0),
              (strings.head_radius, 0),
-             (strings.tail_normal, (0, 0, 0))]
-            ),
-           (strings.long_elbow_angle,
-            [(strings.curvature_radius, 0),
-             (strings.head_radius, 0),
              (strings.tail_normal, (0, 0, 0)),
              (strings.angle, 0)]
             ),
