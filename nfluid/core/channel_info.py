@@ -32,17 +32,7 @@ class ChannelInfo(object):
     def get_assembly_length(self):
         res = 0.0
         for elem in self.assembly.elements:
-            print 'Elem: ', elem
-            if isinstance(elem, ChannelElement2G):
-                res += elem.get_len()
-            elif isinstance(elem, ChannelElement):
-                try:
-                    print "HEY! ", elem.length
-                    res += elem.length
-                except Exception as e:
-                    # raise(e)
-                    res += 0.0
-            # res += elem.get_len()
+            res += elem.get_len()
         return res
 
     def get_assembly_volume(self):
