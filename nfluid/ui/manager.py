@@ -5,7 +5,6 @@ from nfluid.elements.circle_tee import CircleTee
 from nfluid.elements.flow_adapter import FlowAdapter
 from nfluid.elements.long_elbow import LongElbow
 from nfluid.elements.short_elbow import ShortElbow
-from nfluid.elements.short_elbow_angle import ShortElbowAngle
 from nfluid.elements.spheric_coupling import SphericCoupling
 from nfluid.shapes.shapes import Shape
 from nfluid.ui.elements.auxiliar import strings
@@ -134,8 +133,6 @@ class NfluidDataManager(object):
             return strings.flow_adapter
         if isinstance(element, ShortElbow):
             return strings.short_elbow
-        if isinstance(element, ShortElbowAngle):
-            return strings.short_elbow_angle
         if isinstance(element, LongElbow):
             return strings.long_elbow
         if isinstance(element, SphericCoupling):
@@ -216,6 +213,7 @@ class NfluidDataManager(object):
                                Normal=piece.params[strings.tail_normal])
         if piece.type == strings.short_elbow:
             return ShortElbow(R=piece.params[strings.head_radius],
+                              Angle=piece.params[strings.angle],
                               PosH=piece.params[strings.head_position],
                               PosT=piece.params[strings.tail_position],
                               NormalH=piece.params[strings.head_normal],

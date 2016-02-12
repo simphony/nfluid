@@ -22,7 +22,6 @@ class ParametersString(object):
         self.coupling = "coupling"
         self.flow_adapter = "flow_adapter"
         self.short_elbow = "short_elbow"
-        self.short_elbow_angle = "short_elbow_angle"
         self.long_elbow = "long_elbow"
         self.spheric_coupling = "spheric_coupling"
         self.tee = "tee"

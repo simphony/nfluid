@@ -57,8 +57,7 @@ class Shape(object):
         new_paths = 0
         for tail in cursor.links_tail:
             if tail is not None:
-                if (isinstance(tail, ShapeShortElbowAngle) or
-                        isinstance(tail, ShapeLongElbow) or
+                if (isinstance(tail, ShapeLongElbow) or
                         isinstance(tail, ShapeTee) or
                         isinstance(tail, ShapeShortElbow) or
                         isinstance(tail, ShapeCirclePath)):
@@ -311,7 +310,7 @@ class ShapeLongElbow(Shape):
                                                  self.angle)
 
 
-class ShapeShortElbow(Shape):
+class ShapeShortElbow90(Shape):
 
     def __init__(
         self, R,
@@ -327,7 +326,7 @@ class ShapeShortElbow(Shape):
         self.mesh = _generator.create_short_elbow(self.Radius)
 
 
-class ShapeShortElbowAngle(Shape):
+class ShapeShortElbow(Shape):
 
     def __init__(
         self, R, Angle,
@@ -418,10 +417,10 @@ def CreateShape(type, center, rotation,
         shape = ShapeLongElbow90(par0, par1, par2, par3, par4, par5)
     elif type == 'long_elbow':
         shape = ShapeLongElbow(par0, par1, par2, par3, par4, par5, par6)
+    elif type == 'short_elbow_90':
+        shape = ShapeShortElbow90(par0, par1, par2, par3, par4)
     elif type == 'short_elbow':
-        shape = ShapeShortElbow(par0, par1, par2, par3, par4)
-    elif type == 'short_elbow_angle':
-        shape = ShapeShortElbowAngle(par0, par1, par2, par3, par4, par5)
+        shape = ShapeShortElbow(par0, par1, par2, par3, par4, par5)
     elif type == 'spheric_coupling':
         shape = ShapeSphericCoupling(par0, par1, par2, par3, par4)
     elif type == 'circle_path':
