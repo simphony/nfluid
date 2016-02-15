@@ -37,9 +37,11 @@ class Shape(object):
 
 # WORKFLOW init, add_shape, add_shape ... , finalize,  ...use..., release
     @classmethod
-    def init(cls):
+    def init(cls, gates_sides, elements_divisions):
         cls.shapes = ShapeContainer()
         cls.total_mesh = None
+        _generator.slices = gates_sides
+        _generator.stacks = elements_divisions
 
     @classmethod
     def connect_next_piece(cls, cursor, initial_gate=0):

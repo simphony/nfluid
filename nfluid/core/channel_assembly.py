@@ -78,8 +78,8 @@ class ChannelAssembly(object):
                 print 'GEOMETRY NOT RESOLVED: ', res
                 print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    def create_shapes(self):
-        Shape.init()
+    def create_shapes(self, gates_sides=20, elements_divisions=8):
+        Shape.init(gates_sides, elements_divisions)
 
         for element in self.elements:
             res = element.create_shape()
