@@ -4,7 +4,7 @@ import os
 import sys
 from nfluid.core.channel_assembly import ChannelAssembly, create_channel
 from nfluid.elements.circle_coupling import CircleCoupling
-from nfluid.elements.long_elbow import LongElbow
+from nfluid.elements.long_elbow_angle import LongElbowAngle
 from nfluid.tests.TestBase import MakeTest1
 from nfluid.util.vector import Vector
 
@@ -14,28 +14,45 @@ if len(sys.argv) == 1:
     print '0: All'
     print '1: Test 1'
     print '2: Test 2'
+    print '3: Test 3'
+    print '4: Test 4'
 
     exit(0)
 
-n_tests = 2
+n_tests = 4
 
 assembly = ChannelAssembly()
 
 if sys.argv[1] == '1':
     print 'Test_1'
-    create_channel(CircleCoupling(10, 15, PosH=Vector(0, 0, 0),
+    create_channel(CircleCoupling(10, 15, PosH=Vector(0, 77, 130),
                                   Normal=Vector(0, 0, 1))
-                   .link(LongElbow(RC=50, Angle=135,
-                                   NormalT=Vector(1, 0, -1)))
+                   .link(LongElbowAngle(RC=50, NormalT=Vector(1, -1, 0)))
                    .link(CircleCoupling(L=122)))
 
 elif sys.argv[1] == '2':
     print 'Test_2'
     create_channel(CircleCoupling(10, 20, PosH=Vector(0, 0, 0),
                                   Normal=Vector(0, 0, 1))
-                   .link(LongElbow(RC=50, NormalT=Vector(0, 1, 0)))
-                   .link(LongElbow(RC=50, Angle=45,
-                                   NormalT=Vector(0, 1, 1)))
+                   .link(LongElbowAngle(RC=50, NormalT=Vector(0, 1, 0)))
+                   .link(LongElbowAngle(RC=50, NormalT=Vector(-1, 0, 0)))
+                   .link(CircleCoupling(L=100)))
+
+elif sys.argv[1] == '3':
+    print 'Test_3'
+    create_channel(CircleCoupling(10, 15, PosH=Vector(0, 0, 0),
+                                  Normal=Vector(0, 0, 1))
+                   .link(LongElbowAngle(RC=50, Angle=135,
+                                        NormalT=Vector(1, 0, -1)))
+                   .link(CircleCoupling(L=122)))
+
+elif sys.argv[1] == '4':
+    print 'Test_4'
+    create_channel(CircleCoupling(10, 20, PosH=Vector(0, 0, 0),
+                                  Normal=Vector(0, 0, 1))
+                   .link(LongElbowAngle(RC=50, NormalT=Vector(0, 1, 0)))
+                   .link(LongElbowAngle(RC=50, Angle=45,
+                                        NormalT=Vector(0, 1, 1)))
                    .link(CircleCoupling(L=100)))
 
 elif sys.argv[1] == '0':

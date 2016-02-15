@@ -3,7 +3,7 @@ from nfluid.core.channel_element import ChannelElement
 from nfluid.elements.circle_coupling import CircleCoupling
 from nfluid.elements.circle_tee import CircleTee
 from nfluid.elements.flow_adapter import FlowAdapter
-from nfluid.elements.long_elbow import LongElbow
+from nfluid.elements.long_elbow_angle import LongElbowAngle
 from nfluid.elements.short_elbow_angle import ShortElbowAngle
 from nfluid.elements.spheric_coupling import SphericCoupling
 from nfluid.shapes.shapes import Shape
@@ -133,8 +133,8 @@ class NfluidDataManager(object):
             return strings.flow_adapter
         if isinstance(element, ShortElbowAngle):
             return strings.short_elbow_angle
-        if isinstance(element, LongElbow):
-            return strings.long_elbow
+        if isinstance(element, LongElbowAngle):
+            return strings.long_elbow_angle
         if isinstance(element, SphericCoupling):
             return strings.spheric_coupling
         if isinstance(element, CircleTee):
@@ -218,14 +218,14 @@ class NfluidDataManager(object):
                                    PosT=piece.params[strings.tail_position],
                                    NormalH=piece.params[strings.head_normal],
                                    NormalT=piece.params[strings.tail_normal])
-        if piece.type == strings.long_elbow:
-            return LongElbow(R=piece.params[strings.head_radius],
-                             RC=piece.params[strings.curvature_radius],
-                             Angle=piece.params[strings.angle],
-                             PosH=piece.params[strings.head_position],
-                             PosT=piece.params[strings.tail_position],
-                             NormalH=piece.params[strings.head_normal],
-                             NormalT=piece.params[strings.tail_normal])
+        if piece.type == strings.long_elbow_angle:
+            return LongElbowAngle(R=piece.params[strings.head_radius],
+                                  RC=piece.params[strings.curvature_radius],
+                                  Angle=piece.params[strings.angle],
+                                  PosH=piece.params[strings.head_position],
+                                  PosT=piece.params[strings.tail_position],
+                                  NormalH=piece.params[strings.head_normal],
+                                  NormalT=piece.params[strings.tail_normal])
         if piece.type == strings.spheric_coupling:
             return SphericCoupling(R=piece.params[strings.head_radius],
                                    RS=piece.params[strings.sphere_radius],

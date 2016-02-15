@@ -6,7 +6,7 @@ from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
 import math
 import copy
-# Class of Elbow
+# Class of Elbow90
 
 
 class LongElbow90(ChannelElement2G):
@@ -78,7 +78,8 @@ class LongElbow90(ChannelElement2G):
 
         # check geometry data
 
-        return CreateShape('long_elbow', self.CenterPos, self.RotationOperator,
+        return CreateShape('long_elbow_90',
+                           self.CenterPos, self.RotationOperator,
                            self.get_r_curv(), self.get_r(),
                            self.get_pos_head(),
                            self.get_pos_tail(),

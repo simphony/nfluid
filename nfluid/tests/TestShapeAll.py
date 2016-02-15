@@ -7,7 +7,7 @@ from nfluid.elements.cap import Cap
 from nfluid.elements.circle_coupling import CircleCoupling
 from nfluid.elements.circle_tee import CircleTee
 from nfluid.elements.flow_adapter import FlowAdapter
-from nfluid.elements.long_elbow import LongElbow
+from nfluid.elements.long_elbow_angle import LongElbowAngle
 from nfluid.elements.short_elbow_angle import ShortElbowAngle
 from nfluid.elements.spheric_coupling import SphericCoupling
 from nfluid.tests.TestBase import MakeTest1
@@ -40,12 +40,12 @@ if sys.argv[1] == '1':
 
     tee2.link(CircleCoupling(L=42), 0)
     tee2.link(ShortElbowAngle(NormalT=Vector(1, 1, 0)), 1) \
-        .link(LongElbow(RC=15, NormalT=Vector(0, 0, 1))) \
+        .link(LongElbowAngle(RC=15, NormalT=Vector(0, 0, 1))) \
         .link(FlowAdapter(RT=15, L=20))
 
     tee3.link(CircleCoupling(L=42), 0) \
         .link(SphericCoupling(RS=20))
-    tee3.link(LongElbow(RC=50, NormalT=Vector(-1, -1, 0)), 1)
+    tee3.link(LongElbowAngle(RC=50, NormalT=Vector(-1, -1, 0)), 1)
 
 elif sys.argv[1] == '2':
     print 'Test All 2'
@@ -60,7 +60,7 @@ elif sys.argv[1] == '2':
        .link(CircleCoupling(L=42))
 
     tee.link(FlowAdapter(RT=15, L=27), 1) \
-       .link(LongElbow(RC=50, NormalT=Vector(0, 0, 1))) \
+       .link(LongElbowAngle(RC=50, NormalT=Vector(0, 0, 1))) \
        .link(CircleCoupling(L=20))
 
 elif sys.argv[1] == '3':
@@ -78,7 +78,7 @@ elif sys.argv[1] == '3':
        .link(Cap(L=10))
 
     tee.link(FlowAdapter(RT=15, L=27), 1) \
-       .link(LongElbow(RC=50, NormalT=Vector(0, 0, 1))) \
+       .link(LongElbowAngle(RC=50, NormalT=Vector(0, 0, 1))) \
        .link(CircleCoupling(L=20)) \
        .link(Cap(L=5))
 

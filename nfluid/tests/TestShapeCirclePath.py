@@ -6,7 +6,7 @@ from nfluid.core.channel_assembly import ChannelAssembly, create_channel
 from nfluid.elements.circle_coupling import CircleCoupling
 from nfluid.elements.circle_path import CirclePath
 from nfluid.elements.flow_adapter import FlowAdapter
-from nfluid.elements.long_elbow import LongElbow
+from nfluid.elements.long_elbow_angle import LongElbowAngle
 from nfluid.elements.spheric_coupling import SphericCoupling
 from nfluid.tests.TestBase import MakeTest1
 from nfluid.util.vector import Vector
@@ -36,7 +36,7 @@ if sys.argv[1] == '1':
                                       Vector(50, 0, 50), Vector(50, 0, 100),
                                       Vector(100, 0, 100)],
                               NormalT=Vector(1, 0, 0)))
-             .link(LongElbow(RC=50, NormalT=Vector(0, 1, 0))))
+             .link(LongElbowAngle(RC=50, NormalT=Vector(0, 1, 0))))
 
 elif sys.argv[1] == '2':
     print 'Test_2'
@@ -49,7 +49,7 @@ elif sys.argv[1] == '2':
                                       Vector(50, 0, 100), Vector(50, 50, 100)],
                               NormalT=Vector(-1, 1, 0)))
              .link(SphericCoupling(RS=16))
-             .link(LongElbow(RC=50, NormalT=Vector(1, 1, 1))))
+             .link(LongElbowAngle(RC=50, NormalT=Vector(1, 1, 1))))
 
 elif sys.argv[1] == '3':
     print 'Test_3'
@@ -64,7 +64,7 @@ elif sys.argv[1] == '3':
              CircleCoupling(R=0.5, L=5, PosH=Vector(0, 0, 0),
                             Normal=Vector(0, 1, 0))
              .link(CirclePath(Points=points, NormalT=Vector(0, 0, -1)))
-             .link(LongElbow(RC=5, NormalT=Vector(0, 1, 0)))
+             .link(LongElbowAngle(RC=5, NormalT=Vector(0, 1, 0)))
              .link(SphericCoupling(RS=2))
              .link(CircleCoupling(L=4)))
 
@@ -76,7 +76,7 @@ elif sys.argv[1] == '4':
                                   Normal=Vector(0, 0, 1))
                    .link(CirclePath(Points=points, NormalT=Vector(0, 0, 1),
                                     Twist=30))
-                   .link(LongElbow(RC=40, NormalT=Vector(1, 2, 0))))
+                   .link(LongElbowAngle(RC=40, NormalT=Vector(1, 2, 0))))
 
 elif sys.argv[1] == '5':
     print 'Test_5'
@@ -84,7 +84,7 @@ elif sys.argv[1] == '5':
               Vector(0, 50, 100), Vector(0, 20, 100), Vector(0, 20, 150)]
     create_channel(CircleCoupling(R=5, L=35, PosH=Vector(0, 0, 0),
                                   Normal=Vector(0, 0, 1))
-                   .link(LongElbow(RC=25, NormalT=Vector(1, -1, 0)))
+                   .link(LongElbowAngle(RC=25, NormalT=Vector(1, -1, 0)))
                    .link(CirclePath(Points=points, NormalT=Vector(1, -1, 0),
                                     Twist=160))
                    .link(CircleCoupling(L=40)))
