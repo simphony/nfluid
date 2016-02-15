@@ -46,7 +46,7 @@ elif sys.argv[1] == '3':
     create_channel(CircleCoupling(R=5, L=30, PosH=Vector(0, 0, 0),
                                   Normal=Vector(0, 0, 1))
                    .link(ShortElbow(Angle=135,
-                                         NormalT=Vector(1, 1, -sqrt2)))
+                                    NormalT=Vector(1, 1, -sqrt2)))
                    .link(CircleCoupling(L=80)))
 
 elif sys.argv[1] == '4':
