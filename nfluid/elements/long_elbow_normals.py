@@ -10,7 +10,7 @@ import copy
 # Class of Elbow
 
 
-class LongElbowAngleAuto(ChannelElement2G):
+class LongElbowNormals(ChannelElement2G):
 
     def __init__(
         self,
@@ -51,7 +51,7 @@ class LongElbowAngleAuto(ChannelElement2G):
         self.get_head_gate().PosElement = Vector(0, 0, 0)
 
     def get_name(self):
-        return 'LongElbowAngleAuto'
+        return 'LongElbowNormals'
 
     def get_r(self):
         return self.get_head_gate().get_r()
@@ -80,7 +80,7 @@ class LongElbowAngleAuto(ChannelElement2G):
 
     def print_info(self):
         ChannelElement2G.print_info(self)
-        print 'LongElbowAngleAuto radius Rdef =', \
+        print 'LongElbowNormals radius Rdef =', \
             self.get_head_gate().get_r_def(), 'RH =', \
             self.get_gate_size_h(), 'RT =', self.get_gate_size_t()
 

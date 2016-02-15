@@ -5,7 +5,7 @@ import sys
 from nfluid.core.channel_assembly import ChannelAssembly, create_channel
 from nfluid.elements.circle_coupling import CircleCoupling
 from nfluid.elements.long_elbow import LongElbow
-from nfluid.elements.long_elbow_angle_auto import LongElbowAngleAuto
+from nfluid.elements.long_elbow_normals import LongElbowNormals
 from nfluid.tests.TestBase import MakeTest1
 from nfluid.util.vector import Vector
 import math
@@ -28,8 +28,8 @@ if sys.argv[1] == '1':
     sqrt2 = math.sqrt(2)
     create_channel(CircleCoupling(R=10, L=33, PosH=Vector(0, 0, 0),
                                   Normal=Vector(0, 0, 1))
-                   .link(LongElbowAngleAuto(RC=50,
-                                            NormalT=Vector(1, 0, -sqrt2)))
+                   .link(LongElbowNormals(RC=50,
+                                          NormalT=Vector(1, 0, -sqrt2)))
                    .link(CircleCoupling(L=122)))
 
 elif sys.argv[1] == '2':
@@ -37,7 +37,7 @@ elif sys.argv[1] == '2':
     create_channel(CircleCoupling(R=10, L=20, PosH=Vector(0, 0, 0),
                                   Normal=Vector(0, 0, 1))
                    .link(LongElbow(RC=50, NormalT=Vector(0, 1, 0)))
-                   .link(LongElbowAngleAuto(RC=50, NormalT=Vector(1, 1, -1)))
+                   .link(LongElbowNormals(RC=50, NormalT=Vector(1, 1, -1)))
                    .link(CircleCoupling(L=100)))
 
 elif sys.argv[1] == '0':
