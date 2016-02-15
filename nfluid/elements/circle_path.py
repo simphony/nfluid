@@ -13,7 +13,7 @@ class CirclePath(ChannelElement2G):
 
     def __init__(
         self,
-        Points,        # List of elements as Vectors
+        Points,        # List of points as Vectors
         R=None,        # Gate radius
         PosH=None,     # Position of head gate
         PosT=None,     # Position of tail gate

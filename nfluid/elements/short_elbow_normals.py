@@ -79,7 +79,7 @@ class ShortElbowNormals(ChannelElement2G):
 
     def create_shape_child(self):
         print 'create_shape ShortElbowNormals'
-        return CreateShape('short_elbow', self.CenterPos,
+        return CreateShape('short_elbow_angle', self.CenterPos,
                            self.RotationOperator,
                            self.get_r(), self.angle,
                            self.get_pos_head(), self.get_pos_tail(),

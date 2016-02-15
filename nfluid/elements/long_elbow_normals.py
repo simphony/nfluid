@@ -7,7 +7,7 @@ from nfluid.util.vector import Vector
 from nfluid.util.vector import get_vector_angle_grad
 import math
 import copy
-# Class of Elbow
+# Class of LongElbowNormals
 
 
 class LongElbowNormals(ChannelElement2G):
@@ -85,10 +85,10 @@ class LongElbowNormals(ChannelElement2G):
             self.get_gate_size_h(), 'RT =', self.get_gate_size_t()
 
     def create_shape_child(self):
-        print 'create_shape LongElbow'
+        print 'create_shape LongElbowNormals'
         # check geometry data
 
-        return CreateShape('long_elbow', self.CenterPos,
+        return CreateShape('long_elbow_angle', self.CenterPos,
                            self.RotationOperator,
                            self.get_r_curv(),
                            self.angle,
