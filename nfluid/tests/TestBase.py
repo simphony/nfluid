@@ -5,6 +5,7 @@
 
 def MakeTest1(assembly):
     print 'resolve_geometry ----------------------------------'
+    # assembly.print_info_file('Assembly_info_before.txt')
     res = assembly.resolve_geometry()
     if res != '':
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
@@ -83,6 +84,9 @@ print_info Assembly ---------------------------'''
  
     # file_out.close()
 
-    assembly.print_info_file()
+    assembly.print_info_file('Assembly_info_after.txt')
+
+    from nfluid.ui.main_module import start_gui
+    start_gui()
 
     # assembly.release_shapes()
