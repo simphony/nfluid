@@ -4,6 +4,7 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element import ChannelElement
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
+from nfluid.geometry.auxiliar_geometry import Arithmetic_Polygon
 
 
 class CircleTee(ChannelElement):
@@ -25,6 +26,8 @@ class CircleTee(ChannelElement):
         ChannelElement.__init__(self)
 
         self.IsEqualGateSize = True
+
+        self.volume = None
 
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))
@@ -69,6 +72,17 @@ class CircleTee(ChannelElement):
     def get_len(self):
         return self.length
 
+    def get_volume(self):
+        return self.volume
+
+    def calculate_volume(self):
+        slices = ChannelElement.slices
+        poly = Arithmetic_Polygon(self.get_r(), slices)
+        v_cyl = poly.area() * self.get_len()
+        r = self.get_r()
+        v_gate = (16.0 / 3.0) * r * r * r
+        self.volume = v_gate + ((3.0 / 2.0) * (v_cyl - v_gate))
+
     def resolve_geometry_child(self):
 
         R = self.get_r()
@@ -79,6 +93,13 @@ class CircleTee(ChannelElement):
             self.get_tail_gate(0).PosElement = Vector(R, 0, 0)
             self.get_tail_gate(1).PosElement = Vector(-R, 0, 0)
 
+        if self.volume is None:
+            try:
+                self.calculate_volume()
+            except Exception as e:
+                print e
+                pass
+        print "-- -- -- THE VOLUME -- -- --", self.volume
         return ''
 
     def create_shape_child(self):

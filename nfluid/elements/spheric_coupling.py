@@ -54,23 +54,14 @@ class SphericCoupling(ChannelElement2G):
         return self.volume
 
     def calculate_volume(self):
-        print " . . . . . . . . . . . . . . . . . . . . ." * 2
-        print "self.get_r()", self.get_r()
-        print "self.RadiusSphere", self.RadiusSphere
-        print "self.get_len()", self.get_len()
         slices = ChannelElement2G.slices
         poly_top = Arithmetic_Polygon(self.get_r(), slices)
         poly_bottom = Arithmetic_Polygon(self.RadiusSphere, slices)
         l = self.get_len()
         a_t = poly_top.area()
         a_p = poly_bottom.area()
-        print "a_t", a_t
-        print "a_p", a_p
         v = l/3.0 * (a_t + a_p + math.sqrt(a_t * a_p))
-        print "v", v
         self.volume = v * 2.0
-
-        print " . . . . . . . . . . . . . . . . . . . . ." * 2
 
     def resolve_geometry_child(self):
         if self.get_r() is not None:
@@ -88,8 +79,7 @@ class SphericCoupling(ChannelElement2G):
         if self.volume is None:
             try:
                 self.calculate_volume()
-            except Exception as e:
-                print e
+            except:
                 pass
         print "-- -- -- THE VOLUME -- -- --", self.volume
 
