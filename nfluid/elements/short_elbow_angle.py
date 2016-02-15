@@ -6,15 +6,15 @@ from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
 import math
 import copy
-# Class of ShortElbow
+# Class of ShortElbowAngle
 
 
-class ShortElbow(ChannelElement2G):
+class ShortElbowAngle(ChannelElement2G):
 
     def __init__(
         self,
         R=None,        # Gate radius
-        Angle=90,      # Elbow angle
+        Angle=90,      # Elbow angle (default: 90)
         PosH=None,     # Position of head gate
         PosT=None,     # Position of tail gate
         NormalH=None,  # Normal at head gate
@@ -43,7 +43,7 @@ class ShortElbow(ChannelElement2G):
         self.sin = math.sin(math.radians(Angle))
 
     def get_name(self):
-        return 'ShortElbow'
+        return 'ShortElbowAngle'
 
     def get_r(self):
         return self.get_head_gate().get_r()
@@ -63,7 +63,7 @@ class ShortElbow(ChannelElement2G):
 
     def print_info(self):
         ChannelElement2G.print_info(self)
-        print 'ShortElbow radius Rdef =', \
+        print 'ShortElbowAngle radius Rdef =', \
             self.get_head_gate().get_r_def(), \
             'RH =', self.get_gate_size_h(), 'RT =', self.get_gate_size_t(), \
             'PosH =', self.get_head_gate().Pos, \
@@ -72,8 +72,8 @@ class ShortElbow(ChannelElement2G):
             'NormT =', self.get_tail_gate().NormalElement
 
     def create_shape_child(self):
-        print 'create_shape ShortElbow'
-        return CreateShape('short_elbow', self.CenterPos,
+        print 'create_shape ShortElbowAngle'
+        return CreateShape('short_elbow_angle', self.CenterPos,
                            self.RotationOperator,
                            self.get_r(), self.angle,
                            self.get_pos_head(), self.get_pos_tail(),

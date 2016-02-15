@@ -5,7 +5,7 @@ from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
 import math
-# Class of Elbow
+# Class of Elbow90
 
 
 class ShortElbow90(ChannelElement2G):

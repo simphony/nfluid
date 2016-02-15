@@ -6,7 +6,7 @@ from nfluid.core.channel_assembly import ChannelAssembly, create_channel
 from nfluid.elements.circle_coupling import CircleCoupling
 from nfluid.elements.flow_adapter import FlowAdapter
 from nfluid.elements.long_elbow import LongElbow
-from nfluid.elements.short_elbow import ShortElbow
+from nfluid.elements.short_elbow_angle import ShortElbowAngle
 from nfluid.elements.spheric_coupling import SphericCoupling
 from nfluid.tests.TestBase import MakeTest1
 from nfluid.util.vector import Vector
@@ -30,7 +30,7 @@ if sys.argv[1] == '1':
                                   Normal=Vector(0, 0, 1))
                    .link(SphericCoupling(RS=50))
                    .link(CircleCoupling(L=30))
-                   .link(ShortElbow(NormalT=Vector(-0.45, 0.21, 0)))
+                   .link(ShortElbowAngle(NormalT=Vector(-0.45, 0.21, 0)))
                    .link(CircleCoupling(L=42))
                    .link(LongElbow(RC=50, NormalT=Vector(0, 0, 1)))
                    .link(LongElbow(RC=50, NormalT=Vector(1, 1, 0)))
@@ -47,7 +47,7 @@ elif sys.argv[1] == '2':
                                   Normal=Vector(0, 0, 1))
                    .link(SphericCoupling(RS=50))
                    .link(CircleCoupling(L=30))
-                   .link(ShortElbow(NormalT=Vector(0, 1, 0)))
+                   .link(ShortElbowAngle(NormalT=Vector(0, 1, 0)))
                    .link(CircleCoupling(L=42))
                    .link(FlowAdapter(RT=30, L=20))
                    .link(LongElbow(RC=50, NormalT=Vector(1, 0, 0)))
