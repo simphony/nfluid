@@ -4,6 +4,7 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
+from nfluid.geometry.auxiliar_geometry import Arithmetic_Polygon
 # Class of CircleCoupling
 
 
@@ -21,6 +22,7 @@ class CircleCoupling(ChannelElement2G):
         self.IsEqualGateSize = True
 
         self.length = L
+        self.volume = None
         self.IsAxialSym = True
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))
@@ -42,13 +44,26 @@ class CircleCoupling(ChannelElement2G):
     def get_r(self):
         return self.get_head_gate().get_r()
 
+    def get_volume(self):
+        return self.volume
+
+    def calculate_volume(self):
+        slices = ChannelElement2G.slices
+        poly = Arithmetic_Polygon(self.get_r(), slices)
+        self.volume = poly.area() * self.get_len()
+
     def resolve_geometry_child(self):
         if self.get_len() is not None:
             self.get_head_gate().PosElement = Vector(0, 0,
                                                      -self.get_len() / 2.0)
             self.get_tail_gate().PosElement = Vector(0, 0,
                                                      self.get_len() / 2.0)
-
+        if self.volume is None:
+            try:
+                self.calculate_volume()
+            except:
+                pass
+        print "-- -- -- THE VOLUME -- -- --", self.volume
         return ''
 
     def print_info(self):

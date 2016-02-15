@@ -40,6 +40,8 @@ class Shape(object):
     def init(cls, gates_sides, elements_divisions):
         cls.shapes = ShapeContainer()
         cls.total_mesh = None
+        cls.slices = gates_sides
+        cls.stacks = elements_divisions
         _generator.slices = gates_sides
         _generator.stacks = elements_divisions
 

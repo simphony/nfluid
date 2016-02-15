@@ -4,6 +4,7 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
+from nfluid.geometry.auxiliar_geometry import Arithmetic_Polygon
 import math
 # Class of SphericCoupling
 
@@ -28,6 +29,8 @@ class SphericCoupling(ChannelElement2G):
         self.RadiusSphere = RS
         self.IsAxialSym = True
 
+        self.volume = None
+
         self.set_normal_def(Normal)
 
         self.get_head_gate().set_pos_def(PosH)
@@ -47,6 +50,28 @@ class SphericCoupling(ChannelElement2G):
     def get_r(self):
         return self.get_head_gate().get_r()
 
+    def get_volume(self):
+        return self.volume
+
+    def calculate_volume(self):
+        print " . . . . . . . . . . . . . . . . . . . . ." * 2
+        print "self.get_r()", self.get_r()
+        print "self.RadiusSphere", self.RadiusSphere
+        print "self.get_len()", self.get_len()
+        slices = ChannelElement2G.slices
+        poly_top = Arithmetic_Polygon(self.get_r(), slices)
+        poly_bottom = Arithmetic_Polygon(self.RadiusSphere, slices)
+        l = self.get_len()
+        a_t = poly_top.area()
+        a_p = poly_bottom.area()
+        print "a_t", a_t
+        print "a_p", a_p
+        v = l/3.0 * (a_t + a_p + math.sqrt(a_t * a_p))
+        print "v", v
+        self.volume = v * 2.0
+
+        print " . . . . . . . . . . . . . . . . . . . . ." * 2
+
     def resolve_geometry_child(self):
         if self.get_r() is not None:
             if self.get_r() > self.RadiusSphere:
@@ -59,6 +84,14 @@ class SphericCoupling(ChannelElement2G):
             self.get_tail_gate().PosElement = Vector(0, 0, length)
 
             self.length = length * 2
+
+        if self.volume is None:
+            try:
+                self.calculate_volume()
+            except Exception as e:
+                print e
+                pass
+        print "-- -- -- THE VOLUME -- -- --", self.volume
 
         return ''
 

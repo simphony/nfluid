@@ -23,10 +23,10 @@ assembly = ChannelAssembly()
 
 if sys.argv[1] == '1':
     print 'Test_1'
-    create_channel(CircleCoupling(R=10, L=20, PosH=Vector(0, 20, 30),
+    create_channel(CircleCoupling(R=9.8995, L=20, PosH=Vector(0, 20, 30),
                                   Normal=Vector(0, 0, 1))
-                   .link(FlowAdapter(L=15))
-                   .link(CircleCoupling(R=45, L=125)))
+                   .link(FlowAdapter(L=10.91))
+                   .link(CircleCoupling(R=16.9706, L=125)))
 
 elif sys.argv[1] == '2':
     print 'Test_2'

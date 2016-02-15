@@ -5,7 +5,6 @@
 
 def MakeTest1(assembly):
     print 'resolve_geometry ----------------------------------'
-    # assembly.print_info_file('Assembly_info_before.txt')
     res = assembly.resolve_geometry()
     if res != '':
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'

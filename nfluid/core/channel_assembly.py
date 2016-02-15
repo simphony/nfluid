@@ -10,9 +10,13 @@ from nfluid.util import snappy_generator
 
 class ChannelAssembly(object):
 
-    def __init__(self):
+    def __init__(self, gates_sides=4, elements_divisions=8):
         self.elements = []
         ChannelElement.assembly = self
+        ChannelElement.slices = gates_sides
+        ChannelElement.stacks = elements_divisions
+        self.gates_sides = gates_sides
+        self.elements_divisions = elements_divisions
         self.info_extractor = ChannelInfoParser(ChannelInfo(self))
 
     def add_element(self, element):
@@ -78,8 +82,8 @@ class ChannelAssembly(object):
                 print 'GEOMETRY NOT RESOLVED: ', res
                 print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    def create_shapes(self, gates_sides=20, elements_divisions=8):
-        Shape.init(gates_sides, elements_divisions)
+    def create_shapes(self):
+        Shape.init(self.gates_sides, self.elements_divisions)
 
         for element in self.elements:
             res = element.create_shape()
