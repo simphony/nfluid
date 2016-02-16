@@ -92,16 +92,16 @@ class Shape(object):
                         print normal_tail_current
                     print "angle_end"
                     # if iter == 0:
-                        # iter = 100
+                    #   iter = 100
                     # while angle > 0.001 and iter:
-                        # angle = math.pi - angle
-                        # tail.mesh.set_orientation(math.degrees(angle))
-                        # c, normal_tail_current = tail.mesh.get_face_info(1)
-                        # angle = angle_between_vectors(normal_tail,
-                                                    # normal_tail_current)
-                        # iter -= 1
-                        # print angle
-                        # print normal_tail_current
+                    #   angle = math.pi - angle
+                    #   tail.mesh.set_orientation(math.degrees(angle))
+                    #   c, normal_tail_current = tail.mesh.get_face_info(1)
+                    #   angle = angle_between_vectors(normal_tail,
+                    #                           normal_tail_current)
+                    #   iter -= 1
+                    #   print angle
+                    #   print normal_tail_current
                     tail.mesh = cls.total_mesh.adapt(tail.mesh, gate)
                     cls.total_mesh = cls.total_mesh.connect(tail.mesh, gate)
                 else:
@@ -126,13 +126,13 @@ class Shape(object):
             dir = (initial.NormalH.X(0), initial.NormalH.X(1),
                    initial.NormalH.X(2))
             initial_mesh.move(point=pos, direction=dir)
-            
             if (isinstance(initial, ShapeLongElbowAngle) or
                     isinstance(initial, ShapeShortElbowAngle) or
                     isinstance(initial, ShapeTee) or
                     isinstance(initial, ShapeCirclePath)):
                 if isinstance(initial, ShapeTee):
-                    normal_tail = (initial.NormalT0.X(0), initial.NormalT0.X(1),
+                    normal_tail = (initial.NormalT0.X(0),
+                                   initial.NormalT0.X(1),
                                    initial.NormalT0.X(2))
                 else:
                     normal_tail = (initial.NormalT.X(0), initial.NormalT.X(1),
@@ -155,7 +155,7 @@ class Shape(object):
                     print angle
                     print normal_tail_current
                 print "angle_end"
-            
+
             cursor = initial
             cls.total_mesh = initial_mesh
             cls.connect_next_piece(cursor, 0)

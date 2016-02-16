@@ -42,11 +42,11 @@ _pieces = [(strings.coupling,
             [(strings.head_radius, 0),
              (strings.tail_normal0, (0, 0, 0))]
             )
-            #,
-            # (strings.circle_path,
-            #  [(strings.head_radius, 0),
-            #   (strings.points, )]
-            # )
+           #    ,
+           #  (strings.circle_path,
+           #   [(strings.head_radius, 0),
+           #    (strings.points, )]
+           #   )
            ]
 
 

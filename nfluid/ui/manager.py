@@ -153,8 +153,6 @@ class NfluidDataManager(object):
             type = NfluidDataManager._get_string(element)
             id = element.get_id()
             res.append(Piece(type, id))
-        print "list -------"
-        for e in res: print e
         return res
 
     @classmethod
@@ -217,17 +215,17 @@ class NfluidDataManager(object):
                                   NormalT=piece.params[strings.tail_normal])
         if piece.type == strings.short_elbow_normals:
             return ShortElbowNormals(R=piece.params[strings.head_radius],
-                                   PosH=piece.params[strings.head_position],
-                                   PosT=piece.params[strings.tail_position],
-                                   NormalH=piece.params[strings.head_normal],
-                                   NormalT=piece.params[strings.tail_normal])
+                                     PosH=piece.params[strings.head_position],
+                                     PosT=piece.params[strings.tail_position],
+                                     NormalH=piece.params[strings.head_normal],
+                                     NormalT=piece.params[strings.tail_normal])
         if piece.type == strings.long_elbow_normals:
             return LongElbowNormals(R=piece.params[strings.head_radius],
-                                  RC=piece.params[strings.curvature_radius],
-                                  PosH=piece.params[strings.head_position],
-                                  PosT=piece.params[strings.tail_position],
-                                  NormalH=piece.params[strings.head_normal],
-                                  NormalT=piece.params[strings.tail_normal])
+                                    RC=piece.params[strings.curvature_radius],
+                                    PosH=piece.params[strings.head_position],
+                                    PosT=piece.params[strings.tail_position],
+                                    NormalH=piece.params[strings.head_normal],
+                                    NormalT=piece.params[strings.tail_normal])
         if piece.type == strings.spheric_coupling:
             return SphericCoupling(R=piece.params[strings.head_radius],
                                    RS=piece.params[strings.sphere_radius],
@@ -244,10 +242,10 @@ class NfluidDataManager(object):
                              NormalT0=piece.params[strings.tail_normal0],
                              NormalT1=piece.params[strings.tail_normal1])
         # if piece.type == string.circle_path:
-            # return CirclePath(Points=piece.params[strings.points],
-                              # R=piece.params[strings.head_radius],
-                              # PosH=piece.params[strings.head_position],
-                              # PosT=piece.params[strings.tail_position],
-                              # NormalH=piece.params[strings.head_normal],
-                              # NormalT=piece.params[strings.tail_normal],
-                              # Twist=piece.params[strings.angle])
+        #     return CirclePath(Points=piece.params[strings.points],
+        #                       R=piece.params[strings.head_radius],
+        #                       PosH=piece.params[strings.head_position],
+        #                       PosT=piece.params[strings.tail_position],
+        #                       NormalH=piece.params[strings.head_normal],
+        #                       NormalT=piece.params[strings.tail_normal],
+        #                       Twist=piece.params[strings.angle])

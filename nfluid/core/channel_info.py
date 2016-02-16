@@ -1,6 +1,5 @@
 from nfluid.core.channel_element import ChannelElement
 from nfluid.core.channel_element_2g import ChannelElement2G
-import copy
 
 
 sep_s = '\n' + '-'*40 + '\n'
@@ -138,7 +137,6 @@ class ChannelInfo(object):
         self.assembly = assembly
 
     def get_initial_piece(self):
-        res = {}
         for elem in self.assembly.elements:
             if elem.get_prev_element() is None:
                 return PieceInfo(elem)
@@ -153,7 +151,7 @@ class ChannelInfo(object):
                 i = 0
                 total_tails = len(elem.tails)
                 while (i < total_tails and
-                    elem.get_next_element(i) is not None):
+                       elem.get_next_element(i) is not None):
                         i += 1
                 if i < total_tails:
                     res.append(PieceInfo(elem))
@@ -180,7 +178,7 @@ class ChannelInfo(object):
         for elem in self.assembly.elements:
             res.append(PieceInfo(elem))
         return res
-        
+
 
 class ChannelInfoParser(object):
 
@@ -188,19 +186,19 @@ class ChannelInfoParser(object):
         self.info = info
 
     def str_title_intro(self):
-        res = '' 
+        res = ''
         res += '================ Assembly information ================\n'
         res += '======================================================\n'
         return res
 
     def str_title_init(self):
-        res = '' 
+        res = ''
         res += '\n' + 'Init information' + '\n'
         res += '----------------' + '\n'
         return res
 
     def str_title_end(self):
-        res = '' 
+        res = ''
         res += '\n' + 'End information' + '\n'
         res += '---------------' + '\n'
         return res
@@ -216,7 +214,6 @@ class ChannelInfoParser(object):
         res += '\n' + 'Pieces information' + '\n'
         res += '------------------' + '\n'
         return res
-
 
     def str_init_info(self):
         res = ''
@@ -278,15 +275,3 @@ class ChannelInfoParser(object):
             f = open(filename, 'w')
             f.write(text)
             f.close()
-
-
-
-
-
-
-
-
-
-
-
-                    

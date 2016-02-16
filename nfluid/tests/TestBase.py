@@ -44,7 +44,6 @@ print_info Assembly ---------------------------'''
 
     # assembly.show_shapes()
 
-
     # start_gui()
 
     # Testing is_inside algorithm:
@@ -61,7 +60,9 @@ print_info Assembly ---------------------------'''
     # limits = mesh.coord_limits()
     # print limits
 
-    # cube = mesh.generate_cubic_mesh(limits['x_min'],limits['x_max'],limits['y_min'],limits['y_max'],limits['z_min'],limits['z_max'], 0.5)
+    # cube = mesh.generate_cubic_mesh(limits['x_min'],
+    # limits['x_max'],limits['y_min'],limits['y_max'],
+    # limits['z_min'],limits['z_max'], 0.5)
 
     # # print cube.vertices
     # inside = []
@@ -69,7 +70,7 @@ print_info Assembly ---------------------------'''
         # inside_r = mesh.is_inside(v)
         # # print inside_r
         # if inside_r is True:
-            # inside.append(v)
+        #     inside.append(v)
 
     # filename = 'inside_shapeall.xyz'
     # file_out = open(filename, 'w')
@@ -80,7 +81,7 @@ print_info Assembly ---------------------------'''
     # spec = 'O'
     # for v in inside:
         # file_out.write('{0} {1} {2} {3}\n'.format(spec, v[0], v[1], v[2]))
- 
+
     # file_out.close()
 
     assembly.print_info_file('Assembly_info_after.txt')

@@ -217,12 +217,15 @@ class Arithmetic_Triangle_Rect(Arithmetic_Triangle):
 
     def _recalculate(self, c1=None, c2=None, h=None):
         n_none = 0
-        if self._c1 is None: n_none += 1
-        if self._c2 is None: n_none += 1
-        if self._h is None: n_none += 1
+        if self._c1 is None:
+            n_none += 1
+        if self._c2 is None:
+            n_none += 1
+        if self._h is None:
+            n_none += 1
         if n_none >= 2:
             raise Exception("Can't calculate sides; not enough params")
-        
+
         if self._h is None:
             self._h = math.sqrt((self._c1*self._c1) + (self._c2*self._c2))
         elif self._c1 is None:
@@ -249,22 +252,17 @@ class Arithmetic_Triangle_Iso(Arithmetic_Triangle):
             n_none += 1
         else:
             self._c1 = self._c2
-        if self._h is None: n_none += 1
+        if self._h is None:
+            n_none += 1
         if n_none >= 2:
             raise Exception("Can't calculate sides; not enough params")
-        
-        # if self._h is None:
-            # self._h = math.sqrt((self._c1*self._c1) + (self._c2*self._c2))
-        # elif self._c1 is None:
-            # self._c1 = math.sqrt((self._h*self._h) - (self._c2*self._c2))
-        # else:
-            # self._c2 = math.sqrt((self._h*self._h) - (self._c1*self._c1))
+        # to be completed
 
 
 class Arithmetic_Polygon(object):
 
     def __init__(self, radius, n_sides):
-    # radius == center to one the vertices
+        # radius == center to one the vertices
         self._radius = radius
         self._n_sides = n_sides
 
@@ -276,15 +274,3 @@ class Arithmetic_Polygon(object):
         apothema = t2.get_c2()
         perimeter = side * self._n_sides
         return (0.5 * apothema * perimeter)
-
-        
-
-
-
-
-
-
-
-
-
-

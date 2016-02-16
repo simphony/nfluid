@@ -152,5 +152,6 @@ class ChannelAssembly(object):
     def print_info_file(self, filename=None):
         self.info_extractor.print_output(filename)
 
+
 def create_channel(elt):
     return elt

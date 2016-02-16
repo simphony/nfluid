@@ -14,7 +14,7 @@ from nfluid.geometry.functions import angle_between_vectors
 from nfluid.geometry.functions import normal_of, center_of, distance
 from nfluid.geometry.auxiliar_geometry import Plane, Line3D
 import visvis as vv
-import copy
+
 
 class GeometricMesh(object):
     """Simple class to specify a geometrical mesh:
@@ -801,12 +801,10 @@ class CylindricalPart(GeometricMesh):
                             inter_point = ((inter, key))
                             min_d = cur_d
         return inter_point
-        
+
     def intersections_of_point(self, point, normal):
         ray = Line3D(point, normal)
         inter_points = []
-        inter_point = None
-        min_d = 9999
         for key, triangle in self.triangles.iteritems():
             v0 = self.vertex(triangle[0])
             v1 = self.vertex(triangle[1])
@@ -836,19 +834,20 @@ class CylindricalPart(GeometricMesh):
     def is_inside(self, point, inter_points=None):
         # copy_mesh = copy.deepcopy(self)
         # copy_mesh.close()
-        # inter_points = copy_mesh.intersections_of_point(point, (0,1,0))
+        # inter_points = copy_mesh.intersections_of_point(point, (0, 1, 0))
         if inter_points is None:
-            inter_points = self.intersections_of_point(point, (0,1,0))
+            inter_points = self.intersections_of_point(point, (0, 1, 0))
         left = 0
         right = 0
         for coords, key in inter_points:
-            cur_n = (coords[0]-point[0], coords[1]-point[1], coords[2]-point[2])
+            cur_n = (coords[0]-point[0], coords[1]-point[1],
+                     coords[2]-point[2])
             if cur_n[1] < 0:
                 left += 1
             else:
                 right += 1
-        # print "point"        
-        # print point        
+        # print "point"
+        # print point
         # print "left - right"
         # print left, right
         if left % 2 != 0 and right % 2 != 0:
@@ -858,8 +857,10 @@ class CylindricalPart(GeometricMesh):
     def fill_mesh(self, step, filename):
         self.close()
         limits = self.coord_limits()
-        # cube = mesh.generate_cubic_mesh(limits['x_min'],limits['x_max'],limits['y_min'],limits['y_max'],limits['z_min'],limits['z_max'], step)
-        
+        # cube = mesh.generate_cubic_mesh(
+        #           limits['x_min'],limits['x_max'],limits['y_min'],
+        #           limits['y_max'],limits['z_min'],limits['z_max'], step)
+
         x_min = limits['x_min']
         y_min = limits['y_min']
         z_min = limits['z_min']
@@ -878,7 +879,7 @@ class CylindricalPart(GeometricMesh):
                 # print "Z"
                 # print cur_x, cur_y, cur_z
                 p = (cur_x, cur_y, cur_z)
-                inter_points = self.intersections_of_point(p, (0,1,0))
+                inter_points = self.intersections_of_point(p, (0, 1, 0))
                 while cur_y < y_max:
                     # print "Y"
                     # print cur_x, cur_y, cur_z
@@ -892,7 +893,7 @@ class CylindricalPart(GeometricMesh):
                 cur_z += step
             cur_z = z_min
             cur_x += step
-        
+
         file_out = open(filename, 'w')
 
         total_v = len(inside)
@@ -901,9 +902,9 @@ class CylindricalPart(GeometricMesh):
         spec = 'O'
         for v in inside:
             file_out.write('{0} {1} {2} {3}\n'.format(spec, v[0], v[1], v[2]))
-            
+
         file_out.close()
-        
+
         return not_inside
 
     def coord_limits(self):
@@ -926,16 +927,14 @@ class CylindricalPart(GeometricMesh):
                 z_min = v[2]
             if v[2] > z_max:
                 z_max = v[2]
-        return {'x_min':x_min, 'x_max':x_max, 
-                'y_min':y_min, 'y_max':y_max,
-                'z_min':z_min, 'z_max':z_max}
-        
+        return {'x_min': x_min, 'x_max': x_max,
+                'y_min': y_min, 'y_max': y_max,
+                'z_min': z_min, 'z_max': z_max}
+
     # @classmethod
-    def generate_cubic_mesh(self, x_min, x_max, y_min, y_max, z_min, z_max, step=1):
+    def generate_cubic_mesh(self, x_min, x_max, y_min, y_max,
+                            z_min, z_max, step=1):
         res = GeometricMesh()
-        x_len = x_max - x_min
-        y_len = y_max - y_min
-        z_len = z_max - z_min
         cur_x = x_min
         cur_y = y_min
         cur_z = z_min
@@ -949,7 +948,6 @@ class CylindricalPart(GeometricMesh):
             cur_y = y_min
             cur_x += step
         return res
-        
 
     def intersection(self, figure):
         """This calculates an returns the intersection of the vertices of
