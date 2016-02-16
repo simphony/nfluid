@@ -13,16 +13,25 @@ _pieces = [(strings.coupling,
              (strings.tail_radius, 0),
              (strings.length, 0)]
             ),
-           (strings.short_elbow,
+           (strings.short_elbow_angle,
             [(strings.head_radius, 0),
              (strings.tail_normal, (0, 0, 0)),
              (strings.angle, 0)]
             ),
-           (strings.long_elbow,
+           (strings.short_elbow_normals,
+            [(strings.head_radius, 0),
+             (strings.tail_normal, (0, 0, 0))]
+            ),
+           (strings.long_elbow_angle,
             [(strings.curvature_radius, 0),
              (strings.head_radius, 0),
              (strings.tail_normal, (0, 0, 0)),
              (strings.angle, 0)]
+            ),
+           (strings.long_elbow_normals,
+            [(strings.curvature_radius, 0),
+             (strings.head_radius, 0),
+             (strings.tail_normal, (0, 0, 0))]
             ),
            (strings.spheric_coupling,
             [(strings.head_radius, 0),
@@ -33,6 +42,11 @@ _pieces = [(strings.coupling,
             [(strings.head_radius, 0),
              (strings.tail_normal0, (0, 0, 0))]
             )
+            #,
+            # (strings.circle_path,
+            #  [(strings.head_radius, 0),
+            #   (strings.points, )]
+            # )
            ]
 
 

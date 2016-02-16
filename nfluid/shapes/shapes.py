@@ -63,8 +63,8 @@ class Shape(object):
         for tail in cursor.links_tail:
             if tail is not None:
                 if (isinstance(tail, ShapeLongElbowAngle) or
-                        isinstance(tail, ShapeTee) or
                         isinstance(tail, ShapeShortElbowAngle) or
+                        isinstance(tail, ShapeTee) or
                         isinstance(tail, ShapeCirclePath)):
                     if isinstance(tail, ShapeTee):
                         normal_tail = (tail.NormalT0.X(0), tail.NormalT0.X(1),
@@ -91,15 +91,17 @@ class Shape(object):
                         print angle
                         print normal_tail_current
                     print "angle_end"
-                    if iter == 0:
-                        iter = 100
+                    # if iter == 0:
+                        # iter = 100
                     # while angle > 0.001 and iter:
                         # angle = math.pi - angle
                         # tail.mesh.set_orientation(math.degrees(angle))
                         # c, normal_tail_current = tail.mesh.get_face_info(1)
                         # angle = angle_between_vectors(normal_tail,
-                        #                             normal_tail_current)
+                                                    # normal_tail_current)
                         # iter -= 1
+                        # print angle
+                        # print normal_tail_current
                     tail.mesh = cls.total_mesh.adapt(tail.mesh, gate)
                     cls.total_mesh = cls.total_mesh.connect(tail.mesh, gate)
                 else:
@@ -127,9 +129,7 @@ class Shape(object):
             
             if (isinstance(initial, ShapeLongElbowAngle) or
                     isinstance(initial, ShapeShortElbowAngle) or
-                    isinstance(initial, ShapeLongElbow) or
                     isinstance(initial, ShapeTee) or
-                    isinstance(initial, ShapeShortElbow) or
                     isinstance(initial, ShapeCirclePath)):
                 if isinstance(initial, ShapeTee):
                     normal_tail = (initial.NormalT0.X(0), initial.NormalT0.X(1),
@@ -306,27 +306,6 @@ class ShapeFlowAdapter(Shape):
                                                    self.Length)
 
 
-class ShapeLongElbow90(Shape):
-
-    def __init__(
-        self, RC, R,
-        PosH, PosT,
-        NormalH, NormalT
-    ):
-        Shape.__init__(self)
-        # Curvature radius
-        self.RadiusCurvature = RC
-        # Gate radius
-        self.Radius = R
-        self.PosH = PosH
-        self.PosT = PosT
-        self.NormalH = NormalH
-        self.NormalT = NormalT
-        self.mesh = _generator.create_long_elbow(self.RadiusCurvature,
-                                                 self.Radius
-                                                 )
-
-
 class ShapeLongElbowAngle(Shape):
 
     def __init__(
@@ -347,22 +326,6 @@ class ShapeLongElbowAngle(Shape):
         self.mesh = _generator.create_long_elbow(self.RadiusCurvature,
                                                  self.Radius,
                                                  self.angle)
-
-
-class ShapeShortElbow90(Shape):
-
-    def __init__(
-        self, R,
-        PosH, PosT,
-        NormalH, NormalT
-    ):
-        Shape.__init__(self)
-        self.Radius = R
-        self.PosH = PosH
-        self.PosT = PosT
-        self.NormalH = NormalH
-        self.NormalT = NormalT
-        self.mesh = _generator.create_short_elbow(self.Radius)
 
 
 class ShapeShortElbowAngle(Shape):
@@ -452,12 +415,8 @@ def CreateShape(type, center, rotation,
         shape = ShapeTee4(par0, par1, par2, par3, par4, par5)
     elif type == 'flow_adapter':
         shape = ShapeFlowAdapter(par0, par1, par2, par3, par4, par5)
-    elif type == 'long_elbow_90':
-        shape = ShapeLongElbow90(par0, par1, par2, par3, par4, par5)
     elif type == 'long_elbow_angle':
         shape = ShapeLongElbowAngle(par0, par1, par2, par3, par4, par5, par6)
-    elif type == 'short_elbow_90':
-        shape = ShapeShortElbow90(par0, par1, par2, par3, par4)
     elif type == 'short_elbow_angle':
         shape = ShapeShortElbowAngle(par0, par1, par2, par3, par4, par5)
     elif type == 'spheric_coupling':

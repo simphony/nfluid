@@ -10,7 +10,7 @@ from nfluid.util import snappy_generator
 
 class ChannelAssembly(object):
 
-    def __init__(self, gates_sides=4, elements_divisions=8):
+    def __init__(self, gates_sides=30, elements_divisions=15):
         self.elements = []
         ChannelElement.assembly = self
         ChannelElement.slices = gates_sides
