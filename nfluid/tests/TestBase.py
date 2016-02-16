@@ -90,6 +90,13 @@ print_info Assembly ---------------------------'''
     print tree
     amplitude = tree.walk_amplitude()
     depth = tree.walk_depth()
+    d = tree.depth()
+    print "depth", d
+
+    print "level ", 3, ":"
+    level = tree.get_level(3)
+    for elem in level:
+        print elem.data
 
     print "AMPLITUDE"
     for elem in amplitude:

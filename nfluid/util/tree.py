@@ -24,6 +24,30 @@ class TreeBase(object):
         d = 1
         return self._depth(self.root, d)
 
+    def amplitude(sefl):
+        pass
+
+    def n_leafs(self):
+        d = self.depth()
+        level = self.get_level(d)
+        return len(level)
+
+    def get_level(self, level):
+        res = []
+        queue = []
+        queue.append((self.root, 1))
+        while queue != []:
+            (cur_elem, cur_level) = queue.pop(0)
+            if cur_level == level:
+                res.append(copy.deepcopy(cur_elem))
+            left = cur_elem.next_l
+            right = cur_elem.next_r
+            if left is not None and cur_level < level:
+                queue.append((left, cur_level + 1))
+            if right is not None and cur_level < level:
+                queue.append((right, cur_level + 1))
+        return res
+
     def _depth(self, cur_node, cur_depth):
         if cur_node is None:
             return cur_depth - 1
@@ -37,7 +61,7 @@ class TreeBase(object):
     def search(self, value):
         return self.walk_amplitude(value)
 
-    def walk_amplitude(self, value=None):
+    def walk_amplitude(self, value=None, func=None, params=None):
         res = []
         queue = []
         queue.append(self.root)
@@ -46,6 +70,8 @@ class TreeBase(object):
             if value is not None and value == cur_elem.data:
                 return copy.deepcopy(cur_elem)
             res.append(copy.deepcopy(cur_elem))
+            if func:
+                func(cur_elem, params)
             left = cur_elem.next_l
             right = cur_elem.next_r
             if left is not None:
@@ -54,7 +80,7 @@ class TreeBase(object):
                 queue.append(right)
         return res
 
-    def walk_depth(self, value=None):
+    def walk_depth(self, value=None, func=None, params=None):
         res = []
         queue = []
         queue.append(self.root)
@@ -63,6 +89,8 @@ class TreeBase(object):
             if value is not None and value == cur_elem.data:
                 return copy.deepcopy(cur_elem)
             res.append(copy.deepcopy(cur_elem))
+            if func:
+                func(cur_elem, params)
             left = cur_elem.next_l
             right = cur_elem.next_r
             if right is not None:
