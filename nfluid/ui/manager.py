@@ -168,6 +168,11 @@ class NfluidDataManager(object):
         NfluidDataManager.model.export_shapes(file_name[0])
 
     @classmethod
+    def export_mesh_info_txt(self):
+        file_name = NfluidDataManager.gui.get_path_save_file(ext='.txt')
+        NfluidDataManager.model.print_info_file(file_name[0])
+
+    @classmethod
     def export_mesh_foam(self):
         NfluidDataManager.model.create_openfoam_project()
         msg = "Done."

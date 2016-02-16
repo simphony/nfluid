@@ -35,6 +35,7 @@ class MainWindow(QtGui.QMainWindow):
         file_menu = self.menu_main.addMenu('&File')
         file_menu.addAction(self.stl_action)
         file_menu.addAction(self.foam_action)
+        file_menu.addAction(self.txt_action)
 
         self.status_bar = None
 
@@ -65,6 +66,13 @@ class MainWindow(QtGui.QMainWindow):
                             statusTip="Exports the current mesh to STL format",
                             triggered=self.export_mesh_stl)
 
+        self.txt_action = QtGui.QAction(
+                            QtGui.QIcon(), "&Export mesh to txt",
+                            self,
+                            statusTip="Exports the information of the mesh\
+                            to txt format",
+                            triggered=self.export_mesh_info_txt)
+
         self.foam_action = QtGui.QAction(
                                QtGui.QIcon(),
                                "&Create OpenFoam project",
@@ -78,6 +86,9 @@ class MainWindow(QtGui.QMainWindow):
 
     def export_mesh_foam(self):
         NfluidDataManager.export_mesh_foam()
+
+    def export_mesh_info_txt(self):
+        NfluidDataManager.export_mesh_info_txt()
 
     def exit_handler(self):
         self.cw_visualizer.exit_handler()

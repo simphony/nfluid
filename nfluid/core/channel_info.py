@@ -59,6 +59,7 @@ class PieceInfo(object):
         self.name = self.elem.get_name()
         self.radius = self.elem.get_r()
         self.length = self.elem.get_len()
+        self.volume = self.elem.get_volume()
         self.pos = self.elem.get_pos_head()
         self.normal = self.elem.get_normal_head()
         self.head = GateInfo(self.elem.heads[0], 0)
@@ -110,6 +111,7 @@ class PieceInfo(object):
               'Name: ' + str(self.name) + '\n' + \
               'Radius: ' + str(self.radius) + '\n' + \
               'Length: ' + str(self.length) + '\n' + \
+              'Volume: ' + str(self.volume) + '\n' + \
               'Position: ' + str(self.pos) + '\n' + \
               'Normal: ' + str(self.normal) + '\n'
         if self.curvature_radius is not None:
@@ -164,7 +166,10 @@ class ChannelInfo(object):
         return res
 
     def get_assembly_volume(self):
-        return 0.0
+        res = 0.0
+        for elem in self.assembly.elements:
+            res += elem.get_volume()
+        return res
 
     def get_number_of_pieces(self):
         return len(self.assembly.elements)

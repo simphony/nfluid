@@ -54,14 +54,12 @@ class SphericCoupling(ChannelElement2G):
         return self.volume
 
     def calculate_volume(self):
-        slices = ChannelElement2G.slices
-        poly_top = Arithmetic_Polygon(self.get_r(), slices)
-        poly_bottom = Arithmetic_Polygon(self.RadiusSphere, slices)
-        l = self.get_len()
-        a_t = poly_top.area()
-        a_p = poly_bottom.area()
-        v = l/3.0 * (a_t + a_p + math.sqrt(a_t * a_p))
-        self.volume = v * 2.0
+        rs = self.RadiusSphere
+        r = self.get_r()
+        h = rs - r
+        v_cap = ((math.pi * h) / 6.0) * (3.0 * r * r + h * h)
+        v_sphere = (4.0 / 3.0) * math.pi * rs * rs * rs
+        self.volume = v_sphere - (2 * v_cap)
 
     def resolve_geometry_child(self):
         if self.get_r() is not None:

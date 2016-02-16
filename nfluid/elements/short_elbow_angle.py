@@ -4,6 +4,7 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
+from nfluid.geometry.auxiliar_geometry import Arithmetic_Polygon
 import math
 import copy
 # Class of ShortElbowAngle
@@ -24,6 +25,7 @@ class ShortElbowAngle(ChannelElement2G):
 
         self.IsEqualGateSize = True
         self.IsAxialSym = False
+        self.volume = None
 
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))
@@ -48,6 +50,14 @@ class ShortElbowAngle(ChannelElement2G):
     def get_r(self):
         return self.get_head_gate().get_r()
 
+    def get_volume(self):
+        return self.volume
+
+    def calculate_volume(self):
+        slices = ChannelElement2G.slices
+        poly = Arithmetic_Polygon(self.get_r(), slices)
+        self.volume = poly.area() * self.get_len()
+
     def resolve_geometry_child(self):
         self.get_head_gate().NormalElement = Vector(0, 0, 1)
         self.get_tail_gate().NormalElement = Vector(-self.sin, 0, self.cos)
@@ -58,6 +68,13 @@ class ShortElbowAngle(ChannelElement2G):
             self.get_head_gate().PosElement = Vector(0, 0, 0)
             self.get_tail_gate().PosElement = Vector((self.cos - 1) * R,
                                                      0, self.sin * R)
+
+        if self.volume is None:
+            try:
+                self.calculate_volume()
+            except:
+                pass
+        print "-- -- -- THE VOLUME -- -- --", self.volume
 
         return ''
 
