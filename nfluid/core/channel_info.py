@@ -176,17 +176,12 @@ class ChannelInfo(object):
 
     def get_assembly_structure(self):
         tree = self.assembly.get_tree_structure()
-        
-        def mark_level_position(elem, **args):
-            # res: [] with elem and pos in its tree level
-            # cur_pos:
-            c_pos = args['cur_pos']
-            args['res'].append(tuple(elem.data, c_pos))
-        
-        def create_string(elem, **args):
-            # res, cur_level, cur_elem, total_elem, mid
-            # mid == number of 'tabs' in initial level
-            n_tabs = mid 
+        n_levels = tree.depth()
+        for i in range(n_levels):
+            cur_level = i + 1
+            elems = tree.get_level(cur_level)
+            n_elems = len(elems)
+            
 
     def get_assembly_pieces(self):
         # return copy.deepcopy(self.assembly.elements)
