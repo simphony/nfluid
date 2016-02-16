@@ -4,10 +4,11 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
-# Class of Elbow
+import math
+# Class of Elbow90
 
 
-class ShortElbow(ChannelElement2G):
+class ShortElbow90(ChannelElement2G):
 
     def __init__(
         self,
@@ -43,7 +44,7 @@ class ShortElbow(ChannelElement2G):
         self.get_tail_gate().NormalElement = Vector(1, 0, 0)
 
     def get_name(self):
-        return 'ShortElbow'
+        return 'ShortElbow90'
 
     def get_r(self):
         return self.get_head_gate().get_r()
@@ -55,23 +56,25 @@ class ShortElbow(ChannelElement2G):
 
         R = self.get_r()
         if R is not None:
+            self.length = 2*math.pi*R * 0.25
             self.get_head_gate().PosElement = Vector(0, 0, -R)
             self.get_tail_gate().PosElement = Vector(R, 0, 0)
+
         return ''
 
     def print_info(self):
         ChannelElement2G.print_info(self)
-        print 'ShortElbow radius Rdef =', \
+        print 'ShortElbow90 radius Rdef =', \
             self.get_head_gate().get_r_def(), 'RH =', \
             self.get_gate_size_h(), 'RT =', self.get_gate_size_t(), \
             'PosH =', self.get_pos_head(), 'PosT =', self.get_pos_tail()
 
     def create_shape_child(self):
-        print 'create_shape ShortElbow'
+        print 'create_shape ShortElbow90'
 
         # check geometry data
 
-        return CreateShape('short_elbow', self.CenterPos,
+        return CreateShape('short_elbow_90', self.CenterPos,
                            self.RotationOperator,
                            self.get_r(), self.get_pos_head(),
                            self.get_pos_tail(),

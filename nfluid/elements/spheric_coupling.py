@@ -16,8 +16,7 @@ class SphericCoupling(ChannelElement2G):
         R=None,
         PosH=None,
         PosT=None,
-        NormalH=None,
-        NormalT=None,
+        Normal=None
     ):
         ChannelElement2G.__init__(self)
 
@@ -29,8 +28,7 @@ class SphericCoupling(ChannelElement2G):
         self.RadiusSphere = RS
         self.IsAxialSym = True
 
-        self.get_head_gate().set_normal_def(NormalH)
-        self.get_tail_gate().set_normal_def(NormalT)
+        self.set_normal_def(Normal)
 
         self.get_head_gate().set_pos_def(PosH)
         self.get_tail_gate().set_pos_def(PosT)
@@ -50,8 +48,6 @@ class SphericCoupling(ChannelElement2G):
         return self.get_head_gate().get_r()
 
     def resolve_geometry_child(self):
-        print '&&&&& SphericCoupling 1'
-
         if self.get_r() is not None:
             if self.get_r() > self.RadiusSphere:
                 return 'Incorrect Sphere radius'
