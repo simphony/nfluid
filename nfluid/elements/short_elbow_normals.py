@@ -7,10 +7,10 @@ from nfluid.util.vector import Vector
 from nfluid.util.vector import get_vector_angle_grad
 import math
 import copy
-# Class of ShortElbowAngleAuto
+# Class of ShortElbowNormals
 
 
-class ShortElbowAngleAuto(ChannelElement2G):
+class ShortElbowNormals(ChannelElement2G):
 
     def __init__(
         self,
@@ -44,7 +44,7 @@ class ShortElbowAngleAuto(ChannelElement2G):
         self.get_head_gate().NormalElement = Vector(0, 0, 1)
 
     def get_name(self):
-        return 'ShortElbowAngleAuto'
+        return 'ShortElbowNormals'
 
     def get_r(self):
         return self.get_head_gate().get_r()
@@ -69,7 +69,7 @@ class ShortElbowAngleAuto(ChannelElement2G):
 
     def print_info(self):
         ChannelElement2G.print_info(self)
-        print 'ShortElbowAngleAuto radius Rdef =', \
+        print 'ShortElbowNormals radius Rdef =', \
             self.get_head_gate().get_r_def(), \
             'RH =', self.get_gate_size_h(), 'RT =', self.get_gate_size_t(), \
             'PosH =', self.get_head_gate().Pos, \
@@ -78,7 +78,7 @@ class ShortElbowAngleAuto(ChannelElement2G):
             'NormT =', self.get_tail_gate().NormalElement
 
     def create_shape_child(self):
-        print 'create_shape ShortElbowAngleAuto'
+        print 'create_shape ShortElbowNormals'
         return CreateShape('short_elbow_angle', self.CenterPos,
                            self.RotationOperator,
                            self.get_r(), self.angle,

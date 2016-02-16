@@ -6,7 +6,7 @@ from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
 import math
 import copy
-# Class of Elbow
+# Class of ElbowAngle
 
 
 class LongElbowAngle(ChannelElement2G):
@@ -59,7 +59,7 @@ class LongElbowAngle(ChannelElement2G):
                                                  0, self.sin * RC)
 
     def get_name(self):
-        return 'LongElbow'
+        return 'LongElbowAngle'
 
     def get_r(self):
         return self.get_head_gate().get_r()
@@ -72,12 +72,12 @@ class LongElbowAngle(ChannelElement2G):
 
     def print_info(self):
         ChannelElement2G.print_info(self)
-        print 'LongElbow radius Rdef =', \
+        print 'LongElbowAngle radius Rdef =', \
             self.get_head_gate().get_r_def(), 'RH =', \
             self.get_gate_size_h(), 'RT =', self.get_gate_size_t()
 
     def create_shape_child(self):
-        print 'create_shape LongElbow'
+        print 'create_shape LongElbowAngle'
         # check geometry data
 
         return CreateShape('long_elbow_angle', self.CenterPos,

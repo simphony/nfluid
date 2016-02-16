@@ -6,6 +6,7 @@ from nfluid.core.channel_assembly import ChannelAssembly, create_channel
 from nfluid.elements.circle_coupling import CircleCoupling
 from nfluid.elements.circle_tee import CircleTee
 from nfluid.elements.flow_adapter import FlowAdapter
+from nfluid.elements.spheric_coupling import SphericCoupling
 from nfluid.tests.TestBase import MakeTest1
 from nfluid.util.vector import Vector
 
@@ -15,10 +16,11 @@ if len(sys.argv) == 1:
     print '0: All'
     print '1: Test Tee 1'
     print '2: Test Tee 2'
+    print '3: Test Tee 3'
 
     exit(0)
 
-n_tests = 2
+n_tests = 3
 
 assembly = ChannelAssembly()
 
@@ -42,11 +44,32 @@ elif sys.argv[1] == '2':
                           .link(CircleCoupling(L=125))
                           .link(CircleTee(220, NormalT0=Vector(1, 0, 0))))
 
+    tee1 = tee0.link(FlowAdapter(RT=123, L=120), 1) \
+               .link(CircleCoupling(L=200)) \
+               .link(CircleTee(NormalT0=Vector(0, 1, 0)))
+
+    tee0.link(SphericCoupling(RS=355), 0) \
+        .link(CircleCoupling(L=120))
+
+    tee1.link(FlowAdapter(RT=220, L=115), 0) \
+        .link(CircleCoupling(L=125))
+
+    tee1.link(FlowAdapter(RT=320, L=125), 1) \
+        .link(CircleCoupling(L=125))
+
+elif sys.argv[1] == '3':
+    print 'Test Tee 3'
+    tee0 = create_channel(CircleCoupling(111, 78, PosH=Vector(11, 22, 33),
+                                         Normal=Vector(0, 0, 1))
+                          .link(FlowAdapter(RT=220, L=115))
+                          .link(CircleCoupling(L=125))
+                          .link(CircleTee(220, NormalT0=Vector(1, 0, 0))))
+
     tee1 = tee0.link(FlowAdapter(RT=123, L=120), 0) \
                .link(CircleCoupling(L=200)) \
                .link(CircleTee(NormalT0=Vector(0, 1, 0)))
 
-    tee0.link(FlowAdapter(RT=155, L=127), 1) \
+    tee0.link(SphericCoupling(RS=355), 1) \
         .link(CircleCoupling(L=120))
 
     tee1.link(FlowAdapter(RT=220, L=115), 0) \

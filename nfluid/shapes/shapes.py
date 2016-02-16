@@ -48,16 +48,23 @@ class Shape(object):
     @classmethod
     def connect_next_piece(cls, cursor, initial_gate=0):
         gate = initial_gate
+        # current_element = type(cursor).__name__
+        # linked_elements = ''
+        # for tail in cursor.links_tail:
+        #     linked_elements = linked_elements + type(tail).__name__ + ' '
+        # if not cursor.links_tail:
+        #     linked_elements = 'None'
+        # print 'Gate', gate, 'at', current_element, \
+        #       'linked to', linked_elements
+
         # We accumulate and return the number of new paths opened, so the
         # connections in upper levels will be done correctly
         new_paths = 0
         for tail in cursor.links_tail:
             if tail is not None:
                 if (isinstance(tail, ShapeLongElbowAngle) or
-                        isinstance(tail, ShapeShortElbowAngle) or
-                        isinstance(tail, ShapeLongElbow) or
                         isinstance(tail, ShapeTee) or
-                        isinstance(tail, ShapeShortElbow) or
+                        isinstance(tail, ShapeShortElbowAngle) or
                         isinstance(tail, ShapeCirclePath)):
                     if isinstance(tail, ShapeTee):
                         normal_tail = (tail.NormalT0.X(0), tail.NormalT0.X(1),
@@ -100,10 +107,10 @@ class Shape(object):
                 cur_gate = gate
                 gate += 1
                 if isinstance(tail, ShapeTee):
-                    gate += 1
+                    # gate += 1
                     new_paths += 1
-                res = Shape.connect_next_piece(tail, cur_gate)
-                gate += res
+                new_paths += Shape.connect_next_piece(tail, cur_gate)
+                gate += new_paths
             else:
                 gate += 1
         return new_paths
@@ -299,7 +306,7 @@ class ShapeFlowAdapter(Shape):
                                                    self.Length)
 
 
-class ShapeLongElbow(Shape):
+class ShapeLongElbow90(Shape):
 
     def __init__(
         self, RC, R,
@@ -342,7 +349,7 @@ class ShapeLongElbowAngle(Shape):
                                                  self.angle)
 
 
-class ShapeShortElbow(Shape):
+class ShapeShortElbow90(Shape):
 
     def __init__(
         self, R,
@@ -445,12 +452,12 @@ def CreateShape(type, center, rotation,
         shape = ShapeTee4(par0, par1, par2, par3, par4, par5)
     elif type == 'flow_adapter':
         shape = ShapeFlowAdapter(par0, par1, par2, par3, par4, par5)
-    elif type == 'long_elbow':
-        shape = ShapeLongElbow(par0, par1, par2, par3, par4, par5)
+    elif type == 'long_elbow_90':
+        shape = ShapeLongElbow90(par0, par1, par2, par3, par4, par5)
     elif type == 'long_elbow_angle':
         shape = ShapeLongElbowAngle(par0, par1, par2, par3, par4, par5, par6)
-    elif type == 'short_elbow':
-        shape = ShapeShortElbow(par0, par1, par2, par3, par4)
+    elif type == 'short_elbow_90':
+        shape = ShapeShortElbow90(par0, par1, par2, par3, par4)
     elif type == 'short_elbow_angle':
         shape = ShapeShortElbowAngle(par0, par1, par2, par3, par4, par5)
     elif type == 'spheric_coupling':

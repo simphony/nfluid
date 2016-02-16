@@ -14,7 +14,7 @@ class ShortElbowAngle(ChannelElement2G):
     def __init__(
         self,
         R=None,        # Gate radius
-        Angle=90,      # Elbow angle
+        Angle=90,      # Elbow angle (default: 90)
         PosH=None,     # Position of head gate
         PosT=None,     # Position of tail gate
         NormalH=None,  # Normal at head gate
@@ -72,6 +72,7 @@ class ShortElbowAngle(ChannelElement2G):
             'NormT =', self.get_tail_gate().NormalElement
 
     def create_shape_child(self):
+        print 'create_shape ShortElbowAngle'
         return CreateShape('short_elbow_angle', self.CenterPos,
                            self.RotationOperator,
                            self.get_r(), self.angle,
