@@ -6,6 +6,7 @@ from nfluid.core.channel_element import ChannelElement
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.shapes.shapes import Shape
 from nfluid.util import snappy_generator
+from nfluid.util.tree import TreeBase, TreeNode
 
 
 class ChannelAssembly(object):
@@ -151,6 +152,22 @@ class ChannelAssembly(object):
 
     def print_info_file(self, filename=None):
         self.info_extractor.print_output(filename)
+
+    def get_tree_structure(self):
+        if len(self.elements) == 0:
+            return None
+        tree = TreeBase(TreeNode(self.elements[0]))
+        root = tree.get_root()
+        self._get_tree_structure(self.elements[0], tree, root)
+        return tree
+        
+    def _get_tree_structure(self, cur_elem, tree, cur_node):
+        if cur_elem is not None:
+            for i in xrange(len(cur_elem.tails)):
+                next_elem = cur_elem.get_next_element(i)
+                if next_elem is not None:
+                    new_node = tree.add_node(cur_node, TreeNode(next_elem))
+                    self._get_tree_structure(next_elem, tree, new_node)
 
 
 def create_channel(elt):

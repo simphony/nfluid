@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import math
 import copy
 
 
@@ -44,7 +43,7 @@ class TreeBase(object):
         queue.append(self.root)
         while queue != []:
             cur_elem = queue.pop(0)
-            if value == cur.elem.data:
+            if value is not None and value == cur_elem.data:
                 return copy.deepcopy(cur_elem)
             res.append(copy.deepcopy(cur_elem))
             left = cur_elem.next_l
@@ -61,7 +60,7 @@ class TreeBase(object):
         queue.append(self.root)
         while queue != []:
             cur_elem = queue.pop()
-            if value == cur.elem.data:
+            if value is not None and value == cur_elem.data:
                 return copy.deepcopy(cur_elem)
             res.append(copy.deepcopy(cur_elem))
             left = cur_elem.next_l
@@ -75,8 +74,8 @@ class TreeBase(object):
     def add_node(self, prev_node, node):
         if prev_node.next_l is not None and prev_node.next_r is not None:
             raise Exception("Full node! Can't add anything to it!")
-        if node.data is None:
-            raise Exception("Empty node!!!!")
+        # if node.data is None:
+            # raise Exception("Empty node!!!!")
         cur_node = TreeNode(copy.deepcopy(node.data))
         cur_node.prev = prev_node
         cur_node.next_l = None

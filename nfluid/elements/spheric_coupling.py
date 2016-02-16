@@ -4,7 +4,6 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
-from nfluid.geometry.auxiliar_geometry import Arithmetic_Polygon
 import math
 # Class of SphericCoupling
 

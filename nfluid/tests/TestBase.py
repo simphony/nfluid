@@ -86,6 +86,19 @@ print_info Assembly ---------------------------'''
 
     assembly.print_info_file('Assembly_info_after.txt')
 
+    tree = assembly.get_tree_structure()
+    print tree
+    amplitude = tree.walk_amplitude()
+    depth = tree.walk_depth()
+
+    print "AMPLITUDE"
+    for elem in amplitude:
+        print elem.data
+
+    print "DEPTH"
+    for elem in depth:
+        print elem.data
+
     from nfluid.ui.main_module import start_gui
     start_gui()
 
