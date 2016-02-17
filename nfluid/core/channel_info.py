@@ -1,7 +1,6 @@
 from nfluid.core.channel_element import ChannelElement
 from nfluid.core.channel_element_2g import ChannelElement2G
 
-
 sep_s = '\n' + '-'*40 + '\n'
 sep_m = '\n' + '='*60 + '\n'
 sep_l = '\n' + '_'*80 + '\n' + '='*80 + '\n'
@@ -176,12 +175,8 @@ class ChannelInfo(object):
 
     def get_assembly_structure(self):
         tree = self.assembly.get_tree_structure()
-        n_levels = tree.depth()
-        for i in range(n_levels):
-            cur_level = i + 1
-            elems = tree.get_level(cur_level)
-            n_elems = len(elems)
-            
+        res = tree.tree_as_str()
+        return res
 
     def get_assembly_pieces(self):
         # return copy.deepcopy(self.assembly.elements)
@@ -248,9 +243,12 @@ class ChannelInfoParser(object):
         length = self.info.get_assembly_length()
         volume = self.info.get_assembly_volume()
         n_pieces = self.info.get_number_of_pieces()
+        structure = self.info.get_assembly_structure()
         res += '\nLength: ' + str(length)
         res += '\nVolume: ' + str(volume)
         res += '\nNumber of pieces: ' + str(n_pieces)
+        res += '\n'
+        res += '\nStructure:\n' + structure
         res += '\n'
         return res
 

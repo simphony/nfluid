@@ -41,7 +41,8 @@ if sys.argv[1] == '1':
     tee2.link(CircleCoupling(L=42), 0)
     tee2.link(ShortElbowAngle(NormalT=Vector(1, 1, 0)), 1) \
         .link(LongElbowAngle(RC=15, NormalT=Vector(0, 0, 1))) \
-        .link(FlowAdapter(RT=15, L=20))
+        .link(FlowAdapter(RT=15, L=20)) \
+        .link(CircleCoupling(L=15))
 
     tee3.link(CircleCoupling(L=42), 0) \
         .link(SphericCoupling(RS=20))

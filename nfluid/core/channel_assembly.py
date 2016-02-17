@@ -160,7 +160,7 @@ class ChannelAssembly(object):
         root = tree.get_root()
         self._get_tree_structure(self.elements[0], tree, root)
         return tree
-        
+
     def _get_tree_structure(self, cur_elem, tree, cur_node):
         if cur_elem is not None:
             for i in xrange(len(cur_elem.tails)):

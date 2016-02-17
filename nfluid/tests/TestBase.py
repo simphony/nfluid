@@ -106,7 +106,17 @@ print_info Assembly ---------------------------'''
     for elem in depth:
         print elem.data
 
+    strings_tree = assembly.info_extractor.info.get_assembly_structure()
+    
+    print "STRUCTURE"
+    print strings_tree
+
     from nfluid.ui.main_module import start_gui
     start_gui()
+
+    # strings_tree = assembly.info_extractor.info.get_assembly_structure()
+    
+    # print "STRUCTURE"
+    # print strings_tree
 
     # assembly.release_shapes()
