@@ -61,6 +61,8 @@ class ChannelElement(object):
         return self.get_tail_gate(n).Normal
 
     def get_next_element(self, n=0):
+        if self.tails == []:
+            return None
         gt = self.get_tail_gate(n)
         if gt is None:
             return None

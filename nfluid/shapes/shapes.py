@@ -111,6 +111,8 @@ class Shape(object):
                 if isinstance(tail, ShapeTee):
                     # gate += 1
                     new_paths += 1
+                if isinstance(tail, ShapeCap):
+                    new_paths -= 1
                 new_paths += Shape.connect_next_piece(tail, cur_gate)
                 gate += new_paths
             else:
@@ -172,12 +174,14 @@ class Shape(object):
             cls.shapes.append(shape)
 
     @classmethod
-    def export(cls, file_name):
+    def export(cls, file_name, close=False):
         if cls.total_mesh is None:
             raise Exception('Total mesh not generated!')
         res = copy.deepcopy(cls.total_mesh)
-        res.close()
+        if close is True:
+            res.close()
         res.export(file_name)
+        res = None
 
     @classmethod
     def simphony_mesh(cls):

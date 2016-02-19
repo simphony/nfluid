@@ -40,6 +40,12 @@ class Cap(ChannelElement):
     def get_r(self):
         return self.get_head_gate().get_r()
 
+    def get_len(self):
+        return 0
+
+    def get_volume(self):
+        return 0
+
     def resolve_geometry_child(self):
         if self.get_r() is None:
             return ''

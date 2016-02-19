@@ -360,13 +360,14 @@ class Circle3D(GeometricMesh):
 
         res = CylindricalPart()
         res.vertices = dict(self.vertices)
-        res.n_vertices = self.n_vertices
+        res.vertex_count = self.n_vertices()
         res.normals = dict(self.normals)
+        res.normals_count = self.n_normals()
         res.triangles = dict(self.triangles)
-        res.n_triangles = self.triangles
+        res.triangles_count = self.n_triangles()
         cap = res.add_vertex(point)
         res.add_normal(cap, point)
-
+        res.add_connection_face(tuple([x for x in xrange(self.n_vertices())]))
         for i in xrange(self.slices):
             res.add_triangle((i, cap, (i + 1) % self.slices))
         return res
@@ -527,6 +528,8 @@ class CylindricalPart(GeometricMesh):
     def attach(self, figure, conn_face=0):
         # Last face (considered tail ftm)
         # with the conn_face modification, there is no conflict with tees
+        print "--- attach; self, nfaces: ", self, self.n_faces()
+        print "--- attach; figure, nfaces: ", figure, figure.n_faces()
         center1, normal1 = self.get_face_info(1+conn_face)
         center2, normal2 = figure.get_face_info(0)
         figure.move(center1, normal1)
@@ -596,9 +599,61 @@ class CylindricalPart(GeometricMesh):
             return figure._connect_to_structuredcylindricalpart(self)
         elif isinstance(figure, CylindricalPart):
             return self._connect_to_cylindricalpart(figure)
+        else:
+            return self._connect_to_point(figure)
 
-    def _connect_to_point(self, point):
-        pass
+    def _connect_to_point(self, point, face=None):
+        print "_connect_to_point"
+        print "point", point
+        res = CylindricalPart()
+        n_vertices1 = self.n_vertices()
+        # vertex_coordinates = []
+        for i in xrange(n_vertices1):
+            index = res.add_vertex(self.vertex(i))
+            res.add_normal(index, self.normal(i))
+        # Copy current triangles in the part
+        res.triangles = dict(self.triangles)
+        res.triangles_count = self.triangles_count
+        cur_index = None
+        cur_face = None
+        # cur_info = None
+        cur_distance = 9999
+        if face is None:
+            for index, face in self.connection_faces.iteritems():
+                info = self.get_face_info(index)
+                p1 = info[0]
+                d = (p1[0]-point[0], p1[1]-point[1], p1[2]-point[2])
+                c_distance = abs(vector_norm(d))
+                print "c_distance", c_distance
+                if c_distance < cur_distance:
+                    cur_face = face
+                    # cur_info = info
+                    cur_distance = c_distance
+                    cur_index = index
+        else:
+            cur_face = self.connection_face(face)
+            cur_index = face
+        new_indexes = {}
+
+        print "cur_face", cur_face
+        # calculate intersection of the connection face vertices
+        # with plane of the circle, so we obtain the optimal connection
+        vertex_coords = [self.vertex(index_) for index_ in cur_face]
+        point_normal = normal_of(vertex_coords[0], vertex_coords[1], vertex_coords[2])
+
+        index = res.add_vertex(point)
+        res.add_normal(index, point_normal)
+
+        n_vertices = len(cur_face)
+        for i in xrange(n_vertices):
+            res.add_triangle((cur_face[i % n_vertices],
+                              index,
+                              cur_face[(i + 1) % n_vertices]))
+        # Copy this properly!!
+        res.connection_faces = dict(self.connection_faces)
+        del res.connection_faces[cur_index]
+        res.face_count = self.face_count - 1
+        return res      
 
     def _connect_to_circle3d(self, circle, face=None):
         res = CylindricalPart()

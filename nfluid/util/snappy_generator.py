@@ -69,6 +69,7 @@ def CreateBlockMeshDict(f, minv, maxv, nx, ny, nz):
 def generate_snappy_project(file_path, template_name=None,
                             ncells_x=20, ncells_y=20, ncells_z=20):
 
+    path = None
     if template_name is None:
         path = os.path.dirname(stl.__file__)
         template_name = os.path.join(path,
@@ -86,6 +87,14 @@ def generate_snappy_project(file_path, template_name=None,
 
     shutil.copy2(file_path, 'FOAM_PROJECT\\constant\\triSurface\\' +
                  case_name + '.stl')
+
+    if path is not None:
+        shutil.copy2(path + '\\snappy_files\\needed_files\\controlDict',
+                     'FOAM_PROJECT\\system\\')
+        shutil.copy2(path + '\\snappy_files\\needed_files\\fvSchemes',
+                     'FOAM_PROJECT\\system\\')
+        shutil.copy2(path + '\\snappy_files\\needed_files\\fvSolution',
+                     'FOAM_PROJECT\\system\\')
 
     stlinfo = stl.STL_Info(file_path)
     minv = (stlinfo.minx, stlinfo.miny, stlinfo.minz)

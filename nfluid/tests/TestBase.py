@@ -84,8 +84,6 @@ print_info Assembly ---------------------------'''
 
     # file_out.close()
 
-    assembly.print_info_file('Assembly_info_after.txt')
-
     tree = assembly.get_tree_structure()
     print tree
     amplitude = tree.walk_amplitude()
@@ -107,15 +105,17 @@ print_info Assembly ---------------------------'''
         print elem.data
 
     strings_tree = assembly.info_extractor.info.get_assembly_structure()
-    
+
     print "STRUCTURE"
     print strings_tree
 
     from nfluid.ui.main_module import start_gui
     start_gui()
 
+    assembly.print_info_file('Assembly_info_after.txt')
+
     # strings_tree = assembly.info_extractor.info.get_assembly_structure()
-    
+
     # print "STRUCTURE"
     # print strings_tree
 

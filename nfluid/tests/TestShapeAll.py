@@ -83,30 +83,34 @@ elif sys.argv[1] == '3':
        .link(CircleCoupling(L=20)) \
        .link(Cap(L=5))
 
-    print '-----------------------------'
-    el1 = assembly.get_element_by_id(1)
-    el2 = assembly.get_element_by_id(2)
-    el3 = assembly.get_element_by_id(3)
+    # COMMENTED TILL WE KNOW IT WORKS PROPERLY!!!! ----------------------------
 
-    if el1 is not None:
-        print 'Name: ', el1.get_name(), 'get_element_by_id 1: ', \
-            el1.print_info()
-    if el2 is not None:
-        print 'Name: ', el2.get_name(), 'get_element_by_id 2: ', \
-            el2.print_info()
-    if el3 is not None:
-        print 'Name: ', el3.get_name(), 'get_element_by_id 3: ', \
-            el3.print_info()
+    # print '-----------------------------'
+    # el1 = assembly.get_element_by_id(1)
+    # el2 = assembly.get_element_by_id(2)
+    # el3 = assembly.get_element_by_id(3)
 
-    print el2.get_chain_str()
+    # if el1 is not None:
+        # print 'Name: ', el1.get_name(), 'get_element_by_id 1: ', \
+            # el1.print_info()
+    # if el2 is not None:
+        # print 'Name: ', el2.get_name(), 'get_element_by_id 2: ', \
+            # el2.print_info()
+    # if el3 is not None:
+        # print 'Name: ', el3.get_name(), 'get_element_by_id 3: ', \
+            # el3.print_info()
 
-    if el1 is not None:
-        assembly.delete_element(el1)
+    # print el2.get_chain_str()
 
-    new_elt = CircleCoupling(L=125)
-    el3.insert_before(new_elt)
+    # if el1 is not None:
+        # assembly.delete_element(el1)
 
-    assembly.insert_element_before(new_elt, el3)
+    # new_elt = CircleCoupling(L=125)
+    # el3.insert_before(new_elt)
+
+    # assembly.insert_element_before(new_elt, el3)
+
+    # -------------------------------------------------------------------------
 
 elif sys.argv[1] == '0':
     for i in range(1, n_tests+1):

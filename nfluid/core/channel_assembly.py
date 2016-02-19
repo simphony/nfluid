@@ -99,10 +99,9 @@ class ChannelAssembly(object):
             element.release_shape()
         Shape.release()
 
-    def export_shapes(self, file_name):
-        # file = open(file_name, 'w')
-        Shape.export(file_name)
-        # file.close()
+    def export_shapes(self, file_name, close=False):
+        # close == True --> we close the stl surface
+        Shape.export(file_name, close)
         return ''
 
     def create_openfoam_project(self, stl=None, template=None):

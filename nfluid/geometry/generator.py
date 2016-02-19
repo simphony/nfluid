@@ -37,6 +37,7 @@ class GeometryGenerator():
 
     def create_cap(self, r, l):
         return Cap(r, l, self.slices, self.stacks)
+        # return Coupling(r, l, self.slices, self.stacks)
 
     def create_tee(self, r):
         return Tee(r, self.slices, self.stacks)

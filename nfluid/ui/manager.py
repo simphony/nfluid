@@ -9,6 +9,7 @@ from nfluid.elements.long_elbow_normals import LongElbowNormals
 from nfluid.elements.short_elbow_normals import ShortElbowNormals
 from nfluid.elements.spheric_coupling import SphericCoupling
 from nfluid.elements.circle_path import CirclePath
+from nfluid.elements.cap import Cap
 from nfluid.shapes.shapes import Shape
 from nfluid.ui.elements.auxiliar import strings
 from nfluid.util.vector import Vector
@@ -143,6 +144,8 @@ class NfluidDataManager(object):
             return strings.tee
         if isinstance(element, CirclePath):
             return strings.circle_path
+        if isinstance(element, Cap):
+            return strings.cap
 
     @classmethod
     def list_of_pieces(cls):
@@ -165,7 +168,12 @@ class NfluidDataManager(object):
     @classmethod
     def export_mesh_stl(self):
         file_name = NfluidDataManager.gui.get_path_save_file(ext='.stl')
-        NfluidDataManager.model.export_shapes(file_name[0])
+        title = 'Close .stl?'
+        msg = 'Do you want to close the exported .stl surface?'
+        close = NfluidDataManager.gui.ask_for(bool,
+                                              title,
+                                              msg)
+        NfluidDataManager.model.export_shapes(file_name[0], close)
 
     @classmethod
     def export_mesh_info_txt(self):

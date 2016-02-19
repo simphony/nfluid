@@ -28,6 +28,7 @@ class ParametersString(object):
         self.spheric_coupling = "spheric_coupling"
         self.circle_path = "circle_path"
         self.tee = "tee"
+        self.cap = "cap"
         self.gate = "Gate"
 
 strings = ParametersString()

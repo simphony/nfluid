@@ -123,7 +123,15 @@ class MainWindow(QtGui.QMainWindow):
             number = QtGui.QInputDialog.getInt(self, param_name, msg)
             return int(number[0])
         if param_type == float:
-            pass
+            return None
+        if param_type == bool:
+            but = QtGui.QMessageBox.question(self, param_name, msg,
+                                              buttons=QtGui.QMessageBox.Yes|QtGui.QMessageBox.No)
+            if but == QtGui.QMessageBox.Yes:
+                print "R E T U R N E D True"
+                return True
+            print "R E T U R N E D False"
+            return False
 
     def get_path_save_file(self, ext):
         res = QtGui.QFileDialog.getSaveFileName(filter=ext)
