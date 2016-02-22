@@ -8,18 +8,18 @@
 
 FoamFile
 {
-    version     2.0;
-    format      ascii;
-    class       dictionary;
-    object      snappyHexMeshDict;
+    version         2.0;
+    format          ascii;
+    class           dictionary;
+    object          snappyHexMeshDict;
 }
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 // Which of the steps to run
 castellatedMesh true;
-snap            false;
-//snap            true;
-addLayers       false;
+snap            true;
+addLayers       true;
 
 
 // Geometry. Definition of all surfaces. All surfaces are of class
@@ -30,18 +30,18 @@ addLayers       false;
 // - to 'snap' the mesh boundary to the surface
 geometry
 {
-    $$$STL_FILE_NAME$$$
+    "$$$STL_FILE_NAME$$$"
     {
         type triSurfaceMesh;
         name $$$TASK_NAME$$$;
     }
 
-//    refinementBox
-//    {
-//        type searchableBox;
-//        min ($$$REFINEMENT_BOX_MIN$$$);
-//        max ($$$REFINEMENT_BOX_MAX$$$);
-//    }
+    refinementBox
+    {
+        type searchableBox;
+        min ($$$REFINEMENT_BOX_MIN$$$);
+        max ($$$REFINEMENT_BOX_MAX$$$);
+    }
 };
 
 
@@ -53,17 +53,17 @@ castellatedMeshControls
     // Refinement parameters
     // ~~~~~~~~~~~~~~~~~~~~~
 
-    // If local number of cells is >= maxLocalCells on any processor
-    // switches from from refinement followed by balancing
-    // (current method) to (weighted) balancing before refinement.
-    maxLocalCells 100000;
+    // While refining maximum number of cells per processor. This is basically
+    // the number of cells that fit on a processor. If you choose this too small
+    // it will do just more refinement iterations to obtain a similar mesh.
+    maxLocalCells 1000000;
 
     // Overall cell limit (approximately). Refinement will stop immediately
     // upon reaching this number so a refinement level might not complete.
     // Note that this is the number of cells before removing the part which
     // is not 'visible' from the keepPoint. The final number of cells might
     // actually be a lot less.
-    maxGlobalCells 7000000;
+    maxGlobalCells 2000000;
 
     // The surface refinement loop might spend lots of iterations refining just a
     // few cells. This setting will cause refinement to stop if <= minimumRefine
@@ -71,17 +71,10 @@ castellatedMeshControls
     // (unless the number of cells to refine is 0)
     minRefinementCells 10;
 
-    // Allow a certain level of imbalance during refining
-    // (since balancing is quite expensive)
-    // Expressed as fraction of perfect balance (= overall number of cells /
-    // nProcs). 0=balance always.
-    maxLoadUnbalance 0.10;
-
-
     // Number of buffer layers between different levels.
     // 1 means normal 2:1 refinement restriction, larger means slower
     // refinement.
-    nCellsBetweenLevels 3;
+    nCellsBetweenLevels 2;
 
 
 
@@ -114,13 +107,12 @@ castellatedMeshControls
         $$$TASK_NAME$$$
         {
             // Surface-wise min and max refinement level
-            level (3 5);
+            level (5 6);
         }
     }
-//initial            level (6 8);
 
     // Resolve sharp angles
-    resolveFeatureAngle 60;
+    resolveFeatureAngle 30;
 
 
     // Region-wise refinement
@@ -141,7 +133,7 @@ castellatedMeshControls
         refinementBox
         {
             mode inside;
-            levels ((1E15 5));
+            levels ((1E15 4));
         }
     }
 
@@ -155,12 +147,6 @@ castellatedMeshControls
     // NOTE: This point should never be on a face, always inside a cell, even
     // after refinement.
     locationInMesh (3 3 0.43);
-
-
-    // Whether any faceZones (as specified in the refinementSurfaces)
-    // are only on the boundary of corresponding cellZones or also allow
-    // free-standing zone faces. Not used if there are no faceZones.
-    allowFreeStandingZoneFaces false;
 }
 
 
@@ -186,70 +172,71 @@ snapControls
 }
 
 
-
 // Settings for the layer addition.
 addLayersControls
 {
-    // Are the thickness parameters below relative to the undistorted
-    // size of the refined cell outside layer (true) or absolute sizes (false).
-    relativeSizes true;
-
     // Per final patch (so not geometry!) the layer information
     layers
     {
-//        "(lowerWall|motorBike).*"
-//        {
-//            nSurfaceLayers 1;
-//        }
+        minZ
+        {
+            nSurfaceLayers 1;
+        }
+        $$$TASK_NAME$$$:001%1
+        {
+            nSurfaceLayers 1;
+        }
     }
 
     // Expansion factor for layer mesh
     expansionRatio 1.0;
 
-    // Wanted thickness of final added cell layer. If multiple layers
-    // is the thickness of the layer furthest away from the wall.
-    // See relativeSizes parameter.
-    finalLayerThickness 0.3;
+    //- Wanted thickness of final added cell layer. If multiple layers
+    //  is the
+    //  thickness of the layer furthest away from the wall.
+    //  Relative to undistorted size of cell outside layer.
+    // finalLayerRatio 0.3; 
+    finalLayerThickness 0.3; 
 
-    // Minimum thickness of cell layer. If for any reason layer
-    // cannot be above minThickness do not add layer.
-    // Relative to undistorted size of cell outside layer.
+    //- Minimum thickness of cell layer. If for any reason layer
+    //  cannot be above minThickness do not add layer.
+    //  Relative to undistorted size of cell outside layer.
     minThickness 0.1;
 
-    // If points get not extruded do nGrow layers of connected faces that are
-    // also not grown. This helps convergence of the layer addition process
-    // close to features.
-    nGrow 0;
+    //- If points get not extruded do nGrow layers of connected faces that are
+    //  also not grown. This helps convergence of the layer addition process
+    //  close to features.
+    nGrow 1;
 
 
     // Advanced settings
 
-    // When not to extrude surface. 0 is flat surface, 90 is when two faces
-    // are perpendicular
-    featureAngle 60;
+    //- When not to extrude surface. 0 is flat surface, 90 is when two faces
+    //  make straight angle.
+    featureAngle 30;
 
-    // Maximum number of snapping relaxation iterations. Should stop
-    // before upon reaching a correct mesh.
+    //- Maximum number of snapping relaxation iterations. Should stop
+    //  before upon reaching a correct mesh.
     nRelaxIter 3;
 
-    // Number of smoothing iterations of surface normals
+    // Number of smoothing iterations of surface normals 
     nSmoothSurfaceNormals 1;
 
-    // Number of smoothing iterations of interior mesh movement direction
+    // Number of smoothing iterations of interior mesh movement direction  
     nSmoothNormals 3;
 
     // Smooth layer thickness over surface patches
-    nSmoothThickness 2;
+    nSmoothThickness 10;
 
-    // Stop layer growth on highly warped cells
+    // Stop layer growth on highly warped cells 
     maxFaceThicknessRatio 0.5;
 
-    // Reduce layer growth where ratio thickness to medial
-    // distance is large
+    // Reduce layer growth where ratio thickness to medial 
+    // distance is large 
     maxThicknessToMedialRatio 0.3;
 
     // Angle used to pick up medial axis points
-    minMedianAxisAngle 90;
+    minMedianAxisAngle 130;
 
     // Create buffer region for new layer terminations
     nBufferCellsNoExtrude 0;
@@ -282,7 +269,6 @@ meshQualityControls
     minFlatness 0.5;
 
     //- Minimum pyramid volume. Is absolute volume of cell pyramid.
-    //  Set to a sensible fraction of the smallest cell volume expected.
     //  Set to very negative number (e.g. -1E30) to disable.
     minVol 1e-13;
     minTetQuality 1e-30;
@@ -298,7 +284,7 @@ meshQualityControls
     //- 1 = hex, <= 0 = folded or flattened illegal cell
     minDeterminant 0.001;
 
-    //- minFaceWeight (0 -> 0.5)
+    //- minFaceWeight (0 -> 0.5) 
     minFaceWeight 0.02;
 
     //- minVolRatio (0 -> 1)
@@ -319,10 +305,17 @@ meshQualityControls
 
 // Advanced
 
+// Flags for optional output
+// 0 : only write final meshes
+// 1 : write intermediate meshes
+// 2 : write volScalarField with cellLevel for postprocessing
+// 4 : write current intersections as .obj files
+debug 0;
+
+
 // Merge tolerance. Is fraction of overall bounding box of initial mesh.
 // Note: the write tolerance needs to be higher than this.
-mergeTolerance 1E-5;
+mergeTolerance 1E-6;
 
 
 // ************************************************************************* //
-

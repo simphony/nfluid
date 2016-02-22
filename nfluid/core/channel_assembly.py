@@ -6,6 +6,7 @@ from nfluid.core.channel_element import ChannelElement
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.shapes.shapes import Shape
 from nfluid.util import snappy_generator
+from nfluid.util import cfmesh_generator
 from nfluid.util.tree import TreeBase, TreeNode
 
 
@@ -104,9 +105,14 @@ class ChannelAssembly(object):
         Shape.export(file_name, close)
         return ''
 
-    def create_openfoam_project(self, stl=None, template=None):
-        self.export_shapes('foam.stl')
+    def create_openfoam_snappy_project(self, stl=None, template=None):
+        self.export_shapes('foam.stl', close=True)
         snappy_generator.generate_snappy_project('foam.stl',
+                                                 template)
+
+    def create_openfoam_cfmesh_project(self, stl=None, template=None):
+        self.export_shapes('foam.stl', close=True)
+        cfmesh_generator.generate_cfmesh_project('foam.stl',
                                                  template)
 
     def extract_simphony_mesh(self):

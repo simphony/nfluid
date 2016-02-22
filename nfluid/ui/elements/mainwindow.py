@@ -34,7 +34,8 @@ class MainWindow(QtGui.QMainWindow):
         self.menu_main = self.menuBar()
         file_menu = self.menu_main.addMenu('&File')
         file_menu.addAction(self.stl_action)
-        file_menu.addAction(self.foam_action)
+        file_menu.addAction(self.foam_snappy_action)
+        file_menu.addAction(self.foam_cfmesh_action)
         file_menu.addAction(self.txt_action)
 
         self.status_bar = None
@@ -69,23 +70,34 @@ class MainWindow(QtGui.QMainWindow):
         self.txt_action = QtGui.QAction(
                             QtGui.QIcon(), "&Export mesh to txt",
                             self,
-                            statusTip="Exports the information of the mesh\
-                            to txt format",
+                            statusTip="Exports the information of the mesh" + \
+                            " to txt format",
                             triggered=self.export_mesh_info_txt)
 
-        self.foam_action = QtGui.QAction(
-                               QtGui.QIcon(),
-                               "&Create OpenFoam project",
-                               self,
-                               statusTip="Creates the OpenFoam\
-                               Project with the default template",
-                               triggered=self.export_mesh_foam)
+        self.foam_snappy_action = QtGui.QAction(
+                                    QtGui.QIcon(),
+                                    "&Create OpenFoam Snappy project",
+                                    self,
+                                    statusTip="Creates the OpenFoam Snappy" + \
+                                    "HexMesh Project with default template",
+                                    triggered=self.export_mesh_foam_snappy)
+
+        self.foam_cfmesh_action = QtGui.QAction(
+                                    QtGui.QIcon(),
+                                    "&Create OpenFoam  cfMesh project",
+                                    self,
+                                    statusTip="Creates the OpenFoam cfMesh" + \
+                                    " (tetMesh) Project with default template",
+                                    triggered=self.export_mesh_foam_cfmesh)
 
     def export_mesh_stl(self):
         NfluidDataManager.export_mesh_stl()
 
-    def export_mesh_foam(self):
-        NfluidDataManager.export_mesh_foam()
+    def export_mesh_foam_snappy(self):
+        NfluidDataManager.export_mesh_foam_snappy()
+
+    def export_mesh_foam_cfmesh(self):
+        NfluidDataManager.export_mesh_foam_cfmesh()
 
     def export_mesh_info_txt(self):
         NfluidDataManager.export_mesh_info_txt()

@@ -26,7 +26,7 @@ print_info Assembly ---------------------------'''
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
         exit()
 
-    # res = assembly.create_shapes()
+    res = assembly.create_shapes()
     if res == '':
         print 'Shapes created'
     else:
@@ -34,7 +34,7 @@ print_info Assembly ---------------------------'''
         print 'Shapes creation error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    # res = assembly.export_shapes('Test1.stl')
+    res = assembly.export_shapes('Test1.stl', close=True)
     if res == '':
         print 'Shapes exported'
     else:

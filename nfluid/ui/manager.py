@@ -181,9 +181,15 @@ class NfluidDataManager(object):
         NfluidDataManager.model.print_info_file(file_name[0])
 
     @classmethod
-    def export_mesh_foam(self):
-        NfluidDataManager.model.create_openfoam_project()
-        msg = "Done."
+    def export_mesh_foam_snappy(self):
+        NfluidDataManager.model.create_openfoam_snappy_project()
+        msg = "Exported as snappy project."
+        NfluidDataManager.gui.message(msg)
+
+    @classmethod
+    def export_mesh_foam_cfmesh(self):
+        NfluidDataManager.model.create_openfoam_cfmesh_project()
+        msg = "Exported as cfmesh (tetmesh) project."
         NfluidDataManager.gui.message(msg)
 
     @classmethod
