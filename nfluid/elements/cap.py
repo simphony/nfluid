@@ -4,7 +4,7 @@ from nfluid.shapes.shapes import CreateShape
 from nfluid.util.vector import Vector
 from nfluid.core.channel_element import ChannelElement
 from nfluid.core.gates import GateCircle
-
+import math
 
 # Class of Cap
 
@@ -21,7 +21,9 @@ class Cap(ChannelElement):
 
         self.IsAxialSym = True
 
+        self.Radius = R
         self.length = L
+        self.volume = None
 
         self.heads.append(GateCircle(self))
 
@@ -38,20 +40,34 @@ class Cap(ChannelElement):
         return 'Cap'
 
     def get_r(self):
+        self.Radius = self.get_head_gate().get_r()
         return self.get_head_gate().get_r()
 
     def get_len(self):
-        return 0
+        return self.length
 
     def get_volume(self):
-        return 0
+        print " c  a  p    self.volume"
+        print self.volume
+        return self.volume
+
+    def calculate_volume(self):
+        self.volume = ((math.pi * self.length) / 6.0) * \
+                       ((3 * self.Radius * self.Radius) + \
+                       (self.length * self.length))
 
     def resolve_geometry_child(self):
+        print " c  a  p    resolve_geometry_child"
         if self.get_r() is None:
-            return ''
+            return 'Incorrect Radius'
         if self.get_r() < self.length:
             return 'Incorrect Cup length'
         else:
+            if self.volume is None:
+                try:
+                    self.calculate_volume()
+                except:
+                    pass
             return ''
 
     def print_info(self):

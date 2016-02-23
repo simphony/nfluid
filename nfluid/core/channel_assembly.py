@@ -124,9 +124,10 @@ class ChannelAssembly(object):
     def delete_element(self, element):
 
         if not isinstance(element, ChannelElement2G):
-            raise TypeError('unsupported operand type(s)')
-
-        element.delete()
+            if len(element.tails) != 0:
+                raise TypeError('unsupported operand type(s)')
+        else:
+            element.delete()
 
         try:
             index = self.elements.index(element)

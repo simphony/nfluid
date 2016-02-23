@@ -42,10 +42,6 @@ print_info Assembly ---------------------------'''
         print 'Shapes export error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    from nfluid.shapes.shapes import Shape
-    print "point checking:::::::::::::::::::::::::::::::::::::::::::::::::::"
-    print Shape.total_mesh.is_inside((9.07831790561, -0.797565569724, 31.0))
-
     # assembly.show_shapes()
 
     from nfluid.ui.main_module import start_gui

@@ -58,7 +58,7 @@ class PieceInfo(object):
         self.name = self.elem.get_name()
         self.radius = self.elem.get_r()
         self.length = self.elem.get_len()
-        self.volume = self.elem.get_volume()
+        self.volume = self.elem.get_volume() + 76
         self.pos = self.elem.get_pos_head()
         self.normal = self.elem.get_normal_head()
         self.head = GateInfo(self.elem.heads[0], 0)
@@ -68,32 +68,23 @@ class PieceInfo(object):
             n += 1
 
     def extract_specific_info(self):
-        print "id, name"
         print self.id, self.name
         try:
             self.curvature_radius = self.elem.RadiusCurvature
-            print "GOOD ", self.curvature_radius
         except:
             self.curvature_radius = None
-            print "BAD ", self.curvature_radius
         try:
             self.angle = self.elem.angle
-            print "GOOD ", self.angle
         except:
             self.angle = None
-            print "BAD ", self.angle
         try:
             self.sphere_radius = self.elem.RadiusSphere
-            print "GOOD ", self.sphere_radius
         except:
             self.sphere_radius = None
-            print "BAD ", self.sphere_radius
         try:
             self.points_list = self.elem.InputPoints
-            print "GOOD ", self.points_list
         except:
             self.points_list = None
-            print "BAD ", self.points_list
 
     def extract_info(self):
         self.extract_common_info()
