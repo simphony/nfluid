@@ -91,19 +91,19 @@ elif sys.argv[1] == '3':
     # el3 = assembly.get_element_by_id(3)
 
     # if el1 is not None:
-        # print 'Name: ', el1.get_name(), 'get_element_by_id 1: ', \
-            # el1.print_info()
+    #    print 'Name: ', el1.get_name(), 'get_element_by_id 1: ', \
+    #        el1.print_info()
     # if el2 is not None:
-        # print 'Name: ', el2.get_name(), 'get_element_by_id 2: ', \
-            # el2.print_info()
+    #    print 'Name: ', el2.get_name(), 'get_element_by_id 2: ', \
+    #        el2.print_info()
     # if el3 is not None:
-        # print 'Name: ', el3.get_name(), 'get_element_by_id 3: ', \
-            # el3.print_info()
+    #    print 'Name: ', el3.get_name(), 'get_element_by_id 3: ', \
+    #        el3.print_info()
 
     # print el2.get_chain_str()
 
     # if el1 is not None:
-        # assembly.delete_element(el1)
+    #    assembly.delete_element(el1)
 
     # new_elt = CircleCoupling(L=125)
     # el3.insert_before(new_elt)

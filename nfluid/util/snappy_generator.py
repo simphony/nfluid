@@ -72,8 +72,8 @@ def generate_snappy_project(file_path, template_name=None,
     path = None
     if template_name is None:
         path = os.path.dirname(stl.__file__)
-        template_name = os.path.join(path,
-                                     'foam_files\\snappy_templates\\SnappyTemplate.txt')
+        default_template = 'foam_files\\snappy_templates\\SnappyTemplate.txt'
+        template_name = os.path.join(path, default_template)
 
     base_name = ntpath.basename(file_path)
     case_name, file_ext = os.path.splitext(base_name)

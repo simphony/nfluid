@@ -171,12 +171,10 @@ class Plane():
         x0 = self.point[0]
         y0 = self.point[1]
         z0 = self.point[2]
-        # print "a_line", a_line, "b_line", b_line, "self.normal", self.normal, "self.point", self.point
-        
+
         t = ((a*x0 + b*y0 + c*z0 - a*a0 - b*a1 - c*a2) /
              ((a*b0 - a*a0 + b*b1 - b*a1 + c*b2 - c*a2))+0.0001)
-        # print "t"
-        # print t
+
         return line.get_point(t, b_line)
 
 

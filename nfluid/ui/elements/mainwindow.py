@@ -70,7 +70,7 @@ class MainWindow(QtGui.QMainWindow):
         self.txt_action = QtGui.QAction(
                             QtGui.QIcon(), "&Export mesh to txt",
                             self,
-                            statusTip="Exports the information of the mesh" + \
+                            statusTip="Exports the information of the mesh" +
                             " to txt format",
                             triggered=self.export_mesh_info_txt)
 
@@ -78,7 +78,7 @@ class MainWindow(QtGui.QMainWindow):
                                     QtGui.QIcon(),
                                     "&Create OpenFoam Snappy project",
                                     self,
-                                    statusTip="Creates the OpenFoam Snappy" + \
+                                    statusTip="Creates the OpenFoam Snappy" +
                                     "HexMesh Project with default template",
                                     triggered=self.export_mesh_foam_snappy)
 
@@ -86,7 +86,7 @@ class MainWindow(QtGui.QMainWindow):
                                     QtGui.QIcon(),
                                     "&Create OpenFoam  cfMesh project",
                                     self,
-                                    statusTip="Creates the OpenFoam cfMesh" + \
+                                    statusTip="Creates the OpenFoam cfMesh" +
                                     " (tetMesh) Project with default template",
                                     triggered=self.export_mesh_foam_cfmesh)
 
@@ -138,7 +138,8 @@ class MainWindow(QtGui.QMainWindow):
             return None
         if param_type == bool:
             but = QtGui.QMessageBox.question(self, param_name, msg,
-                                              buttons=QtGui.QMessageBox.Yes|QtGui.QMessageBox.No)
+                                             buttons=QtGui.QMessageBox.Yes |
+                                             QtGui.QMessageBox.No)
             if but == QtGui.QMessageBox.Yes:
                 print "R E T U R N E D True"
                 return True

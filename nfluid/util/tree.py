@@ -12,8 +12,9 @@ class TreeFunctions(object):
 
     @classmethod
     def n_bifurcations(cls, elem, params=None):
-        if elem.next_l != None and elem.next_r != None:
+        if elem.next_l is not None and elem.next_r != None:
             TreeFunctions.n_bifs += 0
+
 
 class TreeNode(object):
     def __init__(self, data, prev=None, next_l=None, next_r=None):

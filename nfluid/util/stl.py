@@ -11,9 +11,9 @@ class STL_Info():
         self.maxy = 0.0
         self.minz = 0.0
         self.maxz = 0.0
-        self.inside_point = (0,0,0)
-        self.outside_point = (0,0,0)
-        self.onface_point = (0,0,0)
+        self.inside_point = (0, 0, 0)
+        self.outside_point = (0, 0, 0)
+        self.onface_point = (0, 0, 0)
         self.output = open('{}_box.txt'.format(file_name), "w")
         self.surrounding_box()
         self._write_output()
@@ -74,7 +74,7 @@ class STL_Info():
         self._check_limits(v2)
 
         normal = normal_of(v0, v1, v2)
-        center = center_of([v0,v1,v2])
+        center = center_of([v0, v1, v2])
         t = 1.00
         self.inside_point = (center[0] - (normal[0]*t),
                              center[1] - (normal[1]*t),

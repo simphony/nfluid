@@ -5,8 +5,8 @@ from nfluid.util.vector import Vector
 from nfluid.core.channel_element import ChannelElement
 from nfluid.core.gates import GateCircle
 import math
-
 # Class of Cap
+
 
 class Cap(ChannelElement):
 
@@ -53,8 +53,8 @@ class Cap(ChannelElement):
 
     def calculate_volume(self):
         self.volume = ((math.pi * self.length) / 6.0) * \
-                       ((3 * self.Radius * self.Radius) + \
-                       (self.length * self.length))
+                       ((3 * self.Radius * self.Radius) +
+                        (self.length * self.length))
 
     def resolve_geometry_child(self):
         print " c  a  p    resolve_geometry_child"

@@ -2,11 +2,13 @@ import sys
 import os
 import ntpath
 import shutil
+import nfluid.util.stl as stl
 
 
 def make_dir(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
+
 
 def generate_cfmesh_project(file_path, template_name=None):
 
@@ -28,12 +30,11 @@ def generate_cfmesh_project(file_path, template_name=None):
                  case_name + '.stl')
 
     shutil.copy2(path + '\\foam_files\\common_files\\controlDict',
-                     'CFMESH_PROJECT\\system\\')
+                 'CFMESH_PROJECT\\system\\')
     shutil.copy2(path + '\\foam_files\\common_files\\fvSchemes',
-                     'CFMESH_PROJECT\\system\\')
+                 'CFMESH_PROJECT\\system\\')
     shutil.copy2(path + '\\foam_files\\common_files\\fvSolution',
-                     'CFMESH_PROJECT\\system\\')
-
+                 'CFMESH_PROJECT\\system\\')
 
     search_words = [
         '$$$STL_FILE_NAME$$$'
@@ -71,6 +72,5 @@ if __name__ == '__main__':
         template_name = sys.argv[2]
     else:
         template_name = 'foam_files/cfmesh_templates/cfmeshTemplate.txt'
-
 
     generate_cfmesh_project(file_path, template_name)

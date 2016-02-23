@@ -633,13 +633,14 @@ class CylindricalPart(GeometricMesh):
         else:
             cur_face = self.connection_face(face)
             cur_index = face
-        new_indexes = {}
 
-        print "cur_face", cur_face
+        # print "cur_face", cur_face
         # calculate intersection of the connection face vertices
         # with plane of the circle, so we obtain the optimal connection
         vertex_coords = [self.vertex(index_) for index_ in cur_face]
-        point_normal = normal_of(vertex_coords[0], vertex_coords[1], vertex_coords[2])
+        point_normal = normal_of(vertex_coords[0],
+                                 vertex_coords[1],
+                                 vertex_coords[2])
 
         index = res.add_vertex(point)
         res.add_normal(index, point_normal)
@@ -653,7 +654,7 @@ class CylindricalPart(GeometricMesh):
         res.connection_faces = dict(self.connection_faces)
         del res.connection_faces[cur_index]
         res.face_count = self.face_count - 1
-        return res      
+        return res
 
     def _connect_to_circle3d(self, circle, face=None):
         res = CylindricalPart()

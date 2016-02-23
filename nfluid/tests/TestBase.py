@@ -42,7 +42,7 @@ print_info Assembly ---------------------------'''
         print 'Shapes export error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    # assembly.show_shapes()
+    assembly.show_shapes()
 
     from nfluid.ui.main_module import start_gui
     start_gui()
@@ -68,10 +68,10 @@ print_info Assembly ---------------------------'''
     # # print cube.vertices
     # inside = []
     # for v in cube.vertices.itervalues():
-        # inside_r = mesh.is_inside(v)
-        # # print inside_r
-        # if inside_r is True:
-        #     inside.append(v)
+    #    inside_r = mesh.is_inside(v)
+    #    # print inside_r
+    #    if inside_r is True:
+    #        inside.append(v)
 
     # filename = 'inside_shapeall.xyz'
     # file_out = open(filename, 'w')
@@ -81,7 +81,7 @@ print_info Assembly ---------------------------'''
     # file_out.write('---------------\n')
     # spec = 'O'
     # for v in inside:
-        # file_out.write('{0} {1} {2} {3}\n'.format(spec, v[0], v[1], v[2]))
+    #    file_out.write('{0} {1} {2} {3}\n'.format(spec, v[0], v[1], v[2]))
 
     # file_out.close()
 
@@ -96,15 +96,15 @@ print_info Assembly ---------------------------'''
     # print "level ", 3, ":"
     # level = tree.get_level(3)
     # for elem in level:
-        # print elem.data
+    #    print elem.data
 
     # print "AMPLITUDE"
     # for elem in amplitude:
-        # print elem.data
+    #    print elem.data
 
     # print "DEPTH"
     # for elem in depth:
-        # print elem.data
+    #    print elem.data
 
     # strings_tree = assembly.info_extractor.info.get_assembly_structure()
 
@@ -122,4 +122,4 @@ print_info Assembly ---------------------------'''
     # print "STRUCTURE"
     # print strings_tree
 
-    # assembly.release_shapes()
+    assembly.release_shapes()
