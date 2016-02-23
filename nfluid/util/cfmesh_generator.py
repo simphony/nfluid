@@ -2,7 +2,6 @@ import sys
 import os
 import ntpath
 import shutil
-import nfluid.util.stl as stl
 
 
 def make_dir(directory):

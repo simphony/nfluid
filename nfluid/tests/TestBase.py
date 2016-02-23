@@ -42,9 +42,14 @@ print_info Assembly ---------------------------'''
         print 'Shapes export error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
+    from nfluid.shapes.shapes import Shape
+    print "point checking:::::::::::::::::::::::::::::::::::::::::::::::::::"
+    print Shape.total_mesh.is_inside((9.07831790561, -0.797565569724, 31.0))
+
     # assembly.show_shapes()
 
-    # start_gui()
+    from nfluid.ui.main_module import start_gui
+    start_gui()
 
     # Testing is_inside algorithm:
 
@@ -84,35 +89,37 @@ print_info Assembly ---------------------------'''
 
     # file_out.close()
 
-    tree = assembly.get_tree_structure()
-    print tree
-    amplitude = tree.walk_amplitude()
-    depth = tree.walk_depth()
-    d = tree.depth()
-    print "depth", d
+    # -----------
+    # tree = assembly.get_tree_structure()
+    # print tree
+    # amplitude = tree.walk_amplitude()
+    # depth = tree.walk_depth()
+    # d = tree.depth()
+    # print "depth", d
 
-    print "level ", 3, ":"
-    level = tree.get_level(3)
-    for elem in level:
-        print elem.data
+    # print "level ", 3, ":"
+    # level = tree.get_level(3)
+    # for elem in level:
+        # print elem.data
 
-    print "AMPLITUDE"
-    for elem in amplitude:
-        print elem.data
+    # print "AMPLITUDE"
+    # for elem in amplitude:
+        # print elem.data
 
-    print "DEPTH"
-    for elem in depth:
-        print elem.data
+    # print "DEPTH"
+    # for elem in depth:
+        # print elem.data
 
-    strings_tree = assembly.info_extractor.info.get_assembly_structure()
+    # strings_tree = assembly.info_extractor.info.get_assembly_structure()
 
-    print "STRUCTURE"
-    print strings_tree
+    # print "STRUCTURE"
+    # print strings_tree
 
-    from nfluid.ui.main_module import start_gui
-    start_gui()
+    # from nfluid.ui.main_module import start_gui
+    # start_gui()
 
-    assembly.print_info_file('Assembly_info_after.txt')
+    # assembly.print_info_file('Assembly_info_after.txt')
+    # ------------
 
     # strings_tree = assembly.info_extractor.info.get_assembly_structure()
 

@@ -99,6 +99,7 @@ def generate_snappy_project(file_path, template_name=None,
     stlinfo = stl.STL_Info(file_path)
     minv = (stlinfo.minx, stlinfo.miny, stlinfo.minz)
     maxv = (stlinfo.maxx, stlinfo.maxy, stlinfo.maxz)
+    in_p = stlinfo.inside_point
 
     fb = open('SNAPPY_PROJECT\\constant\\polyMesh\\blockMeshDict', 'w')
     CreateBlockMeshDict(fb, minv, maxv, ncells_x, ncells_y, ncells_z)
@@ -107,7 +108,8 @@ def generate_snappy_project(file_path, template_name=None,
         '$$$STL_FILE_NAME$$$',
         '$$$TASK_NAME$$$',
         '$$$REFINEMENT_BOX_MIN$$$',
-        '$$$REFINEMENT_BOX_MAX$$$']
+        '$$$REFINEMENT_BOX_MAX$$$',
+        '$$$LOCATION_IN_MESH$$$']
 
     replacement = len(search_words) * [None]
 
@@ -115,6 +117,7 @@ def generate_snappy_project(file_path, template_name=None,
     replacement[1] = case_name
     replacement[2] = str(minv[0]) + ' ' + str(minv[1]) + ' ' + str(minv[2])
     replacement[3] = str(maxv[0]) + ' ' + str(maxv[1]) + ' ' + str(maxv[2])
+    replacement[4] = str(in_p[0]) + ' ' + str(in_p[1]) + ' ' + str(in_p[2])
 
     # ft = open('TEMPLATES/' + template_name, 'r')
     ft = open(template_name, 'r')
