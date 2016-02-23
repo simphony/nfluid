@@ -3,6 +3,18 @@
 import copy
 
 
+class TreeFunctions(object):
+    n_bifs = 0
+
+    @classmethod
+    def reset(cls):
+        TreeFunctions.n_bifs = 0
+
+    @classmethod
+    def n_bifurcations(cls, elem, params=None):
+        if elem.next_l != None and elem.next_r != None:
+            TreeFunctions.n_bifs += 0
+
 class TreeNode(object):
     def __init__(self, data, prev=None, next_l=None, next_r=None):
         self.prev = prev
@@ -123,7 +135,10 @@ class TreeBase(object):
         res = []
         depth = self.depth()
         # mid = pow(2, depth)
-        mid = depth * name_space
+        TreeFunctions.reset()
+        self.walk_amplitude(func=TreeFunctions.n_bifurcations)
+        n_bifurcations = TreeFunctions.n_bifs
+        mid = (n_bifurcations + 1) * name_space
         self._strings_structure(self.root, 0, mid, mid, depth, res)
         return res
 
@@ -149,7 +164,7 @@ class TreeBase(object):
                                         total, depth, res)
 
     def tree_as_str(self):
-        name_len = 8
+        name_len = 16
         strings = self.strings_structure(name_len)
         cur_level = 0
         res = ''
