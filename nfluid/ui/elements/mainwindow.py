@@ -1,6 +1,7 @@
 from PySide import QtCore, QtGui
 from nfluid.ui.elements.creationpieceswidget import CreationPiecesWidget
 from nfluid.ui.elements.listpieceswidget import ListPiecesWidget
+from nfluid.ui.elements.schemapieceswidget import SchemaPiecesWidget
 from nfluid.ui.elements.visualizer import VisVisWidget
 from nfluid.ui.manager import NfluidDataManager
 from nfluid.util.vector import Vector
@@ -29,6 +30,13 @@ class MainWindow(QtGui.QMainWindow):
         title = QtGui.QLabel(cur_widget.name())
         self.dw_pieces_list.setTitleBarWidget(title)
 
+        self.dw_pieces_schema = QtGui.QDockWidget()
+        cur_widget = SchemaPiecesWidget(self)
+        self.dw_pieces_schema.setWidget(cur_widget)
+        self.dw_pieces_schema.setFeatures(QtGui.QDockWidget.NoDockWidgetFeatures)
+        title = QtGui.QLabel(cur_widget.name())
+        self.dw_pieces_schema.setTitleBarWidget(title)
+
         self.cw_visualizer = VisVisWidget()
 
         self.menu_main = self.menuBar()
@@ -55,9 +63,15 @@ class MainWindow(QtGui.QMainWindow):
         self.dw_pieces_list.setMinimumWidth(self.min_w)
         self.dw_pieces_list.setMinimumHeight(self.min_h)
 
+        self.dw_pieces_schema.setMaximumWidth(self.max_w)
+        self.dw_pieces_schema.setMaximumHeight(self.max_h)
+        self.dw_pieces_schema.setMinimumWidth(self.min_w)
+        self.dw_pieces_schema.setMinimumHeight(self.min_h)        
+
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea,
                            self.dw_pieces_creation)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
+        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
         self.setCentralWidget(self.cw_visualizer.widget())
 
     def create_actions(self):
@@ -111,6 +125,9 @@ class MainWindow(QtGui.QMainWindow):
 
     def refresh_list_pieces(self):
         self.dw_pieces_list.widget().refresh_gui()
+
+    def refresh_schemea_pieces(self):
+        self.dw_pieces_schema.widget().refresh_gui()
 
     def refresh_all(self):
         self.refresh_list_pieces()
