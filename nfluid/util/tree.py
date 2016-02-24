@@ -13,7 +13,7 @@ class TreeFunctions(object):
     @classmethod
     def n_bifurcations(cls, elem, params=None):
         if elem.next_l is not None and elem.next_r is not None:
-            TreeFunctions.n_bifs += 0
+            TreeFunctions.n_bifs += 1
 
 
 class TreeNode(object):
@@ -48,8 +48,10 @@ class TreeBase(object):
             return d_r
 
     def amplitude(self):
+        print "amplitude -------"
         TreeFunctions.reset()
         self.walk_amplitude(func=TreeFunctions.n_bifurcations)
+        print TreeFunctions.n_bifs
         return TreeFunctions.n_bifs
 
     def n_leafs(self):

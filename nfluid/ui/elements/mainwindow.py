@@ -71,7 +71,7 @@ class MainWindow(QtGui.QMainWindow):
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea,
                            self.dw_pieces_creation)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
-        # self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
+        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
         self.setCentralWidget(self.cw_visualizer.widget())
 
     def create_actions(self):

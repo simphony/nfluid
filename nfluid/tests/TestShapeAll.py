@@ -35,6 +35,7 @@ if sys.argv[1] == '1':
 
     tee2 = CircleTee(NormalT0=Vector(0, 0, 1))
     tee3 = CircleTee(NormalT0=Vector(0, 0, 1))
+
     tee.link(tee2, 0)
     tee.link(tee3, 1)
 
