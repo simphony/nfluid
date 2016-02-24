@@ -13,6 +13,7 @@ from nfluid.elements.cap import Cap
 from nfluid.shapes.shapes import Shape
 from nfluid.ui.elements.auxiliar import strings
 from nfluid.util.vector import Vector
+from nfluid.util.tree import TreeFunctions
 import copy
 
 
@@ -35,6 +36,15 @@ class Piece(object):
     def __str__(self):
         return self.name()
 
+
+class TreeFunctionsManager(TreeFunctions):
+    @classmethod
+    def reset(cls):
+        TreeFunctions.reset()
+
+    @classmethod
+    def convert_data(cls, elem, params=None):
+        elem.data = Piece(elem.data.get_name(), elem.data.get_id())
 
 class NfluidDataManager(object):
     model = None
@@ -164,6 +174,14 @@ class NfluidDataManager(object):
             return None
         NfluidDataManager.model.create_shapes()
         return Shape.total_mesh
+
+    @classmethod
+    def get_assembly_tree(self):
+        if not NfluidDataManager.exists():
+            return None
+        tree = NfluidDataManager.model.get_tree_structure()
+        tree.walk_amplitude(func=TreeFunctionsManager.convert_data)
+        return tree
 
     @classmethod
     def export_mesh_stl(self):

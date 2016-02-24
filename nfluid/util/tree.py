@@ -47,8 +47,10 @@ class TreeBase(object):
         else:
             return d_r
 
-    def amplitude(sefl):
-        pass
+    def amplitude(self):
+        TreeFunctions.reset()
+        self.walk_amplitude(func=TreeFunctions.n_bifurcations)
+        return TreeFunctions.n_bifs
 
     def n_leafs(self):
         d = self.depth()
@@ -135,10 +137,7 @@ class TreeBase(object):
     def strings_structure(self, name_space):
         res = []
         depth = self.depth()
-        # mid = pow(2, depth)
-        TreeFunctions.reset()
-        self.walk_amplitude(func=TreeFunctions.n_bifurcations)
-        n_bifurcations = TreeFunctions.n_bifs
+        n_bifurcations = self.amplitude()
         mid = (n_bifurcations + 1) * name_space
         self._strings_structure(self.root, 0, mid, mid, depth, res)
         return res

@@ -71,7 +71,7 @@ class MainWindow(QtGui.QMainWindow):
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea,
                            self.dw_pieces_creation)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
-        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
+        # self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
         self.setCentralWidget(self.cw_visualizer.widget())
 
     def create_actions(self):
@@ -126,12 +126,13 @@ class MainWindow(QtGui.QMainWindow):
     def refresh_list_pieces(self):
         self.dw_pieces_list.widget().refresh_gui()
 
-    def refresh_schemea_pieces(self):
+    def refresh_schema_pieces(self):
         self.dw_pieces_schema.widget().refresh_gui()
 
     def refresh_all(self):
         self.refresh_list_pieces()
         self.refresh_visualizer()
+        self.refresh_schema_pieces()
 
     def message(self, msg=''):
         msgBox = QtGui.QMessageBox()
