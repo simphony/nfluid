@@ -98,6 +98,7 @@ class NfluidDataManager(object):
             if current_piece.id == -1:
                 msg = "No piece selected to link to!"
                 NfluidDataManager.gui.message(msg)
+                return -1
             else:
                 selected_piece = NfluidDataManager.get_piece(current_piece)
                 print "selected_piece..aaaaaaaaaaaaaaaaa"
@@ -117,6 +118,7 @@ class NfluidDataManager(object):
                     selected_piece.link(new_piece)
                 NfluidDataManager.model.clear_geometry()
                 NfluidDataManager.model.resolve_geometry()
+                return 0
 
     @classmethod
     def remove_piece(cls, piece):
