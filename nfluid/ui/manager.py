@@ -180,7 +180,8 @@ class NfluidDataManager(object):
         if not NfluidDataManager.exists():
             return None
         tree = NfluidDataManager.model.get_tree_structure()
-        tree.walk_amplitude(func=TreeFunctionsManager.convert_data)
+        if tree is not None:
+            tree.walk_amplitude(func=TreeFunctionsManager.convert_data)
         return tree
 
     @classmethod
@@ -268,8 +269,7 @@ class NfluidDataManager(object):
                                    RS=piece.params[strings.sphere_radius],
                                    PosH=piece.params[strings.head_position],
                                    PosT=piece.params[strings.tail_position],
-                                   NormalH=piece.params[strings.head_normal],
-                                   NormalT=piece.params[strings.tail_normal])
+                                   Normal=piece.params[strings.tail_normal])
         if piece.type == strings.tee:
             return CircleTee(R=piece.params[strings.head_radius],
                              PosH=piece.params[strings.head_position],
@@ -278,6 +278,11 @@ class NfluidDataManager(object):
                              NormalH=piece.params[strings.head_normal],
                              NormalT0=piece.params[strings.tail_normal0],
                              NormalT1=piece.params[strings.tail_normal1])
+        if piece.type == strings.cap:
+            return Cap(L=piece.params[strings.length],
+                       R=piece.params[strings.head_radius],
+                       PosH=piece.params[strings.head_position],
+                       NormalH=piece.params[strings.head_normal])
         # if piece.type == string.circle_path:
         #     return CirclePath(Points=piece.params[strings.points],
         #                       R=piece.params[strings.head_radius],

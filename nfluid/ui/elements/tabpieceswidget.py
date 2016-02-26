@@ -35,12 +35,14 @@ _pieces = [(strings.coupling,
             ),
            (strings.spheric_coupling,
             [(strings.head_radius, 0),
-             (strings.sphere_radius, 0),
-             (strings.tail_normal, (0, 0, 0))]
+             (strings.sphere_radius, 0)]
             ),
            (strings.tee,
             [(strings.head_radius, 0),
              (strings.tail_normal0, (0, 0, 0))]
+            ),
+           (strings.cap,
+            [(strings.length, 0)]
             )
            #    ,
            #  (strings.circle_path,

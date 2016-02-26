@@ -12,7 +12,7 @@ from nfluid.util.tree import TreeBase, TreeNode
 
 class ChannelAssembly(object):
 
-    def __init__(self, gates_sides=10, elements_divisions=5):
+    def __init__(self, gates_sides=20, elements_divisions=10):
         self.elements = []
         ChannelElement.assembly = self
         ChannelElement.slices = gates_sides

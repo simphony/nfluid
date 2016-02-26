@@ -61,7 +61,7 @@ class SchemaPiecesWidget(QtGui.QWidget):
         self.name_space = 100
         self.level_space = 20
         self.floor_space = 20
-        self.connection_space = 20
+        self.connection_space = 10
 
     def name(self):
         return self._name
@@ -124,39 +124,71 @@ class SchemaPiecesWidget(QtGui.QWidget):
         t_y = y_to
         self.schema_scene.addLine(f_x, f_y, t_x, t_y)
 
-    def draw_elements(self, elem, x, y, width, cur_amp):
+    def draw_elements(self, elem, x, y, width, cur_level):
         if elem is not None:
             self.add_element(elem.data.name(), x, y)
             if elem.next_l is not None:
                 if elem.next_r is not None:
                     # new_x = x - (width * ((self.name_space / 2) + self.floor_space))
-                    cur_width = width / cur_amp
-                    new_x = x - cur_width
-                    new_amp = cur_amp + 1
+                    # cur_width = (self.name_space + self.floor_space) * (cur_level)
+                    cur_width = width / 2
+                    new_x = x - (cur_width)
                     # new_x = x - (x / 2)
                 else:
                     new_x = x
                     cur_width = width
-                    new_amp = cur_amp
                 new_y = y + (self.level_space + self.connection_space) 
                 self.add_connection(x, y, new_x, new_y)
                 self.draw_elements(elem.next_l, new_x, new_y, cur_width,
-                                   new_amp)
+                                   cur_level - 1)
             if elem.next_r is not None:
                 if elem.next_l is not None:
                     # new_x = x + (width * ((self.name_space / 2) + self.floor_space))
-                    cur_width = width / cur_amp
-                    new_x = x + cur_width
-                    new_amp = cur_amp + 1
+                    # cur_width = (self.name_space + self.floor_space) * (cur_level / 2)
+                    cur_width = width / 2
+                    new_x = x + (cur_width)
                     # new_x = x + (x / 2)
                 else:
                     new_x = x
                     cur_width = width
-                    new_amp = cur_amp
                 new_y = y + (self.level_space + self.connection_space) 
                 self.add_connection(x, y, new_x, new_y)
                 self.draw_elements(elem.next_r, new_x, new_y, cur_width,
-                                   new_amp)
+                                   cur_level - 1)
+
+    # def draw_elements(self, elem, x, y, width, cur_amp):
+        # if elem is not None:
+            # self.add_element(elem.data.name(), x, y)
+            # if elem.next_l is not None:
+                # if elem.next_r is not None:
+                    # # new_x = x - (width * ((self.name_space / 2) + self.floor_space))
+                    # cur_width = width / cur_amp
+                    # new_x = x - cur_width
+                    # new_amp = cur_amp + 1
+                    # # new_x = x - (x / 2)
+                # else:
+                    # new_x = x
+                    # cur_width = width
+                    # new_amp = cur_amp
+                # new_y = y + (self.level_space + self.connection_space) 
+                # self.add_connection(x, y, new_x, new_y)
+                # self.draw_elements(elem.next_l, new_x, new_y, cur_width,
+                                   # new_amp)
+            # if elem.next_r is not None:
+                # if elem.next_l is not None:
+                    # # new_x = x + (width * ((self.name_space / 2) + self.floor_space))
+                    # cur_width = width / cur_amp
+                    # new_x = x + cur_width
+                    # new_amp = cur_amp + 1
+                    # # new_x = x + (x / 2)
+                # else:
+                    # new_x = x
+                    # cur_width = width
+                    # new_amp = cur_amp
+                # new_y = y + (self.level_space + self.connection_space) 
+                # self.add_connection(x, y, new_x, new_y)
+                # self.draw_elements(elem.next_r, new_x, new_y, cur_width,
+                                   # new_amp)
 
     def refresh_gui(self):
         tree = NfluidDataManager.get_assembly_tree()
@@ -164,7 +196,8 @@ class SchemaPiecesWidget(QtGui.QWidget):
             init = tree.get_root()
             width = tree.amplitude() + 1
             height = tree.depth() + 1
-            total_width = (width) * (self.name_space + self.floor_space + self.pen_width)
+            # total_width = ((width - 1) * 2) * (self.name_space + self.floor_space + self.pen_width)
+            total_width = ((width - 1) * 2) * (self.name_space + self.floor_space + self.pen_width)
             total_height = (height) * (self.level_space + self.connection_space + self.pen_width)
             self.schema_view.setSceneRect(0, 0, total_width, total_height)
             self.schema_scene.clear()
@@ -173,7 +206,7 @@ class SchemaPiecesWidget(QtGui.QWidget):
             init_x = total_width / 2
             init_x -= (self.name_space) / 2
             init_y = 10
-            self.draw_elements(init, init_x, init_y, total_width/4, 1)
+            self.draw_elements(init, init_x, init_y, total_width / 2, height - 1)
             # self.add_element(init.data.name(), init_x, init_y)
             
             
