@@ -38,7 +38,7 @@ class MainWindow(QtGui.QMainWindow):
         title = QtGui.QLabel(cur_widget.name())
         self.dw_pieces_schema.setTitleBarWidget(title)
 
-        self.cw_visualizer = VisVisWidget()
+        self.cw_visualizer = VisVisWidget(self)
 
         self.menu_main = self.menuBar()
         file_menu = self.menu_main.addMenu('&File')
@@ -107,6 +107,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def export_mesh_stl(self):
         NfluidDataManager.export_mesh_stl()
+        self.refresh_visualizer()
 
     def export_mesh_foam_snappy(self):
         NfluidDataManager.export_mesh_foam_snappy()
@@ -154,7 +155,8 @@ class MainWindow(QtGui.QMainWindow):
             number = QtGui.QInputDialog.getInt(self, param_name, msg)
             return int(number[0])
         if param_type == float:
-            return None
+            number = QtGui.QInputDialog.getDouble(self, param_name, msg)
+            return float(number[0])
         if param_type == bool:
             but = QtGui.QMessageBox.question(self, param_name, msg,
                                              buttons=QtGui.QMessageBox.Yes |

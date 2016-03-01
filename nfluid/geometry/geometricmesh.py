@@ -117,7 +117,9 @@ class GeometricMesh(object):
         return res
 
     def export(self, filename):
-        vv.meshWrite(filename, self.to_visvis_mesh(), bin=False)
+        vv_mesh = self.to_visvis_mesh()
+        vv.meshWrite(filename, vv_mesh, bin=False)
+        vv_mesh = None
 
     def n_vertices(self):
         return len(self.vertices)

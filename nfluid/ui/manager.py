@@ -15,6 +15,7 @@ from nfluid.ui.elements.auxiliar import strings
 from nfluid.util.vector import Vector
 from nfluid.util.tree import TreeFunctions
 import copy
+import visvis as vv
 
 
 class Piece(object):
@@ -75,11 +76,17 @@ class NfluidDataManager(object):
                                                 msg)
             piece.params[strings.head_position] = pos
             msg = "As is the first piece of the assembly, you must define\
-                   its initial normal head."
+                   its initial head normal."
             normal = NfluidDataManager.gui.ask_for(Vector,
                                                    strings.head_normal,
                                                    msg)
             piece.params[strings.head_normal] = normal
+            msg = "As is the first piece of the assembly, you must define\
+                   its initial head radius."
+            radius = NfluidDataManager.gui.ask_for(float,
+                                                   strings.head_radius,
+                                                   msg)
+            piece.params[strings.head_radius] = radius
             if piece.params[strings.tail_normal] is None:
                 if piece.params[strings.tail_normal0] is None:
                     # We copy the same normal, since if its not defined
@@ -197,6 +204,7 @@ class NfluidDataManager(object):
                                               title,
                                               msg)
         NfluidDataManager.model.export_shapes(file_name[0], close)
+        vv.closeAll()
 
     @classmethod
     def export_mesh_info_txt(self):
@@ -287,8 +295,8 @@ class NfluidDataManager(object):
                        R=piece.params[strings.head_radius],
                        PosH=piece.params[strings.head_position],
                        NormalH=piece.params[strings.head_normal])
-        if piece.type == string.circle_path:
-            return CirclePath(Points=piece.params[strings.points],
+        if piece.type == strings.circle_path:
+            return CirclePath(Points=piece.params[strings.points_list],
                               R=piece.params[strings.head_radius],
                               PosH=piece.params[strings.head_position],
                               PosT=piece.params[strings.tail_position],

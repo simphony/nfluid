@@ -102,36 +102,57 @@ class WidgetParameterList(QtGui.QWidget):
     def __init__(self, name, value):
         super(WidgetParameterList, self).__init__()
         self._name = name
-        self._value = [] #... value
+        self._value = []
         self.create_actions()
         self.create_gui()
+        self.setValue(value)
 
     def name(self):
         return self._name
 
     def value(self):
-        # self._value = ...
-        return [(0,0,0),(5,0,0),(5,0,5)]
+        n_items = self._value_widget.count()
+        res = []
+        for i in xrange(n_items):
+            cur_item = self._value_widget.item(i)
+            txt = cur_item.text()
+            comps = txt.split(',')
+            res.append(Vector(float(comps[0]),
+                              float(comps[1]),
+                              float(comps[2])))
+        return res
 
     def setValue(self, value):
-        self._value = value
-        # ...
+        self._value_widget.clear()
+        for v in value:
+            if v is not None:
+                item = str(v[0]) + ', ' + str(v[1]) + ', ' + str(v[2])
+                self._value_widget.addItem(item)
 
     def create_actions(self):
         self.add_point_action = QtGui.QAction(QtGui.QIcon(), "&Add Point",
                                         self, statusTip="Add a new point",
                                         triggered=self.add_current_point)
+        self.remove_point_action = QtGui.QAction(QtGui.QIcon(), "&Remove Point",
+                                        self, statusTip="Remove selected point",
+                                        triggered=self.remove_current_point)
+        self.remove_all_action = QtGui.QAction(QtGui.QIcon(), "&Remove All",
+                                        self, statusTip="Remove all points",
+                                        triggered=self.remove_all_points)
 
     def create_gui(self):
         self.layout = QtGui.QVBoxLayout()
         self.name_widget = QtGui.QLabel(self._name)
         self._value_widget = QtGui.QListWidget(self)
         self.layout.addWidget(self.name_widget)
+        
         self.items_layout = QtGui.QHBoxLayout()
         self.items_layout.addWidget(self._value_widget)
         
         self.options_layout = QtGui.QVBoxLayout()
         self.point_widget = WidgetParameterVector("Point", (0,0,0))
+        self.options_layout.addWidget(self.point_widget)
+
         self.add_point_button = QtGui.QPushButton("Add Point", parent=self)
         self.add_point_button.clicked.connect(self.add_point_action.triggered)
 
@@ -141,23 +162,33 @@ class WidgetParameterList(QtGui.QWidget):
         self.remove_all_button = QtGui.QPushButton("Remove All", parent=self)
         self.remove_all_button.clicked.connect(self.remove_all_action.triggered)
 
-        self.options_layout.addWidget(self.point_widget)
-        self.options_layout.addWidget(self.add_point_button)
-        self.options_layout.addWidget(self.remove_point_button)
-        self.options_layout.addWidget(self.remove_all_button)
+        self.options_buttons_layout = QtGui.QHBoxLayout()
 
-        self.items_layout.addWidget(self.options_layout)
+        self.options_buttons_layout.addWidget(self.add_point_button)
+        self.options_buttons_layout.addWidget(self.remove_point_button)
+        self.options_buttons_layout.addWidget(self.remove_all_button)
 
-        self.layout.addWidget(self.item_layout)
+        self.options_layout.addLayout(self.options_buttons_layout)
+
+        self.items_layout.addLayout(self.options_layout)
+
+        self.layout.addLayout(self.items_layout)
+        self.setLayout(self.layout)
+
+        self._value_widget.setMinimumWidth(100)
 
     def add_current_point(self):
-        pass
+        p = self.point_widget.value()
+        item = str(p.X(0)) + ', ' + str(p.X(1)) + ', ' + str(p.X(2))
+        self._value_widget.addItem(item)
 
     def remove_current_point(self):
-        pass
+        current = self._value_widget.currentItem()
+        current_row = self._value_widget.row(current)
+        self._value_widget.takeItem(current_row)
 
     def remove_all_points(self):
-        pass
+        self._value_widget.clear()
 
 class WidgetNewPiece(QtGui.QWidget):
 
@@ -181,6 +212,9 @@ class WidgetNewPiece(QtGui.QWidget):
 
     def create_gui(self):
         self.layout = QtGui.QVBoxLayout()
+        print "L A Y O U T spacing B: ", self.layout.spacing()
+        self.layout.setSpacing(5)
+        print "L A Y O U T spacing A: ", self.layout.spacing()
         for par in self.parameters:
             # if hasattr(par[1], '__iter__'):
             if isinstance(par[1], tuple):

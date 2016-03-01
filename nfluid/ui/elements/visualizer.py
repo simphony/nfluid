@@ -5,11 +5,12 @@ import numpy as np
 
 class VisVisWidget(object):
 
-    def __init__(self):
+    def __init__(self, main_win):
         super(VisVisWidget, self).__init__()
         # self.app = vv.use()
         self._vv_widget = vv.gcf()
         self._vv_widget._widget.show()
+        self.main_win = main_win
         self.create_gui()
 
     def create_gui(self):
@@ -17,6 +18,9 @@ class VisVisWidget(object):
 
     def set_mesh(self, mesh):
         vv.clf()
+        self._vv_widget = vv.gcf()
+        self._vv_widget._widget.show()
+        self.main_win.setCentralWidget(self.widget())
         if mesh:
             v_mesh = mesh.to_visvis_mesh()
             v_mesh.faceColor = 'y'

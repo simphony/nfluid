@@ -126,10 +126,14 @@ class CirclePath(ChannelElement2G):
 
     def create_shape_child(self):
         print 'create_shape CirclePath'
-
+        print "self.CenterPos"
+        print self.CenterPos
+        print "self.RotationOperator"
+        print self.RotationOperator
         # Compute new Points: shift + rotation
         RPoints = []
         for Point in self.InputPoints:
+            print Point
             RPoint = self.CenterPos + self.RotationOperator * Point
             RPoints.append(RPoint)
 
