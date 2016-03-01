@@ -98,6 +98,67 @@ class WidgetParameterVector(QtGui.QWidget):
         self.setLayout(self.layout)
 
 
+class WidgetParameterList(QtGui.QWidget):
+    def __init__(self, name, value):
+        super(WidgetParameterList, self).__init__()
+        self._name = name
+        self._value = [] #... value
+        self.create_actions()
+        self.create_gui()
+
+    def name(self):
+        return self._name
+
+    def value(self):
+        # self._value = ...
+        return [(0,0,0),(5,0,0),(5,0,5)]
+
+    def setValue(self, value):
+        self._value = value
+        # ...
+
+    def create_actions(self):
+        self.add_point_action = QtGui.QAction(QtGui.QIcon(), "&Add Point",
+                                        self, statusTip="Add a new point",
+                                        triggered=self.add_current_point)
+
+    def create_gui(self):
+        self.layout = QtGui.QVBoxLayout()
+        self.name_widget = QtGui.QLabel(self._name)
+        self._value_widget = QtGui.QListWidget(self)
+        self.layout.addWidget(self.name_widget)
+        self.items_layout = QtGui.QHBoxLayout()
+        self.items_layout.addWidget(self._value_widget)
+        
+        self.options_layout = QtGui.QVBoxLayout()
+        self.point_widget = WidgetParameterVector("Point", (0,0,0))
+        self.add_point_button = QtGui.QPushButton("Add Point", parent=self)
+        self.add_point_button.clicked.connect(self.add_point_action.triggered)
+
+        self.remove_point_button = QtGui.QPushButton("Remove Point", parent=self)
+        self.remove_point_button.clicked.connect(self.remove_point_action.triggered)
+
+        self.remove_all_button = QtGui.QPushButton("Remove All", parent=self)
+        self.remove_all_button.clicked.connect(self.remove_all_action.triggered)
+
+        self.options_layout.addWidget(self.point_widget)
+        self.options_layout.addWidget(self.add_point_button)
+        self.options_layout.addWidget(self.remove_point_button)
+        self.options_layout.addWidget(self.remove_all_button)
+
+        self.items_layout.addWidget(self.options_layout)
+
+        self.layout.addWidget(self.item_layout)
+
+    def add_current_point(self):
+        pass
+
+    def remove_current_point(self):
+        pass
+
+    def remove_all_points(self):
+        pass
+
 class WidgetNewPiece(QtGui.QWidget):
 
     def __init__(self, name, params):
@@ -121,8 +182,11 @@ class WidgetNewPiece(QtGui.QWidget):
     def create_gui(self):
         self.layout = QtGui.QVBoxLayout()
         for par in self.parameters:
-            if hasattr(par[1], '__iter__'):
+            # if hasattr(par[1], '__iter__'):
+            if isinstance(par[1], tuple):
                 new_param = WidgetParameterVector(par[0], par[1])
+            elif isinstance(par[1], list):
+                new_param = WidgetParameterList(par[0], par[1])
             else:
                 new_param = WidgetParameterNumber(par[0], par[1])
 

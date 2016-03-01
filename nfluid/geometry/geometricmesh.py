@@ -860,12 +860,29 @@ class CylindricalPart(GeometricMesh):
         closed STL surface.
         NOTE: this will terminate the mesh, so there is no guarantee that the
         rest of operation will work after closing the mesh."""
-        for i in xrange(self.n_faces()):
+        # We give special treatment to face 0. It's the initial one of the
+        # first piece and it has incorrect order or vertices in terms
+        # of closing the surface.
+        face0 = list(self.connection_face(0))
+        face0 = face0[::-1]
+        center, normal = self.get_face_info(0)
+        print "center, normal"
+        print center, normal
+        v_index = self.add_vertex(center)
+        for v1, v2 in zip(face0, face0[1:] + [face0[0]]):
+            self.add_triangle((v1, v_index, v2))
+
+        for i in xrange(self.n_faces() - 1):
+            i = i + 1
             face = list(self.connection_face(i))
             center, normal = self.get_face_info(i)
+            print "center, normal"
+            print center, normal
             v_index = self.add_vertex(center)
             for v1, v2 in zip(face, face[1:] + [face[0]]):
                 self.add_triangle((v1, v_index, v2))
+        print "self.normals"
+        print self.normals
 
     def intersection_of_point(self, point, normal):
         ray = Line3D(point, normal)

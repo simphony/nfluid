@@ -287,11 +287,11 @@ class NfluidDataManager(object):
                        R=piece.params[strings.head_radius],
                        PosH=piece.params[strings.head_position],
                        NormalH=piece.params[strings.head_normal])
-        # if piece.type == string.circle_path:
-        #     return CirclePath(Points=piece.params[strings.points],
-        #                       R=piece.params[strings.head_radius],
-        #                       PosH=piece.params[strings.head_position],
-        #                       PosT=piece.params[strings.tail_position],
-        #                       NormalH=piece.params[strings.head_normal],
-        #                       NormalT=piece.params[strings.tail_normal],
-        #                       Twist=piece.params[strings.angle])
+        if piece.type == string.circle_path:
+            return CirclePath(Points=piece.params[strings.points],
+                              R=piece.params[strings.head_radius],
+                              PosH=piece.params[strings.head_position],
+                              PosT=piece.params[strings.tail_position],
+                              NormalH=piece.params[strings.head_normal],
+                              NormalT=piece.params[strings.tail_normal],
+                              Twist=piece.params[strings.angle])
