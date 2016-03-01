@@ -33,7 +33,8 @@ class MainWindow(QtGui.QMainWindow):
         self.dw_pieces_schema = QtGui.QDockWidget()
         cur_widget = SchemaPiecesWidget(self)
         self.dw_pieces_schema.setWidget(cur_widget)
-        self.dw_pieces_schema.setFeatures(QtGui.QDockWidget.NoDockWidgetFeatures)
+        self.dw_pieces_schema.setFeatures(QtGui.QDockWidget.
+                                          NoDockWidgetFeatures)
         title = QtGui.QLabel(cur_widget.name())
         self.dw_pieces_schema.setTitleBarWidget(title)
 
@@ -66,7 +67,7 @@ class MainWindow(QtGui.QMainWindow):
         self.dw_pieces_schema.setMaximumWidth(self.max_w)
         self.dw_pieces_schema.setMaximumHeight(self.max_h)
         self.dw_pieces_schema.setMinimumWidth(self.min_w)
-        self.dw_pieces_schema.setMinimumHeight(self.min_h)        
+        self.dw_pieces_schema.setMinimumHeight(self.min_h)
 
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea,
                            self.dw_pieces_creation)

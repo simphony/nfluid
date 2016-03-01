@@ -46,6 +46,7 @@ class TreeFunctionsManager(TreeFunctions):
     def convert_data(cls, elem, params=None):
         elem.data = Piece(elem.data.get_name(), elem.data.get_id())
 
+
 class NfluidDataManager(object):
     model = None
     gui = None

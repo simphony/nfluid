@@ -140,31 +140,38 @@ class GeometricMesh(object):
         # """
         # angle = angle_between_vectors(direction, n)
         # if angle == math.pi or angle == 0:
-            # aux_plane = Plane(p, n)
-            # aux_point = aux_plane.get_point()
-            # vect = unit_vector((aux_point[0]-p[0],
-                               # aux_point[1]-p[1],
-                               # aux_point[2]-p[2]))
+        #    # aux_plane = Plane(p, n)
+        #    # aux_point = aux_plane.get_point()
+        #    # vect = unit_vector((aux_point[0]-p[0],
+        #                       # aux_point[1]-p[1],
+        #                       # aux_point[2]-p[2]))
         # else:
-            # vect = unit_vector(vector_product(direction, n))
+        #    # vect = unit_vector(vector_product(direction, n))
 
         # rot_m = rotation_matrix(angle, vect)
         # d = (point[0]-p[0], point[1]-p[1], point[2]-p[2])
         # t = (-p[0], -p[1], -p[2])
         # values = self.vertices.values()
         # values.append(1)
-        # new_values = np.dot(values, rot_m)
-
+        # # new_values = np.dot(values, rot_m)
+        # print "np.dot(values, rot_m) B"
+        # print "values"
+        # print values
+        # print "rot_m"
+        # print rot_m
+        # print np.dot(values, rot_m)
+        # print "np.dot(values, rot_m) E"
+        # new_values = 0
         # new_values.pop()
-        # self.vertices = self.vertices.fromkeys(self.vertices.keys(), new_values)
-        # for k, v in self.vertices.iteritems():
-            # n_v = (v[0]+t[0], v[1]+t[1], v[2]+t[2])
-            # if (angle != 0.0 and angle != 2*math.pi and
-                    # math.isnan(angle) is False):
-                # n_v = np.dot(n_v+(1,), rot_m)
-            # n_v = (n_v[0]+d[0]-t[0], n_v[1]+d[1]-t[1], n_v[2]+d[2]-t[2])
-            # self.update_vertex(k, n_v)
-
+        # self.vertices = self.vertices.fromkeys(self.vertices.keys(),
+        #                                        new_values)
+        # # for k, v in self.vertices.iteritems():
+        #    # # n_v = (v[0]+t[0], v[1]+t[1], v[2]+t[2])
+        #    # # if (angle != 0.0 and angle != 2*math.pi and
+        #            # # math.isnan(angle) is False):
+        #        # # n_v = np.dot(n_v+(1,), rot_m)
+        #    # # n_v = (n_v[0]+d[0]-t[0], n_v[1]+d[1]-t[1], n_v[2]+d[2]-t[2])
+        #    # # self.update_vertex(k, n_v)
 
     def _move(self, point, direction, p, n):
         """center == True means that we do the movement in reference

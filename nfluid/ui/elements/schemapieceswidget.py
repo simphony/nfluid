@@ -1,52 +1,5 @@
 from PySide import QtGui, QtCore
-from nfluid.ui.manager import NfluidDataManager, Piece
-from nfluid.util.tree import TreeFunctions
-
-
-# class TreeFunctionsSchemaPieces(TreeFunctions):
-    # scene
-    
-    # @classmethod
-    # def reset(cls):
-        # TreeFunctions.reset()
-
-
-# class SchemaPiecesWidget(QtGui.QWidget):
-
-    # def __init__(self, main_win):
-        # super(SchemaPiecesWidget, self).__init__()
-        # self.main_win = main_win
-        # self._name = "SSSSS"
-        # self.initUI()
-
-    # def name(self):
-        # return self._name
-
-    # def initUI(self):
-
-        # hbox=QtGui.QHBoxLayout()
-        # leftpanel=QtGui.QFrame()
-        # leftpanel.setGeometry(0,0,300,400)
-        # self.scene=QtGui.QGraphicsScene()
-        # self.scene.addText("Hello, world!")
-        # view=QtGui.QGraphicsView(self.scene,leftpanel)
-        # view.setSceneRect(0,0,300,400)
-        # pen=QtGui.QPen(QtCore.Qt.black,2)
-        # self.scene.addLine(0,0,200,200,pen)
-        # hbox.addWidget(leftpanel)
-        # rightpanel=QtGui.QFrame()
-        # hbox.addWidget(rightpanel)
-        # szoveg=QtGui.QLabel(rightpanel)
-        # szoveg.setText(u"Hello World!")
-        # self.setLayout(hbox)
-        # self.resize(500,500)
-        # self.setWindowTitle('blabla')
-        # self.show()
-
-    # def refresh_gui(self):
-        # pass
-
-
+from nfluid.ui.manager import NfluidDataManager
 
 
 class SchemaPiecesWidget(QtGui.QWidget):
@@ -83,10 +36,6 @@ class SchemaPiecesWidget(QtGui.QWidget):
         # self.rect_pen.setColor(QtGui.QColor(0, 0, 0))
         self.rect_pen.setColor(QtGui.QColor(26, 32, 201))
 
-        gradient = QtGui.QLinearGradient()
-        # gradient.setColorAt(0, QtGui.QColor.fromRgbF(0, 1, 0, 1))
-        # gradient.setColorAt(1, QtGui.QColor.fromRgbF(0, 0, 0, 0))
-        # self.rect_brush = QtGui.QBrush(gradient)
         self.rect_brush = QtGui.QBrush()
         # self.rect_brush.setColor(QtGui.QColor(166, 227, 247))
         self.rect_brush.setColor(QtGui.QColor(232, 219, 100))
@@ -129,66 +78,36 @@ class SchemaPiecesWidget(QtGui.QWidget):
             self.add_element(elem.data.name(), x, y)
             if elem.next_l is not None:
                 if elem.next_r is not None:
-                    # new_x = x - (width * ((self.name_space / 2) + self.floor_space))
-                    # cur_width = (self.name_space + self.floor_space) * (cur_level)
+                    # new_x = x - (width * ((self.name_space / 2) +
+                    #              self.floor_space))
+                    # cur_width = (self.name_space + self.floor_space) *
+                    #              (cur_level)
                     cur_width = width / 2
                     new_x = x - (cur_width)
                     # new_x = x - (x / 2)
                 else:
                     new_x = x
                     cur_width = width
-                new_y = y + (self.level_space + self.connection_space) 
+                new_y = y + (self.level_space + self.connection_space)
                 self.add_connection(x, y, new_x, new_y)
                 self.draw_elements(elem.next_l, new_x, new_y, cur_width,
                                    cur_level - 1)
             if elem.next_r is not None:
                 if elem.next_l is not None:
-                    # new_x = x + (width * ((self.name_space / 2) + self.floor_space))
-                    # cur_width = (self.name_space + self.floor_space) * (cur_level / 2)
+                    # new_x = x + (width * ((self.name_space / 2) +
+                    #                         self.floor_space))
+                    # cur_width = (self.name_space + self.floor_space) *
+                    #               (cur_level / 2)
                     cur_width = width / 2
                     new_x = x + (cur_width)
                     # new_x = x + (x / 2)
                 else:
                     new_x = x
                     cur_width = width
-                new_y = y + (self.level_space + self.connection_space) 
+                new_y = y + (self.level_space + self.connection_space)
                 self.add_connection(x, y, new_x, new_y)
                 self.draw_elements(elem.next_r, new_x, new_y, cur_width,
                                    cur_level - 1)
-
-    # def draw_elements(self, elem, x, y, width, cur_amp):
-        # if elem is not None:
-            # self.add_element(elem.data.name(), x, y)
-            # if elem.next_l is not None:
-                # if elem.next_r is not None:
-                    # # new_x = x - (width * ((self.name_space / 2) + self.floor_space))
-                    # cur_width = width / cur_amp
-                    # new_x = x - cur_width
-                    # new_amp = cur_amp + 1
-                    # # new_x = x - (x / 2)
-                # else:
-                    # new_x = x
-                    # cur_width = width
-                    # new_amp = cur_amp
-                # new_y = y + (self.level_space + self.connection_space) 
-                # self.add_connection(x, y, new_x, new_y)
-                # self.draw_elements(elem.next_l, new_x, new_y, cur_width,
-                                   # new_amp)
-            # if elem.next_r is not None:
-                # if elem.next_l is not None:
-                    # # new_x = x + (width * ((self.name_space / 2) + self.floor_space))
-                    # cur_width = width / cur_amp
-                    # new_x = x + cur_width
-                    # new_amp = cur_amp + 1
-                    # # new_x = x + (x / 2)
-                # else:
-                    # new_x = x
-                    # cur_width = width
-                    # new_amp = cur_amp
-                # new_y = y + (self.level_space + self.connection_space) 
-                # self.add_connection(x, y, new_x, new_y)
-                # self.draw_elements(elem.next_r, new_x, new_y, cur_width,
-                                   # new_amp)
 
     def refresh_gui(self):
         tree = NfluidDataManager.get_assembly_tree()
@@ -196,9 +115,11 @@ class SchemaPiecesWidget(QtGui.QWidget):
             init = tree.get_root()
             width = tree.amplitude() + 1
             height = tree.depth() + 1
-            # total_width = ((width - 1) * 2) * (self.name_space + self.floor_space + self.pen_width)
-            total_width = ((width - 1) * 2) * (self.name_space + self.floor_space + self.pen_width)
-            total_height = (height) * (self.level_space + self.connection_space + self.pen_width)
+            total_width = ((width - 1) * 2) * (self.name_space +
+                                               self.floor_space +
+                                               self.pen_width)
+            total_height = (height) * (self.level_space +
+                                       self.connection_space + self.pen_width)
             self.schema_view.setSceneRect(0, 0, total_width, total_height)
             self.schema_scene.clear()
             print "width, height"
@@ -206,10 +127,10 @@ class SchemaPiecesWidget(QtGui.QWidget):
             init_x = total_width / 2
             init_x -= (self.name_space) / 2
             init_y = 10
-            self.draw_elements(init, init_x, init_y, total_width / 2, height - 1)
+            self.draw_elements(init, init_x, init_y, total_width / 2,
+                               height - 1)
             # self.add_element(init.data.name(), init_x, init_y)
-            
-            
+
             # name_space = 20
             # strings_struct = tree.strings_structure(name_space)
             # print " - - - - - - - strings_struct - - - - - - - "
