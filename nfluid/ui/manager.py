@@ -89,6 +89,7 @@ class NfluidDataManager(object):
             new_piece = NfluidDataManager.create_piece(piece)
             NfluidDataManager.model.clear_geometry()
             NfluidDataManager.model.resolve_geometry()
+            return 0
         else:
             current_piece = NfluidDataManager.gui.\
                             dw_pieces_list.widget().\

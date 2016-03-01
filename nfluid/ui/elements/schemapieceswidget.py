@@ -110,6 +110,7 @@ class SchemaPiecesWidget(QtGui.QWidget):
                                    cur_level - 1)
 
     def refresh_gui(self):
+        self.schema_scene.clear()
         tree = NfluidDataManager.get_assembly_tree()
         if tree is not None:
             init = tree.get_root()
@@ -121,7 +122,6 @@ class SchemaPiecesWidget(QtGui.QWidget):
             total_height = (height) * (self.level_space +
                                        self.connection_space + self.pen_width)
             self.schema_view.setSceneRect(0, 0, total_width, total_height)
-            self.schema_scene.clear()
             print "width, height"
             print width, height
             init_x = total_width / 2
