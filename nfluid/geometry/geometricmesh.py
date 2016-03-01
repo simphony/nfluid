@@ -861,10 +861,10 @@ class CylindricalPart(GeometricMesh):
         NOTE: this will terminate the mesh, so there is no guarantee that the
         rest of operation will work after closing the mesh."""
         for i in xrange(self.n_faces()):
-            face = self.connection_face(i)
+            face = list(self.connection_face(i))
             center, normal = self.get_face_info(i)
             v_index = self.add_vertex(center)
-            for v1, v2 in zip(face, face[1:]+(face[0],)):
+            for v1, v2 in zip(face, face[1:] + [face[0]]):
                 self.add_triangle((v1, v_index, v2))
 
     def intersection_of_point(self, point, normal):
