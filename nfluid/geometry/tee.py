@@ -1,5 +1,7 @@
 from nfluid.geometry.geometricmesh import Circle3D, CylindricalPart
 from nfluid.visualisation.show import show
+from nfluid.geometry.functions import normal_of, center_of
+from visvis import solidLine, Pointset, Point
 
 
 class Tee(CylindricalPart):
@@ -69,6 +71,7 @@ class Tee(CylindricalPart):
             cyl.add_triangle((index_match[t[0]], index_match[t[1]],
                               index_match[t[2]]))
         # We generate new triangles!
+        normals = []
         prev_z = 999
         if n_vert % 2 != 0:
             pass
@@ -104,6 +107,7 @@ class Tee(CylindricalPart):
                 # cyl.add_triangle(new_triangle2)
                 # prev_z = cur_v[2]
         else:
+            long = 2
             for index in xrange(n_vert):
                 cur_v = cyl.vertex(index_match[index])
                 if index >= (n_vert/2)+factor:
@@ -111,6 +115,18 @@ class Tee(CylindricalPart):
                     new_triangle1 = (index_match[index],
                                      index_match[(index+1) % n_vert],
                                      (internal_index))
+                    v0 = cyl.vertex(index_match[index])
+                    v1 = cyl.vertex(index_match[(index+1) % n_vert])
+                    v2 = cyl.vertex((internal_index))
+                    c_n = normal_of(v0,v1,v2)
+                    c_c = center_of([v0,v1,v2])
+
+                    c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
+                    ps = Pointset(3)
+                    ps.append(Point(c_c))
+                    ps.append(Point(c_c2))
+                    normals.append(ps)
+                    # print "N O R M A L t 1", c_n
                     # new_triangle2 = (index_match[(index+1) % n_vert],
                                      # (internal_index-1),
                                      # internal_index)
@@ -122,24 +138,57 @@ class Tee(CylindricalPart):
                                      index_match[(index+1) % n_vert],
                                      (internal_index-1)
                                      )
+                    v0 = cyl.vertex(internal_index)
+                    v1 = cyl.vertex(index_match[(index+1) % n_vert])
+                    v2 = cyl.vertex((internal_index-1))
+                    c_n = normal_of(v0,v1,v2)
+                    c_c = center_of([v0,v1,v2])
+                    c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
+                    ps = Pointset(3)
+                    ps.append(Point(c_c))
+                    ps.append(Point(c_c2))
+                    normals.append(ps)
+                    # print "N O R M A L t 2", c_n
                 else:
                     internal_index = index
                     new_triangle1 = (index_match[index],
                                      index_match[(index+1) % n_vert],
                                      (internal_index+1))
+
+                    v0 = cyl.vertex(index_match[index])
+                    v1 = cyl.vertex(index_match[(index+1) % n_vert])
+                    v2 = cyl.vertex((internal_index+1))
+                    c_n = normal_of(v0,v1,v2)
+                    c_c = center_of([v0,v1,v2])
+
+                    c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
+                    ps = Pointset(3)
+                    ps.append(Point(c_c))
+                    ps.append(Point(c_c2))
+                    normals.append(ps)
                     # new_triangle2 = (index_match[index], (internal_index+1),
                                      # internal_index)
                     # new_triangle1 = ((internal_index+1),
                                      # index_match[(index+1) % n_vert],
                                      # index_match[index]
                                      # )
-                    new_triangle2 = (internal_index,
-                                    (internal_index+1),
+                    new_triangle2 = ((internal_index+1),
+                                      internal_index,
                                     index_match[index]
                                      )
+                    v0 = cyl.vertex(internal_index+1)
+                    v1 = cyl.vertex((internal_index))
+                    v2 = cyl.vertex(index_match[index])
+                    c_n = normal_of(v0,v1,v2)
+                    c_c = center_of([v0,v1,v2])
+                    c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
+                    ps = Pointset(3)
+                    ps.append(Point(c_c))
+                    ps.append(Point(c_c2))
+                    normals.append(ps)
                 cyl.add_triangle(new_triangle1)
                 cyl.add_triangle(new_triangle2)
                 prev_z = cur_v[2]
         cyl.flip_connection_face(1)
         self.copy_from_cylindricalpart(cyl)
-        show([self])
+        show([self], normals)
