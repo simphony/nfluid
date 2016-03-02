@@ -36,12 +36,13 @@ _pieces = [(strings.coupling,
            (strings.cap,
             [(strings.length, 0)]
             ),
-            (strings.circle_path,
-             [(strings.angle, 0),
-              (strings.tail_normal, (0, 0, 0)),
-              (strings.points_list,[None])]
-             )
+           (strings.circle_path,
+            [(strings.angle, 0),
+             (strings.tail_normal, (0, 0, 0)),
+             (strings.points_list, [None])]
+            )
            ]
+
 
 class TabPiecesWidget(QtGui.QTabWidget):
 
