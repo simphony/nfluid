@@ -29,7 +29,8 @@ def show(items, normals=None):
 
     if normals is not None:
         for normal in normals:
-            solidLine(normal, 0.1)
+            sl = solidLine(normal, 0.1)
+            sl.faceColor = 'r'
 
     # Show title and enter main loop
     vv.title('Show')
