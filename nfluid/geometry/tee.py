@@ -108,31 +108,31 @@ class Tee(CylindricalPart):
                 cur_v = cyl.vertex(index_match[index])
                 if index >= (n_vert/2)+factor:
                     internal_index = n_vert*2 - index
-                    # new_triangle1 = (index_match[index],
-                                     # index_match[(index+1) % n_vert],
-                                     # (internal_index))
+                    new_triangle1 = (index_match[index],
+                                     index_match[(index+1) % n_vert],
+                                     (internal_index))
                     # new_triangle2 = (index_match[(index+1) % n_vert],
                                      # (internal_index-1),
                                      # internal_index)
-                    new_triangle1 = ((internal_index),
-                                     index_match[(index+1) % n_vert],
-                                     index_match[index]
-                                     )
+                    # new_triangle1 = ((internal_index),
+                                     # index_match[(index+1) % n_vert],
+                                     # index_match[index]
+                                     # )
                     new_triangle2 = (internal_index,
                                      index_match[(index+1) % n_vert],
                                      (internal_index-1)
                                      )
                 else:
                     internal_index = index
-                    # new_triangle1 = (index_match[index],
-                                     # index_match[(index+1) % n_vert],
-                                     # (internal_index+1))
+                    new_triangle1 = (index_match[index],
+                                     index_match[(index+1) % n_vert],
+                                     (internal_index+1))
                     # new_triangle2 = (index_match[index], (internal_index+1),
                                      # internal_index)
-                    new_triangle1 = ((internal_index+1),
-                                     index_match[(index+1) % n_vert],
-                                     index_match[index]
-                                     )
+                    # new_triangle1 = ((internal_index+1),
+                                     # index_match[(index+1) % n_vert],
+                                     # index_match[index]
+                                     # )
                     new_triangle2 = (internal_index,
                                     (internal_index+1),
                                     index_match[index]
