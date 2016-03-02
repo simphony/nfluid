@@ -14,8 +14,8 @@ class ChannelAssembly(object):
 
     def __init__(self, gates_sides=20, elements_divisions=10):
         self.elements = []
-        gates_sides = 21
-        elements_divisions = 10
+        gates_sides = 6
+        elements_divisions = 2
         ChannelElement.assembly = self
         ChannelElement.slices = gates_sides
         ChannelElement.stacks = elements_divisions

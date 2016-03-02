@@ -8,7 +8,7 @@ class Tee(CylindricalPart):
     def __init__(self, r, slices, stacks):
         super(Tee, self).__init__()
         normals = []
-        long = 2
+        long = 5
         self.r = r
         eps = 0.1
         face1 = Circle3D(r, slices, pos=(0, 0, 0), normal=(0, -1, 0))
@@ -288,4 +288,9 @@ class Tee(CylindricalPart):
                 prev_z = cur_v[2]
         cyl.flip_connection_face(1)
         self.copy_from_cylindricalpart(cyl)
+        print "self.vertices"
+        print self.vertices
+        print "self.triangles"
+        print self.triangles
+
         show([self], normals)

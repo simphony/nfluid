@@ -29,8 +29,10 @@ assembly = ChannelAssembly(3, 1)
 
 if sys.argv[1] == '1':
     print 'Test All 1'
-    tee = create_channel(CircleCoupling(R=10, L=75, PosH=Vector(0, 0, 0),
-                                        Normal=Vector(0, 0, 1)))
+    tee = create_channel(CircleTee(R=10, PosH=Vector(0, 0, 0), NormalT0=Vector(1,0,0),
+                                        NormalH=Vector(0, 0, 1)))
+    # tee = create_channel(CircleCoupling(R=10, L=75, PosH=Vector(0, 0, 0),
+                                        # Normal=Vector(0, 0, 1)))
                          # .link(CircleTee(NormalT0=Vector(1, 0, 0))))
 
     # tee2 = CircleTee(NormalT0=Vector(0, 0, 1))
