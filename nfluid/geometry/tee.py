@@ -69,76 +69,76 @@ class Tee(CylindricalPart):
             cyl.add_triangle((index_match[t[0]], index_match[t[1]],
                               index_match[t[2]]))
         # We generate new triangles!
-        # prev_z = 999
-        # if n_vert % 2 != 0:
-            # for index in xrange(n_vert):
-                # cur_v = cyl.vertex(index_match[index])
-                # if index >= (n_vert/2)+factor:
-                    # internal_index = n_vert*2 - index
+        prev_z = 999
+        if n_vert % 2 != 0:
+            for index in xrange(n_vert):
+                cur_v = cyl.vertex(index_match[index])
+                if index >= (n_vert/2)+factor:
+                    internal_index = n_vert*2 - index
+                    new_triangle1 = (index_match[index],
+                                     index_match[(index+1) % n_vert],
+                                     (internal_index))
+                    new_triangle2 = (index_match[(index+1) % n_vert],
+                                     (internal_index-1),
+                                     internal_index)
+                else:
+                    internal_index = index
+                    new_triangle1 = (index_match[index],
+                                     index_match[(index+1) % n_vert],
+                                     (internal_index+1))
+                    new_triangle2 = (index_match[index], (internal_index+1),
+                                     internal_index)
+                # we check if we have the two vertex of the polygon that
+                # share a parallel of the original
+                # cylinder. In this case, we'll have to generate
+                # special triangles
+                if abs(prev_z - cur_v[2]) <= 0.0001:
+                    new_triangle3 = (index_match[index], n_vert/2+1,
+                                     internal_index+1)
+                    new_triangle4 = (index_match[index], internal_index+1,
+                                     internal_index)
+                    cyl.add_triangle(new_triangle3)
+                    cyl.add_triangle(new_triangle4)
+                cyl.add_triangle(new_triangle1)
+                cyl.add_triangle(new_triangle2)
+                prev_z = cur_v[2]
+        else:
+            for index in xrange(n_vert):
+                cur_v = cyl.vertex(index_match[index])
+                if index >= (n_vert/2)+factor:
+                    internal_index = n_vert*2 - index
                     # new_triangle1 = (index_match[index],
                                      # index_match[(index+1) % n_vert],
                                      # (internal_index))
-                    # new_triangle2 = (index_match[(index+1) % n_vert],
-                                     # (internal_index-1),
-                                     # internal_index)
-                # else:
-                    # internal_index = index
+                    new_triangle2 = (index_match[(index+1) % n_vert],
+                                     (internal_index-1),
+                                     internal_index)
+                    new_triangle1 = ((internal_index),
+                                     index_match[(index+1) % n_vert],
+                                     index_match[index]
+                                     )
+                    # new_triangle2 = (internal_index,
+                    #                  index_match[(index+1) % n_vert],
+                    #                  (internal_index-1)
+                    #                  )
+                else:
+                    internal_index = index
                     # new_triangle1 = (index_match[index],
                                      # index_match[(index+1) % n_vert],
                                      # (internal_index+1))
-                    # new_triangle2 = (index_match[index], (internal_index+1),
-                                     # internal_index)
-                # # we check if we have the two vertex of the polygon that
-                # # share a parallel of the original
-                # # cylinder. In this case, we'll have to generate
-                # # special triangles
-                # if abs(prev_z - cur_v[2]) <= 0.0001:
-                    # new_triangle3 = (index_match[index], n_vert/2+1,
-                                     # internal_index+1)
-                    # new_triangle4 = (index_match[index], internal_index+1,
-                                     # internal_index)
-                    # cyl.add_triangle(new_triangle3)
-                    # cyl.add_triangle(new_triangle4)
-                # cyl.add_triangle(new_triangle1)
-                # cyl.add_triangle(new_triangle2)
-                # prev_z = cur_v[2]
-        # else:
-            # for index in xrange(n_vert):
-                # cur_v = cyl.vertex(index_match[index])
-                # if index >= (n_vert/2)+factor:
-                    # internal_index = n_vert*2 - index
-                    # new_triangle1 = (index_match[index],
-                                     # index_match[(index+1) % n_vert],
-                                     # (internal_index))
-                    # new_triangle2 = (index_match[(index+1) % n_vert],
-                                     # (internal_index-1),
-                                     # internal_index)
-                    # # new_triangle1 = ((internal_index),
-                    # #                  index_match[(index+1) % n_vert],
-                    # #                  index_match[index]
-                    # #                  )
-                    # # new_triangle2 = (internal_index,
-                    # #                  index_match[(index+1) % n_vert],
-                    # #                  (internal_index-1)
-                    # #                  )
-                # else:
-                    # internal_index = index
-                    # new_triangle1 = (index_match[index],
-                                     # index_match[(index+1) % n_vert],
-                                     # (internal_index+1))
-                    # new_triangle2 = (index_match[index], (internal_index+1),
-                                     # internal_index)
-                    # # new_triangle1 = ((internal_index+1),
-                    # #                  index_match[(index+1) % n_vert],
-                    # #                  index_match[index]
-                    # #                  )
-                    # # new_triangle2 = (internal_index,
-                    # #                 (internal_index+1),
-                    # #                 index_match[index]
-                    # #                  )
-                # cyl.add_triangle(new_triangle1)
-                # cyl.add_triangle(new_triangle2)
-                # prev_z = cur_v[2]
-        # cyl.flip_connection_face(1)
+                    new_triangle2 = (index_match[index], (internal_index+1),
+                                     internal_index)
+                    new_triangle1 = ((internal_index+1),
+                                     index_match[(index+1) % n_vert],
+                                     index_match[index]
+                                     )
+                    # new_triangle2 = (internal_index,
+                    #                 (internal_index+1),
+                    #                 index_match[index]
+                    #                  )
+                cyl.add_triangle(new_triangle1)
+                cyl.add_triangle(new_triangle2)
+                prev_z = cur_v[2]
+        cyl.flip_connection_face(1)
         self.copy_from_cylindricalpart(cyl)
         show([self])
