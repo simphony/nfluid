@@ -42,7 +42,7 @@ print_info Assembly ---------------------------'''
         print 'Shapes export error res = ', res
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
-    # assembly.show_shapes()
+    assembly.show_shapes()
 
     from nfluid.ui.main_module import start_gui
     start_gui()
