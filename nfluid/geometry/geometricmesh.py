@@ -1206,6 +1206,8 @@ class CylindricalPart(GeometricMesh):
             self.update_vertex(i0, p1)
             self.update_vertex(i1, p0)
             count += 1
+            # for t in self.triangles.itervalues():
+                # if i == t[0]:
         face_vertices = list(new_face_vertices)
         self.connection_faces[face] = face_vertices
 
