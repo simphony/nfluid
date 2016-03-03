@@ -76,15 +76,15 @@ elif sys.argv[1] == '3':
                          .link(CircleCoupling(L=30))
                          .link(CircleTee(NormalT0=Vector(1, 0, 0))))
 
-    tee.link(FlowAdapter(RT=23, L=20), 0) \
-       .link(ShortElbowAngle(NormalT=Vector(0, 0, 1))) \
-       .link(CircleCoupling(L=42)) \
-       .link(Cap(L=10))
+    # tee.link(FlowAdapter(RT=23, L=20), 0) \
+       # .link(ShortElbowAngle(NormalT=Vector(0, 0, 1))) \
+       # .link(CircleCoupling(L=42))# \
+       # .link(Cap(L=10))
 
-    tee.link(FlowAdapter(RT=15, L=27), 1) \
-       .link(LongElbowAngle(RC=50, NormalT=Vector(0, 0, 1))) \
-       .link(CircleCoupling(L=20)) \
-       .link(Cap(L=5))
+    # tee.link(FlowAdapter(RT=15, L=27), 1) \
+       # .link(LongElbowAngle(RC=50, NormalT=Vector(0, 0, 1))) \
+       # .link(CircleCoupling(L=20))# \
+       # .link(Cap(L=5))
 
 elif sys.argv[1] == '4':
     print 'Test All 4'

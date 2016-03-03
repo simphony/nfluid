@@ -116,10 +116,31 @@ class GeometricMesh(object):
         res.add_cells([Cell(v_ids_matching.values())])
         return res
 
+    # def export(self, filename):
+        # vv_mesh = self.to_visvis_mesh()
+        # vv.meshWrite(filename, vv_mesh, bin=False)
+        # vv_mesh = None
+
     def export(self, filename):
-        vv_mesh = self.to_visvis_mesh()
-        vv.meshWrite(filename, vv_mesh, bin=False)
-        vv_mesh = None
+        file_out = open(filename, 'w')
+        file_out.write('solid\n')
+        for t in self.triangles.itervalues():
+            v0 = self.vertex(t[0])
+            v1 = self.vertex(t[1])
+            v2 = self.vertex(t[2])
+            c_n = normal_of(v0,v1,v2)
+            file_out.write('facet normal {0} {1} {2}\n'.format(
+                            str(c_n[0]), str(c_n[1]), str(c_n[2])))
+            file_out.write('outer loop\n')
+            file_out.write('vertex {0} {1} {2}\n'.format(
+                            str(v0[0]), str(v0[1]), str(v0[2])))
+            file_out.write('vertex {0} {1} {2}\n'.format(
+                            str(v1[0]), str(v1[1]), str(v1[2])))
+            file_out.write('vertex {0} {1} {2}\n'.format(
+                            str(v2[0]), str(v2[1]), str(v2[2])))
+            file_out.write('endloop\nendfacet\n')
+        file_out.write('endsolid\n')
+        file_out.close()
 
     def n_vertices(self):
         return len(self.vertices)
@@ -868,6 +889,7 @@ class CylindricalPart(GeometricMesh):
         face0 = list(self.connection_face(0))
         face0 = face0[::-1]
         center, normal = self.get_face_info(0)
+        print '\n' * 20
         print "center, normal"
         print center, normal
         v_index = self.add_vertex(center)
