@@ -942,6 +942,20 @@ class CylindricalPart(GeometricMesh):
         print "self.normals"
         print self.normals
 
+        normals_v = []
+        for t in self.triangles.itervalues():
+            v0 = self.vertex(t[0])
+            v1 = self.vertex(t[1])
+            v2 = self.vertex(t[2])
+            c_n = normal_of(v0, v1, v2)
+            c_c = center_of([v0, v1, v2])
+            c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
+            ps = Pointset(3)
+            ps.append(Point(c_c))
+            ps.append(Point(c_c2))
+            normals_v.append(ps)
+
+        print "show 2"
         show([self], normals_v)
 
     def intersection_of_point(self, point, normal):
@@ -1206,8 +1220,6 @@ class CylindricalPart(GeometricMesh):
             self.update_vertex(i0, p1)
             self.update_vertex(i1, p0)
             count += 1
-            # for t in self.triangles.itervalues():
-                # if i == t[0]:
         face_vertices = list(new_face_vertices)
         self.connection_faces[face] = face_vertices
 

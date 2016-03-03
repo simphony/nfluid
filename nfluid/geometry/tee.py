@@ -49,7 +49,8 @@ class Tee(CylindricalPart):
         new_triangles_count = 0
         for k, t in cyl.triangles.iteritems():
             if t != ():
-                new_triangles[new_triangles_count] = t
+                # new_triangles[new_triangles_count] = t
+                new_triangles[new_triangles_count] = (t[0], t[2], t[1])
                 new_triangles_count += 1
 
                 v0 = cyl.vertex(t[0])
@@ -289,7 +290,7 @@ class Tee(CylindricalPart):
                 cyl.add_triangle(new_triangle1)
                 cyl.add_triangle(new_triangle2)
                 prev_z = cur_v[2]
-        # cyl.flip_connection_face(1)
+        cyl.flip_connection_face(1)
         # cyl.connection_faces[1] = cyl.connection_faces[1][::-1]
         # cyl.connection_faces[2] = cyl.connection_faces[2][::-1]
         self.copy_from_cylindricalpart(cyl)
@@ -311,5 +312,5 @@ class Tee(CylindricalPart):
             ps.append(Point(c_c2))
             normals_v.append(ps)
 
-
+        print "show 1"
         show([self], normals)
