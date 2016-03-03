@@ -2,7 +2,8 @@ import math
 import numpy as np
 import bisect
 
-from visvis import OrientableMesh
+from visvis import OrientableMesh, Pointset
+import visvis as vv
 from simphony.cuds.mesh import Point, Face, Cell, Mesh
 from nfluid.external.transformations import rotation_matrix
 # from nfluid.external.transformations import angle_between_vectors
@@ -13,12 +14,7 @@ from nfluid.geometry.functions import cos_table, sin_table
 from nfluid.geometry.functions import angle_between_vectors
 from nfluid.geometry.functions import normal_of, center_of, distance
 from nfluid.geometry.auxiliar_geometry import Plane, Line3D
-import visvis as vv
-
-
 from nfluid.visualisation.show import show
-from nfluid.geometry.functions import normal_of, center_of
-from visvis import solidLine, Pointset, Point
 
 
 class GeometricMesh(object):
@@ -133,7 +129,7 @@ class GeometricMesh(object):
             v0 = self.vertex(t[0])
             v1 = self.vertex(t[1])
             v2 = self.vertex(t[2])
-            c_n = normal_of(v0,v1,v2)
+            c_n = normal_of(v0, v1, v2)
             file_out.write('facet normal {0} {1} {2}\n'.format(
                             str(c_n[0]), str(c_n[1]), str(c_n[2])))
             file_out.write('outer loop\n')
@@ -320,7 +316,8 @@ class GeometricMesh(object):
             v2 = self.vertex(t[2])
             c_n = normal_of(v0, v1, v2)
             c_c = center_of([v0, v1, v2])
-            c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
+            c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long,
+                    c_c[2] + c_n[2] * long]
             ps = Pointset(3)
             ps.append(Point(c_c))
             ps.append(Point(c_c2))
@@ -900,8 +897,6 @@ class CylindricalPart(GeometricMesh):
         # We give special treatment to face 0. It's the initial one of the
         # first piece and it has incorrect order or vertices in terms
         # of closing the surface.
-        normals_v = []
-        long = 5
         face0 = list(self.connection_face(0))
         face0 = face0[::-1]
         center, normal = self.get_face_info(0)

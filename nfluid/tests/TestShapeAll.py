@@ -25,13 +25,13 @@ if len(sys.argv) == 1:
 
 n_tests = 3
 
-assembly = ChannelAssembly(3, 1)
+assembly = ChannelAssembly()
 
 if sys.argv[1] == '1':
     print 'Test All 1'
     tee = create_channel(CircleCoupling(R=10, L=75, PosH=Vector(0, 0, 0),
-                                        Normal=Vector(0, 0, 1))) \
-                         .link(CircleTee(NormalT0=Vector(1, 0, 0)))
+                                        Normal=Vector(0, 0, 1))
+                         .link(CircleTee(NormalT0=Vector(1, 0, 0))))
 
     tee2 = CircleTee(NormalT0=Vector(0, 0, 1))
     tee3 = CircleTee(NormalT0=Vector(0, 0, 1))

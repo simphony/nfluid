@@ -1,7 +1,4 @@
 from nfluid.geometry.geometricmesh import Circle3D, CylindricalPart
-from nfluid.visualisation.show import show
-from nfluid.geometry.functions import normal_of, center_of
-from visvis import solidLine, Pointset, Point
 
 
 class Tee(CylindricalPart):
@@ -130,8 +127,8 @@ class Tee(CylindricalPart):
                                      (internal_index+1))
 
                     new_triangle2 = ((internal_index+1),
-                                      internal_index,
-                                    index_match[index]
+                                     internal_index,
+                                     index_match[index]
                                      )
                 cyl.add_triangle(new_triangle1)
                 cyl.add_triangle(new_triangle2)
