@@ -16,6 +16,11 @@ from nfluid.geometry.auxiliar_geometry import Plane, Line3D
 import visvis as vv
 
 
+from nfluid.visualisation.show import show
+from nfluid.geometry.functions import normal_of, center_of
+from visvis import solidLine, Pointset, Point
+
+
 class GeometricMesh(object):
     """Simple class to specify a geometrical mesh:
        collection of vertices, its normals and triangles.
@@ -886,6 +891,8 @@ class CylindricalPart(GeometricMesh):
         # We give special treatment to face 0. It's the initial one of the
         # first piece and it has incorrect order or vertices in terms
         # of closing the surface.
+        normals_v = []
+        long = 5
         face0 = list(self.connection_face(0))
         face0 = face0[::-1]
         center, normal = self.get_face_info(0)
@@ -893,8 +900,22 @@ class CylindricalPart(GeometricMesh):
         print "center, normal"
         print center, normal
         v_index = self.add_vertex(center)
+        self.add_normal(v_index, normal)
         for v1, v2 in zip(face0, face0[1:] + [face0[0]]):
-            self.add_triangle((v1, v_index, v2))
+            self.add_triangle((v1, v2, v_index))
+
+            v0 = self.vertex(v1)
+            v1 = self.vertex(v2)
+            v2 = self.vertex(v_index)
+            c_n = normal_of(v0, v1, v2)
+            c_c = center_of([v0, v1, v2])
+            c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
+            ps = Pointset(3)
+            ps.append(Point(c_c))
+            ps.append(Point(c_c2))
+            normals_v.append(ps)
+
+
 
         for i in xrange(self.n_faces() - 1):
             i = i + 1
@@ -903,10 +924,25 @@ class CylindricalPart(GeometricMesh):
             print "center, normal"
             print center, normal
             v_index = self.add_vertex(center)
+            self.add_normal(v_index, normal)
             for v1, v2 in zip(face, face[1:] + [face[0]]):
-                self.add_triangle((v1, v_index, v2))
+                self.add_triangle((v1, v2, v_index))
+
+                v0 = self.vertex(v1)
+                v1 = self.vertex(v2)
+                v2 = self.vertex(v_index)
+                c_n = normal_of(v0, v1, v2)
+                c_c = center_of([v0, v1, v2])
+                c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
+                ps = Pointset(3)
+                ps.append(Point(c_c))
+                ps.append(Point(c_c2))
+                normals_v.append(ps)
+
         print "self.normals"
         print self.normals
+
+        show([self], normals_v)
 
     def intersection_of_point(self, point, normal):
         ray = Line3D(point, normal)

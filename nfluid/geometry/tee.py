@@ -293,4 +293,4 @@ class Tee(CylindricalPart):
         print "self.triangles"
         print self.triangles
 
-        show([self], normals)
+        # show([self], normals)
