@@ -519,10 +519,10 @@ class Circle3D(GeometricMesh):
                 res.add_vertex(figure.vertex(i))
                 res.add_normal(i+self.slices, figure.normal(i))
             for i in xrange(self.slices):
-                res.add_triangle((i, i+self.slices, (i+1) % (self.slices)))
+                res.add_triangle((i, (i+1) % (self.slices), i+self.slices))
                 res.add_triangle(((i+1) % self.slices,
-                                  (i+self.slices) % (self.slices*2),
-                                  ((i+1) % self.slices) + self.slices))
+                                  ((i+1) % self.slices) + self.slices,
+                                  (i+self.slices) % (self.slices*2)))
             res.add_connection_face(tuple([x for x in xrange(n_vertices)]))
             res.add_connection_face(
                 tuple([x+n_vertices for x in xrange(n_vertices)]))
