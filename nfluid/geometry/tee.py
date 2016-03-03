@@ -36,6 +36,7 @@ class Tee(CylindricalPart):
             cur_v = (cur_v[0], cur_v[1], face_v[2])
             circle.update_vertex(i, cur_v)
         cyl = face1.connect(face2)
+        # cyl = face2.connect(face1)
         involved_vertices = [i+1 for i in xrange(((n_vert/2)+factor)-1)]
         involved_vertices.extend(
             [i+1+n_vert for i in xrange(((n_vert/2)+factor)-1)])
@@ -52,8 +53,8 @@ class Tee(CylindricalPart):
                 new_triangles_count += 1
 
                 v0 = cyl.vertex(t[0])
-                v1 = cyl.vertex(t[1])
-                v2 = cyl.vertex(t[2])
+                v1 = cyl.vertex(t[2])
+                v2 = cyl.vertex(t[1])
                 c_n = normal_of(v0,v1,v2)
                 c_c = center_of([v0,v1,v2])
                 c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
@@ -66,6 +67,7 @@ class Tee(CylindricalPart):
         cyl.triangles_count = new_triangles_count
         # We copy current information
         top = circle.connect(circle_test)
+        # top = circle_test.connect(circle)
         count = 0
         new_connection_face = []
         index_match = {}
@@ -83,12 +85,12 @@ class Tee(CylindricalPart):
         cyl.connection_faces[0] = tuple(cyl.connection_faces[2])
         cyl.connection_faces[2] = aux
         for k, t in top.triangles.iteritems():
-            cyl.add_triangle((index_match[t[0]], index_match[t[1]],
-                              index_match[t[2]]))
+            cyl.add_triangle((index_match[t[0]], index_match[t[2]],
+                              index_match[t[1]]))
 
             v0 = cyl.vertex(index_match[t[0]])
-            v1 = cyl.vertex(index_match[t[1]])
-            v2 = cyl.vertex(index_match[t[2]])
+            v1 = cyl.vertex(index_match[t[2]])
+            v2 = cyl.vertex(index_match[t[1]])
             c_n = normal_of(v0,v1,v2)
             c_c = center_of([v0,v1,v2])
             c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
@@ -105,12 +107,12 @@ class Tee(CylindricalPart):
                 if index >= (n_vert/2)+factor:
                     internal_index = n_vert*2 - index
                     new_triangle1 = (index_match[index],
-                                     index_match[(index+1) % n_vert],
-                                     (internal_index))
+                                     internal_index,
+                                     index_match[(index+1) % n_vert])
 
                     v0 = cyl.vertex(index_match[index])
-                    v1 = cyl.vertex(index_match[(index+1) % n_vert])
-                    v2 = cyl.vertex(internal_index)
+                    v1 = cyl.vertex(internal_index)
+                    v2 = cyl.vertex(index_match[(index+1) % n_vert])
                     c_n = normal_of(v0,v1,v2)
                     c_c = center_of([v0,v1,v2])
                     c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
@@ -120,12 +122,12 @@ class Tee(CylindricalPart):
                     normals.append(ps)
 
                     new_triangle2 = (index_match[(index+1) % n_vert],
-                                     (internal_index-1),
-                                     internal_index)
+                                     internal_index,
+                                     internal_index-1)
 
                     v0 = cyl.vertex(index_match[(index+1) % n_vert])
-                    v1 = cyl.vertex((internal_index-1))
-                    v2 = cyl.vertex(internal_index)
+                    v1 = cyl.vertex(internal_index)
+                    v2 = cyl.vertex(internal_index-1)
                     c_n = normal_of(v0,v1,v2)
                     c_c = center_of([v0,v1,v2])
                     c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
@@ -137,12 +139,12 @@ class Tee(CylindricalPart):
                 else:
                     internal_index = index
                     new_triangle1 = (index_match[index],
-                                     index_match[(index+1) % n_vert],
-                                     (internal_index+1))
+                                     internal_index+1,
+                                     index_match[(index+1) % n_vert])
 
                     v0 = cyl.vertex(index_match[index])
-                    v1 = cyl.vertex(index_match[(index+1) % n_vert])
-                    v2 = cyl.vertex((internal_index+1))
+                    v1 = cyl.vertex(internal_index+1)
+                    v2 = cyl.vertex(index_match[(index+1) % n_vert])
                     c_n = normal_of(v0,v1,v2)
                     c_c = center_of([v0,v1,v2])
                     c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
@@ -151,12 +153,12 @@ class Tee(CylindricalPart):
                     ps.append(Point(c_c2))
                     normals.append(ps)
 
-                    new_triangle2 = (index_match[index], (internal_index+1),
-                                     internal_index)
+                    new_triangle2 = (index_match[index], internal_index,
+                                     internal_index+1)
 
                     v0 = cyl.vertex(index_match[index])
-                    v1 = cyl.vertex((internal_index+1))
-                    v2 = cyl.vertex(internal_index)
+                    v1 = cyl.vertex(internal_index)
+                    v2 = cyl.vertex(internal_index+1)
                     c_n = normal_of(v0,v1,v2)
                     c_c = center_of([v0,v1,v2])
                     c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
@@ -170,13 +172,14 @@ class Tee(CylindricalPart):
                 # cylinder. In this case, we'll have to generate
                 # special triangles
                 if abs(prev_z - cur_v[2]) <= 0.0001:
-                    new_triangle3 = (index_match[index], internal_index+1,
-                                     n_vert/2+1)
+                    new_triangle3 = (index_match[index], n_vert/2+1,
+                                     internal_index+1
+                                     )
 
 
                     v0 = cyl.vertex(index_match[index])
-                    v1 = cyl.vertex(internal_index+1)
-                    v2 = cyl.vertex(n_vert/2+1)
+                    v1 = cyl.vertex(n_vert/2+1)
+                    v2 = cyl.vertex(internal_index+1)
                     c_n = normal_of(v0,v1,v2)
                     c_c = center_of([v0,v1,v2])
                     c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
@@ -185,12 +188,12 @@ class Tee(CylindricalPart):
                     ps.append(Point(c_c2))
                     normals.append(ps)
 
-                    new_triangle4 = (index_match[index], internal_index,
-                                     internal_index+1)
+                    new_triangle4 = (index_match[index], internal_index+1,
+                                     internal_index)
 
                     v0 = cyl.vertex(index_match[index])
-                    v1 = cyl.vertex(internal_index)
-                    v2 = cyl.vertex(internal_index+1)
+                    v1 = cyl.vertex(internal_index+1)
+                    v2 = cyl.vertex(internal_index)
                     c_n = normal_of(v0,v1,v2)
                     c_c = center_of([v0,v1,v2])
                     c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
@@ -295,4 +298,4 @@ class Tee(CylindricalPart):
         print "self.triangles"
         print self.triangles
 
-        # show([self], normals)
+        show([self], normals)
