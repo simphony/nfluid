@@ -795,11 +795,11 @@ class CylindricalPart(GeometricMesh):
         n_vertices = len(cur_face)
         for i in xrange(n_vertices):
             res.add_triangle((cur_face[i],
-                              connections_dict[cur_face[i]],
-                              cur_face[(i+1) % n_vertices]))
+                              cur_face[(i+1) % n_vertices],
+                              connections_dict[cur_face[i]]))
             res.add_triangle((cur_face[(i+1) % n_vertices],
-                              connections_dict[cur_face[i]],
-                              connections_dict[cur_face[(i+1) % n_vertices]]))
+                              connections_dict[cur_face[(i+1) % n_vertices]],
+                              connections_dict[cur_face[i]]))
         # Copy this properly!!
         res.connection_faces = dict(self.connection_faces)
         res.connection_faces[cur_index] = new_indexes.values()
