@@ -287,8 +287,8 @@ class Tee(CylindricalPart):
                 cyl.add_triangle(new_triangle2)
                 prev_z = cur_v[2]
         cyl.flip_connection_face(1)
-        cyl.connection_faces[1] = cyl.connection_faces[1][::-1]
-        cyl.connection_faces[2] = cyl.connection_faces[2][::-1]
+        # cyl.connection_faces[1] = cyl.connection_faces[1][::-1]
+        # cyl.connection_faces[2] = cyl.connection_faces[2][::-1]
         self.copy_from_cylindricalpart(cyl)
         print "self.vertices"
         print self.vertices
