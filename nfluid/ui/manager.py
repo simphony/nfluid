@@ -101,19 +101,13 @@ class NfluidDataManager(object):
             current_piece = NfluidDataManager.gui.\
                             dw_pieces_list.widget().\
                             current_piece()
-            print "current_piece.."
-            print current_piece.type
-            print current_piece.id
             if current_piece.id == -1:
                 msg = "No piece selected to link to!"
                 NfluidDataManager.gui.message(msg)
                 return -1
             else:
                 selected_piece = NfluidDataManager.get_piece(current_piece)
-                print "selected_piece..aaaaaaaaaaaaaaaaa"
-                print selected_piece
                 selected_piece.print_info()
-                print "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                 new_piece = NfluidDataManager.create_piece(piece)
                 if current_piece.type == strings.tee:
                     gate = 0
@@ -231,10 +225,6 @@ class NfluidDataManager(object):
     def create_piece(self, piece):
         """Factory function for piece creation.
         """
-        print "piece..."
-        print piece.type
-        print piece.id
-        print piece.params
         if piece.type == strings.coupling:
             return CircleCoupling(R=piece.params[strings.head_radius],
                                   L=piece.params[strings.length],

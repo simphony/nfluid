@@ -223,9 +223,7 @@ class WidgetNewPiece(QtGui.QWidget):
 
     def create_gui(self):
         self.layout = QtGui.QVBoxLayout()
-        print "L A Y O U T spacing B: ", self.layout.spacing()
         self.layout.setSpacing(5)
-        print "L A Y O U T spacing A: ", self.layout.spacing()
         for par in self.parameters:
             # if hasattr(par[1], '__iter__'):
             if isinstance(par[1], tuple):

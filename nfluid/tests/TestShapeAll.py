@@ -29,27 +29,25 @@ assembly = ChannelAssembly(3, 1)
 
 if sys.argv[1] == '1':
     print 'Test All 1'
-    tee = create_channel(CircleTee(R=10, PosH=Vector(0, 0, 0), NormalT0=Vector(1,0,0),
-                                        NormalH=Vector(0, 0, 1)))
-    # tee = create_channel(CircleCoupling(R=10, L=75, PosH=Vector(0, 0, 0),
-                                        # Normal=Vector(0, 0, 1)))
-                         # .link(CircleTee(NormalT0=Vector(1, 0, 0))))
+    tee = create_channel(CircleCoupling(R=10, L=75, PosH=Vector(0, 0, 0),
+                                        Normal=Vector(0, 0, 1))) \
+                         .link(CircleTee(NormalT0=Vector(1, 0, 0)))
 
-    # tee2 = CircleTee(NormalT0=Vector(0, 0, 1))
-    # tee3 = CircleTee(NormalT0=Vector(0, 0, 1))
+    tee2 = CircleTee(NormalT0=Vector(0, 0, 1))
+    tee3 = CircleTee(NormalT0=Vector(0, 0, 1))
 
-    # tee.link(tee2, 0)
-    # tee.link(tee3, 1)
+    tee.link(tee2, 0)
+    tee.link(tee3, 1)
 
-    # tee2.link(CircleCoupling(L=42), 0)
-    # tee2.link(ShortElbowAngle(NormalT=Vector(1, 1, 0)), 1) \
-        # .link(LongElbowAngle(RC=15, NormalT=Vector(0, 0, 1))) \
-        # .link(FlowAdapter(RT=15, L=20)) \
-        # .link(CircleCoupling(L=15))
+    tee2.link(CircleCoupling(L=42), 0)
+    tee2.link(ShortElbowAngle(NormalT=Vector(1, 1, 0)), 1) \
+        .link(LongElbowAngle(RC=15, NormalT=Vector(0, 0, 1))) \
+        .link(FlowAdapter(RT=15, L=20)) \
+        .link(CircleCoupling(L=15))
 
-    # tee3.link(CircleCoupling(L=42), 0) \
-        # .link(SphericCoupling(RS=20))
-    # tee3.link(LongElbowAngle(RC=50, NormalT=Vector(-1, -1, 0)), 1)
+    tee3.link(CircleCoupling(L=42), 0) \
+        .link(SphericCoupling(RS=20))
+    tee3.link(LongElbowAngle(RC=50, NormalT=Vector(-1, -1, 0)), 1)
 
 elif sys.argv[1] == '2':
     print 'Test All 2'
@@ -76,26 +74,15 @@ elif sys.argv[1] == '3':
                          .link(CircleCoupling(L=30))
                          .link(CircleTee(NormalT0=Vector(1, 0, 0))))
 
-    # tee.link(FlowAdapter(RT=23, L=20), 0) \
-       # .link(ShortElbowAngle(NormalT=Vector(0, 0, 1))) \
-       # .link(CircleCoupling(L=42))# \
-       # .link(Cap(L=10))
+    tee.link(FlowAdapter(RT=23, L=20), 0) \
+       .link(ShortElbowAngle(NormalT=Vector(0, 0, 1))) \
+       .link(CircleCoupling(L=42)) \
+       .link(Cap(L=10))
 
-    # tee.link(FlowAdapter(RT=15, L=27), 1) \
-       # .link(LongElbowAngle(RC=50, NormalT=Vector(0, 0, 1))) \
-       # .link(CircleCoupling(L=20))# \
-       # .link(Cap(L=5))
-
-elif sys.argv[1] == '4':
-    print 'Test All 4'
-    tee = create_channel(CircleCoupling(R=40, L=100,
-                                        PosH=Vector(0, 0, 0),
-                                        Normal=Vector(0, 0, 1))
-                         .link(CircleTee(NormalT0=Vector(1,0,0))))
-
-    tee.link(LongElbowAngle(RC=100, NormalT=Vector(0,0,1)), 0)
-
-    tee.link(LongElbowAngle(RC=100, NormalT=Vector(0,1,0)), 1)
+    tee.link(FlowAdapter(RT=15, L=27), 1) \
+       .link(LongElbowAngle(RC=50, NormalT=Vector(0, 0, 1))) \
+       .link(CircleCoupling(L=20)) \
+       .link(Cap(L=5))
 
     # COMMENTED TILL WE KNOW IT WORKS PROPERLY!!!! ----------------------------
 
@@ -125,6 +112,17 @@ elif sys.argv[1] == '4':
     # assembly.insert_element_before(new_elt, el3)
 
     # -------------------------------------------------------------------------
+
+elif sys.argv[1] == '4':
+    print 'Test All 4'
+    tee = create_channel(CircleCoupling(R=40, L=100,
+                                        PosH=Vector(0, 0, 0),
+                                        Normal=Vector(0, 0, 1))
+                         .link(CircleTee(NormalT0=Vector(1, 0, 0))))
+
+    tee.link(LongElbowAngle(RC=100, NormalT=Vector(0, 0, 1)), 0)
+
+    tee.link(LongElbowAngle(RC=100, NormalT=Vector(0, 1, 0)), 1)
 
 elif sys.argv[1] == '0':
     for i in range(1, n_tests+1):

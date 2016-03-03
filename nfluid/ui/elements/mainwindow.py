@@ -162,9 +162,7 @@ class MainWindow(QtGui.QMainWindow):
                                              buttons=QtGui.QMessageBox.Yes |
                                              QtGui.QMessageBox.No)
             if but == QtGui.QMessageBox.Yes:
-                print "R E T U R N E D True"
                 return True
-            print "R E T U R N E D False"
             return False
 
     def get_path_save_file(self, ext):

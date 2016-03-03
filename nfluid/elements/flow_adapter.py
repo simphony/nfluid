@@ -75,7 +75,6 @@ class FlowAdapter(ChannelElement2G):
                 self.calculate_volume()
             except:
                 pass
-        print "-- -- -- THE VOLUME -- -- --", self.volume
         return ''
 
     def print_info(self):

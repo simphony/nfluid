@@ -44,8 +44,6 @@ class CreationPiecesWidget(QtGui.QWidget):
                                         triggered=self.add_current_piece)
 
     def add_current_piece(self):
-        print "Adding new piece"
-        # print self.pieces_widget.get_piece()
         piece = self.pieces_widget.get_piece()
         ok = NfluidDataManager.add_piece(piece)
         if ok is 0:

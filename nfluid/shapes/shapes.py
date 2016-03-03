@@ -74,23 +74,15 @@ class Shape(object):
                                        tail.NormalT.X(2))
                     tail.mesh = cls.total_mesh.attach(tail.mesh, gate)
                     c, normal_tail_current = tail.mesh.get_face_info(1)
-                    print "normal_tail", normal_tail
-                    print "normal_tail_current", normal_tail_current
                     angle = angle_between_vectors(normal_tail,
                                                   normal_tail_current)
                     iter = 100
-                    print "angle beg"
-                    print angle
-                    print normal_tail_current
                     while angle > 0.001 and iter:
                         tail.mesh.set_orientation(math.degrees(angle))
                         c, normal_tail_current = tail.mesh.get_face_info(1)
                         angle = angle_between_vectors(normal_tail,
                                                       normal_tail_current)
                         iter -= 1
-                        print angle
-                        print normal_tail_current
-                    print "angle_end"
                     # if iter == 0:
                     #   iter = 100
                     # while angle > 0.001 and iter:
@@ -140,23 +132,15 @@ class Shape(object):
                     normal_tail = (initial.NormalT.X(0), initial.NormalT.X(1),
                                    initial.NormalT.X(2))
                 c, normal_tail_current = initial_mesh.get_face_info(1)
-                print "normal_tail", normal_tail
-                print "normal_tail_current", normal_tail_current
                 angle = angle_between_vectors(normal_tail,
                                               normal_tail_current)
                 iter = 100
-                print "angle beg"
-                print angle
-                print normal_tail_current
                 while angle > 0.001 and iter:
                     initial_mesh.set_orientation(math.degrees(angle))
                     c, normal_tail_current = initial_mesh.get_face_info(1)
                     angle = angle_between_vectors(normal_tail,
                                                   normal_tail_current)
                     iter -= 1
-                    print angle
-                    print normal_tail_current
-                print "angle_end"
 
             cursor = initial
             cls.total_mesh = initial_mesh

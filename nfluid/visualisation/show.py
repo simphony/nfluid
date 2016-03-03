@@ -1,6 +1,6 @@
 import visvis as vv
+from visvis import solidLine
 backend = 'pyside'
-from visvis import solidLine, Pointset, Point
 
 
 def show(items, normals=None):

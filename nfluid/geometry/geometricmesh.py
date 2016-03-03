@@ -312,6 +312,22 @@ class GeometricMesh(object):
         n_normals = len(normals)
         return (res[0]/n_normals, res[1]/n_normals, res[2]/n_normals)
 
+    def draw_triangle_normals(self):
+        normals_v = []
+        for t in self.triangles.itervalues():
+            v0 = self.vertex(t[0])
+            v1 = self.vertex(t[1])
+            v2 = self.vertex(t[2])
+            c_n = normal_of(v0, v1, v2)
+            c_c = center_of([v0, v1, v2])
+            c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
+            ps = Pointset(3)
+            ps.append(Point(c_c))
+            ps.append(Point(c_c2))
+            normals_v.append(ps)
+
+        show([self], normals_v)
+
     @property
     def resolution(self):
         return self.vertex_count
@@ -598,8 +614,6 @@ class CylindricalPart(GeometricMesh):
     def attach(self, figure, conn_face=0):
         # Last face (considered tail ftm)
         # with the conn_face modification, there is no conflict with tees
-        print "--- attach; self, nfaces: ", self, self.n_faces()
-        print "--- attach; figure, nfaces: ", figure, figure.n_faces()
         center1, normal1 = self.get_face_info(1+conn_face)
         center2, normal2 = figure.get_face_info(0)
         figure.move(center1, normal1)
@@ -627,7 +641,6 @@ class CylindricalPart(GeometricMesh):
 
     def adapt(self, figure, conn_face=0):
         # We dont adapt tee! stub, maybe we should change this
-        print "--- adapt; figure, nfaces: ", figure, figure.n_faces()
         if figure.n_faces() > 2:
             return figure
         # Calculate angle of twist
@@ -673,8 +686,6 @@ class CylindricalPart(GeometricMesh):
             return self._connect_to_point(figure)
 
     def _connect_to_point(self, point, face=None):
-        print "_connect_to_point"
-        print "point", point
         res = CylindricalPart()
         n_vertices1 = self.n_vertices()
         # vertex_coordinates = []
@@ -694,7 +705,6 @@ class CylindricalPart(GeometricMesh):
                 p1 = info[0]
                 d = (p1[0]-point[0], p1[1]-point[1], p1[2]-point[2])
                 c_distance = abs(vector_norm(d))
-                print "c_distance", c_distance
                 if c_distance < cur_distance:
                     cur_face = face
                     # cur_info = info
@@ -704,7 +714,6 @@ class CylindricalPart(GeometricMesh):
             cur_face = self.connection_face(face)
             cur_index = face
 
-        # print "cur_face", cur_face
         # calculate intersection of the connection face vertices
         # with plane of the circle, so we obtain the optimal connection
         vertex_coords = [self.vertex(index_) for index_ in cur_face]
@@ -896,67 +905,19 @@ class CylindricalPart(GeometricMesh):
         face0 = list(self.connection_face(0))
         face0 = face0[::-1]
         center, normal = self.get_face_info(0)
-        print '\n' * 20
-        print "center, normal"
-        print center, normal
         v_index = self.add_vertex(center)
         self.add_normal(v_index, normal)
         for v1, v2 in zip(face0, face0[1:] + [face0[0]]):
             self.add_triangle((v1, v2, v_index))
 
-            v0 = self.vertex(v1)
-            v1 = self.vertex(v2)
-            v2 = self.vertex(v_index)
-            c_n = normal_of(v0, v1, v2)
-            c_c = center_of([v0, v1, v2])
-            c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
-            ps = Pointset(3)
-            ps.append(Point(c_c))
-            ps.append(Point(c_c2))
-            normals_v.append(ps)
-
-
-
         for i in xrange(self.n_faces() - 1):
             i = i + 1
             face = list(self.connection_face(i))
             center, normal = self.get_face_info(i)
-            print "center, normal"
-            print center, normal
             v_index = self.add_vertex(center)
             self.add_normal(v_index, normal)
             for v1, v2 in zip(face, face[1:] + [face[0]]):
                 self.add_triangle((v1, v2, v_index))
-
-                v0 = self.vertex(v1)
-                v1 = self.vertex(v2)
-                v2 = self.vertex(v_index)
-                c_n = normal_of(v0, v1, v2)
-                c_c = center_of([v0, v1, v2])
-                c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
-                ps = Pointset(3)
-                ps.append(Point(c_c))
-                ps.append(Point(c_c2))
-                normals_v.append(ps)
-
-        print "self.normals"
-        print self.normals
-
-        normals_v = []
-        for t in self.triangles.itervalues():
-            v0 = self.vertex(t[0])
-            v1 = self.vertex(t[1])
-            v2 = self.vertex(t[2])
-            c_n = normal_of(v0, v1, v2)
-            c_c = center_of([v0, v1, v2])
-            c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long, c_c[2] + c_n[2] * long]
-            ps = Pointset(3)
-            ps.append(Point(c_c))
-            ps.append(Point(c_c2))
-            normals_v.append(ps)
-
-        print "show 2"
-        show([self], normals_v)
 
     def intersection_of_point(self, point, normal):
         ray = Line3D(point, normal)

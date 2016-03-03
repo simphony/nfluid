@@ -58,11 +58,7 @@ class SchemaPiecesWidget(QtGui.QWidget):
                                   pen=self.rect_pen, brush=self.rect_brush)
         text = self.schema_scene.addSimpleText(elem)
         len_text = text.boundingRect().width()
-        print "len_text"
-        print len_text
         margin = (self.name_space - len_text) / 2
-        print "margin"
-        print margin
         text.setX(x + self.pen_width + margin)
         text.setY(y + self.pen_width)
 
@@ -122,16 +118,8 @@ class SchemaPiecesWidget(QtGui.QWidget):
             total_height = (height) * (self.level_space +
                                        self.connection_space + self.pen_width)
             self.schema_view.setSceneRect(0, 0, total_width, total_height)
-            print "width, height"
-            print width, height
             init_x = total_width / 2
             init_x -= (self.name_space) / 2
             init_y = 10
             self.draw_elements(init, init_x, init_y, total_width / 2,
                                height - 1)
-            # self.add_element(init.data.name(), init_x, init_y)
-
-            # name_space = 20
-            # strings_struct = tree.strings_structure(name_space)
-            # print " - - - - - - - strings_struct - - - - - - - "
-            # print strings_struct
