@@ -2,7 +2,8 @@ import math
 import numpy as np
 import bisect
 
-from visvis import OrientableMesh
+from visvis import OrientableMesh, Pointset
+import visvis as vv
 from simphony.cuds.mesh import Point, Face, Cell, Mesh
 from nfluid.external.transformations import rotation_matrix
 # from nfluid.external.transformations import angle_between_vectors
@@ -13,7 +14,7 @@ from nfluid.geometry.functions import cos_table, sin_table
 from nfluid.geometry.functions import angle_between_vectors
 from nfluid.geometry.functions import normal_of, center_of, distance
 from nfluid.geometry.auxiliar_geometry import Plane, Line3D
-import visvis as vv
+from nfluid.visualisation.show import show
 
 
 class GeometricMesh(object):
@@ -116,8 +117,31 @@ class GeometricMesh(object):
         res.add_cells([Cell(v_ids_matching.values())])
         return res
 
+    # def export(self, filename):
+        # vv_mesh = self.to_visvis_mesh()
+        # vv.meshWrite(filename, vv_mesh, bin=False)
+        # vv_mesh = None
+
     def export(self, filename):
-        vv.meshWrite(filename, self.to_visvis_mesh(), bin=False)
+        file_out = open(filename, 'w')
+        file_out.write('solid\n')
+        for t in self.triangles.itervalues():
+            v0 = self.vertex(t[0])
+            v1 = self.vertex(t[1])
+            v2 = self.vertex(t[2])
+            c_n = normal_of(v0, v1, v2)
+            file_out.write('facet normal {0} {1} {2}\n'.format(
+                            str(c_n[0]), str(c_n[1]), str(c_n[2])))
+            file_out.write('outer loop\n')
+            file_out.write('vertex {0} {1} {2}\n'.format(
+                            str(v0[0]), str(v0[1]), str(v0[2])))
+            file_out.write('vertex {0} {1} {2}\n'.format(
+                            str(v1[0]), str(v1[1]), str(v1[2])))
+            file_out.write('vertex {0} {1} {2}\n'.format(
+                            str(v2[0]), str(v2[1]), str(v2[2])))
+            file_out.write('endloop\nendfacet\n')
+        file_out.write('endsolid\n')
+        file_out.close()
 
     def n_vertices(self):
         return len(self.vertices)
@@ -130,6 +154,48 @@ class GeometricMesh(object):
 
     def move(self, point, direction):
         pass
+
+    # def _move(self, point, direction, p, n):
+        # """center == True means that we do the movement in reference
+        # to the center of the mesh
+        # center == False means that we do the movement in reference to the
+        # center of the head circle.
+        # This method implies a traslation and a rotation.
+        # """
+        # angle = angle_between_vectors(direction, n)
+        # if angle == math.pi or angle == 0:
+        #    # aux_plane = Plane(p, n)
+        #    # aux_point = aux_plane.get_point()
+        #    # vect = unit_vector((aux_point[0]-p[0],
+        #                       # aux_point[1]-p[1],
+        #                       # aux_point[2]-p[2]))
+        # else:
+        #    # vect = unit_vector(vector_product(direction, n))
+
+        # rot_m = rotation_matrix(angle, vect)
+        # d = (point[0]-p[0], point[1]-p[1], point[2]-p[2])
+        # t = (-p[0], -p[1], -p[2])
+        # values = self.vertices.values()
+        # values.append(1)
+        # # new_values = np.dot(values, rot_m)
+        # print "np.dot(values, rot_m) B"
+        # print "values"
+        # print values
+        # print "rot_m"
+        # print rot_m
+        # print np.dot(values, rot_m)
+        # print "np.dot(values, rot_m) E"
+        # new_values = 0
+        # new_values.pop()
+        # self.vertices = self.vertices.fromkeys(self.vertices.keys(),
+        #                                        new_values)
+        # # for k, v in self.vertices.iteritems():
+        #    # # n_v = (v[0]+t[0], v[1]+t[1], v[2]+t[2])
+        #    # # if (angle != 0.0 and angle != 2*math.pi and
+        #            # # math.isnan(angle) is False):
+        #        # # n_v = np.dot(n_v+(1,), rot_m)
+        #    # # n_v = (n_v[0]+d[0]-t[0], n_v[1]+d[1]-t[1], n_v[2]+d[2]-t[2])
+        #    # # self.update_vertex(k, n_v)
 
     def _move(self, point, direction, p, n):
         """center == True means that we do the movement in reference
@@ -241,6 +307,23 @@ class GeometricMesh(object):
             res[2] += n[2]
         n_normals = len(normals)
         return (res[0]/n_normals, res[1]/n_normals, res[2]/n_normals)
+
+    def draw_triangle_normals(self):
+        normals_v = []
+        for t in self.triangles.itervalues():
+            v0 = self.vertex(t[0])
+            v1 = self.vertex(t[1])
+            v2 = self.vertex(t[2])
+            c_n = normal_of(v0, v1, v2)
+            c_c = center_of([v0, v1, v2])
+            c_c2 = [c_c[0] + c_n[0] * long, c_c[1] + c_n[1] * long,
+                    c_c[2] + c_n[2] * long]
+            ps = Pointset(3)
+            ps.append(Point(c_c))
+            ps.append(Point(c_c2))
+            normals_v.append(ps)
+
+        show([self], normals_v)
 
     @property
     def resolution(self):
@@ -360,13 +443,14 @@ class Circle3D(GeometricMesh):
 
         res = CylindricalPart()
         res.vertices = dict(self.vertices)
-        res.n_vertices = self.n_vertices
+        res.vertex_count = self.n_vertices()
         res.normals = dict(self.normals)
+        res.normals_count = self.n_normals()
         res.triangles = dict(self.triangles)
-        res.n_triangles = self.triangles
+        res.triangles_count = self.n_triangles()
         cap = res.add_vertex(point)
         res.add_normal(cap, point)
-
+        res.add_connection_face(tuple([x for x in xrange(self.n_vertices())]))
         for i in xrange(self.slices):
             res.add_triangle((i, cap, (i + 1) % self.slices))
         return res
@@ -448,10 +532,10 @@ class Circle3D(GeometricMesh):
                 res.add_vertex(figure.vertex(i))
                 res.add_normal(i+self.slices, figure.normal(i))
             for i in xrange(self.slices):
-                res.add_triangle((i, i+self.slices, (i+1) % (self.slices)))
+                res.add_triangle((i, (i+1) % (self.slices), i+self.slices))
                 res.add_triangle(((i+1) % self.slices,
-                                  (i+self.slices) % (self.slices*2),
-                                  ((i+1) % self.slices) + self.slices))
+                                  ((i+1) % self.slices) + self.slices,
+                                  (i+self.slices) % (self.slices*2)))
             res.add_connection_face(tuple([x for x in xrange(n_vertices)]))
             res.add_connection_face(
                 tuple([x+n_vertices for x in xrange(n_vertices)]))
@@ -554,7 +638,6 @@ class CylindricalPart(GeometricMesh):
 
     def adapt(self, figure, conn_face=0):
         # We dont adapt tee! stub, maybe we should change this
-        print "--- adapt; figure, nfaces: ", figure, figure.n_faces()
         if figure.n_faces() > 2:
             return figure
         # Calculate angle of twist
@@ -596,9 +679,58 @@ class CylindricalPart(GeometricMesh):
             return figure._connect_to_structuredcylindricalpart(self)
         elif isinstance(figure, CylindricalPart):
             return self._connect_to_cylindricalpart(figure)
+        else:
+            return self._connect_to_point(figure)
 
-    def _connect_to_point(self, point):
-        pass
+    def _connect_to_point(self, point, face=None):
+        res = CylindricalPart()
+        n_vertices1 = self.n_vertices()
+        # vertex_coordinates = []
+        for i in xrange(n_vertices1):
+            index = res.add_vertex(self.vertex(i))
+            res.add_normal(index, self.normal(i))
+        # Copy current triangles in the part
+        res.triangles = dict(self.triangles)
+        res.triangles_count = self.triangles_count
+        cur_index = None
+        cur_face = None
+        # cur_info = None
+        cur_distance = 9999
+        if face is None:
+            for index, face in self.connection_faces.iteritems():
+                info = self.get_face_info(index)
+                p1 = info[0]
+                d = (p1[0]-point[0], p1[1]-point[1], p1[2]-point[2])
+                c_distance = abs(vector_norm(d))
+                if c_distance < cur_distance:
+                    cur_face = face
+                    # cur_info = info
+                    cur_distance = c_distance
+                    cur_index = index
+        else:
+            cur_face = self.connection_face(face)
+            cur_index = face
+
+        # calculate intersection of the connection face vertices
+        # with plane of the circle, so we obtain the optimal connection
+        vertex_coords = [self.vertex(index_) for index_ in cur_face]
+        point_normal = normal_of(vertex_coords[0],
+                                 vertex_coords[1],
+                                 vertex_coords[2])
+
+        index = res.add_vertex(point)
+        res.add_normal(index, point_normal)
+
+        n_vertices = len(cur_face)
+        for i in xrange(n_vertices):
+            res.add_triangle((cur_face[i % n_vertices],
+                              index,
+                              cur_face[(i + 1) % n_vertices]))
+        # Copy this properly!!
+        res.connection_faces = dict(self.connection_faces)
+        del res.connection_faces[cur_index]
+        res.face_count = self.face_count - 1
+        return res
 
     def _connect_to_circle3d(self, circle, face=None):
         res = CylindricalPart()
@@ -669,11 +801,11 @@ class CylindricalPart(GeometricMesh):
         n_vertices = len(cur_face)
         for i in xrange(n_vertices):
             res.add_triangle((cur_face[i],
-                              connections_dict[cur_face[i]],
-                              cur_face[(i+1) % n_vertices]))
+                              cur_face[(i+1) % n_vertices],
+                              connections_dict[cur_face[i]]))
             res.add_triangle((cur_face[(i+1) % n_vertices],
-                              connections_dict[cur_face[i]],
-                              connections_dict[cur_face[(i+1) % n_vertices]]))
+                              connections_dict[cur_face[(i+1) % n_vertices]],
+                              connections_dict[cur_face[i]]))
         # Copy this properly!!
         res.connection_faces = dict(self.connection_faces)
         res.connection_faces[cur_index] = new_indexes.values()
@@ -762,12 +894,25 @@ class CylindricalPart(GeometricMesh):
         closed STL surface.
         NOTE: this will terminate the mesh, so there is no guarantee that the
         rest of operation will work after closing the mesh."""
-        for i in xrange(self.n_faces()):
-            face = self.connection_face(i)
+        # We give special treatment to face 0. It's the initial one of the
+        # first piece and it has incorrect order or vertices in terms
+        # of closing the surface.
+        face0 = list(self.connection_face(0))
+        face0 = face0[::-1]
+        center, normal = self.get_face_info(0)
+        v_index = self.add_vertex(center)
+        self.add_normal(v_index, normal)
+        for v1, v2 in zip(face0, face0[1:] + [face0[0]]):
+            self.add_triangle((v1, v2, v_index))
+
+        for i in xrange(self.n_faces() - 1):
+            i = i + 1
+            face = list(self.connection_face(i))
             center, normal = self.get_face_info(i)
             v_index = self.add_vertex(center)
-            for v1, v2 in zip(face, face[1:]+(face[0],)):
-                self.add_triangle((v1, v_index, v2))
+            self.add_normal(v_index, normal)
+            for v1, v2 in zip(face, face[1:] + [face[0]]):
+                self.add_triangle((v1, v2, v_index))
 
     def intersection_of_point(self, point, normal):
         ray = Line3D(point, normal)
@@ -801,6 +946,158 @@ class CylindricalPart(GeometricMesh):
                             inter_point = ((inter, key))
                             min_d = cur_d
         return inter_point
+
+    def intersections_of_point(self, point, normal):
+        ray = Line3D(point, normal)
+        inter_points = []
+        for key, triangle in self.triangles.iteritems():
+            v0 = self.vertex(triangle[0])
+            v1 = self.vertex(triangle[1])
+            v2 = self.vertex(triangle[2])
+            n = normal_of(v0, v1, v2)
+            plane = Plane(v0, n)
+            inter = plane.intersection(ray)
+            if inter is not None:
+                if (not math.isnan(inter[0]) and
+                        not math.isnan(inter[1]) and
+                        not math.isnan(inter[2])):
+                    # check if inside triangle
+                    a = np.array([[v0[0], v1[0], v2[0]],
+                                  [v0[1], v1[1], v2[1]],
+                                  [v0[2], v1[2], v2[2]]])
+                    b = np.array([inter[0], inter[1], inter[2]])
+                    try:
+                        s = np.linalg.solve(a, b)
+                    except np.linalg.linalg.LinAlgError:
+                        return None
+                    if (s[0] >= 0 and s[0] <= 1 and
+                            s[1] >= 0 and s[1] <= 1 and
+                            s[2] >= 0 and s[2] <= 1):
+                        inter_points.append((inter, key))
+        return inter_points
+
+    def is_inside_solid_angle(self, point, inter_points=None):
+        pass
+
+    def is_inside_triangles(self, point, inter_points=None):
+        # copy_mesh = copy.deepcopy(self)
+        # copy_mesh.close()
+        # inter_points = copy_mesh.intersections_of_point(point, (0, 1, 0))
+        if inter_points is None:
+            inter_points = self.intersections_of_point(point, (0, 1, 0))
+        left = 0
+        right = 0
+        for coords, key in inter_points:
+            cur_n = (coords[0]-point[0], coords[1]-point[1],
+                     coords[2]-point[2])
+            if cur_n[1] < 0:
+                left += 1
+            else:
+                right += 1
+        # print "point"
+        # print point
+        # print "left - right"
+        # print left, right
+        if left % 2 != 0 and right % 2 != 0:
+            return True
+        return False
+
+    def fill_mesh(self, step, filename, inside_func=None):
+        if inside_func is None:
+            inside_func = self.is_inside_triangles
+        self.close()
+        limits = self.coord_limits()
+        # cube = mesh.generate_cubic_mesh(
+        #           limits['x_min'],limits['x_max'],limits['y_min'],
+        #           limits['y_max'],limits['z_min'],limits['z_max'], step)
+
+        x_min = limits['x_min']
+        y_min = limits['y_min']
+        z_min = limits['z_min']
+        x_max = limits['x_max']
+        y_max = limits['y_max']
+        z_max = limits['z_max']
+        cur_x = x_min
+        cur_y = y_min
+        cur_z = z_min
+        inside = []
+        not_inside = []
+        while cur_x < x_max:
+            # print "X"
+            # print cur_x, cur_y, cur_z
+            while cur_z < z_max:
+                # print "Z"
+                # print cur_x, cur_y, cur_z
+                p = (cur_x, cur_y, cur_z)
+                inter_points = self.intersections_of_point(p, (0, 1, 0))
+                while cur_y < y_max:
+                    # print "Y"
+                    # print cur_x, cur_y, cur_z
+                    cur_p = (cur_x, cur_y, cur_z)
+                    if inside_func(cur_p, inter_points):
+                        inside.append(cur_p)
+                    else:
+                        not_inside.append(cur_p)
+                    cur_y += step
+                cur_y = y_min
+                cur_z += step
+            cur_z = z_min
+            cur_x += step
+
+        file_out = open(filename, 'w')
+
+        total_v = len(inside)
+        file_out.write('{}\n'.format(total_v))
+        file_out.write('---------------\n')
+        spec = 'O'
+        for v in inside:
+            file_out.write('{0} {1} {2} {3}\n'.format(spec, v[0], v[1], v[2]))
+
+        file_out.close()
+
+        return not_inside
+
+    def coord_limits(self):
+        x_min = 9999
+        x_max = -9999
+        y_min = 9999
+        y_max = -9999
+        z_min = 9999
+        z_max = -9999
+        for v in self.vertices.itervalues():
+            if v[0] < x_min:
+                x_min = v[0]
+            if v[0] > x_max:
+                x_max = v[0]
+            if v[1] < y_min:
+                y_min = v[1]
+            if v[1] > y_max:
+                y_max = v[1]
+            if v[2] < z_min:
+                z_min = v[2]
+            if v[2] > z_max:
+                z_max = v[2]
+        return {'x_min': x_min, 'x_max': x_max,
+                'y_min': y_min, 'y_max': y_max,
+                'z_min': z_min, 'z_max': z_max}
+
+    # @classmethod
+    def generate_cubic_mesh(self, x_min, x_max, y_min, y_max,
+                            z_min, z_max, step=1):
+        res = GeometricMesh()
+        cur_x = x_min
+        cur_y = y_min
+        cur_z = z_min
+        while cur_x < x_max:
+            while cur_y < y_max:
+                while cur_z < z_max:
+                    res.add_vertex((cur_x, cur_y, cur_z))
+                    cur_z += step
+                cur_z = z_min
+                cur_y += step
+            cur_y = y_min
+            cur_x += step
+        return res
 
     def intersection(self, figure):
         """This calculates an returns the intersection of the vertices of

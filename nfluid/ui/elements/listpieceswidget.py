@@ -55,17 +55,14 @@ class ListPiecesWidget(QtGui.QWidget):
                                 triggered=self.restart_pieces)
 
     def delete_current_piece(self):
-        print "Deleting current piece"
         current_piece = self.current_piece()
         if current_piece.id != -1:
             NfluidDataManager.remove_piece(current_piece)
             self.main_win.refresh_all()
 
     def restart_pieces(self):
-        print "Deleting all pieces"
         NfluidDataManager.remove_all()
         self.main_win.refresh_all()
-        # print self.current_piece().name()
 
     def refresh_gui(self):
         self.list_pieces.clear()

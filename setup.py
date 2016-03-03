@@ -36,5 +36,7 @@ setup(
         "numpy >= 1.4.1",
         "PySide"],
     packages=find_packages(),
-    package_data={'nfluid.util': ['snappy_templates/*.txt']}
+    package_data={'nfluid.util': ['foam_files\\common_files\\*',
+                                  'foam_files\\cfmesh_templates\\*',
+                                  'foam_files\\snappy_templates\\*']}
     )

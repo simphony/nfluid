@@ -5,6 +5,7 @@ from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import is_colinear
 from nfluid.util.rotations import GetRotationMatrixAxisAngleGrad
+from nfluid.geometry.auxiliar_geometry import Arithmetic_Polygon
 import copy
 # Class of CirclePath
 
@@ -48,6 +49,7 @@ class CirclePath(ChannelElement2G):
         for Point in range(1, len(Points)):
             Length += (Points[Point]-Points[Point-1]).get_len()
         self.length = Length
+        self.volume = None
 
         self.heads.append(GateCircle(self))
         self.tails.append(GateCircle(self))
@@ -94,7 +96,25 @@ class CirclePath(ChannelElement2G):
     def get_r(self):
         return self.get_head_gate().get_r()
 
+    def get_volume(self):
+        return self.volume
+
+    def calculate_volume(self):
+        slices = ChannelElement2G.slices
+        vol = 0.0
+        r = self.get_r()
+        for i in range(1, len(self.InputPoints)):
+            l = (self.InputPoints[i]-self.InputPoints[i-1]).get_len()
+            vol += Arithmetic_Polygon(r, slices).area() * l
+        self.volume = vol
+
     def resolve_geometry_child(self):
+        if self.volume is None:
+            try:
+                self.calculate_volume()
+            except:
+                pass
+        print "-- -- -- THE VOLUME -- -- --", self.volume
         return ''
 
     def print_info(self):
@@ -106,10 +126,14 @@ class CirclePath(ChannelElement2G):
 
     def create_shape_child(self):
         print 'create_shape CirclePath'
-
+        print "self.CenterPos"
+        print self.CenterPos
+        print "self.RotationOperator"
+        print self.RotationOperator
         # Compute new Points: shift + rotation
         RPoints = []
         for Point in self.InputPoints:
+            print Point
             RPoint = self.CenterPos + self.RotationOperator * Point
             RPoints.append(RPoint)
 

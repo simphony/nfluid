@@ -69,36 +69,47 @@ def CreateBlockMeshDict(f, minv, maxv, nx, ny, nz):
 def generate_snappy_project(file_path, template_name=None,
                             ncells_x=20, ncells_y=20, ncells_z=20):
 
+    path = None
     if template_name is None:
         path = os.path.dirname(stl.__file__)
-        template_name = os.path.join(path,
-                                     'snappy_templates\\SnappyTemplate.txt')
+        default_template = 'foam_files\\snappy_templates\\SnappyTemplate.txt'
+        template_name = os.path.join(path, default_template)
 
     base_name = ntpath.basename(file_path)
     case_name, file_ext = os.path.splitext(base_name)
 
-    if os.path.exists('FOAM_PROJECT'):
-        shutil.rmtree('FOAM_PROJECT')
+    if os.path.exists('SNAPPY_PROJECT'):
+        shutil.rmtree('SNAPPY_PROJECT')
 
-    make_dir('FOAM_PROJECT\\constant\\polyMesh')
-    make_dir('FOAM_PROJECT\\constant\\triSurface')
-    make_dir('FOAM_PROJECT\\system')
+    make_dir('SNAPPY_PROJECT\\constant\\polyMesh')
+    make_dir('SNAPPY_PROJECT\\constant\\triSurface')
+    make_dir('SNAPPY_PROJECT\\system')
 
-    shutil.copy2(file_path, 'FOAM_PROJECT\\constant\\triSurface\\' +
+    shutil.copy2(file_path, 'SNAPPY_PROJECT\\constant\\triSurface\\' +
                  case_name + '.stl')
+
+    if path is not None:
+        shutil.copy2(path + '\\snappy_files\\needed_files\\controlDict',
+                     'SNAPPY_PROJECT\\system\\')
+        shutil.copy2(path + '\\snappy_files\\needed_files\\fvSchemes',
+                     'SNAPPY_PROJECT\\system\\')
+        shutil.copy2(path + '\\snappy_files\\needed_files\\fvSolution',
+                     'SNAPPY_PROJECT\\system\\')
 
     stlinfo = stl.STL_Info(file_path)
     minv = (stlinfo.minx, stlinfo.miny, stlinfo.minz)
     maxv = (stlinfo.maxx, stlinfo.maxy, stlinfo.maxz)
+    in_p = stlinfo.inside_point
 
-    fb = open('FOAM_PROJECT\\constant\\polyMesh\\blockMeshDict', 'w')
+    fb = open('SNAPPY_PROJECT\\constant\\polyMesh\\blockMeshDict', 'w')
     CreateBlockMeshDict(fb, minv, maxv, ncells_x, ncells_y, ncells_z)
 
     search_words = [
         '$$$STL_FILE_NAME$$$',
         '$$$TASK_NAME$$$',
         '$$$REFINEMENT_BOX_MIN$$$',
-        '$$$REFINEMENT_BOX_MAX$$$']
+        '$$$REFINEMENT_BOX_MAX$$$',
+        '$$$LOCATION_IN_MESH$$$']
 
     replacement = len(search_words) * [None]
 
@@ -106,10 +117,11 @@ def generate_snappy_project(file_path, template_name=None,
     replacement[1] = case_name
     replacement[2] = str(minv[0]) + ' ' + str(minv[1]) + ' ' + str(minv[2])
     replacement[3] = str(maxv[0]) + ' ' + str(maxv[1]) + ' ' + str(maxv[2])
+    replacement[4] = str(in_p[0]) + ' ' + str(in_p[1]) + ' ' + str(in_p[2])
 
     # ft = open('TEMPLATES/' + template_name, 'r')
     ft = open(template_name, 'r')
-    fo = open('FOAM_PROJECT\\system\\snappyHexMeshDict', 'w')
+    fo = open('SNAPPY_PROJECT\\system\\snappyHexMeshDict', 'w')
 
     for n_str in ft:
         for i in xrange(len(search_words)):
@@ -122,7 +134,8 @@ if __name__ == '__main__':
         print 'Usage:'
         print '\tpython snappy_generator.py'
         print '\t\t<STL_file_name>'
-        print '\t\t[template_file_path="SnappyTemplate.txt"]'
+        print '\t\t[template_file_path="foam_files/snappy_templates/' + \
+              'SnappyTemplate.txt"]'
         print '\t\t[ncells_x=20] [ncells_y=20] [ncells_z=20]'
         exit(0)
 

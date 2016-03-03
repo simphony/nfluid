@@ -28,6 +28,8 @@ class SphericCoupling(ChannelElement2G):
         self.RadiusSphere = RS
         self.IsAxialSym = True
 
+        self.volume = None
+
         self.set_normal_def(Normal)
 
         self.get_head_gate().set_pos_def(PosH)
@@ -47,6 +49,17 @@ class SphericCoupling(ChannelElement2G):
     def get_r(self):
         return self.get_head_gate().get_r()
 
+    def get_volume(self):
+        return self.volume
+
+    def calculate_volume(self):
+        rs = self.RadiusSphere
+        r = self.get_r()
+        h = rs - r
+        v_cap = ((math.pi * h) / 6.0) * (3.0 * r * r + h * h)
+        v_sphere = (4.0 / 3.0) * math.pi * rs * rs * rs
+        self.volume = v_sphere - (2 * v_cap)
+
     def resolve_geometry_child(self):
         if self.get_r() is not None:
             if self.get_r() > self.RadiusSphere:
@@ -59,6 +72,13 @@ class SphericCoupling(ChannelElement2G):
             self.get_tail_gate().PosElement = Vector(0, 0, length)
 
             self.length = length * 2
+
+        if self.volume is None:
+            try:
+                self.calculate_volume()
+            except:
+                pass
+        print "-- -- -- THE VOLUME -- -- --", self.volume
 
         return ''
 

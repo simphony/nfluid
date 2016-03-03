@@ -1,6 +1,7 @@
 from PySide import QtCore, QtGui
 from nfluid.ui.elements.creationpieceswidget import CreationPiecesWidget
 from nfluid.ui.elements.listpieceswidget import ListPiecesWidget
+from nfluid.ui.elements.schemapieceswidget import SchemaPiecesWidget
 from nfluid.ui.elements.visualizer import VisVisWidget
 from nfluid.ui.manager import NfluidDataManager
 from nfluid.util.vector import Vector
@@ -29,12 +30,22 @@ class MainWindow(QtGui.QMainWindow):
         title = QtGui.QLabel(cur_widget.name())
         self.dw_pieces_list.setTitleBarWidget(title)
 
-        self.cw_visualizer = VisVisWidget()
+        self.dw_pieces_schema = QtGui.QDockWidget()
+        cur_widget = SchemaPiecesWidget(self)
+        self.dw_pieces_schema.setWidget(cur_widget)
+        self.dw_pieces_schema.setFeatures(QtGui.QDockWidget.
+                                          NoDockWidgetFeatures)
+        title = QtGui.QLabel(cur_widget.name())
+        self.dw_pieces_schema.setTitleBarWidget(title)
+
+        self.cw_visualizer = VisVisWidget(self)
 
         self.menu_main = self.menuBar()
         file_menu = self.menu_main.addMenu('&File')
         file_menu.addAction(self.stl_action)
-        file_menu.addAction(self.foam_action)
+        file_menu.addAction(self.foam_snappy_action)
+        file_menu.addAction(self.foam_cfmesh_action)
+        file_menu.addAction(self.txt_action)
 
         self.status_bar = None
 
@@ -53,9 +64,15 @@ class MainWindow(QtGui.QMainWindow):
         self.dw_pieces_list.setMinimumWidth(self.min_w)
         self.dw_pieces_list.setMinimumHeight(self.min_h)
 
+        self.dw_pieces_schema.setMaximumWidth(self.max_w)
+        self.dw_pieces_schema.setMaximumHeight(self.max_h)
+        self.dw_pieces_schema.setMinimumWidth(self.min_w)
+        self.dw_pieces_schema.setMinimumHeight(self.min_h)
+
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea,
                            self.dw_pieces_creation)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
+        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
         self.setCentralWidget(self.cw_visualizer.widget())
 
     def create_actions(self):
@@ -65,19 +82,41 @@ class MainWindow(QtGui.QMainWindow):
                             statusTip="Exports the current mesh to STL format",
                             triggered=self.export_mesh_stl)
 
-        self.foam_action = QtGui.QAction(
-                               QtGui.QIcon(),
-                               "&Create OpenFoam project",
-                               self,
-                               statusTip="Creates the OpenFoam\
-                               Project with the default template",
-                               triggered=self.export_mesh_foam)
+        self.txt_action = QtGui.QAction(
+                            QtGui.QIcon(), "&Export mesh to txt",
+                            self,
+                            statusTip="Exports the information of the mesh" +
+                            " to txt format",
+                            triggered=self.export_mesh_info_txt)
+
+        self.foam_snappy_action = QtGui.QAction(
+                                    QtGui.QIcon(),
+                                    "&Create OpenFoam Snappy project",
+                                    self,
+                                    statusTip="Creates the OpenFoam Snappy" +
+                                    "HexMesh Project with default template",
+                                    triggered=self.export_mesh_foam_snappy)
+
+        self.foam_cfmesh_action = QtGui.QAction(
+                                    QtGui.QIcon(),
+                                    "&Create OpenFoam  cfMesh project",
+                                    self,
+                                    statusTip="Creates the OpenFoam cfMesh" +
+                                    " (tetMesh) Project with default template",
+                                    triggered=self.export_mesh_foam_cfmesh)
 
     def export_mesh_stl(self):
         NfluidDataManager.export_mesh_stl()
+        self.refresh_visualizer()
 
-    def export_mesh_foam(self):
-        NfluidDataManager.export_mesh_foam()
+    def export_mesh_foam_snappy(self):
+        NfluidDataManager.export_mesh_foam_snappy()
+
+    def export_mesh_foam_cfmesh(self):
+        NfluidDataManager.export_mesh_foam_cfmesh()
+
+    def export_mesh_info_txt(self):
+        NfluidDataManager.export_mesh_info_txt()
 
     def exit_handler(self):
         self.cw_visualizer.exit_handler()
@@ -89,9 +128,13 @@ class MainWindow(QtGui.QMainWindow):
     def refresh_list_pieces(self):
         self.dw_pieces_list.widget().refresh_gui()
 
+    def refresh_schema_pieces(self):
+        self.dw_pieces_schema.widget().refresh_gui()
+
     def refresh_all(self):
         self.refresh_list_pieces()
         self.refresh_visualizer()
+        self.refresh_schema_pieces()
 
     def message(self, msg=''):
         msgBox = QtGui.QMessageBox()
@@ -112,7 +155,15 @@ class MainWindow(QtGui.QMainWindow):
             number = QtGui.QInputDialog.getInt(self, param_name, msg)
             return int(number[0])
         if param_type == float:
-            pass
+            number = QtGui.QInputDialog.getDouble(self, param_name, msg)
+            return float(number[0])
+        if param_type == bool:
+            but = QtGui.QMessageBox.question(self, param_name, msg,
+                                             buttons=QtGui.QMessageBox.Yes |
+                                             QtGui.QMessageBox.No)
+            if but == QtGui.QMessageBox.Yes:
+                return True
+            return False
 
     def get_path_save_file(self, ext):
         res = QtGui.QFileDialog.getSaveFileName(filter=ext)

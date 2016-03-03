@@ -58,6 +58,9 @@ class ChannelElement2G(ChannelElement):
             DifPos = self.get_head_gate().Pos - self.get_tail_gate().Pos
             return DifPos.get_len()
 
+    def get_volume(self):
+        return
+
     def delete(self):
 
         (gates_tails, gates_heads) = self.detach()

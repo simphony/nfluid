@@ -1,8 +1,9 @@
 import visvis as vv
+from visvis import solidLine
 backend = 'pyside'
 
 
-def show(items):
+def show(items, normals=None):
     """Function that shows a mesh object.
     """
     for item in items:
@@ -25,6 +26,11 @@ def show(items):
     if axes.daspectAuto is None:
         axes.daspectAuto = False
     axes.SetLimits()
+
+    if normals is not None:
+        for normal in normals:
+            sl = solidLine(normal, 0.15)
+            sl.faceColor = 'r'
 
     # Show title and enter main loop
     vv.title('Show')

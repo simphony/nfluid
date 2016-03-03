@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import math
 from nfluid.shapes.shapes import CreateShape
 from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
+from nfluid.geometry.auxiliar_geometry import Arithmetic_Polygon
 # Class of FlowAdapter
 
 
@@ -26,6 +28,7 @@ class FlowAdapter(ChannelElement2G):
         self.tails.append(GateCircle(self))
 
         self.length = L
+        self.volume = None
         self.set_normal_def(Normal)
         self.get_head_gate().set_pos_def(PosH)
         self.get_tail_gate().set_pos_def(PosT)
@@ -49,13 +52,29 @@ class FlowAdapter(ChannelElement2G):
     def get_rt(self):
         return self.get_tail_gate().get_r()
 
+    def get_volume(self):
+        return self.volume
+
+    def calculate_volume(self):
+        slices = ChannelElement2G.slices
+        poly_top = Arithmetic_Polygon(self.get_rh(), slices)
+        poly_bottom = Arithmetic_Polygon(self.get_rt(), slices)
+        l = self.get_len()
+        a_t = poly_top.area()
+        a_p = poly_bottom.area()
+        self.volume = l/3.0 * (a_t + a_p + math.sqrt(a_t * a_p))
+
     def resolve_geometry_child(self):
         if self.get_len() is not None:
             self.get_head_gate().PosElement = Vector(0, 0,
                                                      -self.get_len() / 2.0)
             self.get_tail_gate().PosElement = Vector(0, 0,
                                                      self.get_len() / 2.0)
-
+        if self.volume is None:
+            try:
+                self.calculate_volume()
+            except:
+                pass
         return ''
 
     def print_info(self):

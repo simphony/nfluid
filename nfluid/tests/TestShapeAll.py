@@ -35,13 +35,15 @@ if sys.argv[1] == '1':
 
     tee2 = CircleTee(NormalT0=Vector(0, 0, 1))
     tee3 = CircleTee(NormalT0=Vector(0, 0, 1))
+
     tee.link(tee2, 0)
     tee.link(tee3, 1)
 
     tee2.link(CircleCoupling(L=42), 0)
     tee2.link(ShortElbowAngle(NormalT=Vector(1, 1, 0)), 1) \
         .link(LongElbowAngle(RC=15, NormalT=Vector(0, 0, 1))) \
-        .link(FlowAdapter(RT=15, L=20))
+        .link(FlowAdapter(RT=15, L=20)) \
+        .link(CircleCoupling(L=15))
 
     tee3.link(CircleCoupling(L=42), 0) \
         .link(SphericCoupling(RS=20))
@@ -82,30 +84,45 @@ elif sys.argv[1] == '3':
        .link(CircleCoupling(L=20)) \
        .link(Cap(L=5))
 
-    print '-----------------------------'
-    el1 = assembly.get_element_by_id(1)
-    el2 = assembly.get_element_by_id(2)
-    el3 = assembly.get_element_by_id(3)
+    # COMMENTED TILL WE KNOW IT WORKS PROPERLY!!!! ----------------------------
 
-    if el1 is not None:
-        print 'Name: ', el1.get_name(), 'get_element_by_id 1: ', \
-            el1.print_info()
-    if el2 is not None:
-        print 'Name: ', el2.get_name(), 'get_element_by_id 2: ', \
-            el2.print_info()
-    if el3 is not None:
-        print 'Name: ', el3.get_name(), 'get_element_by_id 3: ', \
-            el3.print_info()
+    # print '-----------------------------'
+    # el1 = assembly.get_element_by_id(1)
+    # el2 = assembly.get_element_by_id(2)
+    # el3 = assembly.get_element_by_id(3)
 
-    print el2.get_chain_str()
+    # if el1 is not None:
+    #    print 'Name: ', el1.get_name(), 'get_element_by_id 1: ', \
+    #        el1.print_info()
+    # if el2 is not None:
+    #    print 'Name: ', el2.get_name(), 'get_element_by_id 2: ', \
+    #        el2.print_info()
+    # if el3 is not None:
+    #    print 'Name: ', el3.get_name(), 'get_element_by_id 3: ', \
+    #        el3.print_info()
 
-    if el1 is not None:
-        assembly.delete_element(el1)
+    # print el2.get_chain_str()
 
-    new_elt = CircleCoupling(L=125)
-    el3.insert_before(new_elt)
+    # if el1 is not None:
+    #    assembly.delete_element(el1)
 
-    assembly.insert_element_before(new_elt, el3)
+    # new_elt = CircleCoupling(L=125)
+    # el3.insert_before(new_elt)
+
+    # assembly.insert_element_before(new_elt, el3)
+
+    # -------------------------------------------------------------------------
+
+elif sys.argv[1] == '4':
+    print 'Test All 4'
+    tee = create_channel(CircleCoupling(R=40, L=100,
+                                        PosH=Vector(0, 0, 0),
+                                        Normal=Vector(0, 0, 1))
+                         .link(CircleTee(NormalT0=Vector(1, 0, 0))))
+
+    tee.link(LongElbowAngle(RC=100, NormalT=Vector(0, 0, 1)), 0)
+
+    tee.link(LongElbowAngle(RC=100, NormalT=Vector(0, 1, 0)), 1)
 
 elif sys.argv[1] == '0':
     for i in range(1, n_tests+1):

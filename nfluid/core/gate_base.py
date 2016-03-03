@@ -40,6 +40,9 @@ class Gate(object):
     def set_pos_def(self, PosDef):
         self.PosDef = PosDef
 
+    def get_pos_def(self):
+        return self.PosDef
+
     def set_size_def(
         self,
         s0,
@@ -163,6 +166,9 @@ class Gate(object):
 
             return res
 
+    def get_pos(self):
+        return self.Pos
+
 # from buddy
 # "" - no errors
 # other - error
@@ -198,6 +204,9 @@ class Gate(object):
             NormalDef.normalize()
         self.NormalDef = NormalDef
 
+    def get_normal_def(self):
+        return self.NormalDef
+
 # from element
 # "" - nothing changed
 # "ok" - changed
@@ -226,6 +235,9 @@ class Gate(object):
             # error
 
             return res
+
+    def get_normal(self):
+        return self.Normal
 
 # from buddy
 # "" - no errors

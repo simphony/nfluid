@@ -5,11 +5,17 @@ from nfluid.elements.circle_tee import CircleTee
 from nfluid.elements.flow_adapter import FlowAdapter
 from nfluid.elements.long_elbow_angle import LongElbowAngle
 from nfluid.elements.short_elbow_angle import ShortElbowAngle
+from nfluid.elements.long_elbow_normals import LongElbowNormals
+from nfluid.elements.short_elbow_normals import ShortElbowNormals
 from nfluid.elements.spheric_coupling import SphericCoupling
+from nfluid.elements.circle_path import CirclePath
+from nfluid.elements.cap import Cap
 from nfluid.shapes.shapes import Shape
 from nfluid.ui.elements.auxiliar import strings
 from nfluid.util.vector import Vector
+from nfluid.util.tree import TreeFunctions
 import copy
+import visvis as vv
 
 
 class Piece(object):
@@ -21,15 +27,25 @@ class Piece(object):
         self.params = copy.deepcopy(params)
 
     def name(self):
-        print "    -------- B"
-        print self.type, Piece.sep, str(self.id)
-        print "    -------- E"
         return self.type + Piece.sep + str(self.id)
 
     def set_name(self, name):
         elems = name.split(Piece.sep)
         self.type = elems[0]
         self.id = int(elems[1])
+
+    def __str__(self):
+        return self.name()
+
+
+class TreeFunctionsManager(TreeFunctions):
+    @classmethod
+    def reset(cls):
+        TreeFunctions.reset()
+
+    @classmethod
+    def convert_data(cls, elem, params=None):
+        elem.data = Piece(elem.data.get_name(), elem.data.get_id())
 
 
 class NfluidDataManager(object):
@@ -49,11 +65,6 @@ class NfluidDataManager(object):
 
     @classmethod
     def add_piece(cls, piece):
-        # print "piece..."
-        # print piece.type
-        # print piece.id
-        # print piece.params
-        # print piece.params["L  - length"]
         n_pieces = NfluidDataManager.number_of_pieces()
         new_piece = None
         current_piece = None
@@ -65,11 +76,17 @@ class NfluidDataManager(object):
                                                 msg)
             piece.params[strings.head_position] = pos
             msg = "As is the first piece of the assembly, you must define\
-                   its initial normal head."
+                   its initial head normal."
             normal = NfluidDataManager.gui.ask_for(Vector,
                                                    strings.head_normal,
                                                    msg)
             piece.params[strings.head_normal] = normal
+            msg = "As is the first piece of the assembly, you must define\
+                   its initial head radius."
+            radius = NfluidDataManager.gui.ask_for(float,
+                                                   strings.head_radius,
+                                                   msg)
+            piece.params[strings.head_radius] = radius
             if piece.params[strings.tail_normal] is None:
                 if piece.params[strings.tail_normal0] is None:
                     # We copy the same normal, since if its not defined
@@ -79,22 +96,18 @@ class NfluidDataManager(object):
             new_piece = NfluidDataManager.create_piece(piece)
             NfluidDataManager.model.clear_geometry()
             NfluidDataManager.model.resolve_geometry()
+            return 0
         else:
             current_piece = NfluidDataManager.gui.\
                             dw_pieces_list.widget().\
                             current_piece()
-            print "current_piece.."
-            print current_piece.type
-            print current_piece.id
             if current_piece.id == -1:
                 msg = "No piece selected to link to!"
                 NfluidDataManager.gui.message(msg)
+                return -1
             else:
                 selected_piece = NfluidDataManager.get_piece(current_piece)
-                print "selected_piece..aaaaaaaaaaaaaaaaa"
-                print selected_piece
                 selected_piece.print_info()
-                print "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                 new_piece = NfluidDataManager.create_piece(piece)
                 if current_piece.type == strings.tee:
                     gate = 0
@@ -108,6 +121,7 @@ class NfluidDataManager(object):
                     selected_piece.link(new_piece)
                 NfluidDataManager.model.clear_geometry()
                 NfluidDataManager.model.resolve_geometry()
+                return 0
 
     @classmethod
     def remove_piece(cls, piece):
@@ -135,14 +149,21 @@ class NfluidDataManager(object):
             return strings.short_elbow_angle
         if isinstance(element, LongElbowAngle):
             return strings.long_elbow_angle
+        if isinstance(element, ShortElbowNormals):
+            return strings.short_elbow_normals
+        if isinstance(element, LongElbowNormals):
+            return strings.long_elbow_normals
         if isinstance(element, SphericCoupling):
             return strings.spheric_coupling
         if isinstance(element, CircleTee):
             return strings.tee
+        if isinstance(element, CirclePath):
+            return strings.circle_path
+        if isinstance(element, Cap):
+            return strings.cap
 
     @classmethod
     def list_of_pieces(cls):
-        # DUMMY !!!!
         res = []
         if not NfluidDataManager.exists():
             return res
@@ -150,40 +171,50 @@ class NfluidDataManager(object):
             type = NfluidDataManager._get_string(element)
             id = element.get_id()
             res.append(Piece(type, id))
-        # res.append(Piece(strings.coupling, 0))
-        # res.append(Piece(strings.coupling, 1))
-        # res.append(Piece(strings.flow_adapter, 2))
-        # res.append(Piece(strings.short_elbow, 3))
-        # res.append(Piece(strings.short_elbow, 4))
-        # res.append(Piece(strings.spheric_coupling, 5))
-        # res.append(Piece(strings.tee, 6))
         return res
 
     @classmethod
     def get_total_mesh(self):
         if not NfluidDataManager.exists():
             return None
-        # STUB!
-        # if NfluidDataManager.number_of_pieces() >= 3:
-        # NfluidDataManager.model.clear_geometry()
-        # NfluidDataManager.model.resolve_geometry()
-        # if not NfluidDataManager.model.is_resolved_geometry() == '':
-            # return None
-        # NfluidDataManager.model.print_info()
         NfluidDataManager.model.create_shapes()
         return Shape.total_mesh
-        # else:
-        #    return None
+
+    @classmethod
+    def get_assembly_tree(self):
+        if not NfluidDataManager.exists():
+            return None
+        tree = NfluidDataManager.model.get_tree_structure()
+        if tree is not None:
+            tree.walk_amplitude(func=TreeFunctionsManager.convert_data)
+        return tree
 
     @classmethod
     def export_mesh_stl(self):
         file_name = NfluidDataManager.gui.get_path_save_file(ext='.stl')
-        NfluidDataManager.model.export_shapes(file_name[0])
+        title = 'Close .stl?'
+        msg = 'Do you want to close the exported .stl surface?'
+        close = NfluidDataManager.gui.ask_for(bool,
+                                              title,
+                                              msg)
+        NfluidDataManager.model.export_shapes(file_name[0], close)
+        vv.closeAll()
 
     @classmethod
-    def export_mesh_foam(self):
-        NfluidDataManager.model.create_openfoam_project()
-        msg = "Done."
+    def export_mesh_info_txt(self):
+        file_name = NfluidDataManager.gui.get_path_save_file(ext='.txt')
+        NfluidDataManager.model.print_info_file(file_name[0])
+
+    @classmethod
+    def export_mesh_foam_snappy(self):
+        NfluidDataManager.model.create_openfoam_snappy_project()
+        msg = "Exported as snappy project."
+        NfluidDataManager.gui.message(msg)
+
+    @classmethod
+    def export_mesh_foam_cfmesh(self):
+        NfluidDataManager.model.create_openfoam_cfmesh_project()
+        msg = "Exported as cfmesh (tetmesh) project."
         NfluidDataManager.gui.message(msg)
 
     @classmethod
@@ -194,10 +225,6 @@ class NfluidDataManager(object):
     def create_piece(self, piece):
         """Factory function for piece creation.
         """
-        print "piece..."
-        print piece.type
-        print piece.id
-        print piece.params
         if piece.type == strings.coupling:
             return CircleCoupling(R=piece.params[strings.head_radius],
                                   L=piece.params[strings.length],
@@ -226,13 +253,25 @@ class NfluidDataManager(object):
                                   PosT=piece.params[strings.tail_position],
                                   NormalH=piece.params[strings.head_normal],
                                   NormalT=piece.params[strings.tail_normal])
+        if piece.type == strings.short_elbow_normals:
+            return ShortElbowNormals(R=piece.params[strings.head_radius],
+                                     PosH=piece.params[strings.head_position],
+                                     PosT=piece.params[strings.tail_position],
+                                     NormalH=piece.params[strings.head_normal],
+                                     NormalT=piece.params[strings.tail_normal])
+        if piece.type == strings.long_elbow_normals:
+            return LongElbowNormals(R=piece.params[strings.head_radius],
+                                    RC=piece.params[strings.curvature_radius],
+                                    PosH=piece.params[strings.head_position],
+                                    PosT=piece.params[strings.tail_position],
+                                    NormalH=piece.params[strings.head_normal],
+                                    NormalT=piece.params[strings.tail_normal])
         if piece.type == strings.spheric_coupling:
             return SphericCoupling(R=piece.params[strings.head_radius],
                                    RS=piece.params[strings.sphere_radius],
                                    PosH=piece.params[strings.head_position],
                                    PosT=piece.params[strings.tail_position],
-                                   NormalH=piece.params[strings.head_normal],
-                                   NormalT=piece.params[strings.tail_normal])
+                                   Normal=piece.params[strings.tail_normal])
         if piece.type == strings.tee:
             return CircleTee(R=piece.params[strings.head_radius],
                              PosH=piece.params[strings.head_position],
@@ -241,3 +280,16 @@ class NfluidDataManager(object):
                              NormalH=piece.params[strings.head_normal],
                              NormalT0=piece.params[strings.tail_normal0],
                              NormalT1=piece.params[strings.tail_normal1])
+        if piece.type == strings.cap:
+            return Cap(L=piece.params[strings.length],
+                       R=piece.params[strings.head_radius],
+                       PosH=piece.params[strings.head_position],
+                       NormalH=piece.params[strings.head_normal])
+        if piece.type == strings.circle_path:
+            return CirclePath(Points=piece.params[strings.points_list],
+                              R=piece.params[strings.head_radius],
+                              PosH=piece.params[strings.head_position],
+                              PosT=piece.params[strings.tail_position],
+                              NormalH=piece.params[strings.head_normal],
+                              NormalT=piece.params[strings.tail_normal],
+                              Twist=piece.params[strings.angle])

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import math
+import copy
 
 from nfluid.visualisation.show import show
 from nfluid.geometry.generator import GeometryGenerator
@@ -36,9 +37,13 @@ class Shape(object):
 
 # WORKFLOW init, add_shape, add_shape ... , finalize,  ...use..., release
     @classmethod
-    def init(cls):
+    def init(cls, gates_sides, elements_divisions):
         cls.shapes = ShapeContainer()
         cls.total_mesh = None
+        cls.slices = gates_sides
+        cls.stacks = elements_divisions
+        _generator.slices = gates_sides
+        _generator.stacks = elements_divisions
 
     @classmethod
     def connect_next_piece(cls, cursor, initial_gate=0):
@@ -58,8 +63,8 @@ class Shape(object):
         for tail in cursor.links_tail:
             if tail is not None:
                 if (isinstance(tail, ShapeLongElbowAngle) or
-                        isinstance(tail, ShapeTee) or
                         isinstance(tail, ShapeShortElbowAngle) or
+                        isinstance(tail, ShapeTee) or
                         isinstance(tail, ShapeCirclePath)):
                     if isinstance(tail, ShapeTee):
                         normal_tail = (tail.NormalT0.X(0), tail.NormalT0.X(1),
@@ -69,32 +74,26 @@ class Shape(object):
                                        tail.NormalT.X(2))
                     tail.mesh = cls.total_mesh.attach(tail.mesh, gate)
                     c, normal_tail_current = tail.mesh.get_face_info(1)
-                    print "normal_tail", normal_tail
-                    print "normal_tail_current", normal_tail_current
                     angle = angle_between_vectors(normal_tail,
                                                   normal_tail_current)
                     iter = 100
-                    print "angle beg"
-                    print angle
-                    print normal_tail_current
                     while angle > 0.001 and iter:
                         tail.mesh.set_orientation(math.degrees(angle))
                         c, normal_tail_current = tail.mesh.get_face_info(1)
                         angle = angle_between_vectors(normal_tail,
                                                       normal_tail_current)
                         iter -= 1
-                        print angle
-                        print normal_tail_current
-                    print "angle_end"
-                    if iter == 0:
-                        iter = 100
+                    # if iter == 0:
+                    #   iter = 100
                     # while angle > 0.001 and iter:
-                        # angle = math.pi - angle
-                        # tail.mesh.set_orientation(math.degrees(angle))
-                        # c, normal_tail_current = tail.mesh.get_face_info(1)
-                        # angle = angle_between_vectors(normal_tail,
-                        #                             normal_tail_current)
-                        # iter -= 1
+                    #   angle = math.pi - angle
+                    #   tail.mesh.set_orientation(math.degrees(angle))
+                    #   c, normal_tail_current = tail.mesh.get_face_info(1)
+                    #   angle = angle_between_vectors(normal_tail,
+                    #                           normal_tail_current)
+                    #   iter -= 1
+                    #   print angle
+                    #   print normal_tail_current
                     tail.mesh = cls.total_mesh.adapt(tail.mesh, gate)
                     cls.total_mesh = cls.total_mesh.connect(tail.mesh, gate)
                 else:
@@ -104,6 +103,8 @@ class Shape(object):
                 if isinstance(tail, ShapeTee):
                     # gate += 1
                     new_paths += 1
+                if isinstance(tail, ShapeCap):
+                    new_paths -= 1
                 new_paths += Shape.connect_next_piece(tail, cur_gate)
                 gate += new_paths
             else:
@@ -119,6 +120,28 @@ class Shape(object):
             dir = (initial.NormalH.X(0), initial.NormalH.X(1),
                    initial.NormalH.X(2))
             initial_mesh.move(point=pos, direction=dir)
+            if (isinstance(initial, ShapeLongElbowAngle) or
+                    isinstance(initial, ShapeShortElbowAngle) or
+                    isinstance(initial, ShapeTee) or
+                    isinstance(initial, ShapeCirclePath)):
+                if isinstance(initial, ShapeTee):
+                    normal_tail = (initial.NormalT0.X(0),
+                                   initial.NormalT0.X(1),
+                                   initial.NormalT0.X(2))
+                else:
+                    normal_tail = (initial.NormalT.X(0), initial.NormalT.X(1),
+                                   initial.NormalT.X(2))
+                c, normal_tail_current = initial_mesh.get_face_info(1)
+                angle = angle_between_vectors(normal_tail,
+                                              normal_tail_current)
+                iter = 100
+                while angle > 0.001 and iter:
+                    initial_mesh.set_orientation(math.degrees(angle))
+                    c, normal_tail_current = initial_mesh.get_face_info(1)
+                    angle = angle_between_vectors(normal_tail,
+                                                  normal_tail_current)
+                    iter -= 1
+
             cursor = initial
             cls.total_mesh = initial_mesh
             cls.connect_next_piece(cursor, 0)
@@ -135,10 +158,14 @@ class Shape(object):
             cls.shapes.append(shape)
 
     @classmethod
-    def export(cls, file_name):
+    def export(cls, file_name, close=False):
         if cls.total_mesh is None:
             raise Exception('Total mesh not generated!')
-        cls.total_mesh.export(file_name)
+        res = copy.deepcopy(cls.total_mesh)
+        if close is True:
+            res.close()
+        res.export(file_name)
+        res = None
 
     @classmethod
     def simphony_mesh(cls):
@@ -267,27 +294,6 @@ class ShapeFlowAdapter(Shape):
                                                    self.Length)
 
 
-class ShapeLongElbow90(Shape):
-
-    def __init__(
-        self, RC, R,
-        PosH, PosT,
-        NormalH, NormalT
-    ):
-        Shape.__init__(self)
-        # Curvature radius
-        self.RadiusCurvature = RC
-        # Gate radius
-        self.Radius = R
-        self.PosH = PosH
-        self.PosT = PosT
-        self.NormalH = NormalH
-        self.NormalT = NormalT
-        self.mesh = _generator.create_long_elbow(self.RadiusCurvature,
-                                                 self.Radius
-                                                 )
-
-
 class ShapeLongElbowAngle(Shape):
 
     def __init__(
@@ -308,22 +314,6 @@ class ShapeLongElbowAngle(Shape):
         self.mesh = _generator.create_long_elbow(self.RadiusCurvature,
                                                  self.Radius,
                                                  self.angle)
-
-
-class ShapeShortElbow90(Shape):
-
-    def __init__(
-        self, R,
-        PosH, PosT,
-        NormalH, NormalT
-    ):
-        Shape.__init__(self)
-        self.Radius = R
-        self.PosH = PosH
-        self.PosT = PosT
-        self.NormalH = NormalH
-        self.NormalT = NormalT
-        self.mesh = _generator.create_short_elbow(self.Radius)
 
 
 class ShapeShortElbowAngle(Shape):
@@ -413,12 +403,8 @@ def CreateShape(type, center, rotation,
         shape = ShapeTee4(par0, par1, par2, par3, par4, par5)
     elif type == 'flow_adapter':
         shape = ShapeFlowAdapter(par0, par1, par2, par3, par4, par5)
-    elif type == 'long_elbow_90':
-        shape = ShapeLongElbow90(par0, par1, par2, par3, par4, par5)
     elif type == 'long_elbow_angle':
         shape = ShapeLongElbowAngle(par0, par1, par2, par3, par4, par5, par6)
-    elif type == 'short_elbow_90':
-        shape = ShapeShortElbow90(par0, par1, par2, par3, par4)
     elif type == 'short_elbow_angle':
         shape = ShapeShortElbowAngle(par0, par1, par2, par3, par4, par5)
     elif type == 'spheric_coupling':

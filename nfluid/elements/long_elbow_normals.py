@@ -5,6 +5,7 @@ from nfluid.core.channel_element_2g import ChannelElement2G
 from nfluid.core.gates import GateCircle
 from nfluid.util.vector import Vector
 from nfluid.util.vector import get_vector_angle_grad
+from nfluid.geometry.auxiliar_geometry import Arithmetic_Polygon
 import math
 import copy
 # Class of LongElbowNormals
@@ -31,6 +32,7 @@ class LongElbowNormals(ChannelElement2G):
 
         self.angle = None
         self.RadiusCurvature = RC
+        self.volume = None
 
         # TODO Correct NormalT if both NormalH and NormalT are defined
 
@@ -59,6 +61,14 @@ class LongElbowNormals(ChannelElement2G):
     def get_r_curv(self):
         return self.RadiusCurvature
 
+    def get_volume(self):
+        return self.volume
+
+    def calculate_volume(self):
+        slices = ChannelElement2G.slices
+        poly = Arithmetic_Polygon(self.get_r(), slices)
+        self.volume = poly.area() * self.get_len()
+
     def resolve_geometry_child(self):
         if self.get_normal_head() is not None and \
            self.get_normal_tail() is not None:
@@ -75,6 +85,13 @@ class LongElbowNormals(ChannelElement2G):
             self.get_tail_gate().PosElement = \
                 Vector((self.cos - 1) * self.RadiusCurvature, 0,
                        self.sin * self.RadiusCurvature)
+
+        if self.volume is None:
+            try:
+                self.calculate_volume()
+            except:
+                pass
+        print "-- -- -- THE VOLUME -- -- --", self.volume
 
         return ''
 

@@ -1,5 +1,7 @@
 import random
 import numpy as np
+import math
+import abc
 from nfluid.geometry.functions import distance, equal_vertices
 
 
@@ -169,6 +171,108 @@ class Plane():
         x0 = self.point[0]
         y0 = self.point[1]
         z0 = self.point[2]
+
         t = ((a*x0 + b*y0 + c*z0 - a*a0 - b*a1 - c*a2) /
-             ((a*b0 - a*a0 + b*b1 - b*a1 + c*b2 - c*a2))+0.0000000001)
+             ((a*b0 - a*a0 + b*b1 - b*a1 + c*b2 - c*a2))+0.0001)
+
         return line.get_point(t, b_line)
+
+
+class Arithmetic_Triangle(object):
+
+    def __init__(self, c1=None, c2=None, h=None):
+        self._c1 = c1
+        self._c2 = c2
+        self._h = h
+        # self._recalculate(c1, c2, h)
+
+    def get_c1(self):
+        self._recalculate(c1=None, c2=self._c2, h=self._h)
+        return self._c1
+
+    def get_c2(self):
+        self._recalculate(c1=self._c1, c2=None, h=self._h)
+        return self._c2
+
+    def get_h(self):
+        self._recalculate(c1=self._c1, c2=self._c2, h=None)
+        return self._h
+
+    def set_c1(self, c1):
+        self._c1 = c1
+
+    def set_c2(self, c2):
+        self._c2 = c2
+
+    def set_h(self, h):
+        self._h = h
+
+    @abc.abstractmethod
+    def _recalculate(self, c1=None, c2=None, h=None):
+        pass
+
+
+class Arithmetic_Triangle_Rect(Arithmetic_Triangle):
+
+    def __init__(self, c1=None, c2=None, h=None):
+        super(Arithmetic_Triangle_Rect, self).__init__(c1, c2, h)
+
+    def _recalculate(self, c1=None, c2=None, h=None):
+        n_none = 0
+        if self._c1 is None:
+            n_none += 1
+        if self._c2 is None:
+            n_none += 1
+        if self._h is None:
+            n_none += 1
+        if n_none >= 2:
+            raise Exception("Can't calculate sides; not enough params")
+
+        if self._h is None:
+            self._h = math.sqrt((self._c1*self._c1) + (self._c2*self._c2))
+        elif self._c1 is None:
+            self._c1 = math.sqrt((self._h*self._h) - (self._c2*self._c2))
+        else:
+            self._c2 = math.sqrt((self._h*self._h) - (self._c1*self._c1))
+
+
+class Arithmetic_Triangle_Iso(Arithmetic_Triangle):
+    # Not completed!!!
+    def __init__(self, c=None, h=None):
+        super(Arithmetic_Triangle_Iso, self).__init__(c, c, h)
+
+    def get_c(self):
+        return self.get_c1()
+
+    def _recalculate(self, c1=None, c2=None, h=None):
+        n_none = 0
+        if self._c1 is None:
+            n_none += 1
+        else:
+            self._c2 = self._c1
+        if self._c2 is None:
+            n_none += 1
+        else:
+            self._c1 = self._c2
+        if self._h is None:
+            n_none += 1
+        if n_none >= 2:
+            raise Exception("Can't calculate sides; not enough params")
+        # to be completed
+
+
+class Arithmetic_Polygon(object):
+
+    def __init__(self, radius, n_sides):
+        # radius == center to one the vertices
+        self._radius = radius
+        self._n_sides = n_sides
+
+    def area(self):
+        angle = (2*math.pi) / self._n_sides
+        # with the arc..
+        side = 2.0 * self._radius * math.sin(angle/2.0)
+        t2 = Arithmetic_Triangle_Rect(c1=side/2.0, h=self._radius)
+        apothema = t2.get_c2()
+        perimeter = side * self._n_sides
+        return (0.5 * apothema * perimeter)

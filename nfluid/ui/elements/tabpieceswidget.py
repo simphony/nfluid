@@ -5,33 +5,41 @@ from nfluid.ui.manager import Piece
 
 
 _pieces = [(strings.coupling,
-            [(strings.head_radius, 0),
-             (strings.length, 0)]
+            [(strings.length, 0)]
             ),
            (strings.flow_adapter,
-            [(strings.head_radius, 0),
-             (strings.tail_radius, 0),
+            [(strings.tail_radius, 0),
              (strings.length, 0)]
             ),
-           (strings.short_elbow,
-            [(strings.head_radius, 0),
-             (strings.tail_normal, (0, 0, 0)),
+           (strings.short_elbow_angle,
+            [(strings.tail_normal, (0, 0, 0)),
              (strings.angle, 0)]
             ),
-           (strings.long_elbow,
+           (strings.short_elbow_normals,
+            [(strings.tail_normal, (0, 0, 0))]
+            ),
+           (strings.long_elbow_angle,
             [(strings.curvature_radius, 0),
-             (strings.head_radius, 0),
              (strings.tail_normal, (0, 0, 0)),
              (strings.angle, 0)]
             ),
-           (strings.spheric_coupling,
-            [(strings.head_radius, 0),
-             (strings.sphere_radius, 0),
+           (strings.long_elbow_normals,
+            [(strings.curvature_radius, 0),
              (strings.tail_normal, (0, 0, 0))]
             ),
+           (strings.spheric_coupling,
+            [(strings.sphere_radius, 0)]
+            ),
            (strings.tee,
-            [(strings.head_radius, 0),
-             (strings.tail_normal0, (0, 0, 0))]
+            [(strings.tail_normal0, (0, 0, 0))]
+            ),
+           (strings.cap,
+            [(strings.length, 0)]
+            ),
+           (strings.circle_path,
+            [(strings.angle, 0),
+             (strings.tail_normal, (0, 0, 0)),
+             (strings.points_list, [None])]
             )
            ]
 
