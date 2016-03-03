@@ -976,7 +976,10 @@ class CylindricalPart(GeometricMesh):
                         inter_points.append((inter, key))
         return inter_points
 
-    def is_inside(self, point, inter_points=None):
+    def is_inside_solid_angle(self, point, inter_points=None):
+        pass
+
+    def is_inside_triangles(self, point, inter_points=None):
         # copy_mesh = copy.deepcopy(self)
         # copy_mesh.close()
         # inter_points = copy_mesh.intersections_of_point(point, (0, 1, 0))
@@ -999,7 +1002,9 @@ class CylindricalPart(GeometricMesh):
             return True
         return False
 
-    def fill_mesh(self, step, filename):
+    def fill_mesh(self, step, filename, inside_func=None):
+        if inside_func is None:
+            inside_func = self.is_inside_triangles
         self.close()
         limits = self.coord_limits()
         # cube = mesh.generate_cubic_mesh(
@@ -1029,7 +1034,7 @@ class CylindricalPart(GeometricMesh):
                     # print "Y"
                     # print cur_x, cur_y, cur_z
                     cur_p = (cur_x, cur_y, cur_z)
-                    if self.is_inside(cur_p, inter_points):
+                    if inside_func(cur_p, inter_points):
                         inside.append(cur_p)
                     else:
                         not_inside.append(cur_p)
