@@ -867,7 +867,7 @@ class CylindricalPart(GeometricMesh):
             p1 = id_check[current_t[0]]
             p2 = id_check[current_t[1]]
             p3 = id_check[current_t[2]]
-            res.add_triangle((p1, p2, p3))
+            res.add_triangle((p1, p3, p2))
 
         # COMMENT: CONNECTION FACES ORDER DOES MATTER!!!! KEEP IT!!!
         # Add the other connection face of this object
