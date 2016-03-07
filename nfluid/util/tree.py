@@ -21,14 +21,14 @@ class TreeNode(object):
         self.prev = prev
         self.next_l = next_l
         self.next_r = next_r
-        self.data = copy.deepcopy(data)
+        self.data = data
 
 
 class TreeBase(object):
     def __init__(self, root):
-        self.elements = []
-        self.root = copy.deepcopy(root)
-        self.elements.append(self.root)
+        # self.elements = []
+        self.root = root
+        # self.elements.append(self.root)
 
     def get_root(self):
         return self.root
@@ -66,7 +66,7 @@ class TreeBase(object):
         while queue != []:
             (cur_elem, cur_level) = queue.pop(0)
             if cur_level == level:
-                res.append(copy.deepcopy(cur_elem))
+                res.append(cur_elem)
             left = cur_elem.next_l
             right = cur_elem.next_r
             if left is not None and cur_level < level:
@@ -85,8 +85,8 @@ class TreeBase(object):
         while queue != []:
             cur_elem = queue.pop(0)
             if value is not None and value == cur_elem.data:
-                return copy.deepcopy(cur_elem)
-            res.append(copy.deepcopy(cur_elem))
+                return cur_elem
+            res.append(cur_elem)
             if func:
                 func(cur_elem, params)
             left = cur_elem.next_l
@@ -104,8 +104,8 @@ class TreeBase(object):
         while queue != []:
             cur_elem = queue.pop()
             if value is not None and value == cur_elem.data:
-                return copy.deepcopy(cur_elem)
-            res.append(copy.deepcopy(cur_elem))
+                return cur_elem
+            res.append(cur_elem)
             if func:
                 func(cur_elem, params)
             left = cur_elem.next_l
@@ -121,7 +121,7 @@ class TreeBase(object):
             raise Exception("Full node! Can't add anything to it!")
         # if node.data is None:
             # raise Exception("Empty node!!!!")
-        cur_node = TreeNode(copy.deepcopy(node.data))
+        cur_node = TreeNode(node.data)
         cur_node.prev = prev_node
         cur_node.next_l = None
         cur_node.next_r = None
@@ -129,7 +129,7 @@ class TreeBase(object):
             prev_node.next_l = cur_node
         else:
             prev_node.next_r = cur_node
-        self.elements.append(cur_node)
+        # self.elements.append(cur_node)
         return cur_node
 
     def add_data(self, prev_data, data):
