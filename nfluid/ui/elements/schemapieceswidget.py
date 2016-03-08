@@ -1,5 +1,5 @@
 from PySide import QtGui, QtCore
-from nfluid.ui.manager import NfluidDataManager, Piece
+from nfluid.ui.manager import NfluidDataManager
 
 
 class SchemaGraphicsScene(QtGui.QGraphicsScene):
@@ -12,19 +12,10 @@ class SchemaGraphicsScene(QtGui.QGraphicsScene):
         super(SchemaGraphicsScene, self).mousePressEvent(event)
         pos = event.scenePos()
         item = self.itemAt(pos)
-        # 0 is object name
         if item is not None:
             name = item.text
-            piece = Piece()
-            piece.set_name(name)
-            elem = NfluidDataManager.get_piece(piece)
-            print elem, name
-            # self.selected = name
-            # self.main_win.status_message(name)
             self.main_win.set_selected(name)
-            # self.main_win.refresh_list_pieces()
-            # self.main_win.refresh_piece_panel()
-            
+
 
 class SchemaGraphicsItem(QtGui.QGraphicsItem):
 
@@ -113,7 +104,6 @@ class SchemaPiecesWidget(QtGui.QWidget):
         self.selected_brush.setStyle(QtCore.Qt.SolidPattern)
 
         self.rect_brush.setStyle(QtCore.Qt.LinearGradientPattern)
-
 
         self.schema_view.setHorizontalScrollBarPolicy(
                             QtCore.Qt.ScrollBarAlwaysOn)

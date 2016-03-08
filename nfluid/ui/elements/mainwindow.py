@@ -42,8 +42,6 @@ class MainWindow(QtGui.QMainWindow):
         self.dw_piece_panel_widget = QtGui.QDockWidget()
         cur_widget = PiecePanelWidget(self)
         self.dw_piece_panel_widget.setWidget(cur_widget)
-        # self.dw_piece_panel_widget.setFeatures(QtGui.QDockWidget.
-                                          # NoDockWidgetFeatures)
         title = QtGui.QLabel(cur_widget.name())
         self.dw_piece_panel_widget.setTitleBarWidget(title)
 
@@ -87,7 +85,8 @@ class MainWindow(QtGui.QMainWindow):
                            self.dw_pieces_creation)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
-        self.addDockWidget(QtCore.Qt.RightDockWidgetArea, self.dw_piece_panel_widget)
+        self.addDockWidget(QtCore.Qt.RightDockWidgetArea,
+                           self.dw_piece_panel_widget)
         self.setCentralWidget(self.cw_visualizer.widget())
 
     def create_actions(self):

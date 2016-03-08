@@ -77,37 +77,36 @@ class Piece(object):
     def from_element(self, elem):
         self.type = NfluidDataManager.get_string(elem)
         self.id = elem.get_id()
-        
         parameters = {}
 
-        parameters[strings.head_position] = self._extract_param(elem,
-                                            strings.head_position)
-        parameters[strings.tail_position] = cur_page.get_param(elem,
-                                            strings.tail_position)
-        parameters[strings.tail_position0] = cur_page.get_param(elem,
-                                            strings.tail_position0)
-        parameters[strings.tail_position1] = cur_page.get_param(elem,
-                                            strings.tail_position1)
-        parameters[strings.head_normal] = cur_page.get_param(elem,
-                                            strings.head_normal)
-        parameters[strings.tail_normal] = cur_page.get_param(elem,
-                                            strings.tail_normal)
-        parameters[strings.tail_normal0] = cur_page.get_param(elem,
-                                            strings.tail_normal0)
-        parameters[strings.tail_normal1] = cur_page.get_param(elem,
-                                            strings.tail_normal1)
-        parameters[strings.head_radius] = cur_page.get_param(elem,
-                                            strings.head_radius)
-        parameters[strings.tail_radius] = cur_page.get_param(elem,
-                                            strings.tail_radius)
-        parameters[strings.length] = cur_page.get_param(elem, strings.length)
-        parameters[strings.curvature_radius] = cur_page.get_param(elem,
-                                                 strings.curvature_radius)
-        parameters[strings.angle] = cur_page.get_param(strings.angle)
-        parameters[strings.sphere_radius] = cur_page.get_param(elem,
-                                                strings.sphere_radius)
-        parameters[strings.points_list] = cur_page.get_param(elem,
-                                            strings.points_list)
+        parameters[strings.head_position] = \
+            self._extract_param(elem, strings.head_position)
+        parameters[strings.tail_position] = \
+            self._extract_param(elem, strings.tail_position)
+        parameters[strings.tail_position0] = \
+            self._extract_param(elem, strings.tail_position0)
+        parameters[strings.tail_position1] = \
+            self._extract_param(elem, strings.tail_position1)
+        parameters[strings.head_normal] = \
+            self._extract_param(elem, strings.head_normal)
+        parameters[strings.tail_normal] = \
+            self._extract_param(elem, strings.tail_normal)
+        parameters[strings.tail_normal0] = \
+            self._extract_param(elem, strings.tail_normal0)
+        parameters[strings.tail_normal1] = \
+            self._extract_param(elem, strings.tail_normal1)
+        parameters[strings.head_radius] = \
+            self._extract_param(elem, strings.head_radius)
+        parameters[strings.tail_radius] = \
+            self._extract_param(elem, strings.tail_radius)
+        parameters[strings.length] = self._extract_param(elem, strings.length)
+        parameters[strings.curvature_radius] = \
+            self._extract_param(elem, strings.curvature_radius)
+        parameters[strings.angle] = self._extract_param(strings.angle)
+        parameters[strings.sphere_radius] = \
+            self._extract_param(elem, strings.sphere_radius)
+        parameters[strings.points_list] = \
+            self._extract_param(elem, strings.points_list)
 
         self.parameters = parameters
 

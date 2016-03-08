@@ -10,13 +10,9 @@ class PiecesList(QtGui.QListWidget):
         self.itemClicked.connect(self.on_item_click)
 
     def on_item_click(self, item):
-        print "Hola!!"
         super(PiecesList, self).setCurrentItem(item)
         name = item.text()
-        print name
         self.main_win.set_selected(name)
-        # self.parent.set_selected(name)
-        
 
 
 class ListPiecesWidget(QtGui.QWidget):
@@ -40,9 +36,6 @@ class ListPiecesWidget(QtGui.QWidget):
             if cur_name == name:
                 row = i
                 break
-        # row = self.list_pieces.row(QtGui.QListWidgetItem(name))
-        print "row ! ! ! "
-        print row
         self.list_pieces.setCurrentRow(row)
 
     def create_gui(self):

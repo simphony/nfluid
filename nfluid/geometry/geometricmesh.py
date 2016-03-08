@@ -225,7 +225,6 @@ class GeometricMesh(object):
             n_v = (n_v[0]+d[0]-t[0], n_v[1]+d[1]-t[1], n_v[2]+d[2]-t[2])
             self.update_vertex(k, n_v)
 
-
     def _set_orientation(self, angle, dir, center):
         v_rot = dir
         t = (-center[0], -center[1], -center[2])
