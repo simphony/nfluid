@@ -1,5 +1,5 @@
 from PySide import QtGui
-from nfluid.ui.manager import NfluidDataManager, Piece
+from nfluid.ui.manager import NfluidDataManager
 from nfluid.core.channel_info import PieceInfo
 
 
@@ -36,11 +36,11 @@ class PiecePanelWidget(QtGui.QWidget):
         self.setLayout(self.layout)
 
     def create_actions(self):
-        self.apply_changes_action = QtGui.QAction(
-                                      QtGui.QIcon(), "&Apply",
-                                      self,
-                                      statusTip="Change the selected piece",
-                                      triggered=self.apply_changes_current_piece)
+        self.apply_changes_action = \
+            QtGui.QAction(QtGui.QIcon(), "&Apply",
+                          self,
+                          statusTip="Change the selected piece",
+                          triggered=self.apply_changes_current_piece)
 
     def apply_changes_current_piece(self):
         current_piece = self.current_piece()
