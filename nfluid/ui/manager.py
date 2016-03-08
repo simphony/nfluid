@@ -37,6 +37,79 @@ class Piece(object):
     def __str__(self):
         return self.name()
 
+    def _extract_param(self, elem, param):
+        try:
+            res = None
+            if param == strings.head_position:
+                res = elem.get_pos_head()
+            elif param == strings.tail_position:
+                res = elem.get_pos_tail()
+            elif param == strings.tail_position0:
+                res = elem.get_pos_tail(0)
+            elif param == strings.tail_position1:
+                res = elem.get_pos_head(1)
+            elif param == strings.head_normal:
+                res = elem.get_normal_head()
+            elif param == strings.tail_normal:
+                res = elem.get_normal_tail()
+            elif param == strings.tail_normal0:
+                res = elem.get_normal_tail(0)
+            elif param == strings.tail_normal1:
+                res = elem.get_normal_tail(1)
+            elif param == strings.head_radius:
+                res = elem.get_r()
+            elif param == strings.tail_radius:
+                res = elem.get_rt()
+            elif param == strings.length:
+                res = elem.get_len()
+            elif param == strings.curvature_radius:
+                res = elem.get_r_curv()
+            elif param == strings.sphere_radius:
+                res = elem.get_sphere_r()
+            elif param == strings.points_list:
+                res = elem.get_points()
+            elif param == strings.angle:
+                res = elem.get_angle()
+            return res
+        except:
+            return None
+
+    def from_element(self, elem):
+        self.type = NfluidDataManager.get_string(elem)
+        self.id = elem.get_id()
+        parameters = {}
+
+        parameters[strings.head_position] = \
+            self._extract_param(elem, strings.head_position)
+        parameters[strings.tail_position] = \
+            self._extract_param(elem, strings.tail_position)
+        parameters[strings.tail_position0] = \
+            self._extract_param(elem, strings.tail_position0)
+        parameters[strings.tail_position1] = \
+            self._extract_param(elem, strings.tail_position1)
+        parameters[strings.head_normal] = \
+            self._extract_param(elem, strings.head_normal)
+        parameters[strings.tail_normal] = \
+            self._extract_param(elem, strings.tail_normal)
+        parameters[strings.tail_normal0] = \
+            self._extract_param(elem, strings.tail_normal0)
+        parameters[strings.tail_normal1] = \
+            self._extract_param(elem, strings.tail_normal1)
+        parameters[strings.head_radius] = \
+            self._extract_param(elem, strings.head_radius)
+        parameters[strings.tail_radius] = \
+            self._extract_param(elem, strings.tail_radius)
+        parameters[strings.length] = self._extract_param(elem, strings.length)
+        parameters[strings.curvature_radius] = \
+            self._extract_param(elem, strings.curvature_radius)
+        parameters[strings.angle] = self._extract_param(strings.angle)
+        parameters[strings.sphere_radius] = \
+            self._extract_param(elem, strings.sphere_radius)
+        parameters[strings.points_list] = \
+            self._extract_param(elem, strings.points_list)
+
+        self.parameters = parameters
+
 
 class TreeFunctionsManager(TreeFunctions):
     @classmethod
@@ -45,7 +118,28 @@ class TreeFunctionsManager(TreeFunctions):
 
     @classmethod
     def convert_data(cls, elem, params=None):
-        elem.data = Piece(elem.data.get_name(), elem.data.get_id())
+        name = elem.data.get_name()
+        if name == 'CircleCoupling':
+            name = strings.coupling
+        elif name == 'SphericCoupling':
+            name = strings.spheric_coupling
+        elif name == 'FlowAdapter':
+            name = strings.flow_adapter
+        elif name == 'CircleTee':
+            name = strings.tee
+        elif name == 'ShortElbowAngle':
+            name = strings.short_elbow_angle
+        elif name == 'LongElbowAngle':
+            name = strings.long_elbow_angle
+        elif name == 'ShortElbowNormals':
+            name = strings.short_elbow_normals
+        elif name == 'LongElbowNormals':
+            name = strings.long_elbow_normals
+        elif name == 'Cap':
+            name = strings.cap
+        elif name == 'CirclePath':
+            name = strings.circle_path
+        elem.data = Piece(name, elem.data.get_id())
 
 
 class NfluidDataManager(object):
@@ -140,7 +234,7 @@ class NfluidDataManager(object):
         NfluidDataManager.model.elements = []
 
     @classmethod
-    def _get_string(self, element):
+    def get_string(self, element):
         if isinstance(element, CircleCoupling):
             return strings.coupling
         if isinstance(element, FlowAdapter):
@@ -168,7 +262,7 @@ class NfluidDataManager(object):
         if not NfluidDataManager.exists():
             return res
         for element in NfluidDataManager.model.elements:
-            type = NfluidDataManager._get_string(element)
+            type = NfluidDataManager.get_string(element)
             id = element.get_id()
             res.append(Piece(type, id))
         return res

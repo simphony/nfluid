@@ -2,8 +2,9 @@ from PySide import QtCore, QtGui
 from nfluid.ui.elements.creationpieceswidget import CreationPiecesWidget
 from nfluid.ui.elements.listpieceswidget import ListPiecesWidget
 from nfluid.ui.elements.schemapieceswidget import SchemaPiecesWidget
+from nfluid.ui.elements.piecepanelwidget import PiecePanelWidget
 from nfluid.ui.elements.visualizer import VisVisWidget
-from nfluid.ui.manager import NfluidDataManager
+from nfluid.ui.manager import NfluidDataManager, Piece
 from nfluid.util.vector import Vector
 
 
@@ -38,6 +39,12 @@ class MainWindow(QtGui.QMainWindow):
         title = QtGui.QLabel(cur_widget.name())
         self.dw_pieces_schema.setTitleBarWidget(title)
 
+        self.dw_piece_panel_widget = QtGui.QDockWidget()
+        cur_widget = PiecePanelWidget(self)
+        self.dw_piece_panel_widget.setWidget(cur_widget)
+        title = QtGui.QLabel(cur_widget.name())
+        self.dw_piece_panel_widget.setTitleBarWidget(title)
+
         self.cw_visualizer = VisVisWidget(self)
 
         self.menu_main = self.menuBar()
@@ -69,10 +76,17 @@ class MainWindow(QtGui.QMainWindow):
         self.dw_pieces_schema.setMinimumWidth(self.min_w)
         self.dw_pieces_schema.setMinimumHeight(self.min_h)
 
+        self.dw_piece_panel_widget.setMaximumWidth(self.max_w)
+        self.dw_piece_panel_widget.setMaximumHeight(self.max_h)
+        self.dw_piece_panel_widget.setMinimumWidth(self.min_w)
+        self.dw_piece_panel_widget.setMinimumHeight(self.min_h)
+
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea,
                            self.dw_pieces_creation)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
+        self.addDockWidget(QtCore.Qt.RightDockWidgetArea,
+                           self.dw_piece_panel_widget)
         self.setCentralWidget(self.cw_visualizer.widget())
 
     def create_actions(self):
@@ -121,6 +135,11 @@ class MainWindow(QtGui.QMainWindow):
     def exit_handler(self):
         self.cw_visualizer.exit_handler()
 
+    def set_selected(self, name):
+        self.dw_pieces_list.widget().set_selected(name)
+        self.dw_pieces_schema.widget().set_selected(name)
+        self.refresh_piece_panel()
+
     def refresh_visualizer(self):
         mesh = NfluidDataManager.get_total_mesh()
         self.cw_visualizer.set_mesh(mesh)
@@ -131,15 +150,31 @@ class MainWindow(QtGui.QMainWindow):
     def refresh_schema_pieces(self):
         self.dw_pieces_schema.widget().refresh_gui()
 
+    def refresh_piece_panel(self):
+        self.dw_piece_panel_widget.widget().refresh_gui()
+
     def refresh_all(self):
         self.refresh_list_pieces()
         self.refresh_visualizer()
         self.refresh_schema_pieces()
+        self.refresh_piece_panel()
+
+    def get_current_piece(self):
+        # return self.dw_pieces_list.widget().current_piece()
+        selected = self.dw_pieces_schema.widget().selected
+        if selected is not None:
+            piece = Piece()
+            piece.set_name(selected)
+            return piece
+        return None
 
     def message(self, msg=''):
         msgBox = QtGui.QMessageBox()
         msgBox.setText(msg)
         msgBox.exec_()
+
+    def status_message(self, msg=''):
+        self.statusBar().showMessage(msg)
 
     def ask_for(self, param_type, param_name, msg=''):
         if param_type == Vector:

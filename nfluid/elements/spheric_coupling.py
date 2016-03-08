@@ -52,6 +52,9 @@ class SphericCoupling(ChannelElement2G):
     def get_volume(self):
         return self.volume
 
+    def get_sphere_r(self):
+        return self.RadiusSphere
+
     def calculate_volume(self):
         rs = self.RadiusSphere
         r = self.get_r()

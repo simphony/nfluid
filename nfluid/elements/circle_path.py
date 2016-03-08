@@ -99,6 +99,9 @@ class CirclePath(ChannelElement2G):
     def get_volume(self):
         return self.volume
 
+    def get_points(self):
+        return self.InputPoints
+
     def calculate_volume(self):
         slices = ChannelElement2G.slices
         vol = 0.0

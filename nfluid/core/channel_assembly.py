@@ -12,7 +12,7 @@ from nfluid.util.tree import TreeBase, TreeNode
 
 class ChannelAssembly(object):
 
-    def __init__(self, gates_sides=15, elements_divisions=7):
+    def __init__(self, gates_sides=14, elements_divisions=7):
         self.elements = []
         ChannelElement.assembly = self
         ChannelElement.slices = gates_sides
@@ -162,18 +162,22 @@ class ChannelAssembly(object):
     def get_tree_structure(self):
         if len(self.elements) == 0:
             return None
-        tree = TreeBase(TreeNode(self.elements[0]))
-        root = tree.get_root()
-        self._get_tree_structure(self.elements[0], tree, root)
+        tree = self._get_tree_structure()
         return tree
 
-    def _get_tree_structure(self, cur_elem, tree, cur_node):
-        if cur_elem is not None:
-            for i in xrange(len(cur_elem.tails)):
-                next_elem = cur_elem.get_next_element(i)
-                if next_elem is not None:
-                    new_node = tree.add_node(cur_node, TreeNode(next_elem))
-                    self._get_tree_structure(next_elem, tree, new_node)
+    def _get_tree_structure(self):
+        tree = TreeBase(TreeNode(self.elements[0]))
+        cur_node = tree.get_root()
+        queue = [(cur_node, self.elements[0])]
+        while len(queue) != 0:
+            cur_node, cur_elem = queue.pop()
+            if cur_elem is not None:
+                for i in xrange(len(cur_elem.tails)):
+                    next_elem = cur_elem.get_next_element(i)
+                    if next_elem is not None:
+                        new_node = tree.add_node(cur_node, TreeNode(next_elem))
+                        queue.append((new_node, next_elem))
+        return tree
 
 
 def create_channel(elt):

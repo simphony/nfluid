@@ -1,5 +1,15 @@
 from PySide import QtGui
 from nfluid.util.vector import Vector
+from nfluid.elements.circle_coupling import CircleCoupling
+from nfluid.elements.circle_tee import CircleTee
+from nfluid.elements.flow_adapter import FlowAdapter
+from nfluid.elements.long_elbow_angle import LongElbowAngle
+from nfluid.elements.short_elbow_angle import ShortElbowAngle
+from nfluid.elements.long_elbow_normals import LongElbowNormals
+from nfluid.elements.short_elbow_normals import ShortElbowNormals
+from nfluid.elements.spheric_coupling import SphericCoupling
+from nfluid.elements.circle_path import CirclePath
+from nfluid.elements.cap import Cap
 
 
 class ParametersString(object):
@@ -30,6 +40,30 @@ class ParametersString(object):
         self.tee = "tee"
         self.cap = "cap"
         self.gate = "Gate"
+
+    @classmethod
+    def from_class(self, obj):
+        if isinstance(obj, CircleCoupling):
+            return self.coupling
+        elif isinstance(obj, SphericCoupling):
+            return self.coupling
+        elif isinstance(obj, CircleTee):
+            return self.coupling
+        elif isinstance(obj, FlowAdapter):
+            return self.flow_adapter
+        elif isinstance(obj, ShortElbowAngle):
+            return self.short_elbow_angle
+        elif isinstance(obj, LongElbowAngle):
+            return self.long_elbow_angle
+        elif isinstance(obj, LongElbowNormals):
+            return self.long_elbow_normals
+        elif isinstance(obj, ShortElbowNormals):
+            return self.short_elbow_normals
+        elif isinstance(obj, CirclePath):
+            return self.circle_path
+        elif isinstance(obj, Cap):
+            return self.cap
+
 
 strings = ParametersString()
 

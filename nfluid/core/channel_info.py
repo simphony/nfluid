@@ -58,7 +58,7 @@ class PieceInfo(object):
         self.name = self.elem.get_name()
         self.radius = self.elem.get_r()
         self.length = self.elem.get_len()
-        self.volume = self.elem.get_volume() + 76
+        self.volume = self.elem.get_volume()
         self.pos = self.elem.get_pos_head()
         self.normal = self.elem.get_normal_head()
         self.head = GateInfo(self.elem.heads[0], 0)
