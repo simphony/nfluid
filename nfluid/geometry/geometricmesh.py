@@ -1015,6 +1015,59 @@ class CylindricalPart(GeometricMesh):
         else:
             return None   # point on surface
 
+    def is_inside_solid_angle_fast(self, point, inter_points=None):
+        # Get coordinates of vertices and apply shift to point as origin
+        #   i.e. compute: R = vertex - point
+        # Also compute norm of R
+        R = []
+        modR = []
+        for v in self.vertices.itervalues():
+            r = [x-y for x, y in zip(v, point)]
+            R.append(r)
+            modR.append(math.sqrt(r[0]**2 + r[1]**2 + r[2]**2))
+
+        # Initialize the sum of signed solid angles
+        sum = 0.0
+
+        for t in self.triangles.itervalues():
+            # Get vertex index
+            v0 = t[0]
+            v1 = t[1]
+            v2 = t[2]
+            # Get coordinates of vertices
+            R0 = R[v0]
+            R1 = R[v1]
+            R2 = R[v2]
+            # Also get norms
+            modR0 = modR[v0]
+            modR1 = modR[v1]
+            modR2 = modR[v2]
+
+            # Compute dot products
+            R0R1 = R0[0]*R1[0] + R0[1]*R1[1] + R0[2]*R1[2]
+            R0R2 = R0[0]*R2[0] + R0[1]*R2[1] + R0[2]*R2[2]
+            R1R2 = R1[0]*R2[0] + R1[1]*R2[1] + R1[2]*R2[2]
+
+            # Compute triple product
+            R0R1R2 = R0[0]*(R1[1]*R2[2]-R1[2]*R2[1]) + \
+                R0[1]*(R1[2]*R2[0]-R1[0]*R2[2]) + \
+                R0[2]*(R1[0]*R2[1]-R1[1]*R2[0])
+
+            # Calculate signed solid angle
+            N = R0R1R2
+            D = modR0*modR1*modR2 + R0R1*modR2 + R0R2*modR1 + R1R2*modR0
+            sum += 2 * math.atan2(N, D)
+
+        # Evaluate inside/outside condition
+        epsilon = 1e-3
+        if abs(sum) > 2*math.pi+epsilon:
+            # print 'Volume: ', vol/6.0
+            return True   # point inside
+        elif abs(sum) < 2*math.pi-epsilon:
+            return False  # point outside
+        else:
+            return None   # point on surface
+
     def is_inside_triangles(self, point, inter_points=None):
         # copy_mesh = copy.deepcopy(self)
         # copy_mesh.close()
@@ -1068,6 +1121,8 @@ class CylindricalPart(GeometricMesh):
                 if inside_func == self.is_inside_triangles:
                     inter_points = self.intersections_of_point(p, (0, 1, 0))
                 elif inside_func == self.is_inside_solid_angle:
+                    inter_points = None
+                elif inside_func == self.is_inside_solid_angle_fast:
                     inter_points = None
                 while cur_y < y_max:
                     # print "Y"
