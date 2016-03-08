@@ -1,28 +1,85 @@
 from PySide import QtGui, QtCore
-from nfluid.ui.manager import NfluidDataManager
+from nfluid.ui.manager import NfluidDataManager, Piece
+
+
+class SchemaGraphicsScene(QtGui.QGraphicsScene):
+
+    def __init__(self, parent, main_win):
+        self.main_win = main_win
+        super(SchemaGraphicsScene, self).__init__(parent)
+
+    def mousePressEvent(self, event):
+        super(SchemaGraphicsScene, self).mousePressEvent(event)
+        pos = event.scenePos()
+        item = self.itemAt(pos)
+        # 0 is object name
+        if item is not None:
+            name = item.text
+            piece = Piece()
+            piece.set_name(name)
+            elem = NfluidDataManager.get_piece(piece)
+            print elem, name
+            # self.selected = name
+            # self.main_win.status_message(name)
+            self.main_win.set_selected(name)
+            # self.main_win.refresh_list_pieces()
+            # self.main_win.refresh_piece_panel()
+            
+
+class SchemaGraphicsItem(QtGui.QGraphicsItem):
+
+    def __init__(self, text, x, y, w, h, pen, brush):
+        super(SchemaGraphicsItem, self).__init__()
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.text = text
+        self.pen = pen
+        self.brush = brush
+
+    def boundingRect(self):
+        return QtCore.QRectF(self.x, self.y, self.w, self.h)
+
+    def paint(self, painter, option, widget):
+        painter.setPen(self.pen)
+        painter.setBrush(self.brush)
+        painter.drawRect(self.x, self.y, self.w, self.h)
+        text_g = QtGui.QGraphicsTextItem(self.text)
+        len_text = text_g.boundingRect().width()
+        margin = (self.w + self.pen.width() - len_text) / 2
+        painter.drawText(QtCore.QRectF(self.x + self.pen.width() + margin,
+                         self.y + self.pen.width(),
+                         self.w + self.pen.width(),
+                         self.h + self.pen.width()),
+                         self.text)
 
 
 class SchemaPiecesWidget(QtGui.QWidget):
 
     def __init__(self, main_win):
         super(SchemaPiecesWidget, self).__init__()
-        self.create_actions()
-        self.create_gui()
         self._name = "  Assembly Structure"
         self.main_win = main_win
-        self.refresh_gui()
-        self.name_space = 100
+        self.name_space = 110
         self.level_space = 20
         self.floor_space = 20
         self.connection_space = 10
+        self.selected = None
+        self.create_actions()
+        self.create_gui()
+        self.refresh_gui()
 
     def name(self):
         return self._name
 
+    def set_selected(self, name):
+        self.selected = name
+        self.refresh_gui()
+
     def create_gui(self):
         self.layout = QtGui.QVBoxLayout(self)
-
-        self.schema_scene = QtGui.QGraphicsScene(self)
+        self.schema_scene = SchemaGraphicsScene(self, self.main_win)
         self.schema_view = QtGui.QGraphicsView(self.schema_scene)
 
         self.layout.addWidget(self.schema_view)
@@ -43,6 +100,21 @@ class SchemaPiecesWidget(QtGui.QWidget):
 
         self.rect_brush.setStyle(QtCore.Qt.LinearGradientPattern)
 
+        self.selected_pen = QtGui.QPen()
+        self.pen_width = 3
+        self.selected_pen.setWidth(self.pen_width)
+        self.selected_pen.setStyle(QtCore.Qt.SolidLine)
+        # self.selected_pen.setColor(QtGui.QColor(0, 0, 0))
+        self.selected_pen.setColor(QtGui.QColor(232, 219, 100))
+
+        self.selected_brush = QtGui.QBrush()
+        # self.rect_brush.setColor(QtGui.QColor(166, 227, 247))
+        self.selected_brush.setColor(QtGui.QColor(26, 32, 201))
+        self.selected_brush.setStyle(QtCore.Qt.SolidPattern)
+
+        self.rect_brush.setStyle(QtCore.Qt.LinearGradientPattern)
+
+
         self.schema_view.setHorizontalScrollBarPolicy(
                             QtCore.Qt.ScrollBarAlwaysOn)
         self.schema_view.setVerticalScrollBarPolicy(
@@ -54,13 +126,16 @@ class SchemaPiecesWidget(QtGui.QWidget):
         pass
 
     def add_element(self, elem, x, y):
-        self.schema_scene.addRect(x, y, self.name_space, self.level_space,
-                                  pen=self.rect_pen, brush=self.rect_brush)
-        text = self.schema_scene.addSimpleText(elem)
-        len_text = text.boundingRect().width()
-        margin = (self.name_space - len_text) / 2
-        text.setX(x + self.pen_width + margin)
-        text.setY(y + self.pen_width)
+        if elem != self.selected:
+            self.schema_scene.addItem(SchemaGraphicsItem(elem, x, y,
+                                      self.name_space, self.level_space,
+                                      pen=self.rect_pen,
+                                      brush=self.rect_brush))
+        else:
+            self.schema_scene.addItem(SchemaGraphicsItem(elem, x, y,
+                                      self.name_space, self.level_space,
+                                      pen=self.selected_pen,
+                                      brush=self.selected_brush))
 
     def add_connection(self, x_from, y_from, x_to, y_to):
         f_x = x_from + self.pen_width + (self.name_space / 2)

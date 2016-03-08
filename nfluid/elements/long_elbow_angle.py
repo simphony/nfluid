@@ -72,6 +72,9 @@ class LongElbowAngle(ChannelElement2G):
     def get_volume(self):
         return self.volume
 
+    def get_angle(self):
+        return self.angle
+
     def calculate_volume(self):
         slices = ChannelElement2G.slices
         poly = Arithmetic_Polygon(self.get_r(), slices)
