@@ -977,7 +977,43 @@ class CylindricalPart(GeometricMesh):
         return inter_points
 
     def is_inside_solid_angle(self, point, inter_points=None):
-        pass
+        # Initialize the sum of signed solid angles
+        sum = 0.0
+        for t in self.triangles.itervalues():
+            # Get coordinates of vertices and apply shift to point as origin
+            #   i.e. compute: R = vertex - point
+            R0 = [x-y for x, y in zip(self.vertex(t[0]), point)]
+            R1 = [x-y for x, y in zip(self.vertex(t[1]), point)]
+            R2 = [x-y for x, y in zip(self.vertex(t[2]), point)]
+
+            # Also compute the norms
+            modR0 = math.sqrt(R0[0]**2 + R0[1]**2 + R0[2]**2)
+            modR1 = math.sqrt(R1[0]**2 + R1[1]**2 + R1[2]**2)
+            modR2 = math.sqrt(R2[0]**2 + R2[1]**2 + R2[2]**2)
+
+            # Compute dot products
+            R0R1 = R0[0]*R1[0] + R0[1]*R1[1] + R0[2]*R1[2]
+            R0R2 = R0[0]*R2[0] + R0[1]*R2[1] + R0[2]*R2[2]
+            R1R2 = R1[0]*R2[0] + R1[1]*R2[1] + R1[2]*R2[2]
+
+            # Compute triple product
+            R0R1R2 = R0[0]*(R1[1]*R2[2]-R1[2]*R2[1]) + \
+                R0[1]*(R1[2]*R2[0]-R1[0]*R2[2]) + \
+                R0[2]*(R1[0]*R2[1]-R1[1]*R2[0])
+
+            # Calculate signed solid angle
+            N = R0R1R2
+            D = modR0*modR1*modR2 + R0R1*modR2 + R0R2*modR1 + R1R2*modR0
+            sum += 2 * math.atan2(N, D)
+
+        # Evaluate inside/outside condition
+        epsilon = 1e-3
+        if abs(sum) > 2*math.pi+epsilon:
+            return True   # point inside
+        elif abs(sum) < 2*math.pi-epsilon:
+            return False  # point outside
+        else:
+            return None   # point on surface
 
     def is_inside_triangles(self, point, inter_points=None):
         # copy_mesh = copy.deepcopy(self)
@@ -1029,7 +1065,10 @@ class CylindricalPart(GeometricMesh):
                 # print "Z"
                 # print cur_x, cur_y, cur_z
                 p = (cur_x, cur_y, cur_z)
-                inter_points = self.intersections_of_point(p, (0, 1, 0))
+                if inside_func == self.is_inside_triangles:
+                    inter_points = self.intersections_of_point(p, (0, 1, 0))
+                elif inside_func == self.is_inside_solid_angle:
+                    inter_points = None
                 while cur_y < y_max:
                     # print "Y"
                     # print cur_x, cur_y, cur_z
