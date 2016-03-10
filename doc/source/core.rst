@@ -3,10 +3,6 @@ Core
 
 Core submodule of nFluid containing the core classes of the package.
 
-.. toctree::
-   :maxdepth: 4
-
-   nfluid
 
 .. autosummary::
 

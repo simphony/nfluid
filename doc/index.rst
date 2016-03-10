@@ -8,12 +8,19 @@ Welcome to nFluid's documentation!
 
 .. include:: ../README.rst
 
-Contents:
+API Reference
+=============
 
 .. toctree::
-   :maxdepth: 2
+  :maxdepth: 2
 
-   <core>
+  source/core
+  source/elements
+  source/ui
+  source/geometry
+  source/shapes
+  source/util
+  source/visualization
 
 Indices and tables
 ==================
@@ -21,4 +28,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
