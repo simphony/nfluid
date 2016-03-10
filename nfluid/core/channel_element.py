@@ -11,7 +11,6 @@ from nfluid.util.rotations import (
 # Base class of Channel Elements
 
 class ChannelElement(object):
-
     assembly = None
     __id_cnt = 0
 
