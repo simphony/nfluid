@@ -30,7 +30,7 @@ setup(
     version=VERSION,
     author='SimPhoNy, EU FP7 Project (Nr. 604005) www.simphony-project.eu',
     description='The nFluid package to microchannels design',
-    long_description=README_TEXT
+    long_description=README_TEXT,
     install_requires=[
         "simphony >= 0.2.0",
         "visvis",
