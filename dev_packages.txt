@@ -1,0 +1,4 @@
+simphony >= 0.2.0
+visvis
+numpy >= 1.4.1
+PySide
