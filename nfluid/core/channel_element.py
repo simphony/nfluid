@@ -89,6 +89,23 @@ class ChannelElement(object):
         self.get_tail_gate(gateTail).link(next.get_head_gate(gateHead))
         return next
 
+    def delete(self):
+        (gates_tails, gates_heads) = self.detach()
+
+    def insert_before(self, element):
+        prev = self.get_prev_element()
+        if prev is not None:
+            buddytail = self.get_head_gate().buddy
+            buddytail.link(element.get_head_gate())
+            element.get_head_gate().set_size(buddytail.Size)
+            element.get_head_gate().set_pos(buddytail.Pos)
+            element.get_head_gate().set_normal(buddytail.Normal)
+
+        element.get_tail_gate().link(self.get_head_gate())
+        element.get_tail_gate().set_size(self.get_head_gate().Size)
+        element.get_tail_gate().set_pos(self.get_head_gate().Pos)
+        element.get_tail_gate().set_normal(self.get_head_gate().Normal)
+
     def print_info(self):
         print 'id=', self.__id
         self.for_each_gate(fcn_print_info_xxx)

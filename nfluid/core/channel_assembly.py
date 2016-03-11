@@ -126,6 +126,7 @@ class ChannelAssembly(object):
         if not isinstance(element, ChannelElement2G):
             if len(element.tails) != 0:
                 raise TypeError('unsupported operand type(s)')
+            element.delete()
         else:
             element.delete()
 
