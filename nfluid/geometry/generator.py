@@ -14,11 +14,8 @@ class GeometryGenerator():
     """
 
     def __init__(self, slices=30, stacks=15):
-        # STUB!!!!
         self.slices = slices
         self.stacks = stacks
-        # self.slices = 4
-        # self.stacks = 1
 
     def create_coupling(self, r, l):
         return Coupling(r, l, self.slices, self.stacks)
@@ -37,7 +34,6 @@ class GeometryGenerator():
 
     def create_cap(self, r, l):
         return Cap(r, l, self.slices, self.stacks)
-        # return Coupling(r, l, self.slices, self.stacks)
 
     def create_tee(self, r):
         return Tee(r, self.slices, self.stacks)
