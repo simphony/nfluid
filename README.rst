@@ -29,7 +29,7 @@ Documentation requirements
     - sphinx
 
 Also the documentation is available online at:
-http://simphony-nfluid.readthedocs.org/en/stable/
+http://simphony-nfluid.readthedocs.org/en/latest/
 
 Installation
 ------------
