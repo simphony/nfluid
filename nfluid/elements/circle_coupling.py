@@ -9,6 +9,9 @@ from nfluid.geometry.auxiliar_geometry import Arithmetic_Polygon
 
 
 class CircleCoupling(ChannelElement2G):
+    """Class representing a cylindrical element with one head and one tail.
+
+    """
     def __init__(
         self,
         R=None,
@@ -17,6 +20,22 @@ class CircleCoupling(ChannelElement2G):
         PosT=None,
         Normal=None
     ):
+    """
+    Parameters
+    ----------
+    R : real
+        the radius of the cylinder
+    L : real
+        the length of the cylinder
+    PosH : Vector
+        the position of the center of the head
+    PosT : Vector
+        the position of the center of the tail
+    Normal : Vector
+        normal vector of the cylinder (in which direction are its head
+        and tail facing
+
+    """
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True
