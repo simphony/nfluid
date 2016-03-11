@@ -33,7 +33,7 @@ Documentation requirements
     - sphinx
 
 Also the documentation is available online at:
-simphony-nfluid.readthedocs.org
+http://simphony-nfluid.readthedocs.org
 
 Installation
 ------------
