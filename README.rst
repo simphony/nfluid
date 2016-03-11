@@ -7,6 +7,10 @@ Nfluid simphony module for mesh generation of microchannel circuits.
    :target: https://travis-ci.org/simphony/nfluid
    :alt: Build status
 
+.. image:: https://readthedocs.org/projects/simphony-nfluid/badge/?version=latest
+   :target: http://simphony-nfluid.readthedocs.org/en/latest/?badge=latest
+   :alt: Documentation Status
+
 Repository
 ----------
 Nfluid is hosted on github https://github.com/simphony/nfluid
@@ -29,7 +33,7 @@ Documentation requirements
     - sphinx
 
 Also the documentation is available online at:
-http://simphony-nfluid.readthedocs.org/en/latest/
+simphony-nfluid.readthedocs.org
 
 Installation
 ------------
