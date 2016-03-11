@@ -1,4 +1,4 @@
-simphony >= 0.2.0
+git+https://github.com/simphony/simphony-common.git@0.2.0#egg=simphony
 visvis
 numpy >= 1.4.1
 PySide
