@@ -18,21 +18,21 @@ class SphericCoupling(ChannelElement2G):
         PosT=None,
         Normal=None
     ):
-    """
-    Parameters
-    ----------
-    Rs : real
-        the radius of the sphere (as it wasn't truncated)
-    R : real
-        the radius of the head and tail of the sphere
-    PosH : Vector
-        the position of the center of the head
-    PosT : Vector
-        the position of the center of the tail
-    Normal : Vector
-        normal vector of the piece
+        """
+        Parameters
+        ----------
+        Rs : real
+            the radius of the sphere (as it wasn't truncated)
+        R : real
+            the radius of the head and tail of the sphere
+        PosH : Vector
+            the position of the center of the head
+        PosT : Vector
+            the position of the center of the tail
+        Normal : Vector
+            normal vector of the piece
 
-    """
+        """
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True
