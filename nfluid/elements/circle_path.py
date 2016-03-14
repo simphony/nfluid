@@ -38,7 +38,8 @@ class CirclePath(ChannelElement2G):
         NormalT : Vector
             normal vector of the tail
         Twist : real
-            extra parameter indicating a second rotation when the piece is ambiguous
+            extra parameter indicating a second rotation when the
+            piece is ambiguous
 
         """
         ChannelElement2G.__init__(self)
