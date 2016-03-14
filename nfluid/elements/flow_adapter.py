@@ -20,6 +20,23 @@ class FlowAdapter(ChannelElement2G):
         PosT=None,
         Normal=None,
     ):
+        """
+        Parameters
+        ----------
+        RH : real
+            the radius of the head
+        RT : real
+            the radius of the tail
+        L : real
+            the length of the flow adapter
+        PosH : Vector
+            the position of the center of the head
+        PosT : Vector
+            position of the tail
+        Normal : Vector
+            normal vector of the piece
+
+        """
         ChannelElement2G.__init__(self)
 
         self.IsAxialSym = True

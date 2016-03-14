@@ -21,6 +21,23 @@ class ShortElbowAngle(ChannelElement2G):
         NormalH=None,  # Normal at head gate
         NormalT=None,  # Normal at tail gate
     ):
+        """
+        Parameters
+        ----------
+        Angle : real
+            the angle between head and tail positions
+        R : real
+            the radius of the piece
+        PosH : Vector
+            the position of the center of the head
+        PosT : Vector
+            the position of the center of the tail
+        NormalH : Vector
+            normal vector of the head
+        NormalT : Vector
+            normal vector of the tail
+
+        """
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True

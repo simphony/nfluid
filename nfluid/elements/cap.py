@@ -17,6 +17,19 @@ class Cap(ChannelElement):
         PosH=None,
         NormalH=None,
     ):
+        """
+        Parameters
+        ----------
+        L : real
+            the length of the cap (0 if you want a plane)
+        R : real
+            the radius of the piece
+        PosH : Vector
+            the position of the center of the head
+        NormalH : Vector
+            normal vector of the piece
+
+        """
         ChannelElement.__init__(self)
 
         self.IsAxialSym = True

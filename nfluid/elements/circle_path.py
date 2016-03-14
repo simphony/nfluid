@@ -22,6 +22,25 @@ class CirclePath(ChannelElement2G):
         NormalT=None,  # Normal at tail gate
         Twist=None,    # Extra parameter (if Normals are collinear)
     ):
+        """
+        Parameters
+        ----------
+        R : real
+            the radius of the full piece
+        Points : iterable
+            the points defining the shape of the piece
+        PosH : Vector
+            the position of the center of the head
+        PosT : Vector
+            the position of the center of the tail
+        NormalH : Vector
+            normal vector of the head
+        NormalT : Vector
+            normal vector of the tail
+        Twist : real
+            extra parameter indicating a second rotation when the piece is ambiguous
+
+        """
         ChannelElement2G.__init__(self)
 
         self.IsEqualGateSize = True
