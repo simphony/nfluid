@@ -22,8 +22,10 @@ class CreationPiecesWidget(QtGui.QWidget):
         self.add_button = QtGui.QPushButton("Add", parent=self)
         self.add_button.clicked.connect(self.add_action.triggered)
 
-        self.insert_before_button = QtGui.QPushButton("Insert before", parent=self)
-        self.insert_before_button.clicked.connect(self.insert_before_action.triggered)
+        self.insert_before_button = QtGui.QPushButton("Insert before",
+                                                      parent=self)
+        self.insert_before_button.clicked.connect(self.insert_before_action.
+                                                  triggered)
 
         self.layout.addWidget(self.pieces_widget)
         self.layout.addWidget(self.add_button)
@@ -63,4 +65,3 @@ class CreationPiecesWidget(QtGui.QWidget):
         ok = NfluidDataManager.insert_piece_before(piece)
         if ok is 0:
             self.main_win.refresh_all()
-

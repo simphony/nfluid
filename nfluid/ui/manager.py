@@ -226,8 +226,8 @@ class NfluidDataManager(object):
             NfluidDataManager.gui.message(msg)
             return -1
         current_piece = NfluidDataManager.gui.\
-                        dw_pieces_list.widget().\
-                        current_piece()
+            dw_pieces_list.widget().\
+            current_piece()
         if current_piece.id == -1:
             msg = "No piece selected to link to!"
             NfluidDataManager.gui.message(msg)
