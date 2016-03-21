@@ -157,6 +157,20 @@ class ChannelAssembly(object):
                 print 'GEOMETRY NOT RESOLVED: ', res
                 print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
+    def set_slices(self, new_slices):
+        ChannelElement.slices = new_slices
+        self.gates_sides = new_slices
+
+    def set_stacks(self, new_stacks):
+        ChannelElement.stacks = new_stacks
+        self.elements_divisions = new_stacks
+
+    def slices(self):
+        return self.gates_sides
+
+    def stacks(self):
+        return self.elements_divisions
+
     def create_shapes(self):
         """Builds all the triangular meshes of the elements in the assembly,
         making the linkage between them, creating the full mesh of it.

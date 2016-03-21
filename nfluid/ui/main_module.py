@@ -13,8 +13,9 @@ class NfluidGui(object):
         self.main_window = None
 
     def create_gui(self):
-        self.manager = NfluidDataManager(self.main_window)
         self.main_window = MainWindow()
+        self.manager = NfluidDataManager(self.main_window)
+
         # self.app.aboutToQuit.connect(self.exit_handler)
 
     def exit_handler(self):

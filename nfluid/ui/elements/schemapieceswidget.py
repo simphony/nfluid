@@ -1,5 +1,6 @@
 from PySide import QtGui, QtCore
-from nfluid.ui.manager import NfluidDataManager
+from nfluid.ui.manager import NfluidDataManager, Piece
+from nfluid.ui.elements.auxiliar import strings
 
 
 class SchemaGraphicsScene(QtGui.QGraphicsScene):
@@ -103,7 +104,21 @@ class SchemaPiecesWidget(QtGui.QWidget):
         self.selected_brush.setColor(QtGui.QColor(26, 32, 201))
         self.selected_brush.setStyle(QtCore.Qt.SolidPattern)
 
-        self.rect_brush.setStyle(QtCore.Qt.LinearGradientPattern)
+        self.selected_brush.setStyle(QtCore.Qt.LinearGradientPattern)
+
+        self.closed_pen = QtGui.QPen()
+        self.pen_width = 3
+        self.closed_pen.setWidth(self.pen_width)
+        self.closed_pen.setStyle(QtCore.Qt.SolidLine)
+        # self.closed_pen.setColor(QtGui.QColor(0, 0, 0))
+        self.closed_pen.setColor(QtGui.QColor(232, 219, 100))
+
+        self.closed_brush = QtGui.QBrush()
+        # self.closed_brush.setColor(QtGui.QColor(166, 227, 247))
+        self.closed_brush.setColor(QtGui.QColor(153, 0, 0))
+        self.closed_brush.setStyle(QtCore.Qt.SolidPattern)
+
+        self.closed_brush.setStyle(QtCore.Qt.LinearGradientPattern)
 
         self.schema_view.setHorizontalScrollBarPolicy(
                             QtCore.Qt.ScrollBarAlwaysOn)
@@ -117,10 +132,18 @@ class SchemaPiecesWidget(QtGui.QWidget):
 
     def add_element(self, elem, x, y):
         if elem != self.selected:
-            self.schema_scene.addItem(SchemaGraphicsItem(elem, x, y,
-                                      self.name_space, self.level_space,
-                                      pen=self.rect_pen,
-                                      brush=self.rect_brush))
+            aux_piece = Piece()
+            aux_piece.set_name(elem)
+            if aux_piece.type != strings.cap:
+                self.schema_scene.addItem(SchemaGraphicsItem(elem, x, y,
+                                          self.name_space, self.level_space,
+                                          pen=self.rect_pen,
+                                          brush=self.rect_brush))
+            else:
+                self.schema_scene.addItem(SchemaGraphicsItem(elem, x, y,
+                                          self.name_space, self.level_space,
+                                          pen=self.closed_pen,
+                                          brush=self.closed_brush))
         else:
             self.schema_scene.addItem(SchemaGraphicsItem(elem, x, y,
                                       self.name_space, self.level_space,

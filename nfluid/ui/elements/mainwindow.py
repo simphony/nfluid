@@ -4,6 +4,7 @@ from nfluid.ui.elements.listpieceswidget import ListPiecesWidget
 from nfluid.ui.elements.schemapieceswidget import SchemaPiecesWidget
 from nfluid.ui.elements.piecepanelwidget import PiecePanelWidget
 from nfluid.ui.elements.visualizer import VisVisWidget
+from nfluid.ui.elements.geometrytoolbar import GeometryToolbar
 from nfluid.ui.manager import NfluidDataManager, Piece
 from nfluid.util.vector import Vector
 
@@ -16,6 +17,18 @@ class MainWindow(QtGui.QMainWindow):
         self.refresh_all()
 
     def create_gui(self):
+        # General parameters -------------------------------------------------
+        min_h = 100
+        min_w = 100
+        max_h = 350
+        max_w = 500
+
+        # Tool bars ----------------------------------------------------------
+
+        self.tb_geometry = GeometryToolbar(self)
+        self.addToolBar(self.tb_geometry)
+
+        # Dock Widgets -------------------------------------------------------
         self.dw_pieces_creation = QtGui.QDockWidget()
         cur_widget = CreationPiecesWidget(self)
         self.dw_pieces_creation.setWidget(cur_widget)
@@ -23,6 +36,12 @@ class MainWindow(QtGui.QMainWindow):
                     QtGui.QDockWidget.NoDockWidgetFeatures)
         title = QtGui.QLabel(cur_widget.name())
         self.dw_pieces_creation.setTitleBarWidget(title)
+        self.dw_pieces_creation.setMaximumWidth(max_w)
+        self.dw_pieces_creation.setMaximumHeight(max_h)
+        self.dw_pieces_creation.setMinimumWidth(min_w)
+        self.dw_pieces_creation.setMinimumHeight(min_h)
+        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea,
+                           self.dw_pieces_creation)
 
         self.dw_pieces_list = QtGui.QDockWidget()
         cur_widget = ListPiecesWidget(self)
@@ -30,6 +49,11 @@ class MainWindow(QtGui.QMainWindow):
         self.dw_pieces_list.setFeatures(QtGui.QDockWidget.NoDockWidgetFeatures)
         title = QtGui.QLabel(cur_widget.name())
         self.dw_pieces_list.setTitleBarWidget(title)
+        self.dw_pieces_list.setMaximumWidth(max_w)
+        self.dw_pieces_list.setMaximumHeight(max_h)
+        self.dw_pieces_list.setMinimumWidth(min_w)
+        self.dw_pieces_list.setMinimumHeight(min_h)
+        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
 
         self.dw_pieces_schema = QtGui.QDockWidget()
         cur_widget = SchemaPiecesWidget(self)
@@ -38,15 +62,29 @@ class MainWindow(QtGui.QMainWindow):
                                           NoDockWidgetFeatures)
         title = QtGui.QLabel(cur_widget.name())
         self.dw_pieces_schema.setTitleBarWidget(title)
+        self.dw_pieces_schema.setMaximumWidth(max_w)
+        self.dw_pieces_schema.setMaximumHeight(max_h)
+        self.dw_pieces_schema.setMinimumWidth(min_w)
+        self.dw_pieces_schema.setMinimumHeight(min_h)
+        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
 
         self.dw_piece_panel_widget = QtGui.QDockWidget()
         cur_widget = PiecePanelWidget(self)
         self.dw_piece_panel_widget.setWidget(cur_widget)
         title = QtGui.QLabel(cur_widget.name())
         self.dw_piece_panel_widget.setTitleBarWidget(title)
+        self.dw_piece_panel_widget.setMaximumWidth(max_w)
+        self.dw_piece_panel_widget.setMaximumHeight(max_h)
+        self.dw_piece_panel_widget.setMinimumWidth(min_w)
+        self.dw_piece_panel_widget.setMinimumHeight(min_h)
+        self.addDockWidget(QtCore.Qt.RightDockWidgetArea,
+                           self.dw_piece_panel_widget)
 
+        # Main widget -------------------------------------------------------
         self.cw_visualizer = VisVisWidget(self)
+        self.setCentralWidget(self.cw_visualizer.widget())
 
+        # Menu --------------------------------------------------------------
         self.menu_main = self.menuBar()
         file_menu = self.menu_main.addMenu('&File')
         file_menu.addAction(self.stl_action)
@@ -54,40 +92,8 @@ class MainWindow(QtGui.QMainWindow):
         file_menu.addAction(self.foam_cfmesh_action)
         file_menu.addAction(self.txt_action)
 
+        # Status bar --------------------------------------------------------
         self.status_bar = None
-
-        self.min_h = 100
-        self.min_w = 100
-        self.max_h = 350
-        self.max_w = 500
-
-        self.dw_pieces_creation.setMaximumWidth(self.max_w)
-        self.dw_pieces_creation.setMaximumHeight(self.max_h)
-        self.dw_pieces_creation.setMinimumWidth(self.min_w)
-        self.dw_pieces_creation.setMinimumHeight(self.min_h)
-
-        self.dw_pieces_list.setMaximumWidth(self.max_w)
-        self.dw_pieces_list.setMaximumHeight(self.max_h)
-        self.dw_pieces_list.setMinimumWidth(self.min_w)
-        self.dw_pieces_list.setMinimumHeight(self.min_h)
-
-        self.dw_pieces_schema.setMaximumWidth(self.max_w)
-        self.dw_pieces_schema.setMaximumHeight(self.max_h)
-        self.dw_pieces_schema.setMinimumWidth(self.min_w)
-        self.dw_pieces_schema.setMinimumHeight(self.min_h)
-
-        self.dw_piece_panel_widget.setMaximumWidth(self.max_w)
-        self.dw_piece_panel_widget.setMaximumHeight(self.max_h)
-        self.dw_piece_panel_widget.setMinimumWidth(self.min_w)
-        self.dw_piece_panel_widget.setMinimumHeight(self.min_h)
-
-        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea,
-                           self.dw_pieces_creation)
-        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_list)
-        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.dw_pieces_schema)
-        self.addDockWidget(QtCore.Qt.RightDockWidgetArea,
-                           self.dw_piece_panel_widget)
-        self.setCentralWidget(self.cw_visualizer.widget())
 
     def create_actions(self):
         self.stl_action = QtGui.QAction(
