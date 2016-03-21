@@ -17,6 +17,9 @@ def SetListElement(list, elt, n):
 
 
 class ShapeContainer(list):
+    """Extended list class for Shape elements to make algorithms easier.
+
+    """
     def get_head(self):
         for e in self:
             if len(e.links_head) == 0:
@@ -32,12 +35,50 @@ class ShapeContainer(list):
 
 
 class Shape(object):
+    """Base exchange class between Channel Assembly and Elements and the
+    Geometry Generator (final triangular meshes). It contains the
+    minimum info for the geometry generator to work.
+
+    Also has the algorithms to obtain the full assembly structure in
+    s single mesh, using the geometry generator and its methods.
+
+    Class Attributes
+    ----------------
+        shapes : ShapeContainer
+            iterable of the shapes
+        total_mesh : GeometricMesh
+            the full triangular mesh of the assembly
+        slices : int
+            the vertical divisions of each element in the assembly
+        stacks : int
+            the horizontal divisions of each element in the assembly
+
+    Attributes
+    ----------
+        mesh : GeometricMesh
+            the triangular mesh of the shape
+        links_head : iterable
+            the pieces linked to the head of the shape
+        links_tail : iterable
+            the pieces linked to the tail of the shape
+
+    """
     shapes = ShapeContainer()
     total_mesh = None
 
 # WORKFLOW init, add_shape, add_shape ... , finalize,  ...use..., release
     @classmethod
     def init(cls, gates_sides, elements_divisions):
+        """Initiates the data structures so they are ready to work with
+
+        Parameters
+        ----------
+        gates_sides : int
+            vertical slices
+        elements_divisions : int
+            horizontal slices
+
+        """
         cls.shapes = ShapeContainer()
         cls.total_mesh = None
         cls.slices = gates_sides
@@ -47,6 +88,25 @@ class Shape(object):
 
     @classmethod
     def connect_next_piece(cls, cursor, initial_gate=0):
+        """Connects the pieces linked to the current piece, this means:
+            - create the meshes of the pieces linked, in order
+            - "link" them (in the geometry generator: attach, adapt, connect)
+            - take care of the special orientations of certain pieces (like
+              the elbows, or circle path)
+            - keep connecting the rest of the pieces
+
+        It keeps updating the total_mesh class attribute.
+
+        Parameters
+        ----------
+        cursor : Shape
+            current piece in the chain
+        initial_gate : int
+            this indicates in which gate of the total mesh its going to be
+            added the first piece linked to the current piece
+
+
+        """
         gate = initial_gate
         # current_element = type(cursor).__name__
         # linked_elements = ''
@@ -113,6 +173,12 @@ class Shape(object):
 
     @classmethod
     def finalize(cls):
+        """Method that sets up the things to start building the total
+        triangular mesh of the assembly. It calls connect_next_piece method
+        with the first piece of the assembly after positioning it in the
+        space.
+
+        """
         if len(cls.shapes) != 0:
             initial = cls.shapes.get_head()
             initial_mesh = initial.mesh
@@ -149,16 +215,38 @@ class Shape(object):
 
     @classmethod
     def release(cls):
+        """Clears the shapes and the full triangular mesh.
+
+        """
         cls.shapes = ShapeContainer()
         cls.total_mesh = None
 
     @classmethod
     def add_shape(cls, shape):
+        """Adds a new shape to the container.
+
+        Parameters
+        ----------
+        shape : Shape
+            new shape to be added
+
+        """
         if shape is not None:
             cls.shapes.append(shape)
 
     @classmethod
     def export(cls, file_name, close=False):
+        """Exports the total mesh to STL format.
+
+        Parameters
+        ----------
+            file_name : string
+                name of the file to export to
+            close : boolean
+                indicates if the mesh should be close in all its gates
+                or not before exporting it
+
+        """
         if cls.total_mesh is None:
             raise Exception('Total mesh not generated!')
         res = copy.deepcopy(cls.total_mesh)
@@ -169,12 +257,18 @@ class Shape(object):
 
     @classmethod
     def simphony_mesh(cls):
+        """Extracts the SimPhoNy Mesh of the current total mesh.
+
+        """
         if cls.total_mesh is None:
             raise Exception('Total mesh not generated!')
         return cls.total_mesh.to_simphony_mesh()
 
     @classmethod
     def show(cls):
+        """Opens a visvis visualizer with the total mesh.
+
+        """
         if cls.total_mesh is None:
             raise Exception('Total mesh not generated!')
         show([cls.total_mesh])
@@ -388,7 +482,24 @@ def CreateShape(type, center, rotation,
                 par0=None, par1=None, par2=None,
                 par3=None, par4=None, par5=None,
                 par6=None):
+    """Factory function that creates the correct Shape according to
+    the parameters sent.
 
+    Parameters
+    ----------
+        type : string
+            indicates which shape should be created
+        center : Vector
+            center point of the piece
+        rotation : Operator
+            rotation matrix of all transformations made to the geometry
+            of the shape
+
+    Returns
+    -------
+        A concrete Shape witht the rest of the parameters (par0 to par6)
+
+    """
     shape = None
 
     if type == 'cap':

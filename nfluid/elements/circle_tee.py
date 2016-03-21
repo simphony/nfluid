@@ -19,25 +19,25 @@ class CircleTee(ChannelElement):
         NormalT0=None,
         NormalT1=None,
     ):
-    """
-    Parameters
-    ----------
-    R : real
-        the radius of the piece
-    PosH : Vector
-        the position of the center of the head
-    PosT0 : Vector
-        position of the first tail of the tee
-    PosT1 : Vector
-        position of the second tail of the tee
-    NormalH : Vector
-        normal vector of the head
-    NormalT0 : Vector
-        normal vector of the first tail of the tee
-    NormalT1 : Vector
-        normal vector of the second tail of the tee
+        """
+        Parameters
+        ----------
+        R : real
+            the radius of the piece
+        PosH : Vector
+            the position of the center of the head
+        PosT0 : Vector
+            position of the first tail of the tee
+        PosT1 : Vector
+            position of the second tail of the tee
+        NormalH : Vector
+            normal vector of the head
+        NormalT0 : Vector
+            normal vector of the first tail of the tee
+        NormalT1 : Vector
+            normal vector of the second tail of the tee
 
-    """
+        """
         # NormalH, NormalT0 must be orthogonal
         # NormalT should be corrected to respect that
 

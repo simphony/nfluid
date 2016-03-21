@@ -218,6 +218,27 @@ class NfluidDataManager(object):
                 return 0
 
     @classmethod
+    def insert_piece_before(cls, piece):
+        n_pieces = NfluidDataManager.number_of_pieces()
+        new_piece = None
+        if n_pieces == 0:
+            msg = "There are no pieces in the assembly!"
+            NfluidDataManager.gui.message(msg)
+            return -1
+        current_piece = NfluidDataManager.gui.\
+            dw_pieces_list.widget().\
+            current_piece()
+        if current_piece.id == -1:
+            msg = "No piece selected to link to!"
+            NfluidDataManager.gui.message(msg)
+            return -1
+        current_piece = NfluidDataManager.get_piece(current_piece)
+        new_piece = NfluidDataManager.create_piece(piece)
+        NfluidDataManager.model.insert_element_before(new_piece,
+                                                      current_piece)
+        return 0
+
+    @classmethod
     def remove_piece(cls, piece):
         selected = NfluidDataManager.get_piece(piece)
         NfluidDataManager.model.delete_element(selected)
@@ -268,11 +289,25 @@ class NfluidDataManager(object):
         return res
 
     @classmethod
-    def get_total_mesh(self):
+    def get_total_mesh(self, reset=True):
         if not NfluidDataManager.exists():
             return None
-        NfluidDataManager.model.create_shapes()
+        if reset:
+            NfluidDataManager.model.create_shapes()
         return Shape.total_mesh
+
+    @classmethod
+    def get_slices_stacks(self):
+        if NfluidDataManager.exists():
+            return (NfluidDataManager.model.slices(),
+                    NfluidDataManager.model.stacks())
+        else:
+            return (0, 0)
+
+    @classmethod
+    def set_slices_stacks(self, slices, stacks):
+        NfluidDataManager.model.set_slices(slices)
+        NfluidDataManager.model.set_stacks(stacks)
 
     @classmethod
     def get_assembly_tree(self):

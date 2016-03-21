@@ -22,8 +22,14 @@ class CreationPiecesWidget(QtGui.QWidget):
         self.add_button = QtGui.QPushButton("Add", parent=self)
         self.add_button.clicked.connect(self.add_action.triggered)
 
+        self.insert_before_button = QtGui.QPushButton("Insert before",
+                                                      parent=self)
+        self.insert_before_button.clicked.connect(self.insert_before_action.
+                                                  triggered)
+
         self.layout.addWidget(self.pieces_widget)
         self.layout.addWidget(self.add_button)
+        self.layout.addWidget(self.insert_before_button)
 
         self.min_h = 100
         self.min_w = 100
@@ -43,8 +49,19 @@ class CreationPiecesWidget(QtGui.QWidget):
                                         self, statusTip="Add a new piece",
                                         triggered=self.add_current_piece)
 
+        self.insert_before_action = \
+            QtGui.QAction(QtGui.QIcon(), "&Insert before",
+                          self, statusTip="Insert a new piece",
+                          triggered=self.insert_piece_before)
+
     def add_current_piece(self):
         piece = self.pieces_widget.get_piece()
         ok = NfluidDataManager.add_piece(piece)
+        if ok is 0:
+            self.main_win.refresh_all()
+
+    def insert_piece_before(self):
+        piece = self.pieces_widget.get_piece()
+        ok = NfluidDataManager.insert_piece_before(piece)
         if ok is 0:
             self.main_win.refresh_all()

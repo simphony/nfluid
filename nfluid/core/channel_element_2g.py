@@ -62,27 +62,28 @@ class ChannelElement2G(ChannelElement):
         return
 
     def delete(self):
-
+        next = self.get_next_element()
         (gates_tails, gates_heads) = self.detach()
-
         if gates_tails[0] is not None and gates_heads[0] is not None:
             gates_tails[0].link(gates_heads[0])
+        # if self.get_head_gate().buddy is not None and \
+        #         self.get_tail_gate().buddy is not None:
+        #    self.get_tail_gate().buddy.link(self.get_head_gate().buddy)
+        if gates_heads[0] is None:
+            next.get_head_gate().SizeDef = self.get_tail_gate().SizeDef
 
-    # TODO if None
+    # def insert_before(self, element):
+    #     prev = self.get_prev_element()
+    #     if prev is not None:
+    #         prev.get_tail_gate().link(element.get_head_gate())
+    #         element.get_head_gate().set_size(prev.get_tail_gate().Size)
+    #         element.get_head_gate().set_pos(prev.get_tail_gate().Pos)
+    #         element.get_head_gate().set_normal(prev.get_tail_gate().Normal)
 
-    def insert_before(self, element):
-
-        prev = self.get_prev_element()
-        if prev is not None:
-            prev.get_tail_gate().link(element.get_head_gate())
-            element.get_head_gate().set_size(prev.get_tail_gate().Size)
-            element.get_head_gate().set_pos(prev.get_tail_gate().Pos)
-            element.get_head_gate().set_normal(prev.get_tail_gate().Normal)
-
-        element.get_tail_gate().link(self.get_head_gate())
-        element.get_tail_gate().set_size(self.get_tail_gate().Size)
-        element.get_tail_gate().set_pos(self.get_tail_gate().Pos)
-        element.get_tail_gate().set_normal(self.get_tail_gate().Normal)
+    #     element.get_tail_gate().link(self.get_head_gate())
+    #     element.get_tail_gate().set_size(self.get_tail_gate().Size)
+    #     element.get_tail_gate().set_pos(self.get_tail_gate().Pos)
+    #     element.get_tail_gate().set_normal(self.get_tail_gate().Normal)
 
     def insert_after(self, element):
 
