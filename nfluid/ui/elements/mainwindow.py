@@ -162,8 +162,8 @@ class MainWindow(QtGui.QMainWindow):
     def refresh_all(self):
         self.refresh_list_pieces()
         self.refresh_visualizer()
-        self.refresh_schema_pieces()
         self.refresh_piece_panel()
+        self.refresh_schema_pieces()
 
     def get_current_piece(self):
         # return self.dw_pieces_list.widget().current_piece()

@@ -193,6 +193,10 @@ class SchemaPiecesWidget(QtGui.QWidget):
                 self.draw_elements(elem.next_r, new_x, new_y, cur_width,
                                    cur_level - 1)
 
+    @classmethod
+    def print_element_debug(cls, elem, params):
+        print str(elem.data)
+
     def refresh_gui(self):
         self.schema_scene.clear()
         tree = NfluidDataManager.get_assembly_tree()

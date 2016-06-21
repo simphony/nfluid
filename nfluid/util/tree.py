@@ -183,9 +183,9 @@ class TreeBase(object):
         strings_ord = []
         for i in xrange(d+1):
             strings_ord = strings_ord + by_levels[i]
-        print "strings_ord"
-        for e in strings_ord:
-            print e[0].data.get_name(), e
+        # print "strings_ord"
+        # for e in strings_ord:
+            # print e[0].data.get_name(), e
         for (elem, level, tabs) in strings_ord:
             if cur_level != level:
                 res += '\n'
