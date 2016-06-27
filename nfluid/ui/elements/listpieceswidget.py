@@ -30,13 +30,19 @@ class ListPiecesWidget(QtGui.QWidget):
 
     def set_selected(self, name):
         n = self.list_pieces.count()
+        if name is None:
+            self.list_pieces.clearSelection()
+        row = -1
         for i in xrange(n):
             cur_item = self.list_pieces.item(i)
             cur_name = cur_item.text()
             if cur_name == name:
                 row = i
                 break
-        self.list_pieces.setCurrentRow(row)
+        if row == -1:
+            self.list_pieces.clearSelection()
+        else:
+            self.list_pieces.setCurrentRow(row)
 
     def create_gui(self):
         self.layout = QtGui.QVBoxLayout(self)

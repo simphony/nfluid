@@ -49,14 +49,15 @@ class PiecePanelWidget(QtGui.QWidget):
             self.main_win.refresh_all()
 
     def refresh_gui(self):
-        print "refresh_gui called"
         cur_piece = self.current_piece()
         print "cur_piece"
         print cur_piece
         if cur_piece is not None:
             cur_elem = NfluidDataManager.get_piece(cur_piece)
-            info = PieceInfo(cur_elem)
-            self.text_widget.setText(str(info))
+            info_text = ''
+            if cur_elem is not None:
+                info_text = PieceInfo(cur_elem)
+            self.text_widget.setText(str(info_text))
             # get the params!
 
     def current_piece(self):
