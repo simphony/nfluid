@@ -305,14 +305,14 @@ class ChannelAssembly(object):
         #    _ncad_imported = True
         #    print ('IMPORTED')
         # except ImportError:
-        #    raise ImportError("""WARNING: simphony-ncad couldn't be imported; nCad particles
-        #       extraction not available""")
+        #    raise ImportError("""WARNING: simphony-ncad couldn't be imported;
+        #        nCad particles extraction not available""")
         # if _ncad_imported:
         #    # initiate the wrapper
         #    nc = ncw.nCad()
         #    project_name = nc.get_project_name()
         #    base_name = 'nfluid_component'
-        #    component_name = base_name + project_name            
+        #    component_name = base_name + project_name
         #    # do stuff with the wrapper
         #    component = None
         #    try:
@@ -324,7 +324,7 @@ class ChannelAssembly(object):
         #    data = component.data
         #    data[CUBA.NAME_UC] = particles.name
         #    data[CUBA.MATERIAL_TYPE] = SHAPE_TYPE.DIM_3D_STL
-        #    data[CUBA.FILE_STL] = "C:\\Sgenia\\Projects\\simphony_git_repos\\nfluid\\modelo3.STL"
+        #    data[CUBA.FILE_STL] = ".\\modelo3.STL"
         #    # data[CUBA.FILE_STL] = './' + stl_name
         #    # data[CUBA.STL_MODE] = 0
         #    # data[CUBA.STL_SCALING] = 1
