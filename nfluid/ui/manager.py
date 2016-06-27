@@ -241,8 +241,9 @@ class NfluidDataManager(object):
     @classmethod
     def remove_piece(cls, piece):
         selected = NfluidDataManager.get_piece(piece)
-        NfluidDataManager.model.delete_element(selected)
         NfluidDataManager.gui.set_selected(None)
+        NfluidDataManager.model.delete_element(selected)
+        
 
     @classmethod
     def get_piece(cls, piece):
