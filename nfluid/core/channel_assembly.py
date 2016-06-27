@@ -298,55 +298,53 @@ class ChannelAssembly(object):
         pass
         # _ncad_imported = False
         # try:
-            # import simncad.ncad as ncw
-            # from simphony.cuds.particles import Particles
-            # from simphony.core.cuba import CUBA
-            # from simncad.auxiliar.ncad_types import SHAPE_TYPE
-            # _ncad_imported = True
-            # print ('IMPORTED')
+        #   import simncad.ncad as ncw
+        #    from simphony.cuds.particles import Particles
+        #    from simphony.core.cuba import CUBA
+        #    from simncad.auxiliar.ncad_types import SHAPE_TYPE
+        #    _ncad_imported = True
+        #    print ('IMPORTED')
         # except ImportError:
-            # raise ImportError("""WARNING: simphony-ncad couldn't be imported; nCad particles
-               # extraction not available""")
-
+        #    raise ImportError("""WARNING: simphony-ncad couldn't be imported; nCad particles
+        #       extraction not available""")
         # if _ncad_imported:
-            # # initiate the wrapper
-            # nc = ncw.nCad()
-            # project_name = nc.get_project_name()
-            # base_name = 'nfluid_component'
-            # component_name = base_name + project_name            
-            # # do stuff with the wrapper
-            # component = None
-            # try:
-                # component = nc.get_dataset(component_name)
-            # except ValueError:
-                # component = Particles(component_name)
-            # stl_name = component_name + '.stl'
-            # self.export_shapes(stl_name, close=True)
-            # data = component.data
-            # data[CUBA.NAME_UC] = particles.name
-            # data[CUBA.MATERIAL_TYPE] = SHAPE_TYPE.DIM_3D_STL
-            # data[CUBA.FILE_STL] = "C:\\Sgenia\\Projects\\simphony_git_repos\\nfluid\\modelo3.STL"
-            # # data[CUBA.FILE_STL] = './' + stl_name
-            # # data[CUBA.STL_MODE] = 0
-            # # data[CUBA.STL_SCALING] = 1
-            # # data[CUBA.STL_PADDING] = (0,0,0,0,0,3)
-            # # Add the cell
-            # try:
-                # nc.add_dataset(particles)
-            # except ValueError:
-                # nc.remove_dataset(particles.name)
-                # nc.add_dataset(particles)
-            # # Add the component
-            # try:
-                # nc.add_dataset(component)
-            # except ValueError:
-                # nc.remove_dataset(component_name)
-                # nc.add_dataset(component)
-            
-            # assembly = nc.run()
-            # # debug
-            # nc.show(component_name)
-            # # clear things ???
+        #    # initiate the wrapper
+        #    nc = ncw.nCad()
+        #    project_name = nc.get_project_name()
+        #    base_name = 'nfluid_component'
+        #    component_name = base_name + project_name            
+        #    # do stuff with the wrapper
+        #    component = None
+        #    try:
+        #        component = nc.get_dataset(component_name)
+        #    except ValueError:
+        #        component = Particles(component_name)
+        #    stl_name = component_name + '.stl'
+        #    self.export_shapes(stl_name, close=True)
+        #    data = component.data
+        #    data[CUBA.NAME_UC] = particles.name
+        #    data[CUBA.MATERIAL_TYPE] = SHAPE_TYPE.DIM_3D_STL
+        #    data[CUBA.FILE_STL] = "C:\\Sgenia\\Projects\\simphony_git_repos\\nfluid\\modelo3.STL"
+        #    # data[CUBA.FILE_STL] = './' + stl_name
+        #    # data[CUBA.STL_MODE] = 0
+        #    # data[CUBA.STL_SCALING] = 1
+        #    # data[CUBA.STL_PADDING] = (0,0,0,0,0,3)
+        #    # Add the cell
+        #    try:
+        #        nc.add_dataset(particles)
+        #    except ValueError:
+        #        nc.remove_dataset(particles.name)
+        #        nc.add_dataset(particles)
+        #    # Add the component
+        #    try:
+        #        nc.add_dataset(component)
+        #    except ValueError:
+        #        nc.remove_dataset(component_name)
+        #        nc.add_dataset(component)
+        #    assembly = nc.run()
+        #    # debug
+        #    nc.show(component_name)
+        #    # clear things ???
 
     def show_shapes(self):
         """Opens a modal standalone visualizer containing the full structure
