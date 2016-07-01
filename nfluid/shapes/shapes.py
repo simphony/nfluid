@@ -4,7 +4,7 @@
 import math
 import copy
 
-from nfluid.visualisation.show import show
+import nfluid.visualisation.show as show_mod
 from nfluid.geometry.generator import GeometryGenerator
 from nfluid.geometry.functions import angle_between_vectors
 _generator = GeometryGenerator()
@@ -271,7 +271,7 @@ class Shape(object):
         """
         if cls.total_mesh is None:
             raise Exception('Total mesh not generated!')
-        show([cls.total_mesh])
+        show_mod.show([cls.total_mesh])
 
     def __init__(self):
         # Geometric mesh
