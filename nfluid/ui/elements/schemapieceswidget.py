@@ -158,14 +158,7 @@ class SchemaPiecesWidget(QtGui.QWidget):
         self.schema_scene.addLine(f_x, f_y, t_x, t_y)
 
     def draw_elements(self, elem, x, y, width, cur_level):
-        print 'draw_elements ´´´´´´´´´´´´´´´´´´'
-        print 'elem', elem
         SchemaPiecesWidget.print_element_debug(elem, None)
-        print 'x', x
-        print 'y', y
-        print 'width', width
-        print 'cur_level', cur_level
-        print '´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´'
         if elem is not None:
             self.add_element(elem.data.name(), x, y)
             if elem.next_l is not None:
@@ -221,7 +214,5 @@ class SchemaPiecesWidget(QtGui.QWidget):
             init_x -= (self.name_space) / 2
             init_y = 10
             self.schema_scene.clear()
-            print 'THE BEGININGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG'
             self.draw_elements(init, init_x, init_y, total_width / 2,
                                height - 1)
-            print 'OF THE EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEND'
