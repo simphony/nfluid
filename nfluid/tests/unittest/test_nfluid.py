@@ -546,19 +546,3 @@ class TestNfluidGeometricMeshTee(TestNfluidGeometry):
     def setUp(self):
         super(TestNfluidGeometricMeshTee, self).setUp()
         self.mesh = geo_tee.Tee(self.r, self.slices, self.stacks)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
