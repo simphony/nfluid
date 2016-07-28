@@ -4,15 +4,21 @@
 
 class TreeFunctions(object):
     n_bifs = 0
+    n_elem = 0
 
     @classmethod
     def reset(cls):
         TreeFunctions.n_bifs = 0
+        TreeFunctions.n_elem = 0
 
     @classmethod
     def n_bifurcations(cls, elem, params=None):
         if elem.next_l is not None and elem.next_r is not None:
             TreeFunctions.n_bifs += 1
+
+    @classmethod
+    def n_nodes(cls, elem, params=None):
+        TreeFunctions.n_elem += 1
 
 
 class TreeNode(object):
@@ -76,6 +82,11 @@ class TreeBase(object):
 
     def search(self, value):
         return self.walk_amplitude(value)
+
+    def n_nodes(self):
+        TreeFunctions.reset()
+        self.walk_amplitude(func=TreeFunctions.n_nodes)
+        return TreeFunctions.n_elem
 
     def walk_amplitude(self, value=None, func=None, params=None):
         res = []

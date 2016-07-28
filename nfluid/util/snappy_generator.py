@@ -89,11 +89,11 @@ def generate_snappy_project(file_path, template_name=None,
                  case_name + '.stl')
 
     if path is not None:
-        shutil.copy2(path + '\\snappy_files\\needed_files\\controlDict',
+        shutil.copy2(path + '\\foam_files\\common_files\\controlDict',
                      'SNAPPY_PROJECT\\system\\')
-        shutil.copy2(path + '\\snappy_files\\needed_files\\fvSchemes',
+        shutil.copy2(path + '\\foam_files\\common_files\\fvSchemes',
                      'SNAPPY_PROJECT\\system\\')
-        shutil.copy2(path + '\\snappy_files\\needed_files\\fvSolution',
+        shutil.copy2(path + '\\foam_files\\common_files\\fvSolution',
                      'SNAPPY_PROJECT\\system\\')
 
     stlinfo = stl.STL_Info(file_path)
@@ -127,6 +127,8 @@ def generate_snappy_project(file_path, template_name=None,
         for i in xrange(len(search_words)):
             n_str = n_str.replace(search_words[i], replacement[i])
         fo.write(n_str)
+
+    os.remove(file_path)
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
