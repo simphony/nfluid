@@ -2,10 +2,9 @@ import unittest
 import os
 import shutil
 
-from nfluid.core.channel_assembly import ChannelAssembly, create_channel
+from nfluid.core.channel_assembly import ChannelAssembly
 from nfluid.core.channel_element import ChannelElement
 from nfluid.core.gate_base import Gate
-from nfluid.core.gates import GateCircle
 from nfluid.elements.cap import Cap
 from nfluid.elements.circle_coupling import CircleCoupling
 from nfluid.elements.circle_path import CirclePath
@@ -27,10 +26,8 @@ import nfluid.geometry.long_elbow as geo_long_elbow
 import nfluid.geometry.short_elbow as geo_short_elbow
 import nfluid.geometry.spheric_coupling as geo_spheric_coupling
 import nfluid.geometry.tee as geo_tee
-from nfluid.visualisation.show import show
 from simphony.cuds.mesh import ABCMesh
 from visvis import OrientableMesh
-import visvis as vv
 
 
 def compare_two_vectors(first, second, testcase=None):
@@ -38,6 +35,7 @@ def compare_two_vectors(first, second, testcase=None):
     self.assertTrue(first.x == second.x)
     self.assertTrue(first.y == second.y)
     self.assertTrue(first.z == second.z)
+
 
 def compare_two_gates(first, second, testcase=None):
     self = testcase
@@ -47,12 +45,14 @@ def compare_two_gates(first, second, testcase=None):
     self.assertEqual(first.Pos, second.Pos)
     self.assertEqual(first.Normal, second.Normal)
 
+
 def compare_two_elements(first, second, testcase=None):
     self = testcase
     self.assertTrue(first.get_id() == second.get_id())
     self.assertTrue(first.name() == second.name())
     self.assertListEqual(first.heads, second.heads)
     self.assertListEqual(first.tails, second.tails)
+
 
 def compare_two_meshes(first, second, testcase=None):
     pass
@@ -67,18 +67,19 @@ class TestNfluidAddGet(unittest.TestCase):
         self.addTypeEqualityFunc(Vector, compare_two_vectors)
 
     def test_add_element(self):
-        circle_coupling = CircleCoupling(R=10, L=75, PosH=Vector(0,0,0),
-                                         Normal=Vector(0,0,1))
+        CircleCoupling(R=10, L=75, PosH=Vector(0, 0, 0),
+                       Normal=Vector(0, 0, 1))
         n_elems = len(self.assembly.elements)
-        self.assertTrue( n_elems == 1,
+        self.assertTrue(n_elems == 1,
                         msg='Element not added, size == {}'.format(n_elems))
 
     def test_get_element_by_id(self):
-        circle_coupling = CircleCoupling(R=10, L=75, PosH=Vector(0,0,0),
-                                         Normal=Vector(0,0,1))
+        circle_coupling = CircleCoupling(R=10, L=75, PosH=Vector(0, 0, 0),
+                                         Normal=Vector(0, 0, 1))
         id = circle_coupling.get_id()
         added_elem = self.assembly.get_element_by_id(id)
         self.assertEqual(circle_coupling, added_elem)
+
 
 class TestNFluidAssembly(unittest.TestCase):
 
@@ -87,8 +88,9 @@ class TestNFluidAssembly(unittest.TestCase):
         self.addTypeEqualityFunc(ChannelElement, compare_two_elements)
         self.addTypeEqualityFunc(Gate, compare_two_gates)
         self.addTypeEqualityFunc(Vector, compare_two_vectors)
-        self.circle_coupling1 = CircleCoupling(R=10, L=75, PosH=Vector(0,0,0),
-                                         Normal=Vector(0,0,1))
+        self.circle_coupling1 = CircleCoupling(R=10, L=75,
+                                               PosH=Vector(0, 0, 0),
+                                               Normal=Vector(0, 0, 1))
         self.circle_coupling2 = CircleCoupling(L=15)
         self.circle_coupling1.link(self.circle_coupling2)
 
@@ -105,7 +107,7 @@ class TestNFluidAssembly(unittest.TestCase):
         self.assembly.clear_geometry()
         id = self.circle_coupling1.get_id()
         added = self.assembly.get_element_by_id(id)
-        self.assertTrue(added.changed == True)
+        self.assertTrue(added.changed)
         self.assertEqual(self.circle_coupling1, added)
 
     def test_slices(self):
@@ -231,14 +233,14 @@ class TestNfluidElement(unittest.TestCase):
             self.elem.calculate_volume()
             volume = self.elem.get_volume()
             self.assertIsNotNone(volume)
-        
+
 
 class TestNfluidElementFlowAdapter(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementFlowAdapter, self).setUp()
-        self.elem = FlowAdapter(RH=5, RT=10, L=15, PosH=Vector(0,0,0),
-                                Normal=Vector(0,0,1))
+        self.elem = FlowAdapter(RH=5, RT=10, L=15, PosH=Vector(0, 0, 0),
+                                Normal=Vector(0, 0, 1))
         self.assembly.resolve_geometry()
 
 
@@ -246,9 +248,9 @@ class TestNfluidElementCircleTee(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementCircleTee, self).setUp()
-        self.elem = CircleTee(R=5, PosH=Vector(0,0,0),
-                                NormalH=Vector(0,0,1),
-                                NormalT0=Vector(1,0,0))
+        self.elem = CircleTee(R=5, PosH=Vector(0, 0, 0),
+                              NormalH=Vector(0, 0, 1),
+                              NormalT0=Vector(1, 0, 0))
         self.assembly.resolve_geometry()
 
 
@@ -256,12 +258,12 @@ class TestNfluidElementCirclePath(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementCirclePath, self).setUp()
-        points = [Vector(0,0,0), Vector(0,0,50),
-                  Vector(50,0,50), Vector(50,0,100),
-                  Vector(100,0,100)]
-        self.elem = CirclePath(R=5, Points=points, PosH=Vector(0,0,0),
-                               NormalH=Vector(0,0,1),
-                               NormalT=Vector(1,0,0))
+        points = [Vector(0, 0, 0), Vector(0, 0, 50),
+                  Vector(50, 0, 50), Vector(50, 0, 100),
+                  Vector(100, 0, 100)]
+        self.elem = CirclePath(R=5, Points=points, PosH=Vector(0, 0, 0),
+                               NormalH=Vector(0, 0, 1),
+                               NormalT=Vector(1, 0, 0))
         self.assembly.resolve_geometry()
 
 
@@ -269,8 +271,8 @@ class TestNfluidElementCircleCoupling(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementCircleCoupling, self).setUp()
-        self.elem = CircleCoupling(R=5, L=15, PosH=Vector(0,0,0),
-                                Normal=Vector(0,0,1))
+        self.elem = CircleCoupling(R=5, L=15, PosH=Vector(0, 0, 0),
+                                   Normal=Vector(0, 0, 1))
         self.assembly.resolve_geometry()
 
 
@@ -278,8 +280,8 @@ class TestNfluidElementCap(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementCap, self).setUp()
-        self.elem = Cap(R=20, L=15, PosH=Vector(0,0,0),
-                                NormalH=Vector(0,0,1))
+        self.elem = Cap(R=20, L=15, PosH=Vector(0, 0, 0),
+                        NormalH=Vector(0, 0, 1))
         self.assembly.resolve_geometry()
 
 
@@ -287,8 +289,8 @@ class TestNfluidElementSphericCoupling(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementSphericCoupling, self).setUp()
-        self.elem = SphericCoupling(RS=15, R=5, PosH=Vector(0,0,0),
-                                Normal=Vector(0,0,1))
+        self.elem = SphericCoupling(RS=15, R=5, PosH=Vector(0, 0, 0),
+                                    Normal=Vector(0, 0, 1))
         self.assembly.resolve_geometry()
 
 
@@ -296,9 +298,9 @@ class TestNfluidElementShortElbowNormals(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementShortElbowNormals, self).setUp()
-        self.elem = ShortElbowNormals(R=5, PosH=Vector(0,0,0),
-                                NormalH=Vector(0,0,1),
-                                NormalT=Vector(1,0,0))
+        self.elem = ShortElbowNormals(R=5, PosH=Vector(0, 0, 0),
+                                      NormalH=Vector(0, 0, 1),
+                                      NormalT=Vector(1, 0, 0))
         self.assembly.resolve_geometry()
 
 
@@ -306,9 +308,9 @@ class TestNfluidElementShortElbowAngle(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementShortElbowAngle, self).setUp()
-        self.elem = ShortElbowAngle(R=5, PosH=Vector(0,0,0),
-                                NormalH=Vector(0,0,1),
-                                NormalT=Vector(1,0,0))
+        self.elem = ShortElbowAngle(R=5, PosH=Vector(0, 0, 0),
+                                    NormalH=Vector(0, 0, 1),
+                                    NormalT=Vector(1, 0, 0))
         self.assembly.resolve_geometry()
 
 
@@ -316,9 +318,9 @@ class TestNfluidElementLongElbowNormals(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementLongElbowNormals, self).setUp()
-        self.elem = LongElbowNormals(RC=3, R=5, PosH=Vector(0,0,0),
-                                NormalH=Vector(0,0,1),
-                                NormalT=Vector(1,0,0))
+        self.elem = LongElbowNormals(RC=3, R=5, PosH=Vector(0, 0, 0),
+                                     NormalH=Vector(0, 0, 1),
+                                     NormalT=Vector(1, 0, 0))
         self.assembly.resolve_geometry()
 
 
@@ -326,9 +328,9 @@ class TestNfluidElementLongElbowAngle(TestNfluidElement):
 
     def setUp(self):
         super(TestNfluidElementLongElbowAngle, self).setUp()
-        self.elem = LongElbowAngle(RC=3, R=5, PosH=Vector(0,0,0),
-                                NormalH=Vector(0,0,1),
-                                NormalT=Vector(1,0,0))
+        self.elem = LongElbowAngle(RC=3, R=5, PosH=Vector(0, 0, 0),
+                                   NormalH=Vector(0, 0, 1),
+                                   NormalT=Vector(1, 0, 0))
         self.assembly.resolve_geometry()
 
 
@@ -339,8 +341,8 @@ class TestNfluidGeometricMeshCommon(unittest.TestCase):
         self.mesh = GeometricMesh()
 
     def test_vertex(self):
-        v0 = (1,3,9)
-        v1 = (4,2,10)
+        v0 = (1, 3, 9)
+        v1 = (4, 2, 10)
         index0 = self.mesh.add_vertex(v0)
         index1 = self.mesh.add_vertex(v1)
         added0 = self.mesh.vertex(index0)
@@ -349,7 +351,7 @@ class TestNfluidGeometricMeshCommon(unittest.TestCase):
         self.assertTrue(n_vertices == 2)
         self.assertEqual(added0, v0)
         self.assertEqual(added1, v1)
-        v1 = (10,2,4)
+        v1 = (10, 2, 4)
         self.mesh.update_vertex(index1, v1)
         updated1 = self.mesh.vertex(index1)
         self.assertEqual(updated1, v1)
@@ -358,10 +360,10 @@ class TestNfluidGeometricMeshCommon(unittest.TestCase):
             self.mesh.vertex(index0)
 
     def test_normal(self):
-        v0 = (1,3,9)
-        v1 = (4,2,10)
-        n0 = (1,1,1)
-        n1 = (0.5,0.3,0.1)
+        v0 = (1, 3, 9)
+        v1 = (4, 2, 10)
+        n0 = (1, 1, 1)
+        n1 = (0.5, 0.3, 0.1)
         index0 = self.mesh.add_vertex(v0)
         index1 = self.mesh.add_vertex(v1)
         self.mesh.add_normal(index0, n0)
@@ -372,7 +374,7 @@ class TestNfluidGeometricMeshCommon(unittest.TestCase):
         self.assertTrue(n_normals == 2)
         self.assertEqual(added0, n0)
         self.assertEqual(added1, n1)
-        n1 = (0.1,0.3,0.5)
+        n1 = (0.1, 0.3, 0.5)
         self.mesh.update_normal(index1, n1)
         updated1 = self.mesh.normal(index1)
         self.assertEqual(updated1, n1)
@@ -381,9 +383,9 @@ class TestNfluidGeometricMeshCommon(unittest.TestCase):
             self.mesh.normal(index0)
 
     def test_triangle(self):
-        v0 = (1,3,9)
-        v1 = (4,2,10)
-        v2 = (7,8,11)
+        v0 = (1, 3, 9)
+        v1 = (4, 2, 10)
+        v2 = (7, 8, 11)
         index0 = self.mesh.add_vertex(v0)
         index1 = self.mesh.add_vertex(v1)
         index2 = self.mesh.add_vertex(v2)
@@ -414,18 +416,19 @@ class TestNfluidGeometry(unittest.TestCase):
         self.stacks = 10
         self.r = 1
         self.mesh = None
-        # self.example = geo_coupling.Coupling(self.r, self.r, self.slices, self.stacks)
+        # self.example = geo_coupling.Coupling(self.r, self.r,
+        #                                      self.slices, self.stacks)
         self.example = CylindricalPart()
-        i0 = self.example.add_vertex((0,0,self.r))
-        i1 = self.example.add_vertex((self.r,0,self.r))
-        i2 = self.example.add_vertex((0,self.r,self.r))
-        n = (0,0,1)
-        self.example.add_triangle((i0,i1,i2))
+        i0 = self.example.add_vertex((0, 0, self.r))
+        i1 = self.example.add_vertex((self.r, 0, self.r))
+        i2 = self.example.add_vertex((0, self.r, self.r))
+        n = (0, 0, 1)
+        self.example.add_triangle((i0, i1, i2))
         self.example.add_normal(i0, n)
         self.example.add_normal(i1, n)
         self.example.add_normal(i2, n)
-        self.example.add_connection_face((i0,i1,i2))
-        self.example.add_connection_face((i0,i1,i2))
+        self.example.add_connection_face((i0, i1, i2))
+        self.example.add_connection_face((i0, i1, i2))
 
     def test_vis_vis_mesh(self):
         if self.mesh is not None:
@@ -446,8 +449,8 @@ class TestNfluidGeometry(unittest.TestCase):
 
     def test_move(self):
         if self.mesh is not None:
-            p = (0,0,0)
-            n = (1,0,0)
+            p = (0, 0, 0)
+            n = (1, 0, 0)
             self.mesh.move(p, n)
 
     def test_attach(self):
@@ -503,7 +506,7 @@ class TestNfluidGeometricMeshCouplingPath(TestNfluidGeometry):
 
     def setUp(self):
         super(TestNfluidGeometricMeshCouplingPath, self).setUp()
-        points = [(0,0,0), (0,0,self.r), (0,self.r,self.r*2)]
+        points = [(0, 0, 0), (0, 0, self.r), (0, self.r, self.r*2)]
         self.mesh = geo_coupling_path.CouplingPath(self.r, points,
                                                    self.slices, self.stacks)
 

@@ -1,4 +1,3 @@
-import nfluid.ui.main_module
 from nfluid.ui.main_module import start_gui
 from nfluid.core.channel_assembly import ChannelAssembly, create_channel
 from nfluid.elements.cap import Cap

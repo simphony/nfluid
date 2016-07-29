@@ -3,15 +3,9 @@ from visvis import solidLine
 backend = 'pyside'
 
 
-def import_visvis():
-    import visvis as vv
-    from visvis import solidLine
-    backend = 'pyside'
-
 def show(items, normals=None):
     """Function that shows a mesh object.
     """
-    import_visvis()
     for item in items:
         vv.clf()
         # convert to visvis.Mesh class

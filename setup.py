@@ -31,7 +31,8 @@ setup(
     author='SimPhoNy, EU FP7 Project (Nr. 604005) www.simphony-project.eu',
     description='The nFluid package to microchannels design',
     long_description=README_TEXT,
-    entry_points = {'simphony.pre_processing': ['nfluid_wrapper = nfluid.plugin']},
+    entry_points={'simphony.pre_processing':
+                  ['nfluid_wrapper = nfluid.plugin']},
     install_requires=[
         "simphony >= 0.2.0",
         "visvis",
@@ -39,6 +40,6 @@ setup(
         "numpy >= 1.4.1"],
     packages=find_packages(),
     package_data={'nfluid.util': ['foam_files\\common_files\\*',
-                                     'foam_files\\cfmesh_templates\\*',
-                                     'foam_files\\snappy_templates\\*']}
+                                  'foam_files\\cfmesh_templates\\*',
+                                  'foam_files\\snappy_templates\\*']}
     )

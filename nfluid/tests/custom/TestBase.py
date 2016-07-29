@@ -3,6 +3,7 @@
 # from nfluid.ui.main_module import start_gui
 from nfluid.ui.main_module import start_gui
 
+
 def MakeTest1(assembly):
     print 'resolve_geometry ----------------------------------'
     res = assembly.resolve_geometry()
@@ -43,7 +44,6 @@ print_info Assembly ---------------------------'''
         print '-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-'
 
     # assembly.show_shapes()
-
 
     start_gui()
 
