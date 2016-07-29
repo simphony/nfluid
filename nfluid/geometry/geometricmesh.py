@@ -151,11 +151,7 @@ class GeometricMesh(object):
         pass
 
     def _move(self, point, direction, p, n):
-        """center == True means that we do the movement in reference
-        to the center of the mesh
-        center == False means that we do the movement in reference to the
-        center of the head circle.
-        This method implies a traslation and a rotation.
+        """This method implies a traslation and a rotation.
         """
         angle = angle_between_vectors(direction, n)
         if angle == math.pi or angle == 0:

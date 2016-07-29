@@ -1,5 +1,6 @@
 # STL utility functions
 from nfluid.geometry.functions import normal_of, center_of
+import os
 
 
 class STL_Info():
@@ -14,11 +15,13 @@ class STL_Info():
         self.inside_point = (0, 0, 0)
         self.outside_point = (0, 0, 0)
         self.onface_point = (0, 0, 0)
-        self.output = open('{}_box.txt'.format(file_name), "w")
+        self.output_file = '{}_box.txt'.format(file_name)
+        self.output = open(self.output_file, "w")
         self.surrounding_box()
         self._write_output()
         self.file.close()
         self.output.close()
+        os.remove(self.output_file)
 
     def _coordinates_of_vertex(self, line):
         words = line.split(' ')
